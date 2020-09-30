@@ -1,0 +1,2592 @@
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"test.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.ShowStars,"ax",%progbits
+  16              		.align	1
+  17              		.global	ShowStars
+  18              		.arch armv7-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu softvfp
+  24              	ShowStars:
+  25              	.LFB69:
+  26              		.file 1 "Core/Src/test.c"
+   1:Core/Src/test.c **** #include "test.h"
+   2:Core/Src/test.c **** #include "draw_api.h"
+   3:Core/Src/test.c **** #include "stdlib.h"
+   4:Core/Src/test.c **** #include "stdio.h"
+   5:Core/Src/test.c **** #include "math.h"
+   6:Core/Src/test.c **** void ShowStars(void);
+   7:Core/Src/test.c **** void ShowTest(void);
+   8:Core/Src/test.c **** void ShowSnow(void);
+   9:Core/Src/test.c **** 
+  10:Core/Src/test.c **** void demo(void)
+  11:Core/Src/test.c **** {
+  12:Core/Src/test.c ****     int i, j;
+  13:Core/Src/test.c ****     //demo—› æ
+  14:Core/Src/test.c ****     ClearScreen();
+  15:Core/Src/test.c ****     DrawBitmap(0, 0, TempLogo, 128, 64);
+  16:Core/Src/test.c ****     UpdateScreen();
+  17:Core/Src/test.c ****     HAL_Delay(2000);
+  18:Core/Src/test.c **** 
+  19:Core/Src/test.c ****     //◊÷ÃÂ≤‚ ‘£¨÷ª”–”¢Œƒ
+  20:Core/Src/test.c ****     ClearScreen();
+  21:Core/Src/test.c ****     SetFontSize(1);
+  22:Core/Src/test.c ****     DrawString(0, 0, "test");
+  23:Core/Src/test.c ****     UpdateScreen();
+  24:Core/Src/test.c ****     HAL_Delay(1000);
+  25:Core/Src/test.c **** 
+  26:Core/Src/test.c ****     SetFontSize(2);
+  27:Core/Src/test.c ****     DrawString(0, 8, "test");
+  28:Core/Src/test.c ****     UpdateScreen();
+  29:Core/Src/test.c ****     HAL_Delay(1000);
+  30:Core/Src/test.c **** 
+  31:Core/Src/test.c ****     SetFontSize(3);
+  32:Core/Src/test.c ****     DrawString(0, 24, "test");
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s 			page 2
+
+
+  33:Core/Src/test.c ****     UpdateScreen();
+  34:Core/Src/test.c ****     HAL_Delay(1000);
+  35:Core/Src/test.c **** 
+  36:Core/Src/test.c ****     //ªÆœﬂ
+  37:Core/Src/test.c ****     ClearScreen();
+  38:Core/Src/test.c ****     for (i = 0; i < 20; i++)
+  39:Core/Src/test.c ****     {
+  40:Core/Src/test.c ****         DrawLine(0, 0, i * 10, 63);
+  41:Core/Src/test.c ****         UpdateScreen();
+  42:Core/Src/test.c ****         HAL_Delay(100);
+  43:Core/Src/test.c ****     }
+  44:Core/Src/test.c ****     for (i = 0; i < 20; i++)
+  45:Core/Src/test.c ****     {
+  46:Core/Src/test.c ****         DrawLine(128, 0, 128 - i * 10, 63);
+  47:Core/Src/test.c ****         UpdateScreen();
+  48:Core/Src/test.c ****         HAL_Delay(100);
+  49:Core/Src/test.c ****     }
+  50:Core/Src/test.c ****     HAL_Delay(1000);
+  51:Core/Src/test.c **** 
+  52:Core/Src/test.c ****     //æÿ–Œ
+  53:Core/Src/test.c **** 
+  54:Core/Src/test.c ****     for (j = 0; j < 2; j++)
+  55:Core/Src/test.c ****     {
+  56:Core/Src/test.c ****         if (j == 0)
+  57:Core/Src/test.c ****             ClearScreen();
+  58:Core/Src/test.c ****         for (i = 0; i < 31; i += 2)
+  59:Core/Src/test.c ****         {
+  60:Core/Src/test.c ****             DrawRect2(i * 2, i, 128 - i * 4, 64 - 2 * i);
+  61:Core/Src/test.c ****             UpdateScreen();
+  62:Core/Src/test.c ****             HAL_Delay(100);
+  63:Core/Src/test.c ****         }
+  64:Core/Src/test.c ****         if (j == 0)
+  65:Core/Src/test.c ****             ClearScreen();
+  66:Core/Src/test.c ****         HAL_Delay(500);
+  67:Core/Src/test.c ****         for (i = 31; i > 0; i -= 2)
+  68:Core/Src/test.c ****         {
+  69:Core/Src/test.c ****             DrawFillRect2(i * 2, i, 128 - i * 4, 64 - 2 * i);
+  70:Core/Src/test.c ****             UpdateScreen();
+  71:Core/Src/test.c ****             HAL_Delay(100);
+  72:Core/Src/test.c ****         }
+  73:Core/Src/test.c ****         SetDrawColor(pix_black);
+  74:Core/Src/test.c ****         SetFillcolor(pix_black);
+  75:Core/Src/test.c ****     }
+  76:Core/Src/test.c ****     SetDrawColor(pix_white);
+  77:Core/Src/test.c ****     SetFillcolor(pix_white);
+  78:Core/Src/test.c **** 
+  79:Core/Src/test.c ****     //‘≤Ω«æÿ–Œ
+  80:Core/Src/test.c ****     for (j = 0; j < 2; j++)
+  81:Core/Src/test.c ****     {
+  82:Core/Src/test.c ****         if (j == 0)
+  83:Core/Src/test.c ****             ClearScreen();
+  84:Core/Src/test.c ****         for (i = 0; i < 31; i += 2)
+  85:Core/Src/test.c ****         {
+  86:Core/Src/test.c ****             DrawRoundRect(i * 2, i, 128 - i * 4, 64 - 2 * i, 2);
+  87:Core/Src/test.c ****             UpdateScreen();
+  88:Core/Src/test.c ****             HAL_Delay(100);
+  89:Core/Src/test.c ****         }
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s 			page 3
+
+
+  90:Core/Src/test.c ****         if (j == 0)
+  91:Core/Src/test.c ****             ClearScreen();
+  92:Core/Src/test.c ****         HAL_Delay(500);
+  93:Core/Src/test.c ****         for (i = 31; i > 2; i -= 2)
+  94:Core/Src/test.c ****         {
+  95:Core/Src/test.c ****             DrawfillRoundRect(i * 2, i, 128 - i * 4, 64 - 2 * i, 2);
+  96:Core/Src/test.c ****             UpdateScreen();
+  97:Core/Src/test.c ****             HAL_Delay(100);
+  98:Core/Src/test.c ****         }
+  99:Core/Src/test.c ****         SetDrawColor(pix_black);
+ 100:Core/Src/test.c ****         SetFillcolor(pix_black);
+ 101:Core/Src/test.c ****     }
+ 102:Core/Src/test.c ****     SetDrawColor(pix_white);
+ 103:Core/Src/test.c ****     SetFillcolor(pix_white);
+ 104:Core/Src/test.c **** 
+ 105:Core/Src/test.c ****     //Õ÷‘≤
+ 106:Core/Src/test.c ****     ClearScreen();
+ 107:Core/Src/test.c ****     DrawEllipse(63, 31, 63, 31);
+ 108:Core/Src/test.c ****     UpdateScreen();
+ 109:Core/Src/test.c ****     HAL_Delay(1000);
+ 110:Core/Src/test.c ****     ClearScreen();
+ 111:Core/Src/test.c ****     DrawEllipse(63, 31, 16, 31);
+ 112:Core/Src/test.c ****     UpdateScreen();
+ 113:Core/Src/test.c ****     HAL_Delay(1000);
+ 114:Core/Src/test.c ****     ClearScreen();
+ 115:Core/Src/test.c ****     DrawFillEllipse(63, 31, 63, 31);
+ 116:Core/Src/test.c ****     UpdateScreen();
+ 117:Core/Src/test.c ****     HAL_Delay(1000);
+ 118:Core/Src/test.c ****     ClearScreen();
+ 119:Core/Src/test.c ****     DrawFillEllipse(63, 31, 16, 31);
+ 120:Core/Src/test.c ****     UpdateScreen();
+ 121:Core/Src/test.c ****     HAL_Delay(1000);
+ 122:Core/Src/test.c ****     //‘≤
+ 123:Core/Src/test.c ****     ClearScreen();
+ 124:Core/Src/test.c ****     DrawCircle(63, 31, 30);
+ 125:Core/Src/test.c ****     UpdateScreen();
+ 126:Core/Src/test.c ****     HAL_Delay(1000);
+ 127:Core/Src/test.c ****     ClearScreen();
+ 128:Core/Src/test.c ****     DrawFillCircle(63, 31, 30);
+ 129:Core/Src/test.c ****     UpdateScreen();
+ 130:Core/Src/test.c ****     HAL_Delay(1000);
+ 131:Core/Src/test.c **** 
+ 132:Core/Src/test.c ****     //»˝Ω«–Œ
+ 133:Core/Src/test.c ****     ClearScreen();
+ 134:Core/Src/test.c ****     DrawTriangle(5, 10, 100, 30, 60, 50);
+ 135:Core/Src/test.c ****     UpdateScreen();
+ 136:Core/Src/test.c ****     HAL_Delay(1000);
+ 137:Core/Src/test.c ****     ClearScreen();
+ 138:Core/Src/test.c ****     DrawFillTriangle(5, 10, 100, 30, 60, 50);
+ 139:Core/Src/test.c ****     UpdateScreen();
+ 140:Core/Src/test.c ****     HAL_Delay(1000);
+ 141:Core/Src/test.c ****     //ªÊ÷∆Õº–Œ
+ 142:Core/Src/test.c ****     ClearScreen();
+ 143:Core/Src/test.c ****     DrawBitmap(0, 0, BmpTest1, 16, 16);
+ 144:Core/Src/test.c ****     UpdateScreen();
+ 145:Core/Src/test.c ****     HAL_Delay(1000);
+ 146:Core/Src/test.c ****     DrawBitmap(16, 0, BmpTest2, 32, 32);
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s 			page 4
+
+
+ 147:Core/Src/test.c ****     UpdateScreen();
+ 148:Core/Src/test.c ****     HAL_Delay(1000);
+ 149:Core/Src/test.c ****     DrawBitmap(48, 0, BmpTest3, 64, 64);
+ 150:Core/Src/test.c ****     UpdateScreen();
+ 151:Core/Src/test.c ****     HAL_Delay(1000);
+ 152:Core/Src/test.c **** 
+ 153:Core/Src/test.c ****     //‘≤ª°
+ 154:Core/Src/test.c ****     ClearScreen();
+ 155:Core/Src/test.c ****     for (i = 0; i < 369; i++)
+ 156:Core/Src/test.c ****     {
+ 157:Core/Src/test.c ****         DrawArc(63, 31, 30, 0, i);
+ 158:Core/Src/test.c ****         UpdateScreen();
+ 159:Core/Src/test.c ****         ClearScreen();
+ 160:Core/Src/test.c ****     }
+ 161:Core/Src/test.c ****     DrawCircle(63, 31, 30);
+ 162:Core/Src/test.c ****     UpdateScreen();
+ 163:Core/Src/test.c ****     HAL_Delay(500);
+ 164:Core/Src/test.c ****     //************
+ 165:Core/Src/test.c ****     for (i = 0; i < 10; i++)
+ 166:Core/Src/test.c ****     {
+ 167:Core/Src/test.c ****         DrawFillCircle(63, 31, i);
+ 168:Core/Src/test.c ****         DrawCircle(63, 31, 30);
+ 169:Core/Src/test.c ****         UpdateScreen();
+ 170:Core/Src/test.c ****         ClearScreen();
+ 171:Core/Src/test.c ****         HAL_Delay(100);
+ 172:Core/Src/test.c ****     }
+ 173:Core/Src/test.c **** 
+ 174:Core/Src/test.c ****     //»∆µ„
+ 175:Core/Src/test.c ****     for (i = 0; i < 720; i++)
+ 176:Core/Src/test.c ****     {
+ 177:Core/Src/test.c ****         TypeXY temp;
+ 178:Core/Src/test.c ****         SetAngle(i);
+ 179:Core/Src/test.c ****         SetRotateCenter(63, 31);
+ 180:Core/Src/test.c ****         temp = GetRotateXY(63, 31 + 30);
+ 181:Core/Src/test.c ****         DrawFillCircle(temp.x, temp.y, 5);
+ 182:Core/Src/test.c ****         DrawCircle(63, 31, 30);
+ 183:Core/Src/test.c ****         DrawFillCircle(63, 31, 10);
+ 184:Core/Src/test.c ****         UpdateScreen();
+ 185:Core/Src/test.c ****         ClearScreen();
+ 186:Core/Src/test.c ****     }
+ 187:Core/Src/test.c ****     //*************
+ 188:Core/Src/test.c ****     for (i = 0; i < 95; i++)
+ 189:Core/Src/test.c ****     {
+ 190:Core/Src/test.c ****         TypeXY temp;
+ 191:Core/Src/test.c ****         SetAngle(720 + i);
+ 192:Core/Src/test.c ****         SetRotateCenter(63 + i, 31);
+ 193:Core/Src/test.c ****         temp = GetRotateXY(63 + i, 31 + 30);
+ 194:Core/Src/test.c ****         DrawFillCircle(temp.x, temp.y, 5);
+ 195:Core/Src/test.c ****         DrawCircle(63 + i, 31, 30);
+ 196:Core/Src/test.c ****         DrawFillCircle(63 + i, 31, 10);
+ 197:Core/Src/test.c ****         UpdateScreen();
+ 198:Core/Src/test.c ****         ClearScreen();
+ 199:Core/Src/test.c ****     }
+ 200:Core/Src/test.c **** 
+ 201:Core/Src/test.c ****     //∂Øª≠
+ 202:Core/Src/test.c ****     ShowStars();
+ 203:Core/Src/test.c ****     ShowTest();
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s 			page 5
+
+
+ 204:Core/Src/test.c ****     HAL_Delay(1000);
+ 205:Core/Src/test.c ****     //Ω· ¯
+ 206:Core/Src/test.c ****     ClearScreen();
+ 207:Core/Src/test.c ****     SetFontSize(2);
+ 208:Core/Src/test.c ****     DrawString(8, 16, " Show End ");
+ 209:Core/Src/test.c ****     UpdateScreen();
+ 210:Core/Src/test.c ****     HAL_Delay(2000);
+ 211:Core/Src/test.c ****     ClearScreen();
+ 212:Core/Src/test.c ****     DrawBitmap(0, 10, DZTBGZ, 128, 40);
+ 213:Core/Src/test.c ****     UpdateScreen();
+ 214:Core/Src/test.c ****     while (1)
+ 215:Core/Src/test.c ****         ;
+ 216:Core/Src/test.c **** }
+ 217:Core/Src/test.c **** 
+ 218:Core/Src/test.c **** //–«ø’∂Øª≠
+ 219:Core/Src/test.c **** void ShowStars(void)
+ 220:Core/Src/test.c **** {
+  27              		.loc 1 220 1 view -0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 1024
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
+  32              	.LCFI0:
+  33              		.cfi_def_cfa_offset 28
+  34              		.cfi_offset 4, -28
+  35              		.cfi_offset 5, -24
+  36              		.cfi_offset 6, -20
+  37              		.cfi_offset 7, -16
+  38              		.cfi_offset 8, -12
+  39              		.cfi_offset 9, -8
+  40              		.cfi_offset 14, -4
+  41 0004 ADF2044D 		subw	sp, sp, #1028
+  42              	.LCFI1:
+  43              		.cfi_def_cfa_offset 1056
+ 221:Core/Src/test.c ****     int i; //j;
+  44              		.loc 1 221 5 view .LVU1
+ 222:Core/Src/test.c ****     int count = 0;
+  45              		.loc 1 222 5 view .LVU2
+  46              	.LVL0:
+ 223:Core/Src/test.c ****     int fps = 60;
+  47              		.loc 1 223 5 view .LVU3
+ 224:Core/Src/test.c ****     typedef struct START
+  48              		.loc 1 224 5 view .LVU4
+ 225:Core/Src/test.c ****     {
+ 226:Core/Src/test.c ****         short x;
+ 227:Core/Src/test.c ****         short y;
+ 228:Core/Src/test.c ****         short speed;
+ 229:Core/Src/test.c ****         unsigned char speedcount;
+ 230:Core/Src/test.c ****         unsigned char isexist;
+ 231:Core/Src/test.c ****     } Star;
+ 232:Core/Src/test.c ****     Star star[128] = {0};
+  49              		.loc 1 232 5 view .LVU5
+  50              		.loc 1 232 10 is_stmt 0 view .LVU6
+  51 0008 4FF48062 		mov	r2, #1024
+  52 000c 0021     		movs	r1, #0
+  53 000e 6846     		mov	r0, sp
+  54 0010 FFF7FEFF 		bl	memset
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s 			page 6
+
+
+  55              	.LVL1:
+ 233:Core/Src/test.c ****     srand(2);
+  56              		.loc 1 233 5 is_stmt 1 view .LVU7
+  57 0014 0220     		movs	r0, #2
+  58 0016 FFF7FEFF 		bl	srand
+  59              	.LVL2:
+ 234:Core/Src/test.c ****     for (i = 0; i < 128; i++)
+  60              		.loc 1 234 5 view .LVU8
+  61              		.loc 1 234 12 is_stmt 0 view .LVU9
+  62 001a 0024     		movs	r4, #0
+  63              		.loc 1 234 5 view .LVU10
+  64 001c 00E0     		b	.L2
+  65              	.LVL3:
+  66              	.L3:
+  67              		.loc 1 234 26 is_stmt 1 discriminator 2 view .LVU11
+  68              		.loc 1 234 27 is_stmt 0 discriminator 2 view .LVU12
+  69 001e 0134     		adds	r4, r4, #1
+  70              	.LVL4:
+  71              	.L2:
+  72              		.loc 1 234 17 is_stmt 1 discriminator 1 view .LVU13
+  73              		.loc 1 234 5 is_stmt 0 discriminator 1 view .LVU14
+  74 0020 7F2C     		cmp	r4, #127
+  75 0022 2EDC     		bgt	.L15
+ 235:Core/Src/test.c ****     {
+ 236:Core/Src/test.c ****         if (star[i].isexist == 0)
+  76              		.loc 1 236 9 is_stmt 1 view .LVU15
+  77              		.loc 1 236 20 is_stmt 0 view .LVU16
+  78 0024 0DEBC403 		add	r3, sp, r4, lsl #3
+  79 0028 DB79     		ldrb	r3, [r3, #7]	@ zero_extendqisi2
+  80              		.loc 1 236 12 view .LVU17
+  81 002a 002B     		cmp	r3, #0
+  82 002c F7D1     		bne	.L3
+ 237:Core/Src/test.c ****         {
+ 238:Core/Src/test.c ****             star[i].x = rand() % 127;
+  83              		.loc 1 238 13 is_stmt 1 view .LVU18
+  84              		.loc 1 238 25 is_stmt 0 view .LVU19
+  85 002e FFF7FEFF 		bl	rand
+  86              	.LVL5:
+  87              		.loc 1 238 32 view .LVU20
+  88 0032 4A4B     		ldr	r3, .L19
+  89 0034 83FB0023 		smull	r2, r3, r3, r0
+  90 0038 1A18     		adds	r2, r3, r0
+  91 003a C317     		asrs	r3, r0, #31
+  92 003c C3EBA213 		rsb	r3, r3, r2, asr #6
+  93 0040 C3EBC313 		rsb	r3, r3, r3, lsl #7
+  94 0044 C31A     		subs	r3, r0, r3
+  95              		.loc 1 238 23 view .LVU21
+  96 0046 2DF83430 		strh	r3, [sp, r4, lsl #3]	@ movhi
+ 239:Core/Src/test.c ****             star[i].y = rand() % 64;
+  97              		.loc 1 239 13 is_stmt 1 view .LVU22
+  98              		.loc 1 239 25 is_stmt 0 view .LVU23
+  99 004a FFF7FEFF 		bl	rand
+ 100              	.LVL6:
+ 101              		.loc 1 239 32 view .LVU24
+ 102 004e 4242     		rsbs	r2, r0, #0
+ 103 0050 00F03F03 		and	r3, r0, #63
+ 104 0054 02F03F02 		and	r2, r2, #63
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s 			page 7
+
+
+ 105 0058 58BF     		it	pl
+ 106 005a 5342     		rsbpl	r3, r2, #0
+ 107              		.loc 1 239 23 view .LVU25
+ 108 005c 0DEBC405 		add	r5, sp, r4, lsl #3
+ 109 0060 6B80     		strh	r3, [r5, #2]	@ movhi
+ 240:Core/Src/test.c ****             star[i].speedcount = 0;
+ 110              		.loc 1 240 13 is_stmt 1 view .LVU26
+ 111              		.loc 1 240 32 is_stmt 0 view .LVU27
+ 112 0062 0023     		movs	r3, #0
+ 113 0064 AB71     		strb	r3, [r5, #6]
+ 241:Core/Src/test.c ****             star[i].speed = rand() % 8 + 1;
+ 114              		.loc 1 241 13 is_stmt 1 view .LVU28
+ 115              		.loc 1 241 29 is_stmt 0 view .LVU29
+ 116 0066 FFF7FEFF 		bl	rand
+ 117              	.LVL7:
+ 118              		.loc 1 241 36 view .LVU30
+ 119 006a 4242     		rsbs	r2, r0, #0
+ 120 006c 00F00703 		and	r3, r0, #7
+ 121 0070 02F00702 		and	r2, r2, #7
+ 122 0074 58BF     		it	pl
+ 123 0076 5342     		rsbpl	r3, r2, #0
+ 124              		.loc 1 241 40 view .LVU31
+ 125 0078 0133     		adds	r3, r3, #1
+ 126              		.loc 1 241 27 view .LVU32
+ 127 007a AB80     		strh	r3, [r5, #4]	@ movhi
+ 242:Core/Src/test.c ****             star[i].isexist = 1;
+ 128              		.loc 1 242 13 is_stmt 1 view .LVU33
+ 129              		.loc 1 242 29 is_stmt 0 view .LVU34
+ 130 007c 0123     		movs	r3, #1
+ 131 007e EB71     		strb	r3, [r5, #7]
+ 132 0080 CDE7     		b	.L3
+ 133              	.L15:
+ 222:Core/Src/test.c ****     int fps = 60;
+ 134              		.loc 1 222 9 view .LVU35
+ 135 0082 0026     		movs	r6, #0
+ 136              	.LVL8:
+ 137              	.L12:
+ 243:Core/Src/test.c ****         }
+ 244:Core/Src/test.c ****     }
+ 245:Core/Src/test.c ****     while (1)
+ 138              		.loc 1 245 5 is_stmt 1 view .LVU36
+ 246:Core/Src/test.c ****     {
+ 247:Core/Src/test.c ****         if (FrameRateUpdateScreen(fps) == 1)
+ 139              		.loc 1 247 9 view .LVU37
+ 140              		.loc 1 247 13 is_stmt 0 view .LVU38
+ 141 0084 3C20     		movs	r0, #60
+ 142 0086 FFF7FEFF 		bl	FrameRateUpdateScreen
+ 143              	.LVL9:
+ 144              		.loc 1 247 12 view .LVU39
+ 145 008a 0128     		cmp	r0, #1
+ 146 008c 01D0     		beq	.L16
+ 147              	.L5:
+ 248:Core/Src/test.c ****         {
+ 249:Core/Src/test.c ****             count++;
+ 250:Core/Src/test.c ****             if (count >= fps * 10) //10√Î÷”
+ 251:Core/Src/test.c ****                 return;
+ 252:Core/Src/test.c ****         }
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s 			page 8
+
+
+ 253:Core/Src/test.c **** 
+ 254:Core/Src/test.c ****         for (i = 0; i < 128; i++)
+ 148              		.loc 1 254 9 is_stmt 1 view .LVU40
+ 149              	.LVL10:
+ 150              		.loc 1 254 16 is_stmt 0 view .LVU41
+ 151 008e 0024     		movs	r4, #0
+ 152              		.loc 1 254 9 view .LVU42
+ 153 0090 47E0     		b	.L6
+ 154              	.LVL11:
+ 155              	.L16:
+ 249:Core/Src/test.c ****             if (count >= fps * 10) //10√Î÷”
+ 156              		.loc 1 249 13 is_stmt 1 view .LVU43
+ 249:Core/Src/test.c ****             if (count >= fps * 10) //10√Î÷”
+ 157              		.loc 1 249 18 is_stmt 0 view .LVU44
+ 158 0092 0136     		adds	r6, r6, #1
+ 159              	.LVL12:
+ 250:Core/Src/test.c ****                 return;
+ 160              		.loc 1 250 13 is_stmt 1 view .LVU45
+ 250:Core/Src/test.c ****                 return;
+ 161              		.loc 1 250 16 is_stmt 0 view .LVU46
+ 162 0094 B6F5167F 		cmp	r6, #600
+ 163 0098 F9DB     		blt	.L5
+ 255:Core/Src/test.c ****         {
+ 256:Core/Src/test.c ****             if (star[i].isexist == 0)
+ 257:Core/Src/test.c ****             {
+ 258:Core/Src/test.c **** 
+ 259:Core/Src/test.c ****                 star[i].x = 0;
+ 260:Core/Src/test.c ****                 star[i].y = rand() % 64;
+ 261:Core/Src/test.c ****                 star[i].speed = rand() % 6 + 1;
+ 262:Core/Src/test.c ****                 star[i].speedcount = 0;
+ 263:Core/Src/test.c ****                 star[i].isexist = 1;
+ 264:Core/Src/test.c ****             }
+ 265:Core/Src/test.c ****             else
+ 266:Core/Src/test.c ****             {
+ 267:Core/Src/test.c ****                 star[i].speedcount++;
+ 268:Core/Src/test.c ****                 if (star[i].x >= 124)
+ 269:Core/Src/test.c ****                 {
+ 270:Core/Src/test.c ****                     star[i].isexist = 0;
+ 271:Core/Src/test.c ****                 }
+ 272:Core/Src/test.c ****                 SetDrawColor(pix_black);
+ 273:Core/Src/test.c ****                 DrawLine(star[i].x, star[i].y, star[i].x, star[i].y);
+ 274:Core/Src/test.c ****                 SetDrawColor(pix_white);
+ 275:Core/Src/test.c ****                 if (star[i].speedcount == star[i].speed)
+ 276:Core/Src/test.c ****                 {
+ 277:Core/Src/test.c ****                     star[i].speedcount = 0;
+ 278:Core/Src/test.c ****                     star[i].x += 1;
+ 279:Core/Src/test.c ****                 }
+ 280:Core/Src/test.c ****                 DrawLine(star[i].x, star[i].y, star[i].x + (6 / star[i].speed) - 1, star[i].y);
+ 281:Core/Src/test.c ****             }
+ 282:Core/Src/test.c ****         }
+ 283:Core/Src/test.c ****     }
+ 284:Core/Src/test.c **** }
+ 164              		.loc 1 284 1 view .LVU47
+ 165 009a 0DF2044D 		addw	sp, sp, #1028
+ 166              	.LCFI2:
+ 167              		.cfi_remember_state
+ 168              		.cfi_def_cfa_offset 28
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s 			page 9
+
+
+ 169              		@ sp needed
+ 170 009e BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+ 171              	.LVL13:
+ 172              	.L18:
+ 173              	.LCFI3:
+ 174              		.cfi_restore_state
+ 259:Core/Src/test.c ****                 star[i].y = rand() % 64;
+ 175              		.loc 1 259 17 is_stmt 1 view .LVU48
+ 259:Core/Src/test.c ****                 star[i].y = rand() % 64;
+ 176              		.loc 1 259 27 is_stmt 0 view .LVU49
+ 177 00a2 0027     		movs	r7, #0
+ 178 00a4 2DF83470 		strh	r7, [sp, r4, lsl #3]	@ movhi
+ 260:Core/Src/test.c ****                 star[i].speed = rand() % 6 + 1;
+ 179              		.loc 1 260 17 is_stmt 1 view .LVU50
+ 260:Core/Src/test.c ****                 star[i].speed = rand() % 6 + 1;
+ 180              		.loc 1 260 29 is_stmt 0 view .LVU51
+ 181 00a8 FFF7FEFF 		bl	rand
+ 182              	.LVL14:
+ 260:Core/Src/test.c ****                 star[i].speed = rand() % 6 + 1;
+ 183              		.loc 1 260 36 view .LVU52
+ 184 00ac 3B1A     		subs	r3, r7, r0
+ 185 00ae 00F03F00 		and	r0, r0, #63
+ 186 00b2 03F03F03 		and	r3, r3, #63
+ 187 00b6 58BF     		it	pl
+ 188 00b8 5842     		rsbpl	r0, r3, #0
+ 260:Core/Src/test.c ****                 star[i].speed = rand() % 6 + 1;
+ 189              		.loc 1 260 27 view .LVU53
+ 190 00ba 0DEBC405 		add	r5, sp, r4, lsl #3
+ 191 00be 6880     		strh	r0, [r5, #2]	@ movhi
+ 261:Core/Src/test.c ****                 star[i].speedcount = 0;
+ 192              		.loc 1 261 17 is_stmt 1 view .LVU54
+ 261:Core/Src/test.c ****                 star[i].speedcount = 0;
+ 193              		.loc 1 261 33 is_stmt 0 view .LVU55
+ 194 00c0 FFF7FEFF 		bl	rand
+ 195              	.LVL15:
+ 261:Core/Src/test.c ****                 star[i].speedcount = 0;
+ 196              		.loc 1 261 40 view .LVU56
+ 197 00c4 264B     		ldr	r3, .L19+4
+ 198 00c6 83FB0023 		smull	r2, r3, r3, r0
+ 199 00ca A3EBE073 		sub	r3, r3, r0, asr #31
+ 200 00ce 03EB4303 		add	r3, r3, r3, lsl #1
+ 201 00d2 A0EB4303 		sub	r3, r0, r3, lsl #1
+ 261:Core/Src/test.c ****                 star[i].speedcount = 0;
+ 202              		.loc 1 261 44 view .LVU57
+ 203 00d6 0133     		adds	r3, r3, #1
+ 261:Core/Src/test.c ****                 star[i].speedcount = 0;
+ 204              		.loc 1 261 31 view .LVU58
+ 205 00d8 AB80     		strh	r3, [r5, #4]	@ movhi
+ 262:Core/Src/test.c ****                 star[i].isexist = 1;
+ 206              		.loc 1 262 17 is_stmt 1 view .LVU59
+ 262:Core/Src/test.c ****                 star[i].isexist = 1;
+ 207              		.loc 1 262 36 is_stmt 0 view .LVU60
+ 208 00da AF71     		strb	r7, [r5, #6]
+ 263:Core/Src/test.c ****             }
+ 209              		.loc 1 263 17 is_stmt 1 view .LVU61
+ 263:Core/Src/test.c ****             }
+ 210              		.loc 1 263 33 is_stmt 0 view .LVU62
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s 			page 10
+
+
+ 211 00dc 0123     		movs	r3, #1
+ 212 00de EB71     		strb	r3, [r5, #7]
+ 213 00e0 1EE0     		b	.L8
+ 214              	.L9:
+ 272:Core/Src/test.c ****                 DrawLine(star[i].x, star[i].y, star[i].x, star[i].y);
+ 215              		.loc 1 272 17 is_stmt 1 view .LVU63
+ 216 00e2 0020     		movs	r0, #0
+ 217 00e4 FFF7FEFF 		bl	SetDrawColor
+ 218              	.LVL16:
+ 273:Core/Src/test.c ****                 SetDrawColor(pix_white);
+ 219              		.loc 1 273 17 view .LVU64
+ 273:Core/Src/test.c ****                 SetDrawColor(pix_white);
+ 220              		.loc 1 273 44 is_stmt 0 view .LVU65
+ 221 00e8 0DEBC409 		add	r9, sp, r4, lsl #3
+ 222 00ec B9F90280 		ldrsh	r8, [r9, #2]
+ 273:Core/Src/test.c ****                 SetDrawColor(pix_white);
+ 223              		.loc 1 273 17 view .LVU66
+ 224 00f0 4346     		mov	r3, r8
+ 225 00f2 3A46     		mov	r2, r7
+ 226 00f4 4146     		mov	r1, r8
+ 227 00f6 3846     		mov	r0, r7
+ 228 00f8 FFF7FEFF 		bl	DrawLine
+ 229              	.LVL17:
+ 274:Core/Src/test.c ****                 if (star[i].speedcount == star[i].speed)
+ 230              		.loc 1 274 17 is_stmt 1 view .LVU67
+ 231 00fc 0120     		movs	r0, #1
+ 232 00fe FFF7FEFF 		bl	SetDrawColor
+ 233              	.LVL18:
+ 275:Core/Src/test.c ****                 {
+ 234              		.loc 1 275 17 view .LVU68
+ 275:Core/Src/test.c ****                 {
+ 235              		.loc 1 275 50 is_stmt 0 view .LVU69
+ 236 0102 B9F90430 		ldrsh	r3, [r9, #4]
+ 275:Core/Src/test.c ****                 {
+ 237              		.loc 1 275 20 view .LVU70
+ 238 0106 9D42     		cmp	r5, r3
+ 239 0108 1FD0     		beq	.L17
+ 240              	.L10:
+ 280:Core/Src/test.c ****             }
+ 241              		.loc 1 280 17 is_stmt 1 view .LVU71
+ 280:Core/Src/test.c ****             }
+ 242              		.loc 1 280 33 is_stmt 0 view .LVU72
+ 243 010a 3DF93400 		ldrsh	r0, [sp, r4, lsl #3]
+ 280:Core/Src/test.c ****             }
+ 244              		.loc 1 280 63 view .LVU73
+ 245 010e 0622     		movs	r2, #6
+ 246 0110 92FBF3F2 		sdiv	r2, r2, r3
+ 280:Core/Src/test.c ****             }
+ 247              		.loc 1 280 58 view .LVU74
+ 248 0114 0244     		add	r2, r2, r0
+ 280:Core/Src/test.c ****             }
+ 249              		.loc 1 280 17 view .LVU75
+ 250 0116 4346     		mov	r3, r8
+ 251 0118 013A     		subs	r2, r2, #1
+ 252 011a 4146     		mov	r1, r8
+ 253 011c FFF7FEFF 		bl	DrawLine
+ 254              	.LVL19:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s 			page 11
+
+
+ 255              	.L8:
+ 254:Core/Src/test.c ****         {
+ 256              		.loc 1 254 30 is_stmt 1 discriminator 2 view .LVU76
+ 254:Core/Src/test.c ****         {
+ 257              		.loc 1 254 31 is_stmt 0 discriminator 2 view .LVU77
+ 258 0120 0134     		adds	r4, r4, #1
+ 259              	.LVL20:
+ 260              	.L6:
+ 254:Core/Src/test.c ****         {
+ 261              		.loc 1 254 21 is_stmt 1 discriminator 1 view .LVU78
+ 254:Core/Src/test.c ****         {
+ 262              		.loc 1 254 9 is_stmt 0 discriminator 1 view .LVU79
+ 263 0122 7F2C     		cmp	r4, #127
+ 264 0124 AEDC     		bgt	.L12
+ 256:Core/Src/test.c ****             {
+ 265              		.loc 1 256 13 is_stmt 1 view .LVU80
+ 256:Core/Src/test.c ****             {
+ 266              		.loc 1 256 24 is_stmt 0 view .LVU81
+ 267 0126 0DEBC403 		add	r3, sp, r4, lsl #3
+ 268 012a DB79     		ldrb	r3, [r3, #7]	@ zero_extendqisi2
+ 256:Core/Src/test.c ****             {
+ 269              		.loc 1 256 16 view .LVU82
+ 270 012c 002B     		cmp	r3, #0
+ 271 012e B8D0     		beq	.L18
+ 267:Core/Src/test.c ****                 if (star[i].x >= 124)
+ 272              		.loc 1 267 17 is_stmt 1 view .LVU83
+ 267:Core/Src/test.c ****                 if (star[i].x >= 124)
+ 273              		.loc 1 267 24 is_stmt 0 view .LVU84
+ 274 0130 0DEBC403 		add	r3, sp, r4, lsl #3
+ 275 0134 9D79     		ldrb	r5, [r3, #6]	@ zero_extendqisi2
+ 267:Core/Src/test.c ****                 if (star[i].x >= 124)
+ 276              		.loc 1 267 35 view .LVU85
+ 277 0136 0135     		adds	r5, r5, #1
+ 278 0138 EDB2     		uxtb	r5, r5
+ 279 013a 9D71     		strb	r5, [r3, #6]
+ 268:Core/Src/test.c ****                 {
+ 280              		.loc 1 268 17 is_stmt 1 view .LVU86
+ 268:Core/Src/test.c ****                 {
+ 281              		.loc 1 268 28 is_stmt 0 view .LVU87
+ 282 013c 3DF93470 		ldrsh	r7, [sp, r4, lsl #3]
+ 268:Core/Src/test.c ****                 {
+ 283              		.loc 1 268 20 view .LVU88
+ 284 0140 7B2F     		cmp	r7, #123
+ 285 0142 CEDD     		ble	.L9
+ 270:Core/Src/test.c ****                 }
+ 286              		.loc 1 270 21 is_stmt 1 view .LVU89
+ 270:Core/Src/test.c ****                 }
+ 287              		.loc 1 270 37 is_stmt 0 view .LVU90
+ 288 0144 0022     		movs	r2, #0
+ 289 0146 DA71     		strb	r2, [r3, #7]
+ 290 0148 CBE7     		b	.L9
+ 291              	.L17:
+ 277:Core/Src/test.c ****                     star[i].x += 1;
+ 292              		.loc 1 277 21 is_stmt 1 view .LVU91
+ 277:Core/Src/test.c ****                     star[i].x += 1;
+ 293              		.loc 1 277 40 is_stmt 0 view .LVU92
+ 294 014a 0DEBC402 		add	r2, sp, r4, lsl #3
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s 			page 12
+
+
+ 295 014e 0021     		movs	r1, #0
+ 296 0150 9171     		strb	r1, [r2, #6]
+ 278:Core/Src/test.c ****                 }
+ 297              		.loc 1 278 21 is_stmt 1 view .LVU93
+ 278:Core/Src/test.c ****                 }
+ 298              		.loc 1 278 31 is_stmt 0 view .LVU94
+ 299 0152 0137     		adds	r7, r7, #1
+ 300 0154 2DF83470 		strh	r7, [sp, r4, lsl #3]	@ movhi
+ 301 0158 D7E7     		b	.L10
+ 302              	.L20:
+ 303 015a 00BF     		.align	2
+ 304              	.L19:
+ 305 015c 09040281 		.word	-2130574327
+ 306 0160 ABAAAA2A 		.word	715827883
+ 307              		.cfi_endproc
+ 308              	.LFE69:
+ 310              		.section	.text.ShowWave,"ax",%progbits
+ 311              		.align	1
+ 312              		.global	ShowWave
+ 313              		.syntax unified
+ 314              		.thumb
+ 315              		.thumb_func
+ 316              		.fpu softvfp
+ 318              	ShowWave:
+ 319              	.LFB70:
+ 285:Core/Src/test.c **** 
+ 286:Core/Src/test.c **** void ShowWave(void)
+ 287:Core/Src/test.c **** {
+ 320              		.loc 1 287 1 is_stmt 1 view -0
+ 321              		.cfi_startproc
+ 322              		@ Volatile: function does not return.
+ 323              		@ args = 0, pretend = 0, frame = 0
+ 324              		@ frame_needed = 0, uses_anonymous_args = 0
+ 325              		@ link register save eliminated.
+ 326              	.L22:
+ 288:Core/Src/test.c ****     while (1)
+ 327              		.loc 1 288 5 discriminator 1 view .LVU96
+ 289:Core/Src/test.c ****     {
+ 290:Core/Src/test.c ****     }
+ 328              		.loc 1 290 5 discriminator 1 view .LVU97
+ 288:Core/Src/test.c ****     while (1)
+ 329              		.loc 1 288 11 discriminator 1 view .LVU98
+ 330 0000 FEE7     		b	.L22
+ 331              		.cfi_endproc
+ 332              	.LFE70:
+ 334              		.global	__aeabi_i2d
+ 335              		.global	__aeabi_dmul
+ 336              		.global	__aeabi_ddiv
+ 337              		.global	__aeabi_dadd
+ 338              		.global	__aeabi_d2iz
+ 339              		.section	.text.ShowTest,"ax",%progbits
+ 340              		.align	1
+ 341              		.global	ShowTest
+ 342              		.syntax unified
+ 343              		.thumb
+ 344              		.thumb_func
+ 345              		.fpu softvfp
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s 			page 13
+
+
+ 347              	ShowTest:
+ 348              	.LFB71:
+ 291:Core/Src/test.c **** }
+ 292:Core/Src/test.c **** 
+ 293:Core/Src/test.c **** void ShowTest(void)
+ 294:Core/Src/test.c **** {
+ 349              		.loc 1 294 1 view -0
+ 350              		.cfi_startproc
+ 351              		@ args = 0, pretend = 0, frame = 240
+ 352              		@ frame_needed = 0, uses_anonymous_args = 0
+ 353 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, r10, lr}
+ 354              	.LCFI4:
+ 355              		.cfi_def_cfa_offset 32
+ 356              		.cfi_offset 4, -32
+ 357              		.cfi_offset 5, -28
+ 358              		.cfi_offset 6, -24
+ 359              		.cfi_offset 7, -20
+ 360              		.cfi_offset 8, -16
+ 361              		.cfi_offset 9, -12
+ 362              		.cfi_offset 10, -8
+ 363              		.cfi_offset 14, -4
+ 364 0004 BCB0     		sub	sp, sp, #240
+ 365              	.LCFI5:
+ 366              		.cfi_def_cfa_offset 272
+ 295:Core/Src/test.c ****     int x0 = 63, y0 = 31;
+ 367              		.loc 1 295 5 view .LVU100
+ 368              	.LVL21:
+ 296:Core/Src/test.c ****     unsigned char i = 0, j;
+ 369              		.loc 1 296 5 view .LVU101
+ 297:Core/Src/test.c ****     int n = 1, r = 31, v = 1, count = 0;
+ 370              		.loc 1 297 5 view .LVU102
+ 371              		.loc 1 297 31 is_stmt 0 view .LVU103
+ 372 0006 4FF00008 		mov	r8, #0
+ 373              		.loc 1 297 24 view .LVU104
+ 374 000a 4FF00109 		mov	r9, #1
+ 375              		.loc 1 297 9 view .LVU105
+ 376 000e 4D46     		mov	r5, r9
+ 377 0010 2DE0     		b	.L32
+ 378              	.LVL22:
+ 379              	.L36:
+ 298:Core/Src/test.c ****     int x[30], y[30];
+ 299:Core/Src/test.c **** 
+ 300:Core/Src/test.c ****     while (1)
+ 301:Core/Src/test.c ****     {
+ 302:Core/Src/test.c ****         ClearScreen();
+ 303:Core/Src/test.c ****         for (i = 0; i < n; i++)
+ 304:Core/Src/test.c ****         {
+ 305:Core/Src/test.c ****             x[i] = r * cos(2 * 3.1415926 * i / n) + x0;
+ 306:Core/Src/test.c ****             y[i] = r * sin(2 * 3.1415926 * i / n) + y0;
+ 307:Core/Src/test.c ****         }
+ 308:Core/Src/test.c ****         for (i = 0; i <= n - 2; i++)
+ 380              		.loc 1 308 16 view .LVU106
+ 381 0012 0027     		movs	r7, #0
+ 382 0014 13E0     		b	.L26
+ 383              	.LVL23:
+ 384              	.L28:
+ 309:Core/Src/test.c ****         {
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s 			page 14
+
+
+ 310:Core/Src/test.c ****             for (j = i + 1; j <= n - 1; j++)
+ 311:Core/Src/test.c ****                 DrawLine(x[i], y[i], x[j], y[j]);
+ 385              		.loc 1 311 17 is_stmt 1 discriminator 3 view .LVU107
+ 386 0016 3CAB     		add	r3, sp, #240
+ 387 0018 03EB8402 		add	r2, r3, r4, lsl #2
+ 388 001c 52F8F03C 		ldr	r3, [r2, #-240]
+ 389 0020 52F8782C 		ldr	r2, [r2, #-120]
+ 390 0024 3CA9     		add	r1, sp, #240
+ 391 0026 01EB8600 		add	r0, r1, r6, lsl #2
+ 392 002a 50F8F01C 		ldr	r1, [r0, #-240]
+ 393 002e 50F8780C 		ldr	r0, [r0, #-120]
+ 394 0032 FFF7FEFF 		bl	DrawLine
+ 395              	.LVL24:
+ 310:Core/Src/test.c ****                 DrawLine(x[i], y[i], x[j], y[j]);
+ 396              		.loc 1 310 41 discriminator 3 view .LVU108
+ 310:Core/Src/test.c ****                 DrawLine(x[i], y[i], x[j], y[j]);
+ 397              		.loc 1 310 42 is_stmt 0 discriminator 3 view .LVU109
+ 398 0036 0134     		adds	r4, r4, #1
+ 399              	.LVL25:
+ 310:Core/Src/test.c ****                 DrawLine(x[i], y[i], x[j], y[j]);
+ 400              		.loc 1 310 42 discriminator 3 view .LVU110
+ 401 0038 E4B2     		uxtb	r4, r4
+ 402              	.LVL26:
+ 403              	.L27:
+ 310:Core/Src/test.c ****                 DrawLine(x[i], y[i], x[j], y[j]);
+ 404              		.loc 1 310 29 is_stmt 1 discriminator 1 view .LVU111
+ 310:Core/Src/test.c ****                 DrawLine(x[i], y[i], x[j], y[j]);
+ 405              		.loc 1 310 13 is_stmt 0 discriminator 1 view .LVU112
+ 406 003a AC42     		cmp	r4, r5
+ 407 003c EBDB     		blt	.L28
+ 408              	.LVL27:
+ 409              	.L26:
+ 308:Core/Src/test.c ****         {
+ 410              		.loc 1 308 21 is_stmt 1 discriminator 1 view .LVU113
+ 308:Core/Src/test.c ****         {
+ 411              		.loc 1 308 23 is_stmt 0 discriminator 1 view .LVU114
+ 412 003e 6B1E     		subs	r3, r5, #1
+ 413 0040 3E46     		mov	r6, r7
+ 308:Core/Src/test.c ****         {
+ 414              		.loc 1 308 9 discriminator 1 view .LVU115
+ 415 0042 BB42     		cmp	r3, r7
+ 416 0044 03DD     		ble	.L34
+ 310:Core/Src/test.c ****                 DrawLine(x[i], y[i], x[j], y[j]);
+ 417              		.loc 1 310 13 is_stmt 1 view .LVU116
+ 310:Core/Src/test.c ****                 DrawLine(x[i], y[i], x[j], y[j]);
+ 418              		.loc 1 310 20 is_stmt 0 view .LVU117
+ 419 0046 0137     		adds	r7, r7, #1
+ 420              	.LVL28:
+ 310:Core/Src/test.c ****                 DrawLine(x[i], y[i], x[j], y[j]);
+ 421              		.loc 1 310 20 view .LVU118
+ 422 0048 FFB2     		uxtb	r7, r7
+ 423              	.LVL29:
+ 310:Core/Src/test.c ****                 DrawLine(x[i], y[i], x[j], y[j]);
+ 424              		.loc 1 310 20 view .LVU119
+ 425 004a 3C46     		mov	r4, r7
+ 310:Core/Src/test.c ****                 DrawLine(x[i], y[i], x[j], y[j]);
+ 426              		.loc 1 310 13 view .LVU120
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s 			page 15
+
+
+ 427 004c F5E7     		b	.L27
+ 428              	.LVL30:
+ 429              	.L34:
+ 312:Core/Src/test.c ****         }
+ 313:Core/Src/test.c ****         n += v;
+ 430              		.loc 1 313 9 is_stmt 1 view .LVU121
+ 431              		.loc 1 313 11 is_stmt 0 view .LVU122
+ 432 004e 4D44     		add	r5, r5, r9
+ 433              	.LVL31:
+ 314:Core/Src/test.c ****         if (n == 20 || n == 0)
+ 434              		.loc 1 314 9 is_stmt 1 view .LVU123
+ 435              		.loc 1 314 12 is_stmt 0 view .LVU124
+ 436 0050 142D     		cmp	r5, #20
+ 437 0052 00D0     		beq	.L30
+ 438              		.loc 1 314 21 discriminator 1 view .LVU125
+ 439 0054 0DB9     		cbnz	r5, .L31
+ 440              	.L30:
+ 315:Core/Src/test.c ****             v = -v;
+ 441              		.loc 1 315 13 is_stmt 1 view .LVU126
+ 442              		.loc 1 315 15 is_stmt 0 view .LVU127
+ 443 0056 C9F10009 		rsb	r9, r9, #0
+ 444              	.LVL32:
+ 445              	.L31:
+ 316:Core/Src/test.c ****         HAL_Delay(100);
+ 446              		.loc 1 316 9 is_stmt 1 view .LVU128
+ 447 005a 6420     		movs	r0, #100
+ 448 005c FFF7FEFF 		bl	HAL_Delay
+ 449              	.LVL33:
+ 317:Core/Src/test.c ****         UpdateScreen();
+ 450              		.loc 1 317 9 view .LVU129
+ 451 0060 FFF7FEFF 		bl	UpdateScreen
+ 452              	.LVL34:
+ 318:Core/Src/test.c ****         if (++count == 90)
+ 453              		.loc 1 318 9 view .LVU130
+ 454              		.loc 1 318 12 is_stmt 0 view .LVU131
+ 455 0064 08F10108 		add	r8, r8, #1
+ 456              	.LVL35:
+ 457              		.loc 1 318 12 view .LVU132
+ 458 0068 B8F15A0F 		cmp	r8, #90
+ 459 006c 3DD0     		beq	.L35
+ 460              	.LVL36:
+ 461              	.L32:
+ 298:Core/Src/test.c **** 
+ 462              		.loc 1 298 5 is_stmt 1 view .LVU133
+ 300:Core/Src/test.c ****     {
+ 463              		.loc 1 300 5 view .LVU134
+ 302:Core/Src/test.c ****         for (i = 0; i < n; i++)
+ 464              		.loc 1 302 9 view .LVU135
+ 465 006e FFF7FEFF 		bl	ClearScreen
+ 466              	.LVL37:
+ 303:Core/Src/test.c ****         {
+ 467              		.loc 1 303 9 view .LVU136
+ 303:Core/Src/test.c ****         {
+ 468              		.loc 1 303 16 is_stmt 0 view .LVU137
+ 469 0072 0024     		movs	r4, #0
+ 470              	.LVL38:
+ 471              	.L24:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s 			page 16
+
+
+ 303:Core/Src/test.c ****         {
+ 472              		.loc 1 303 21 is_stmt 1 discriminator 1 view .LVU138
+ 303:Core/Src/test.c ****         {
+ 473              		.loc 1 303 9 is_stmt 0 discriminator 1 view .LVU139
+ 474 0074 AC42     		cmp	r4, r5
+ 475 0076 CCDA     		bge	.L36
+ 305:Core/Src/test.c ****             y[i] = r * sin(2 * 3.1415926 * i / n) + y0;
+ 476              		.loc 1 305 13 is_stmt 1 discriminator 3 view .LVU140
+ 305:Core/Src/test.c ****             y[i] = r * sin(2 * 3.1415926 * i / n) + y0;
+ 477              		.loc 1 305 42 is_stmt 0 discriminator 3 view .LVU141
+ 478 0078 2046     		mov	r0, r4
+ 479 007a FFF7FEFF 		bl	__aeabi_i2d
+ 480              	.LVL39:
+ 481 007e 1CA3     		adr	r3, .L37
+ 482 0080 D3E90023 		ldrd	r2, [r3]
+ 483 0084 FFF7FEFF 		bl	__aeabi_dmul
+ 484              	.LVL40:
+ 485 0088 0646     		mov	r6, r0
+ 486 008a 0F46     		mov	r7, r1
+ 305:Core/Src/test.c ****             y[i] = r * sin(2 * 3.1415926 * i / n) + y0;
+ 487              		.loc 1 305 24 discriminator 3 view .LVU142
+ 488 008c 2846     		mov	r0, r5
+ 489 008e FFF7FEFF 		bl	__aeabi_i2d
+ 490              	.LVL41:
+ 491 0092 0246     		mov	r2, r0
+ 492 0094 0B46     		mov	r3, r1
+ 493 0096 3046     		mov	r0, r6
+ 494 0098 3946     		mov	r1, r7
+ 495 009a FFF7FEFF 		bl	__aeabi_ddiv
+ 496              	.LVL42:
+ 497 009e 0646     		mov	r6, r0
+ 498 00a0 0F46     		mov	r7, r1
+ 499 00a2 FFF7FEFF 		bl	cos
+ 500              	.LVL43:
+ 305:Core/Src/test.c ****             y[i] = r * sin(2 * 3.1415926 * i / n) + y0;
+ 501              		.loc 1 305 22 discriminator 3 view .LVU143
+ 502 00a6 0022     		movs	r2, #0
+ 503 00a8 134B     		ldr	r3, .L37+8
+ 504 00aa FFF7FEFF 		bl	__aeabi_dmul
+ 505              	.LVL44:
+ 305:Core/Src/test.c ****             y[i] = r * sin(2 * 3.1415926 * i / n) + y0;
+ 506              		.loc 1 305 51 discriminator 3 view .LVU144
+ 507 00ae 0022     		movs	r2, #0
+ 508 00b0 124B     		ldr	r3, .L37+12
+ 509 00b2 FFF7FEFF 		bl	__aeabi_dadd
+ 510              	.LVL45:
+ 305:Core/Src/test.c ****             y[i] = r * sin(2 * 3.1415926 * i / n) + y0;
+ 511              		.loc 1 305 18 discriminator 3 view .LVU145
+ 512 00b6 3CAB     		add	r3, sp, #240
+ 513 00b8 03EB840A 		add	r10, r3, r4, lsl #2
+ 514 00bc FFF7FEFF 		bl	__aeabi_d2iz
+ 515              	.LVL46:
+ 516 00c0 4AF8780C 		str	r0, [r10, #-120]
+ 306:Core/Src/test.c ****         }
+ 517              		.loc 1 306 13 is_stmt 1 discriminator 3 view .LVU146
+ 306:Core/Src/test.c ****         }
+ 518              		.loc 1 306 24 is_stmt 0 discriminator 3 view .LVU147
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s 			page 17
+
+
+ 519 00c4 3046     		mov	r0, r6
+ 520 00c6 3946     		mov	r1, r7
+ 521 00c8 FFF7FEFF 		bl	sin
+ 522              	.LVL47:
+ 306:Core/Src/test.c ****         }
+ 523              		.loc 1 306 22 discriminator 3 view .LVU148
+ 524 00cc 0022     		movs	r2, #0
+ 525 00ce 0A4B     		ldr	r3, .L37+8
+ 526 00d0 FFF7FEFF 		bl	__aeabi_dmul
+ 527              	.LVL48:
+ 306:Core/Src/test.c ****         }
+ 528              		.loc 1 306 51 discriminator 3 view .LVU149
+ 529 00d4 0022     		movs	r2, #0
+ 530 00d6 084B     		ldr	r3, .L37+8
+ 531 00d8 FFF7FEFF 		bl	__aeabi_dadd
+ 532              	.LVL49:
+ 306:Core/Src/test.c ****         }
+ 533              		.loc 1 306 18 discriminator 3 view .LVU150
+ 534 00dc FFF7FEFF 		bl	__aeabi_d2iz
+ 535              	.LVL50:
+ 536 00e0 4AF8F00C 		str	r0, [r10, #-240]
+ 303:Core/Src/test.c ****         {
+ 537              		.loc 1 303 28 is_stmt 1 discriminator 3 view .LVU151
+ 303:Core/Src/test.c ****         {
+ 538              		.loc 1 303 29 is_stmt 0 discriminator 3 view .LVU152
+ 539 00e4 0134     		adds	r4, r4, #1
+ 540              	.LVL51:
+ 303:Core/Src/test.c ****         {
+ 541              		.loc 1 303 29 discriminator 3 view .LVU153
+ 542 00e6 E4B2     		uxtb	r4, r4
+ 543              	.LVL52:
+ 303:Core/Src/test.c ****         {
+ 544              		.loc 1 303 29 discriminator 3 view .LVU154
+ 545 00e8 C4E7     		b	.L24
+ 546              	.LVL53:
+ 547              	.L35:
+ 319:Core/Src/test.c ****         {
+ 320:Core/Src/test.c ****             count = 0;
+ 321:Core/Src/test.c ****             return;
+ 322:Core/Src/test.c ****         }
+ 323:Core/Src/test.c ****     }
+ 324:Core/Src/test.c **** }
+ 548              		.loc 1 324 1 view .LVU155
+ 549 00ea 3CB0     		add	sp, sp, #240
+ 550              	.LCFI6:
+ 551              		.cfi_def_cfa_offset 32
+ 552              		@ sp needed
+ 553 00ec BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+ 554              	.LVL54:
+ 555              	.L38:
+ 556              		.loc 1 324 1 view .LVU156
+ 557              		.align	3
+ 558              	.L37:
+ 559 00f0 4AD8124D 		.word	1293080650
+ 560 00f4 FB211940 		.word	1075388923
+ 561 00f8 00003F40 		.word	1077870592
+ 562 00fc 00804F40 		.word	1078951936
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s 			page 18
+
+
+ 563              		.cfi_endproc
+ 564              	.LFE71:
+ 566              		.section	.rodata.demo.str1.4,"aMS",%progbits,1
+ 567              		.align	2
+ 568              	.LC0:
+ 569 0000 74657374 		.ascii	"test\000"
+ 569      00
+ 570              		.global	__aeabi_i2f
+ 571 0005 000000   		.align	2
+ 572              	.LC1:
+ 573 0008 2053686F 		.ascii	" Show End \000"
+ 573      7720456E 
+ 573      642000
+ 574              		.section	.text.demo,"ax",%progbits
+ 575              		.align	1
+ 576              		.global	demo
+ 577              		.syntax unified
+ 578              		.thumb
+ 579              		.thumb_func
+ 580              		.fpu softvfp
+ 582              	demo:
+ 583              	.LFB68:
+  11:Core/Src/test.c ****     int i, j;
+ 584              		.loc 1 11 1 is_stmt 1 view -0
+ 585              		.cfi_startproc
+ 586              		@ args = 0, pretend = 0, frame = 8
+ 587              		@ frame_needed = 0, uses_anonymous_args = 0
+ 588 0000 30B5     		push	{r4, r5, lr}
+ 589              	.LCFI7:
+ 590              		.cfi_def_cfa_offset 12
+ 591              		.cfi_offset 4, -12
+ 592              		.cfi_offset 5, -8
+ 593              		.cfi_offset 14, -4
+ 594 0002 85B0     		sub	sp, sp, #20
+ 595              	.LCFI8:
+ 596              		.cfi_def_cfa_offset 32
+  12:Core/Src/test.c ****     //demo—› æ
+ 597              		.loc 1 12 5 view .LVU158
+  14:Core/Src/test.c ****     DrawBitmap(0, 0, TempLogo, 128, 64);
+ 598              		.loc 1 14 5 view .LVU159
+ 599 0004 FFF7FEFF 		bl	ClearScreen
+ 600              	.LVL55:
+  15:Core/Src/test.c ****     UpdateScreen();
+ 601              		.loc 1 15 5 view .LVU160
+ 602 0008 4023     		movs	r3, #64
+ 603 000a 0093     		str	r3, [sp]
+ 604 000c 8023     		movs	r3, #128
+ 605 000e DA4A     		ldr	r2, .L76
+ 606 0010 0021     		movs	r1, #0
+ 607 0012 0846     		mov	r0, r1
+ 608 0014 FFF7FEFF 		bl	DrawBitmap
+ 609              	.LVL56:
+  16:Core/Src/test.c ****     HAL_Delay(2000);
+ 610              		.loc 1 16 5 view .LVU161
+ 611 0018 FFF7FEFF 		bl	UpdateScreen
+ 612              	.LVL57:
+  17:Core/Src/test.c **** 
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s 			page 19
+
+
+ 613              		.loc 1 17 5 view .LVU162
+ 614 001c 4FF4FA60 		mov	r0, #2000
+ 615 0020 FFF7FEFF 		bl	HAL_Delay
+ 616              	.LVL58:
+  20:Core/Src/test.c ****     SetFontSize(1);
+ 617              		.loc 1 20 5 view .LVU163
+ 618 0024 FFF7FEFF 		bl	ClearScreen
+ 619              	.LVL59:
+  21:Core/Src/test.c ****     DrawString(0, 0, "test");
+ 620              		.loc 1 21 5 view .LVU164
+ 621 0028 0120     		movs	r0, #1
+ 622 002a FFF7FEFF 		bl	SetFontSize
+ 623              	.LVL60:
+  22:Core/Src/test.c ****     UpdateScreen();
+ 624              		.loc 1 22 5 view .LVU165
+ 625 002e D34C     		ldr	r4, .L76+4
+ 626 0030 2246     		mov	r2, r4
+ 627 0032 0021     		movs	r1, #0
+ 628 0034 0846     		mov	r0, r1
+ 629 0036 FFF7FEFF 		bl	DrawString
+ 630              	.LVL61:
+  23:Core/Src/test.c ****     HAL_Delay(1000);
+ 631              		.loc 1 23 5 view .LVU166
+ 632 003a FFF7FEFF 		bl	UpdateScreen
+ 633              	.LVL62:
+  24:Core/Src/test.c **** 
+ 634              		.loc 1 24 5 view .LVU167
+ 635 003e 4FF47A70 		mov	r0, #1000
+ 636 0042 FFF7FEFF 		bl	HAL_Delay
+ 637              	.LVL63:
+  26:Core/Src/test.c ****     DrawString(0, 8, "test");
+ 638              		.loc 1 26 5 view .LVU168
+ 639 0046 0220     		movs	r0, #2
+ 640 0048 FFF7FEFF 		bl	SetFontSize
+ 641              	.LVL64:
+  27:Core/Src/test.c ****     UpdateScreen();
+ 642              		.loc 1 27 5 view .LVU169
+ 643 004c 2246     		mov	r2, r4
+ 644 004e 0821     		movs	r1, #8
+ 645 0050 0020     		movs	r0, #0
+ 646 0052 FFF7FEFF 		bl	DrawString
+ 647              	.LVL65:
+  28:Core/Src/test.c ****     HAL_Delay(1000);
+ 648              		.loc 1 28 5 view .LVU170
+ 649 0056 FFF7FEFF 		bl	UpdateScreen
+ 650              	.LVL66:
+  29:Core/Src/test.c **** 
+ 651              		.loc 1 29 5 view .LVU171
+ 652 005a 4FF47A70 		mov	r0, #1000
+ 653 005e FFF7FEFF 		bl	HAL_Delay
+ 654              	.LVL67:
+  31:Core/Src/test.c ****     DrawString(0, 24, "test");
+ 655              		.loc 1 31 5 view .LVU172
+ 656 0062 0320     		movs	r0, #3
+ 657 0064 FFF7FEFF 		bl	SetFontSize
+ 658              	.LVL68:
+  32:Core/Src/test.c ****     UpdateScreen();
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s 			page 20
+
+
+ 659              		.loc 1 32 5 view .LVU173
+ 660 0068 2246     		mov	r2, r4
+ 661 006a 1821     		movs	r1, #24
+ 662 006c 0020     		movs	r0, #0
+ 663 006e FFF7FEFF 		bl	DrawString
+ 664              	.LVL69:
+  33:Core/Src/test.c ****     HAL_Delay(1000);
+ 665              		.loc 1 33 5 view .LVU174
+ 666 0072 FFF7FEFF 		bl	UpdateScreen
+ 667              	.LVL70:
+  34:Core/Src/test.c **** 
+ 668              		.loc 1 34 5 view .LVU175
+ 669 0076 4FF47A70 		mov	r0, #1000
+ 670 007a FFF7FEFF 		bl	HAL_Delay
+ 671              	.LVL71:
+  37:Core/Src/test.c ****     for (i = 0; i < 20; i++)
+ 672              		.loc 1 37 5 view .LVU176
+ 673 007e FFF7FEFF 		bl	ClearScreen
+ 674              	.LVL72:
+  38:Core/Src/test.c ****     {
+ 675              		.loc 1 38 5 view .LVU177
+  38:Core/Src/test.c ****     {
+ 676              		.loc 1 38 12 is_stmt 0 view .LVU178
+ 677 0082 0024     		movs	r4, #0
+  38:Core/Src/test.c ****     {
+ 678              		.loc 1 38 5 view .LVU179
+ 679 0084 0DE0     		b	.L40
+ 680              	.LVL73:
+ 681              	.L41:
+  40:Core/Src/test.c ****         UpdateScreen();
+ 682              		.loc 1 40 9 is_stmt 1 discriminator 3 view .LVU180
+ 683 0086 04EB8403 		add	r3, r4, r4, lsl #2
+ 684 008a 5A00     		lsls	r2, r3, #1
+ 685 008c 3F23     		movs	r3, #63
+ 686 008e 0021     		movs	r1, #0
+ 687 0090 0846     		mov	r0, r1
+ 688 0092 FFF7FEFF 		bl	DrawLine
+ 689              	.LVL74:
+  41:Core/Src/test.c ****         HAL_Delay(100);
+ 690              		.loc 1 41 9 discriminator 3 view .LVU181
+ 691 0096 FFF7FEFF 		bl	UpdateScreen
+ 692              	.LVL75:
+  42:Core/Src/test.c ****     }
+ 693              		.loc 1 42 9 discriminator 3 view .LVU182
+ 694 009a 6420     		movs	r0, #100
+ 695 009c FFF7FEFF 		bl	HAL_Delay
+ 696              	.LVL76:
+  38:Core/Src/test.c ****     {
+ 697              		.loc 1 38 25 discriminator 3 view .LVU183
+  38:Core/Src/test.c ****     {
+ 698              		.loc 1 38 26 is_stmt 0 discriminator 3 view .LVU184
+ 699 00a0 0134     		adds	r4, r4, #1
+ 700              	.LVL77:
+ 701              	.L40:
+  38:Core/Src/test.c ****     {
+ 702              		.loc 1 38 17 is_stmt 1 discriminator 1 view .LVU185
+  38:Core/Src/test.c ****     {
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s 			page 21
+
+
+ 703              		.loc 1 38 5 is_stmt 0 discriminator 1 view .LVU186
+ 704 00a2 132C     		cmp	r4, #19
+ 705 00a4 EFDD     		ble	.L41
+  44:Core/Src/test.c ****     {
+ 706              		.loc 1 44 12 view .LVU187
+ 707 00a6 0024     		movs	r4, #0
+ 708              	.LVL78:
+  44:Core/Src/test.c ****     {
+ 709              		.loc 1 44 12 view .LVU188
+ 710 00a8 0FE0     		b	.L42
+ 711              	.LVL79:
+ 712              	.L43:
+  46:Core/Src/test.c ****         UpdateScreen();
+ 713              		.loc 1 46 9 is_stmt 1 discriminator 3 view .LVU189
+  46:Core/Src/test.c ****         UpdateScreen();
+ 714              		.loc 1 46 34 is_stmt 0 discriminator 3 view .LVU190
+ 715 00aa 6FF00902 		mvn	r2, #9
+ 716 00ae 02FB04F2 		mul	r2, r2, r4
+  46:Core/Src/test.c ****         UpdateScreen();
+ 717              		.loc 1 46 9 discriminator 3 view .LVU191
+ 718 00b2 3F23     		movs	r3, #63
+ 719 00b4 8032     		adds	r2, r2, #128
+ 720 00b6 0021     		movs	r1, #0
+ 721 00b8 8020     		movs	r0, #128
+ 722 00ba FFF7FEFF 		bl	DrawLine
+ 723              	.LVL80:
+  47:Core/Src/test.c ****         HAL_Delay(100);
+ 724              		.loc 1 47 9 is_stmt 1 discriminator 3 view .LVU192
+ 725 00be FFF7FEFF 		bl	UpdateScreen
+ 726              	.LVL81:
+  48:Core/Src/test.c ****     }
+ 727              		.loc 1 48 9 discriminator 3 view .LVU193
+ 728 00c2 6420     		movs	r0, #100
+ 729 00c4 FFF7FEFF 		bl	HAL_Delay
+ 730              	.LVL82:
+  44:Core/Src/test.c ****     {
+ 731              		.loc 1 44 25 discriminator 3 view .LVU194
+  44:Core/Src/test.c ****     {
+ 732              		.loc 1 44 26 is_stmt 0 discriminator 3 view .LVU195
+ 733 00c8 0134     		adds	r4, r4, #1
+ 734              	.LVL83:
+ 735              	.L42:
+  44:Core/Src/test.c ****     {
+ 736              		.loc 1 44 17 is_stmt 1 discriminator 1 view .LVU196
+  44:Core/Src/test.c ****     {
+ 737              		.loc 1 44 5 is_stmt 0 discriminator 1 view .LVU197
+ 738 00ca 132C     		cmp	r4, #19
+ 739 00cc EDDD     		ble	.L43
+  50:Core/Src/test.c **** 
+ 740              		.loc 1 50 5 is_stmt 1 view .LVU198
+ 741 00ce 4FF47A70 		mov	r0, #1000
+ 742 00d2 FFF7FEFF 		bl	HAL_Delay
+ 743              	.LVL84:
+  54:Core/Src/test.c ****     {
+ 744              		.loc 1 54 5 view .LVU199
+  54:Core/Src/test.c ****     {
+ 745              		.loc 1 54 12 is_stmt 0 view .LVU200
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s 			page 22
+
+
+ 746 00d6 0025     		movs	r5, #0
+  54:Core/Src/test.c ****     {
+ 747              		.loc 1 54 5 view .LVU201
+ 748 00d8 33E0     		b	.L44
+ 749              	.LVL85:
+ 750              	.L72:
+  57:Core/Src/test.c ****         for (i = 0; i < 31; i += 2)
+ 751              		.loc 1 57 13 is_stmt 1 view .LVU202
+ 752 00da FFF7FEFF 		bl	ClearScreen
+ 753              	.LVL86:
+ 754 00de 34E0     		b	.L45
+ 755              	.L47:
+  60:Core/Src/test.c ****             UpdateScreen();
+ 756              		.loc 1 60 13 discriminator 3 view .LVU203
+  60:Core/Src/test.c ****             UpdateScreen();
+ 757              		.loc 1 60 37 is_stmt 0 discriminator 3 view .LVU204
+ 758 00e0 C4F12002 		rsb	r2, r4, #32
+  60:Core/Src/test.c ****             UpdateScreen();
+ 759              		.loc 1 60 13 discriminator 3 view .LVU205
+ 760 00e4 5300     		lsls	r3, r2, #1
+ 761 00e6 9200     		lsls	r2, r2, #2
+ 762 00e8 2146     		mov	r1, r4
+ 763 00ea 6000     		lsls	r0, r4, #1
+ 764 00ec FFF7FEFF 		bl	DrawRect2
+ 765              	.LVL87:
+  61:Core/Src/test.c ****             HAL_Delay(100);
+ 766              		.loc 1 61 13 is_stmt 1 discriminator 3 view .LVU206
+ 767 00f0 FFF7FEFF 		bl	UpdateScreen
+ 768              	.LVL88:
+  62:Core/Src/test.c ****         }
+ 769              		.loc 1 62 13 discriminator 3 view .LVU207
+ 770 00f4 6420     		movs	r0, #100
+ 771 00f6 FFF7FEFF 		bl	HAL_Delay
+ 772              	.LVL89:
+  58:Core/Src/test.c ****         {
+ 773              		.loc 1 58 29 discriminator 3 view .LVU208
+  58:Core/Src/test.c ****         {
+ 774              		.loc 1 58 31 is_stmt 0 discriminator 3 view .LVU209
+ 775 00fa 0234     		adds	r4, r4, #2
+ 776              	.LVL90:
+ 777              	.L46:
+  58:Core/Src/test.c ****         {
+ 778              		.loc 1 58 21 is_stmt 1 discriminator 1 view .LVU210
+  58:Core/Src/test.c ****         {
+ 779              		.loc 1 58 9 is_stmt 0 discriminator 1 view .LVU211
+ 780 00fc 1E2C     		cmp	r4, #30
+ 781 00fe EFDD     		ble	.L47
+  64:Core/Src/test.c ****             ClearScreen();
+ 782              		.loc 1 64 9 is_stmt 1 view .LVU212
+  64:Core/Src/test.c ****             ClearScreen();
+ 783              		.loc 1 64 12 is_stmt 0 view .LVU213
+ 784 0100 2DB1     		cbz	r5, .L70
+ 785              	.L48:
+  66:Core/Src/test.c ****         for (i = 31; i > 0; i -= 2)
+ 786              		.loc 1 66 9 is_stmt 1 view .LVU214
+ 787 0102 4FF4FA70 		mov	r0, #500
+ 788 0106 FFF7FEFF 		bl	HAL_Delay
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s 			page 23
+
+
+ 789              	.LVL91:
+  67:Core/Src/test.c ****         {
+ 790              		.loc 1 67 9 view .LVU215
+  67:Core/Src/test.c ****         {
+ 791              		.loc 1 67 16 is_stmt 0 view .LVU216
+ 792 010a 1F24     		movs	r4, #31
+  67:Core/Src/test.c ****         {
+ 793              		.loc 1 67 9 view .LVU217
+ 794 010c 10E0     		b	.L49
+ 795              	.LVL92:
+ 796              	.L70:
+  65:Core/Src/test.c ****         HAL_Delay(500);
+ 797              		.loc 1 65 13 is_stmt 1 view .LVU218
+ 798 010e FFF7FEFF 		bl	ClearScreen
+ 799              	.LVL93:
+ 800 0112 F6E7     		b	.L48
+ 801              	.L50:
+  69:Core/Src/test.c ****             UpdateScreen();
+ 802              		.loc 1 69 13 discriminator 3 view .LVU219
+  69:Core/Src/test.c ****             UpdateScreen();
+ 803              		.loc 1 69 41 is_stmt 0 discriminator 3 view .LVU220
+ 804 0114 C4F12002 		rsb	r2, r4, #32
+  69:Core/Src/test.c ****             UpdateScreen();
+ 805              		.loc 1 69 13 discriminator 3 view .LVU221
+ 806 0118 5300     		lsls	r3, r2, #1
+ 807 011a 9200     		lsls	r2, r2, #2
+ 808 011c 2146     		mov	r1, r4
+ 809 011e 6000     		lsls	r0, r4, #1
+ 810 0120 FFF7FEFF 		bl	DrawFillRect2
+ 811              	.LVL94:
+  70:Core/Src/test.c ****             HAL_Delay(100);
+ 812              		.loc 1 70 13 is_stmt 1 discriminator 3 view .LVU222
+ 813 0124 FFF7FEFF 		bl	UpdateScreen
+ 814              	.LVL95:
+  71:Core/Src/test.c ****         }
+ 815              		.loc 1 71 13 discriminator 3 view .LVU223
+ 816 0128 6420     		movs	r0, #100
+ 817 012a FFF7FEFF 		bl	HAL_Delay
+ 818              	.LVL96:
+  67:Core/Src/test.c ****         {
+ 819              		.loc 1 67 29 discriminator 3 view .LVU224
+  67:Core/Src/test.c ****         {
+ 820              		.loc 1 67 31 is_stmt 0 discriminator 3 view .LVU225
+ 821 012e 023C     		subs	r4, r4, #2
+ 822              	.LVL97:
+ 823              	.L49:
+  67:Core/Src/test.c ****         {
+ 824              		.loc 1 67 22 is_stmt 1 discriminator 1 view .LVU226
+  67:Core/Src/test.c ****         {
+ 825              		.loc 1 67 9 is_stmt 0 discriminator 1 view .LVU227
+ 826 0130 002C     		cmp	r4, #0
+ 827 0132 EFDC     		bgt	.L50
+  73:Core/Src/test.c ****         SetFillcolor(pix_black);
+ 828              		.loc 1 73 9 is_stmt 1 discriminator 2 view .LVU228
+ 829 0134 0020     		movs	r0, #0
+ 830 0136 FFF7FEFF 		bl	SetDrawColor
+ 831              	.LVL98:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s 			page 24
+
+
+  74:Core/Src/test.c ****     }
+ 832              		.loc 1 74 9 discriminator 2 view .LVU229
+ 833 013a 0020     		movs	r0, #0
+ 834 013c FFF7FEFF 		bl	SetFillcolor
+ 835              	.LVL99:
+  54:Core/Src/test.c ****     {
+ 836              		.loc 1 54 24 discriminator 2 view .LVU230
+  54:Core/Src/test.c ****     {
+ 837              		.loc 1 54 25 is_stmt 0 discriminator 2 view .LVU231
+ 838 0140 0135     		adds	r5, r5, #1
+ 839              	.LVL100:
+ 840              	.L44:
+  54:Core/Src/test.c ****     {
+ 841              		.loc 1 54 17 is_stmt 1 discriminator 1 view .LVU232
+  54:Core/Src/test.c ****     {
+ 842              		.loc 1 54 5 is_stmt 0 discriminator 1 view .LVU233
+ 843 0142 012D     		cmp	r5, #1
+ 844 0144 03DC     		bgt	.L71
+  56:Core/Src/test.c ****             ClearScreen();
+ 845              		.loc 1 56 9 is_stmt 1 view .LVU234
+  56:Core/Src/test.c ****             ClearScreen();
+ 846              		.loc 1 56 12 is_stmt 0 view .LVU235
+ 847 0146 002D     		cmp	r5, #0
+ 848 0148 C7D0     		beq	.L72
+ 849              	.L45:
+  44:Core/Src/test.c ****     {
+ 850              		.loc 1 44 12 discriminator 1 view .LVU236
+ 851 014a 0024     		movs	r4, #0
+ 852              	.LVL101:
+  44:Core/Src/test.c ****     {
+ 853              		.loc 1 44 12 discriminator 1 view .LVU237
+ 854 014c D6E7     		b	.L46
+ 855              	.LVL102:
+ 856              	.L71:
+  76:Core/Src/test.c ****     SetFillcolor(pix_white);
+ 857              		.loc 1 76 5 is_stmt 1 view .LVU238
+ 858 014e 0120     		movs	r0, #1
+ 859 0150 FFF7FEFF 		bl	SetDrawColor
+ 860              	.LVL103:
+  77:Core/Src/test.c **** 
+ 861              		.loc 1 77 5 view .LVU239
+ 862 0154 0120     		movs	r0, #1
+ 863 0156 FFF7FEFF 		bl	SetFillcolor
+ 864              	.LVL104:
+  80:Core/Src/test.c ****     {
+ 865              		.loc 1 80 5 view .LVU240
+  80:Core/Src/test.c ****     {
+ 866              		.loc 1 80 12 is_stmt 0 view .LVU241
+ 867 015a 0025     		movs	r5, #0
+  80:Core/Src/test.c ****     {
+ 868              		.loc 1 80 5 view .LVU242
+ 869 015c 41E0     		b	.L52
+ 870              	.LVL105:
+ 871              	.L75:
+  83:Core/Src/test.c ****         for (i = 0; i < 31; i += 2)
+ 872              		.loc 1 83 13 is_stmt 1 view .LVU243
+ 873 015e FFF7FEFF 		bl	ClearScreen
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s 			page 25
+
+
+ 874              	.LVL106:
+ 875 0162 42E0     		b	.L53
+ 876              	.L55:
+  86:Core/Src/test.c ****             UpdateScreen();
+ 877              		.loc 1 86 13 discriminator 3 view .LVU244
+  86:Core/Src/test.c ****             UpdateScreen();
+ 878              		.loc 1 86 41 is_stmt 0 discriminator 3 view .LVU245
+ 879 0164 C4F12002 		rsb	r2, r4, #32
+  86:Core/Src/test.c ****             UpdateScreen();
+ 880              		.loc 1 86 13 discriminator 3 view .LVU246
+ 881 0168 D2B2     		uxtb	r2, r2
+ 882 016a 5300     		lsls	r3, r2, #1
+ 883 016c 9200     		lsls	r2, r2, #2
+ 884 016e 0221     		movs	r1, #2
+ 885 0170 0091     		str	r1, [sp]
+ 886 0172 03F0FE03 		and	r3, r3, #254
+ 887 0176 02F0FC02 		and	r2, r2, #252
+ 888 017a 2146     		mov	r1, r4
+ 889 017c 6000     		lsls	r0, r4, #1
+ 890 017e FFF7FEFF 		bl	DrawRoundRect
+ 891              	.LVL107:
+  87:Core/Src/test.c ****             HAL_Delay(100);
+ 892              		.loc 1 87 13 is_stmt 1 discriminator 3 view .LVU247
+ 893 0182 FFF7FEFF 		bl	UpdateScreen
+ 894              	.LVL108:
+  88:Core/Src/test.c ****         }
+ 895              		.loc 1 88 13 discriminator 3 view .LVU248
+ 896 0186 6420     		movs	r0, #100
+ 897 0188 FFF7FEFF 		bl	HAL_Delay
+ 898              	.LVL109:
+  84:Core/Src/test.c ****         {
+ 899              		.loc 1 84 29 discriminator 3 view .LVU249
+  84:Core/Src/test.c ****         {
+ 900              		.loc 1 84 31 is_stmt 0 discriminator 3 view .LVU250
+ 901 018c 0234     		adds	r4, r4, #2
+ 902              	.LVL110:
+ 903              	.L54:
+  84:Core/Src/test.c ****         {
+ 904              		.loc 1 84 21 is_stmt 1 discriminator 1 view .LVU251
+  84:Core/Src/test.c ****         {
+ 905              		.loc 1 84 9 is_stmt 0 discriminator 1 view .LVU252
+ 906 018e 1E2C     		cmp	r4, #30
+ 907 0190 E8DD     		ble	.L55
+  90:Core/Src/test.c ****             ClearScreen();
+ 908              		.loc 1 90 9 is_stmt 1 view .LVU253
+  90:Core/Src/test.c ****             ClearScreen();
+ 909              		.loc 1 90 12 is_stmt 0 view .LVU254
+ 910 0192 2DB1     		cbz	r5, .L73
+ 911              	.L56:
+  92:Core/Src/test.c ****         for (i = 31; i > 2; i -= 2)
+ 912              		.loc 1 92 9 is_stmt 1 view .LVU255
+ 913 0194 4FF4FA70 		mov	r0, #500
+ 914 0198 FFF7FEFF 		bl	HAL_Delay
+ 915              	.LVL111:
+  93:Core/Src/test.c ****         {
+ 916              		.loc 1 93 9 view .LVU256
+  93:Core/Src/test.c ****         {
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s 			page 26
+
+
+ 917              		.loc 1 93 16 is_stmt 0 view .LVU257
+ 918 019c 1F24     		movs	r4, #31
+  93:Core/Src/test.c ****         {
+ 919              		.loc 1 93 9 view .LVU258
+ 920 019e 17E0     		b	.L57
+ 921              	.LVL112:
+ 922              	.L73:
+  91:Core/Src/test.c ****         HAL_Delay(500);
+ 923              		.loc 1 91 13 is_stmt 1 view .LVU259
+ 924 01a0 FFF7FEFF 		bl	ClearScreen
+ 925              	.LVL113:
+ 926 01a4 F6E7     		b	.L56
+ 927              	.L58:
+  95:Core/Src/test.c ****             UpdateScreen();
+ 928              		.loc 1 95 13 discriminator 3 view .LVU260
+  95:Core/Src/test.c ****             UpdateScreen();
+ 929              		.loc 1 95 45 is_stmt 0 discriminator 3 view .LVU261
+ 930 01a6 C4F12002 		rsb	r2, r4, #32
+  95:Core/Src/test.c ****             UpdateScreen();
+ 931              		.loc 1 95 13 discriminator 3 view .LVU262
+ 932 01aa D2B2     		uxtb	r2, r2
+ 933 01ac 5300     		lsls	r3, r2, #1
+ 934 01ae 9200     		lsls	r2, r2, #2
+ 935 01b0 0221     		movs	r1, #2
+ 936 01b2 0091     		str	r1, [sp]
+ 937 01b4 03F0FE03 		and	r3, r3, #254
+ 938 01b8 02F0FC02 		and	r2, r2, #252
+ 939 01bc 2146     		mov	r1, r4
+ 940 01be 6000     		lsls	r0, r4, #1
+ 941 01c0 FFF7FEFF 		bl	DrawfillRoundRect
+ 942              	.LVL114:
+  96:Core/Src/test.c ****             HAL_Delay(100);
+ 943              		.loc 1 96 13 is_stmt 1 discriminator 3 view .LVU263
+ 944 01c4 FFF7FEFF 		bl	UpdateScreen
+ 945              	.LVL115:
+  97:Core/Src/test.c ****         }
+ 946              		.loc 1 97 13 discriminator 3 view .LVU264
+ 947 01c8 6420     		movs	r0, #100
+ 948 01ca FFF7FEFF 		bl	HAL_Delay
+ 949              	.LVL116:
+  93:Core/Src/test.c ****         {
+ 950              		.loc 1 93 29 discriminator 3 view .LVU265
+  93:Core/Src/test.c ****         {
+ 951              		.loc 1 93 31 is_stmt 0 discriminator 3 view .LVU266
+ 952 01ce 023C     		subs	r4, r4, #2
+ 953              	.LVL117:
+ 954              	.L57:
+  93:Core/Src/test.c ****         {
+ 955              		.loc 1 93 22 is_stmt 1 discriminator 1 view .LVU267
+  93:Core/Src/test.c ****         {
+ 956              		.loc 1 93 9 is_stmt 0 discriminator 1 view .LVU268
+ 957 01d0 022C     		cmp	r4, #2
+ 958 01d2 E8DC     		bgt	.L58
+  99:Core/Src/test.c ****         SetFillcolor(pix_black);
+ 959              		.loc 1 99 9 is_stmt 1 discriminator 2 view .LVU269
+ 960 01d4 0020     		movs	r0, #0
+ 961 01d6 FFF7FEFF 		bl	SetDrawColor
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s 			page 27
+
+
+ 962              	.LVL118:
+ 100:Core/Src/test.c ****     }
+ 963              		.loc 1 100 9 discriminator 2 view .LVU270
+ 964 01da 0020     		movs	r0, #0
+ 965 01dc FFF7FEFF 		bl	SetFillcolor
+ 966              	.LVL119:
+  80:Core/Src/test.c ****     {
+ 967              		.loc 1 80 24 discriminator 2 view .LVU271
+  80:Core/Src/test.c ****     {
+ 968              		.loc 1 80 25 is_stmt 0 discriminator 2 view .LVU272
+ 969 01e0 0135     		adds	r5, r5, #1
+ 970              	.LVL120:
+ 971              	.L52:
+  80:Core/Src/test.c ****     {
+ 972              		.loc 1 80 17 is_stmt 1 discriminator 1 view .LVU273
+  80:Core/Src/test.c ****     {
+ 973              		.loc 1 80 5 is_stmt 0 discriminator 1 view .LVU274
+ 974 01e2 012D     		cmp	r5, #1
+ 975 01e4 03DC     		bgt	.L74
+  82:Core/Src/test.c ****             ClearScreen();
+ 976              		.loc 1 82 9 is_stmt 1 view .LVU275
+  82:Core/Src/test.c ****             ClearScreen();
+ 977              		.loc 1 82 12 is_stmt 0 view .LVU276
+ 978 01e6 002D     		cmp	r5, #0
+ 979 01e8 B9D0     		beq	.L75
+ 980              	.L53:
+  54:Core/Src/test.c ****     {
+ 981              		.loc 1 54 12 discriminator 1 view .LVU277
+ 982 01ea 0024     		movs	r4, #0
+ 983              	.LVL121:
+  54:Core/Src/test.c ****     {
+ 984              		.loc 1 54 12 discriminator 1 view .LVU278
+ 985 01ec CFE7     		b	.L54
+ 986              	.LVL122:
+ 987              	.L74:
+ 102:Core/Src/test.c ****     SetFillcolor(pix_white);
+ 988              		.loc 1 102 5 is_stmt 1 view .LVU279
+ 989 01ee 0120     		movs	r0, #1
+ 990 01f0 FFF7FEFF 		bl	SetDrawColor
+ 991              	.LVL123:
+ 103:Core/Src/test.c **** 
+ 992              		.loc 1 103 5 view .LVU280
+ 993 01f4 0120     		movs	r0, #1
+ 994 01f6 FFF7FEFF 		bl	SetFillcolor
+ 995              	.LVL124:
+ 106:Core/Src/test.c ****     DrawEllipse(63, 31, 63, 31);
+ 996              		.loc 1 106 5 view .LVU281
+ 997 01fa FFF7FEFF 		bl	ClearScreen
+ 998              	.LVL125:
+ 107:Core/Src/test.c ****     UpdateScreen();
+ 999              		.loc 1 107 5 view .LVU282
+ 1000 01fe 1F23     		movs	r3, #31
+ 1001 0200 3F22     		movs	r2, #63
+ 1002 0202 1946     		mov	r1, r3
+ 1003 0204 1046     		mov	r0, r2
+ 1004 0206 FFF7FEFF 		bl	DrawEllipse
+ 1005              	.LVL126:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s 			page 28
+
+
+ 108:Core/Src/test.c ****     HAL_Delay(1000);
+ 1006              		.loc 1 108 5 view .LVU283
+ 1007 020a FFF7FEFF 		bl	UpdateScreen
+ 1008              	.LVL127:
+ 109:Core/Src/test.c ****     ClearScreen();
+ 1009              		.loc 1 109 5 view .LVU284
+ 1010 020e 4FF47A70 		mov	r0, #1000
+ 1011 0212 FFF7FEFF 		bl	HAL_Delay
+ 1012              	.LVL128:
+ 110:Core/Src/test.c ****     DrawEllipse(63, 31, 16, 31);
+ 1013              		.loc 1 110 5 view .LVU285
+ 1014 0216 FFF7FEFF 		bl	ClearScreen
+ 1015              	.LVL129:
+ 111:Core/Src/test.c ****     UpdateScreen();
+ 1016              		.loc 1 111 5 view .LVU286
+ 1017 021a 1F23     		movs	r3, #31
+ 1018 021c 1022     		movs	r2, #16
+ 1019 021e 1946     		mov	r1, r3
+ 1020 0220 3F20     		movs	r0, #63
+ 1021 0222 FFF7FEFF 		bl	DrawEllipse
+ 1022              	.LVL130:
+ 112:Core/Src/test.c ****     HAL_Delay(1000);
+ 1023              		.loc 1 112 5 view .LVU287
+ 1024 0226 FFF7FEFF 		bl	UpdateScreen
+ 1025              	.LVL131:
+ 113:Core/Src/test.c ****     ClearScreen();
+ 1026              		.loc 1 113 5 view .LVU288
+ 1027 022a 4FF47A70 		mov	r0, #1000
+ 1028 022e FFF7FEFF 		bl	HAL_Delay
+ 1029              	.LVL132:
+ 114:Core/Src/test.c ****     DrawFillEllipse(63, 31, 63, 31);
+ 1030              		.loc 1 114 5 view .LVU289
+ 1031 0232 FFF7FEFF 		bl	ClearScreen
+ 1032              	.LVL133:
+ 115:Core/Src/test.c ****     UpdateScreen();
+ 1033              		.loc 1 115 5 view .LVU290
+ 1034 0236 1F23     		movs	r3, #31
+ 1035 0238 3F22     		movs	r2, #63
+ 1036 023a 1946     		mov	r1, r3
+ 1037 023c 1046     		mov	r0, r2
+ 1038 023e FFF7FEFF 		bl	DrawFillEllipse
+ 1039              	.LVL134:
+ 116:Core/Src/test.c ****     HAL_Delay(1000);
+ 1040              		.loc 1 116 5 view .LVU291
+ 1041 0242 FFF7FEFF 		bl	UpdateScreen
+ 1042              	.LVL135:
+ 117:Core/Src/test.c ****     ClearScreen();
+ 1043              		.loc 1 117 5 view .LVU292
+ 1044 0246 4FF47A70 		mov	r0, #1000
+ 1045 024a FFF7FEFF 		bl	HAL_Delay
+ 1046              	.LVL136:
+ 118:Core/Src/test.c ****     DrawFillEllipse(63, 31, 16, 31);
+ 1047              		.loc 1 118 5 view .LVU293
+ 1048 024e FFF7FEFF 		bl	ClearScreen
+ 1049              	.LVL137:
+ 119:Core/Src/test.c ****     UpdateScreen();
+ 1050              		.loc 1 119 5 view .LVU294
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s 			page 29
+
+
+ 1051 0252 1F23     		movs	r3, #31
+ 1052 0254 1022     		movs	r2, #16
+ 1053 0256 1946     		mov	r1, r3
+ 1054 0258 3F20     		movs	r0, #63
+ 1055 025a FFF7FEFF 		bl	DrawFillEllipse
+ 1056              	.LVL138:
+ 120:Core/Src/test.c ****     HAL_Delay(1000);
+ 1057              		.loc 1 120 5 view .LVU295
+ 1058 025e FFF7FEFF 		bl	UpdateScreen
+ 1059              	.LVL139:
+ 121:Core/Src/test.c ****     //‘≤
+ 1060              		.loc 1 121 5 view .LVU296
+ 1061 0262 4FF47A70 		mov	r0, #1000
+ 1062 0266 FFF7FEFF 		bl	HAL_Delay
+ 1063              	.LVL140:
+ 123:Core/Src/test.c ****     DrawCircle(63, 31, 30);
+ 1064              		.loc 1 123 5 view .LVU297
+ 1065 026a FFF7FEFF 		bl	ClearScreen
+ 1066              	.LVL141:
+ 124:Core/Src/test.c ****     UpdateScreen();
+ 1067              		.loc 1 124 5 view .LVU298
+ 1068 026e 1E22     		movs	r2, #30
+ 1069 0270 1F21     		movs	r1, #31
+ 1070 0272 3F20     		movs	r0, #63
+ 1071 0274 FFF7FEFF 		bl	DrawCircle
+ 1072              	.LVL142:
+ 125:Core/Src/test.c ****     HAL_Delay(1000);
+ 1073              		.loc 1 125 5 view .LVU299
+ 1074 0278 FFF7FEFF 		bl	UpdateScreen
+ 1075              	.LVL143:
+ 126:Core/Src/test.c ****     ClearScreen();
+ 1076              		.loc 1 126 5 view .LVU300
+ 1077 027c 4FF47A70 		mov	r0, #1000
+ 1078 0280 FFF7FEFF 		bl	HAL_Delay
+ 1079              	.LVL144:
+ 127:Core/Src/test.c ****     DrawFillCircle(63, 31, 30);
+ 1080              		.loc 1 127 5 view .LVU301
+ 1081 0284 FFF7FEFF 		bl	ClearScreen
+ 1082              	.LVL145:
+ 128:Core/Src/test.c ****     UpdateScreen();
+ 1083              		.loc 1 128 5 view .LVU302
+ 1084 0288 1E22     		movs	r2, #30
+ 1085 028a 1F21     		movs	r1, #31
+ 1086 028c 3F20     		movs	r0, #63
+ 1087 028e FFF7FEFF 		bl	DrawFillCircle
+ 1088              	.LVL146:
+ 129:Core/Src/test.c ****     HAL_Delay(1000);
+ 1089              		.loc 1 129 5 view .LVU303
+ 1090 0292 FFF7FEFF 		bl	UpdateScreen
+ 1091              	.LVL147:
+ 130:Core/Src/test.c **** 
+ 1092              		.loc 1 130 5 view .LVU304
+ 1093 0296 4FF47A70 		mov	r0, #1000
+ 1094 029a FFF7FEFF 		bl	HAL_Delay
+ 1095              	.LVL148:
+ 133:Core/Src/test.c ****     DrawTriangle(5, 10, 100, 30, 60, 50);
+ 1096              		.loc 1 133 5 view .LVU305
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s 			page 30
+
+
+ 1097 029e FFF7FEFF 		bl	ClearScreen
+ 1098              	.LVL149:
+ 134:Core/Src/test.c ****     UpdateScreen();
+ 1099              		.loc 1 134 5 view .LVU306
+ 1100 02a2 3225     		movs	r5, #50
+ 1101              	.LVL150:
+ 134:Core/Src/test.c ****     UpdateScreen();
+ 1102              		.loc 1 134 5 is_stmt 0 view .LVU307
+ 1103 02a4 0195     		str	r5, [sp, #4]
+ 1104 02a6 3C24     		movs	r4, #60
+ 1105              	.LVL151:
+ 134:Core/Src/test.c ****     UpdateScreen();
+ 1106              		.loc 1 134 5 view .LVU308
+ 1107 02a8 0094     		str	r4, [sp]
+ 1108 02aa 1E23     		movs	r3, #30
+ 1109 02ac 6422     		movs	r2, #100
+ 1110 02ae 0A21     		movs	r1, #10
+ 1111 02b0 0520     		movs	r0, #5
+ 1112 02b2 FFF7FEFF 		bl	DrawTriangle
+ 1113              	.LVL152:
+ 135:Core/Src/test.c ****     HAL_Delay(1000);
+ 1114              		.loc 1 135 5 is_stmt 1 view .LVU309
+ 1115 02b6 FFF7FEFF 		bl	UpdateScreen
+ 1116              	.LVL153:
+ 136:Core/Src/test.c ****     ClearScreen();
+ 1117              		.loc 1 136 5 view .LVU310
+ 1118 02ba 4FF47A70 		mov	r0, #1000
+ 1119 02be FFF7FEFF 		bl	HAL_Delay
+ 1120              	.LVL154:
+ 137:Core/Src/test.c ****     DrawFillTriangle(5, 10, 100, 30, 60, 50);
+ 1121              		.loc 1 137 5 view .LVU311
+ 1122 02c2 FFF7FEFF 		bl	ClearScreen
+ 1123              	.LVL155:
+ 138:Core/Src/test.c ****     UpdateScreen();
+ 1124              		.loc 1 138 5 view .LVU312
+ 1125 02c6 0195     		str	r5, [sp, #4]
+ 1126 02c8 0094     		str	r4, [sp]
+ 1127 02ca 1E23     		movs	r3, #30
+ 1128 02cc 6422     		movs	r2, #100
+ 1129 02ce 0A21     		movs	r1, #10
+ 1130 02d0 0520     		movs	r0, #5
+ 1131 02d2 FFF7FEFF 		bl	DrawFillTriangle
+ 1132              	.LVL156:
+ 139:Core/Src/test.c ****     HAL_Delay(1000);
+ 1133              		.loc 1 139 5 view .LVU313
+ 1134 02d6 FFF7FEFF 		bl	UpdateScreen
+ 1135              	.LVL157:
+ 140:Core/Src/test.c ****     //ªÊ÷∆Õº–Œ
+ 1136              		.loc 1 140 5 view .LVU314
+ 1137 02da 4FF47A70 		mov	r0, #1000
+ 1138 02de FFF7FEFF 		bl	HAL_Delay
+ 1139              	.LVL158:
+ 142:Core/Src/test.c ****     DrawBitmap(0, 0, BmpTest1, 16, 16);
+ 1140              		.loc 1 142 5 view .LVU315
+ 1141 02e2 FFF7FEFF 		bl	ClearScreen
+ 1142              	.LVL159:
+ 143:Core/Src/test.c ****     UpdateScreen();
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s 			page 31
+
+
+ 1143              		.loc 1 143 5 view .LVU316
+ 1144 02e6 1024     		movs	r4, #16
+ 1145 02e8 0094     		str	r4, [sp]
+ 1146 02ea 2346     		mov	r3, r4
+ 1147 02ec 244A     		ldr	r2, .L76+8
+ 1148 02ee 0021     		movs	r1, #0
+ 1149 02f0 0846     		mov	r0, r1
+ 1150 02f2 FFF7FEFF 		bl	DrawBitmap
+ 1151              	.LVL160:
+ 144:Core/Src/test.c ****     HAL_Delay(1000);
+ 1152              		.loc 1 144 5 view .LVU317
+ 1153 02f6 FFF7FEFF 		bl	UpdateScreen
+ 1154              	.LVL161:
+ 145:Core/Src/test.c ****     DrawBitmap(16, 0, BmpTest2, 32, 32);
+ 1155              		.loc 1 145 5 view .LVU318
+ 1156 02fa 4FF47A70 		mov	r0, #1000
+ 1157 02fe FFF7FEFF 		bl	HAL_Delay
+ 1158              	.LVL162:
+ 146:Core/Src/test.c ****     UpdateScreen();
+ 1159              		.loc 1 146 5 view .LVU319
+ 1160 0302 2023     		movs	r3, #32
+ 1161 0304 0093     		str	r3, [sp]
+ 1162 0306 1F4A     		ldr	r2, .L76+12
+ 1163 0308 0021     		movs	r1, #0
+ 1164 030a 2046     		mov	r0, r4
+ 1165 030c FFF7FEFF 		bl	DrawBitmap
+ 1166              	.LVL163:
+ 147:Core/Src/test.c ****     HAL_Delay(1000);
+ 1167              		.loc 1 147 5 view .LVU320
+ 1168 0310 FFF7FEFF 		bl	UpdateScreen
+ 1169              	.LVL164:
+ 148:Core/Src/test.c ****     DrawBitmap(48, 0, BmpTest3, 64, 64);
+ 1170              		.loc 1 148 5 view .LVU321
+ 1171 0314 4FF47A70 		mov	r0, #1000
+ 1172 0318 FFF7FEFF 		bl	HAL_Delay
+ 1173              	.LVL165:
+ 149:Core/Src/test.c ****     UpdateScreen();
+ 1174              		.loc 1 149 5 view .LVU322
+ 1175 031c 4023     		movs	r3, #64
+ 1176 031e 0093     		str	r3, [sp]
+ 1177 0320 194A     		ldr	r2, .L76+16
+ 1178 0322 0021     		movs	r1, #0
+ 1179 0324 3020     		movs	r0, #48
+ 1180 0326 FFF7FEFF 		bl	DrawBitmap
+ 1181              	.LVL166:
+ 150:Core/Src/test.c ****     HAL_Delay(1000);
+ 1182              		.loc 1 150 5 view .LVU323
+ 1183 032a FFF7FEFF 		bl	UpdateScreen
+ 1184              	.LVL167:
+ 151:Core/Src/test.c **** 
+ 1185              		.loc 1 151 5 view .LVU324
+ 1186 032e 4FF47A70 		mov	r0, #1000
+ 1187 0332 FFF7FEFF 		bl	HAL_Delay
+ 1188              	.LVL168:
+ 154:Core/Src/test.c ****     for (i = 0; i < 369; i++)
+ 1189              		.loc 1 154 5 view .LVU325
+ 1190 0336 FFF7FEFF 		bl	ClearScreen
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s 			page 32
+
+
+ 1191              	.LVL169:
+ 155:Core/Src/test.c ****     {
+ 1192              		.loc 1 155 5 view .LVU326
+ 155:Core/Src/test.c ****     {
+ 1193              		.loc 1 155 12 is_stmt 0 view .LVU327
+ 1194 033a 0024     		movs	r4, #0
+ 155:Core/Src/test.c ****     {
+ 1195              		.loc 1 155 5 view .LVU328
+ 1196 033c 0BE0     		b	.L60
+ 1197              	.LVL170:
+ 1198              	.L61:
+ 157:Core/Src/test.c ****         UpdateScreen();
+ 1199              		.loc 1 157 9 is_stmt 1 discriminator 3 view .LVU329
+ 1200 033e 0094     		str	r4, [sp]
+ 1201 0340 0023     		movs	r3, #0
+ 1202 0342 1E22     		movs	r2, #30
+ 1203 0344 1F21     		movs	r1, #31
+ 1204 0346 3F20     		movs	r0, #63
+ 1205 0348 FFF7FEFF 		bl	DrawArc
+ 1206              	.LVL171:
+ 158:Core/Src/test.c ****         ClearScreen();
+ 1207              		.loc 1 158 9 discriminator 3 view .LVU330
+ 1208 034c FFF7FEFF 		bl	UpdateScreen
+ 1209              	.LVL172:
+ 159:Core/Src/test.c ****     }
+ 1210              		.loc 1 159 9 discriminator 3 view .LVU331
+ 1211 0350 FFF7FEFF 		bl	ClearScreen
+ 1212              	.LVL173:
+ 155:Core/Src/test.c ****     {
+ 1213              		.loc 1 155 26 discriminator 3 view .LVU332
+ 155:Core/Src/test.c ****     {
+ 1214              		.loc 1 155 27 is_stmt 0 discriminator 3 view .LVU333
+ 1215 0354 0134     		adds	r4, r4, #1
+ 1216              	.LVL174:
+ 1217              	.L60:
+ 155:Core/Src/test.c ****     {
+ 1218              		.loc 1 155 17 is_stmt 1 discriminator 1 view .LVU334
+ 155:Core/Src/test.c ****     {
+ 1219              		.loc 1 155 5 is_stmt 0 discriminator 1 view .LVU335
+ 1220 0356 B4F5B87F 		cmp	r4, #368
+ 1221 035a F0DD     		ble	.L61
+ 161:Core/Src/test.c ****     UpdateScreen();
+ 1222              		.loc 1 161 5 is_stmt 1 view .LVU336
+ 1223 035c 1E22     		movs	r2, #30
+ 1224 035e 1F21     		movs	r1, #31
+ 1225 0360 3F20     		movs	r0, #63
+ 1226 0362 FFF7FEFF 		bl	DrawCircle
+ 1227              	.LVL175:
+ 162:Core/Src/test.c ****     HAL_Delay(500);
+ 1228              		.loc 1 162 5 view .LVU337
+ 1229 0366 FFF7FEFF 		bl	UpdateScreen
+ 1230              	.LVL176:
+ 163:Core/Src/test.c ****     //************
+ 1231              		.loc 1 163 5 view .LVU338
+ 1232 036a 4FF4FA70 		mov	r0, #500
+ 1233 036e FFF7FEFF 		bl	HAL_Delay
+ 1234              	.LVL177:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s 			page 33
+
+
+ 165:Core/Src/test.c ****     {
+ 1235              		.loc 1 165 5 view .LVU339
+ 165:Core/Src/test.c ****     {
+ 1236              		.loc 1 165 12 is_stmt 0 view .LVU340
+ 1237 0372 0024     		movs	r4, #0
+ 165:Core/Src/test.c ****     {
+ 1238              		.loc 1 165 5 view .LVU341
+ 1239 0374 1CE0     		b	.L62
+ 1240              	.L77:
+ 1241 0376 00BF     		.align	2
+ 1242              	.L76:
+ 1243 0378 00000000 		.word	TempLogo
+ 1244 037c 00000000 		.word	.LC0
+ 1245 0380 00000000 		.word	BmpTest1
+ 1246 0384 00000000 		.word	BmpTest2
+ 1247 0388 00000000 		.word	BmpTest3
+ 1248              	.LVL178:
+ 1249              	.L63:
+ 167:Core/Src/test.c ****         DrawCircle(63, 31, 30);
+ 1250              		.loc 1 167 9 is_stmt 1 discriminator 3 view .LVU342
+ 1251 038c 2246     		mov	r2, r4
+ 1252 038e 1F21     		movs	r1, #31
+ 1253 0390 3F20     		movs	r0, #63
+ 1254 0392 FFF7FEFF 		bl	DrawFillCircle
+ 1255              	.LVL179:
+ 168:Core/Src/test.c ****         UpdateScreen();
+ 1256              		.loc 1 168 9 discriminator 3 view .LVU343
+ 1257 0396 1E22     		movs	r2, #30
+ 1258 0398 1F21     		movs	r1, #31
+ 1259 039a 3F20     		movs	r0, #63
+ 1260 039c FFF7FEFF 		bl	DrawCircle
+ 1261              	.LVL180:
+ 169:Core/Src/test.c ****         ClearScreen();
+ 1262              		.loc 1 169 9 discriminator 3 view .LVU344
+ 1263 03a0 FFF7FEFF 		bl	UpdateScreen
+ 1264              	.LVL181:
+ 170:Core/Src/test.c ****         HAL_Delay(100);
+ 1265              		.loc 1 170 9 discriminator 3 view .LVU345
+ 1266 03a4 FFF7FEFF 		bl	ClearScreen
+ 1267              	.LVL182:
+ 171:Core/Src/test.c ****     }
+ 1268              		.loc 1 171 9 discriminator 3 view .LVU346
+ 1269 03a8 6420     		movs	r0, #100
+ 1270 03aa FFF7FEFF 		bl	HAL_Delay
+ 1271              	.LVL183:
+ 165:Core/Src/test.c ****     {
+ 1272              		.loc 1 165 25 discriminator 3 view .LVU347
+ 165:Core/Src/test.c ****     {
+ 1273              		.loc 1 165 26 is_stmt 0 discriminator 3 view .LVU348
+ 1274 03ae 0134     		adds	r4, r4, #1
+ 1275              	.LVL184:
+ 1276              	.L62:
+ 165:Core/Src/test.c ****     {
+ 1277              		.loc 1 165 17 is_stmt 1 discriminator 1 view .LVU349
+ 165:Core/Src/test.c ****     {
+ 1278              		.loc 1 165 5 is_stmt 0 discriminator 1 view .LVU350
+ 1279 03b0 092C     		cmp	r4, #9
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s 			page 34
+
+
+ 1280 03b2 EBDD     		ble	.L63
+ 175:Core/Src/test.c ****     {
+ 1281              		.loc 1 175 12 view .LVU351
+ 1282 03b4 0024     		movs	r4, #0
+ 1283              	.LVL185:
+ 175:Core/Src/test.c ****     {
+ 1284              		.loc 1 175 12 view .LVU352
+ 1285 03b6 21E0     		b	.L64
+ 1286              	.LVL186:
+ 1287              	.L65:
+ 1288              	.LBB2:
+ 177:Core/Src/test.c ****         SetAngle(i);
+ 1289              		.loc 1 177 9 is_stmt 1 discriminator 3 view .LVU353
+ 178:Core/Src/test.c ****         SetRotateCenter(63, 31);
+ 1290              		.loc 1 178 9 discriminator 3 view .LVU354
+ 1291 03b8 2046     		mov	r0, r4
+ 1292 03ba FFF7FEFF 		bl	__aeabi_i2f
+ 1293              	.LVL187:
+ 1294 03be FFF7FEFF 		bl	SetAngle
+ 1295              	.LVL188:
+ 179:Core/Src/test.c ****         temp = GetRotateXY(63, 31 + 30);
+ 1296              		.loc 1 179 9 discriminator 3 view .LVU355
+ 1297 03c2 1F21     		movs	r1, #31
+ 1298 03c4 3F20     		movs	r0, #63
+ 1299 03c6 FFF7FEFF 		bl	SetRotateCenter
+ 1300              	.LVL189:
+ 180:Core/Src/test.c ****         DrawFillCircle(temp.x, temp.y, 5);
+ 1301              		.loc 1 180 9 discriminator 3 view .LVU356
+ 180:Core/Src/test.c ****         DrawFillCircle(temp.x, temp.y, 5);
+ 1302              		.loc 1 180 16 is_stmt 0 discriminator 3 view .LVU357
+ 1303 03ca 3D22     		movs	r2, #61
+ 1304 03cc 3F21     		movs	r1, #63
+ 1305 03ce 02A8     		add	r0, sp, #8
+ 1306 03d0 FFF7FEFF 		bl	GetRotateXY
+ 1307              	.LVL190:
+ 181:Core/Src/test.c ****         DrawCircle(63, 31, 30);
+ 1308              		.loc 1 181 9 is_stmt 1 discriminator 3 view .LVU358
+ 1309 03d4 0522     		movs	r2, #5
+ 1310 03d6 0399     		ldr	r1, [sp, #12]
+ 1311 03d8 0298     		ldr	r0, [sp, #8]
+ 1312 03da FFF7FEFF 		bl	DrawFillCircle
+ 1313              	.LVL191:
+ 182:Core/Src/test.c ****         DrawFillCircle(63, 31, 10);
+ 1314              		.loc 1 182 9 discriminator 3 view .LVU359
+ 1315 03de 1E22     		movs	r2, #30
+ 1316 03e0 1F21     		movs	r1, #31
+ 1317 03e2 3F20     		movs	r0, #63
+ 1318 03e4 FFF7FEFF 		bl	DrawCircle
+ 1319              	.LVL192:
+ 183:Core/Src/test.c ****         UpdateScreen();
+ 1320              		.loc 1 183 9 discriminator 3 view .LVU360
+ 1321 03e8 0A22     		movs	r2, #10
+ 1322 03ea 1F21     		movs	r1, #31
+ 1323 03ec 3F20     		movs	r0, #63
+ 1324 03ee FFF7FEFF 		bl	DrawFillCircle
+ 1325              	.LVL193:
+ 184:Core/Src/test.c ****         ClearScreen();
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s 			page 35
+
+
+ 1326              		.loc 1 184 9 discriminator 3 view .LVU361
+ 1327 03f2 FFF7FEFF 		bl	UpdateScreen
+ 1328              	.LVL194:
+ 185:Core/Src/test.c ****     }
+ 1329              		.loc 1 185 9 discriminator 3 view .LVU362
+ 1330 03f6 FFF7FEFF 		bl	ClearScreen
+ 1331              	.LVL195:
+ 1332              	.LBE2:
+ 175:Core/Src/test.c ****     {
+ 1333              		.loc 1 175 26 discriminator 3 view .LVU363
+ 175:Core/Src/test.c ****     {
+ 1334              		.loc 1 175 27 is_stmt 0 discriminator 3 view .LVU364
+ 1335 03fa 0134     		adds	r4, r4, #1
+ 1336              	.LVL196:
+ 1337              	.L64:
+ 175:Core/Src/test.c ****     {
+ 1338              		.loc 1 175 17 is_stmt 1 discriminator 1 view .LVU365
+ 175:Core/Src/test.c ****     {
+ 1339              		.loc 1 175 5 is_stmt 0 discriminator 1 view .LVU366
+ 1340 03fc B4F5347F 		cmp	r4, #720
+ 1341 0400 DADB     		blt	.L65
+ 188:Core/Src/test.c ****     {
+ 1342              		.loc 1 188 12 view .LVU367
+ 1343 0402 0024     		movs	r4, #0
+ 1344              	.LVL197:
+ 188:Core/Src/test.c ****     {
+ 1345              		.loc 1 188 12 view .LVU368
+ 1346 0404 24E0     		b	.L66
+ 1347              	.LVL198:
+ 1348              	.L67:
+ 1349              	.LBB3:
+ 190:Core/Src/test.c ****         SetAngle(720 + i);
+ 1350              		.loc 1 190 9 is_stmt 1 discriminator 3 view .LVU369
+ 191:Core/Src/test.c ****         SetRotateCenter(63 + i, 31);
+ 1351              		.loc 1 191 9 discriminator 3 view .LVU370
+ 1352 0406 04F53470 		add	r0, r4, #720
+ 1353 040a FFF7FEFF 		bl	__aeabi_i2f
+ 1354              	.LVL199:
+ 1355 040e FFF7FEFF 		bl	SetAngle
+ 1356              	.LVL200:
+ 192:Core/Src/test.c ****         temp = GetRotateXY(63 + i, 31 + 30);
+ 1357              		.loc 1 192 9 discriminator 3 view .LVU371
+ 1358 0412 04F13F05 		add	r5, r4, #63
+ 1359 0416 1F21     		movs	r1, #31
+ 1360 0418 2846     		mov	r0, r5
+ 1361 041a FFF7FEFF 		bl	SetRotateCenter
+ 1362              	.LVL201:
+ 193:Core/Src/test.c ****         DrawFillCircle(temp.x, temp.y, 5);
+ 1363              		.loc 1 193 9 discriminator 3 view .LVU372
+ 193:Core/Src/test.c ****         DrawFillCircle(temp.x, temp.y, 5);
+ 1364              		.loc 1 193 16 is_stmt 0 discriminator 3 view .LVU373
+ 1365 041e 3D22     		movs	r2, #61
+ 1366 0420 2946     		mov	r1, r5
+ 1367 0422 02A8     		add	r0, sp, #8
+ 1368 0424 FFF7FEFF 		bl	GetRotateXY
+ 1369              	.LVL202:
+ 194:Core/Src/test.c ****         DrawCircle(63 + i, 31, 30);
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s 			page 36
+
+
+ 1370              		.loc 1 194 9 is_stmt 1 discriminator 3 view .LVU374
+ 1371 0428 0522     		movs	r2, #5
+ 1372 042a 0399     		ldr	r1, [sp, #12]
+ 1373 042c 0298     		ldr	r0, [sp, #8]
+ 1374 042e FFF7FEFF 		bl	DrawFillCircle
+ 1375              	.LVL203:
+ 195:Core/Src/test.c ****         DrawFillCircle(63 + i, 31, 10);
+ 1376              		.loc 1 195 9 discriminator 3 view .LVU375
+ 1377 0432 1E22     		movs	r2, #30
+ 1378 0434 1F21     		movs	r1, #31
+ 1379 0436 2846     		mov	r0, r5
+ 1380 0438 FFF7FEFF 		bl	DrawCircle
+ 1381              	.LVL204:
+ 196:Core/Src/test.c ****         UpdateScreen();
+ 1382              		.loc 1 196 9 discriminator 3 view .LVU376
+ 1383 043c 0A22     		movs	r2, #10
+ 1384 043e 1F21     		movs	r1, #31
+ 1385 0440 2846     		mov	r0, r5
+ 1386 0442 FFF7FEFF 		bl	DrawFillCircle
+ 1387              	.LVL205:
+ 197:Core/Src/test.c ****         ClearScreen();
+ 1388              		.loc 1 197 9 discriminator 3 view .LVU377
+ 1389 0446 FFF7FEFF 		bl	UpdateScreen
+ 1390              	.LVL206:
+ 198:Core/Src/test.c ****     }
+ 1391              		.loc 1 198 9 discriminator 3 view .LVU378
+ 1392 044a FFF7FEFF 		bl	ClearScreen
+ 1393              	.LVL207:
+ 1394              	.LBE3:
+ 188:Core/Src/test.c ****     {
+ 1395              		.loc 1 188 25 discriminator 3 view .LVU379
+ 188:Core/Src/test.c ****     {
+ 1396              		.loc 1 188 26 is_stmt 0 discriminator 3 view .LVU380
+ 1397 044e 0134     		adds	r4, r4, #1
+ 1398              	.LVL208:
+ 1399              	.L66:
+ 188:Core/Src/test.c ****     {
+ 1400              		.loc 1 188 17 is_stmt 1 discriminator 1 view .LVU381
+ 188:Core/Src/test.c ****     {
+ 1401              		.loc 1 188 5 is_stmt 0 discriminator 1 view .LVU382
+ 1402 0450 5E2C     		cmp	r4, #94
+ 1403 0452 D8DD     		ble	.L67
+ 202:Core/Src/test.c ****     ShowTest();
+ 1404              		.loc 1 202 5 is_stmt 1 view .LVU383
+ 1405 0454 FFF7FEFF 		bl	ShowStars
+ 1406              	.LVL209:
+ 203:Core/Src/test.c ****     HAL_Delay(1000);
+ 1407              		.loc 1 203 5 view .LVU384
+ 1408 0458 FFF7FEFF 		bl	ShowTest
+ 1409              	.LVL210:
+ 204:Core/Src/test.c ****     //Ω· ¯
+ 1410              		.loc 1 204 5 view .LVU385
+ 1411 045c 4FF47A70 		mov	r0, #1000
+ 1412 0460 FFF7FEFF 		bl	HAL_Delay
+ 1413              	.LVL211:
+ 206:Core/Src/test.c ****     SetFontSize(2);
+ 1414              		.loc 1 206 5 view .LVU386
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s 			page 37
+
+
+ 1415 0464 FFF7FEFF 		bl	ClearScreen
+ 1416              	.LVL212:
+ 207:Core/Src/test.c ****     DrawString(8, 16, " Show End ");
+ 1417              		.loc 1 207 5 view .LVU387
+ 1418 0468 0220     		movs	r0, #2
+ 1419 046a FFF7FEFF 		bl	SetFontSize
+ 1420              	.LVL213:
+ 208:Core/Src/test.c ****     UpdateScreen();
+ 1421              		.loc 1 208 5 view .LVU388
+ 1422 046e 0C4A     		ldr	r2, .L78
+ 1423 0470 1021     		movs	r1, #16
+ 1424 0472 0820     		movs	r0, #8
+ 1425 0474 FFF7FEFF 		bl	DrawString
+ 1426              	.LVL214:
+ 209:Core/Src/test.c ****     HAL_Delay(2000);
+ 1427              		.loc 1 209 5 view .LVU389
+ 1428 0478 FFF7FEFF 		bl	UpdateScreen
+ 1429              	.LVL215:
+ 210:Core/Src/test.c ****     ClearScreen();
+ 1430              		.loc 1 210 5 view .LVU390
+ 1431 047c 4FF4FA60 		mov	r0, #2000
+ 1432 0480 FFF7FEFF 		bl	HAL_Delay
+ 1433              	.LVL216:
+ 211:Core/Src/test.c ****     DrawBitmap(0, 10, DZTBGZ, 128, 40);
+ 1434              		.loc 1 211 5 view .LVU391
+ 1435 0484 FFF7FEFF 		bl	ClearScreen
+ 1436              	.LVL217:
+ 212:Core/Src/test.c ****     UpdateScreen();
+ 1437              		.loc 1 212 5 view .LVU392
+ 1438 0488 2823     		movs	r3, #40
+ 1439 048a 0093     		str	r3, [sp]
+ 1440 048c 8023     		movs	r3, #128
+ 1441 048e 054A     		ldr	r2, .L78+4
+ 1442 0490 0A21     		movs	r1, #10
+ 1443 0492 0020     		movs	r0, #0
+ 1444 0494 FFF7FEFF 		bl	DrawBitmap
+ 1445              	.LVL218:
+ 213:Core/Src/test.c ****     while (1)
+ 1446              		.loc 1 213 5 view .LVU393
+ 1447 0498 FFF7FEFF 		bl	UpdateScreen
+ 1448              	.LVL219:
+ 1449              	.L68:
+ 214:Core/Src/test.c ****         ;
+ 1450              		.loc 1 214 5 discriminator 1 view .LVU394
+ 215:Core/Src/test.c **** }
+ 1451              		.loc 1 215 9 discriminator 1 view .LVU395
+ 214:Core/Src/test.c ****         ;
+ 1452              		.loc 1 214 11 discriminator 1 view .LVU396
+ 1453 049c FEE7     		b	.L68
+ 1454              	.L79:
+ 1455 049e 00BF     		.align	2
+ 1456              	.L78:
+ 1457 04a0 08000000 		.word	.LC1
+ 1458 04a4 00000000 		.word	DZTBGZ
+ 1459              		.cfi_endproc
+ 1460              	.LFE68:
+ 1462              		.section	.text.ShowSnow,"ax",%progbits
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s 			page 38
+
+
+ 1463              		.align	1
+ 1464              		.global	ShowSnow
+ 1465              		.syntax unified
+ 1466              		.thumb
+ 1467              		.thumb_func
+ 1468              		.fpu softvfp
+ 1470              	ShowSnow:
+ 1471              	.LFB72:
+ 325:Core/Src/test.c **** 
+ 326:Core/Src/test.c **** void ShowSnow(void)
+ 327:Core/Src/test.c **** {
+ 1472              		.loc 1 327 1 view -0
+ 1473              		.cfi_startproc
+ 1474              		@ args = 0, pretend = 0, frame = 864
+ 1475              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1476 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 1477              	.LCFI9:
+ 1478              		.cfi_def_cfa_offset 20
+ 1479              		.cfi_offset 4, -20
+ 1480              		.cfi_offset 5, -16
+ 1481              		.cfi_offset 6, -12
+ 1482              		.cfi_offset 7, -8
+ 1483              		.cfi_offset 14, -4
+ 1484 0002 ADF5597D 		sub	sp, sp, #868
+ 1485              	.LCFI10:
+ 1486              		.cfi_def_cfa_offset 888
+ 328:Core/Src/test.c ****     int a[66], i, num = 0;
+ 1487              		.loc 1 328 5 view .LVU398
+ 1488              	.LVL220:
+ 329:Core/Src/test.c ****     struct Snow
+ 1489              		.loc 1 329 5 view .LVU399
+ 330:Core/Src/test.c ****     {
+ 331:Core/Src/test.c ****         short x;
+ 332:Core/Src/test.c ****         short y;
+ 333:Core/Src/test.c ****         short speed;
+ 334:Core/Src/test.c ****     } snow[100];
+ 335:Core/Src/test.c **** 
+ 336:Core/Src/test.c ****     srand(1);
+ 1490              		.loc 1 336 5 view .LVU400
+ 1491 0006 0120     		movs	r0, #1
+ 1492 0008 FFF7FEFF 		bl	srand
+ 1493              	.LVL221:
+ 337:Core/Src/test.c ****     for (i = 0; i < 66; i++)
+ 1494              		.loc 1 337 5 view .LVU401
+ 1495              		.loc 1 337 12 is_stmt 0 view .LVU402
+ 1496 000c 0022     		movs	r2, #0
+ 1497              		.loc 1 337 5 view .LVU403
+ 1498 000e 07E0     		b	.L81
+ 1499              	.LVL222:
+ 1500              	.L82:
+ 338:Core/Src/test.c ****         a[i] = (i - 2) * 10;
+ 1501              		.loc 1 338 9 is_stmt 1 discriminator 3 view .LVU404
+ 1502              		.loc 1 338 19 is_stmt 0 discriminator 3 view .LVU405
+ 1503 0010 931E     		subs	r3, r2, #2
+ 1504              		.loc 1 338 24 discriminator 3 view .LVU406
+ 1505 0012 03EB8303 		add	r3, r3, r3, lsl #2
+ 1506 0016 5B00     		lsls	r3, r3, #1
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s 			page 39
+
+
+ 1507              		.loc 1 338 14 discriminator 3 view .LVU407
+ 1508 0018 96A9     		add	r1, sp, #600
+ 1509 001a 41F82230 		str	r3, [r1, r2, lsl #2]
+ 337:Core/Src/test.c ****     for (i = 0; i < 66; i++)
+ 1510              		.loc 1 337 25 is_stmt 1 discriminator 3 view .LVU408
+ 337:Core/Src/test.c ****     for (i = 0; i < 66; i++)
+ 1511              		.loc 1 337 26 is_stmt 0 discriminator 3 view .LVU409
+ 1512 001e 0132     		adds	r2, r2, #1
+ 1513              	.LVL223:
+ 1514              	.L81:
+ 337:Core/Src/test.c ****     for (i = 0; i < 66; i++)
+ 1515              		.loc 1 337 17 is_stmt 1 discriminator 1 view .LVU410
+ 337:Core/Src/test.c ****     for (i = 0; i < 66; i++)
+ 1516              		.loc 1 337 5 is_stmt 0 discriminator 1 view .LVU411
+ 1517 0020 412A     		cmp	r2, #65
+ 1518 0022 F5DD     		ble	.L82
+ 339:Core/Src/test.c ****     ClearScreen();
+ 1519              		.loc 1 339 5 is_stmt 1 view .LVU412
+ 1520 0024 FFF7FEFF 		bl	ClearScreen
+ 1521              	.LVL224:
+ 328:Core/Src/test.c ****     struct Snow
+ 1522              		.loc 1 328 19 is_stmt 0 view .LVU413
+ 1523 0028 0027     		movs	r7, #0
+ 1524 002a 2DE0     		b	.L87
+ 1525              	.LVL225:
+ 1526              	.L89:
+ 340:Core/Src/test.c ****     while (1)
+ 341:Core/Src/test.c ****     {
+ 342:Core/Src/test.c ****         //FrameRateUpdateScreen(60);
+ 343:Core/Src/test.c ****         if (num != 100)
+ 344:Core/Src/test.c ****         {
+ 345:Core/Src/test.c **** 
+ 346:Core/Src/test.c ****             snow[num].speed = 1 + rand() % 4;
+ 1527              		.loc 1 346 13 is_stmt 1 view .LVU414
+ 1528              		.loc 1 346 35 is_stmt 0 view .LVU415
+ 1529 002c FFF7FEFF 		bl	rand
+ 1530              	.LVL226:
+ 1531              		.loc 1 346 42 view .LVU416
+ 1532 0030 4342     		rsbs	r3, r0, #0
+ 1533 0032 00F00300 		and	r0, r0, #3
+ 1534 0036 03F00303 		and	r3, r3, #3
+ 1535 003a 58BF     		it	pl
+ 1536 003c 5842     		rsbpl	r0, r3, #0
+ 1537              		.loc 1 346 33 view .LVU417
+ 1538 003e 0130     		adds	r0, r0, #1
+ 1539              		.loc 1 346 29 view .LVU418
+ 1540 0040 07EB4704 		add	r4, r7, r7, lsl #1
+ 1541 0044 6500     		lsls	r5, r4, #1
+ 1542 0046 0DEB4404 		add	r4, sp, r4, lsl #1
+ 1543 004a A080     		strh	r0, [r4, #4]	@ movhi
+ 347:Core/Src/test.c ****             i = rand() % 66;
+ 1544              		.loc 1 347 13 is_stmt 1 view .LVU419
+ 1545              		.loc 1 347 17 is_stmt 0 view .LVU420
+ 1546 004c FFF7FEFF 		bl	rand
+ 1547              	.LVL227:
+ 1548              		.loc 1 347 15 view .LVU421
+ 1549 0050 234A     		ldr	r2, .L90
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s 			page 40
+
+
+ 1550 0052 82FB0032 		smull	r3, r2, r2, r0
+ 1551 0056 C317     		asrs	r3, r0, #31
+ 1552 0058 C3EB2213 		rsb	r3, r3, r2, asr #4
+ 1553 005c 03EB4313 		add	r3, r3, r3, lsl #5
+ 1554 0060 A0EB4303 		sub	r3, r0, r3, lsl #1
+ 1555              	.LVL228:
+ 348:Core/Src/test.c ****             snow[num].x = a[i];
+ 1556              		.loc 1 348 13 is_stmt 1 view .LVU422
+ 1557              		.loc 1 348 28 is_stmt 0 view .LVU423
+ 1558 0064 96AA     		add	r2, sp, #600
+ 1559 0066 52F82330 		ldr	r3, [r2, r3, lsl #2]
+ 1560              	.LVL229:
+ 1561              		.loc 1 348 25 view .LVU424
+ 1562 006a 2DF80530 		strh	r3, [sp, r5]	@ movhi
+ 349:Core/Src/test.c ****             snow[num].y = 0;
+ 1563              		.loc 1 349 13 is_stmt 1 view .LVU425
+ 1564              		.loc 1 349 25 is_stmt 0 view .LVU426
+ 1565 006e 0023     		movs	r3, #0
+ 1566 0070 6380     		strh	r3, [r4, #2]	@ movhi
+ 350:Core/Src/test.c ****             num++;
+ 1567              		.loc 1 350 13 is_stmt 1 view .LVU427
+ 1568              		.loc 1 350 16 is_stmt 0 view .LVU428
+ 1569 0072 0137     		adds	r7, r7, #1
+ 1570              	.LVL230:
+ 1571              	.L83:
+ 351:Core/Src/test.c ****         }
+ 352:Core/Src/test.c ****         for (i = 0; i < num; i++)
+ 1572              		.loc 1 352 9 is_stmt 1 view .LVU429
+ 1573              		.loc 1 352 16 is_stmt 0 view .LVU430
+ 1574 0074 0025     		movs	r5, #0
+ 1575              	.LVL231:
+ 1576              	.L84:
+ 1577              		.loc 1 352 21 is_stmt 1 discriminator 1 view .LVU431
+ 1578              		.loc 1 352 9 is_stmt 0 discriminator 1 view .LVU432
+ 1579 0076 BD42     		cmp	r5, r7
+ 1580 0078 09DB     		blt	.L86
+ 353:Core/Src/test.c ****         {
+ 354:Core/Src/test.c ****             snow[i].y += snow[i].speed;
+ 355:Core/Src/test.c ****             DrawPixel(snow[i].x, snow[i].y + 1);
+ 356:Core/Src/test.c ****             DrawPixel(snow[i].x + 1, snow[i].y);
+ 357:Core/Src/test.c ****             DrawPixel(snow[i].x, snow[i].y);
+ 358:Core/Src/test.c ****             DrawPixel(snow[i].x - 1, snow[i].y);
+ 359:Core/Src/test.c ****             DrawPixel(snow[i].x, snow[i].y - 1);
+ 360:Core/Src/test.c ****             if (snow[i].y > 63)
+ 361:Core/Src/test.c ****             {
+ 362:Core/Src/test.c ****                 snow[i].y = 0;
+ 363:Core/Src/test.c ****             }
+ 364:Core/Src/test.c ****         }
+ 365:Core/Src/test.c ****         HAL_Delay(30);
+ 1581              		.loc 1 365 9 is_stmt 1 view .LVU433
+ 1582 007a 1E20     		movs	r0, #30
+ 1583 007c FFF7FEFF 		bl	HAL_Delay
+ 1584              	.LVL232:
+ 366:Core/Src/test.c ****         UpdateScreen();
+ 1585              		.loc 1 366 9 view .LVU434
+ 1586 0080 FFF7FEFF 		bl	UpdateScreen
+ 1587              	.LVL233:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s 			page 41
+
+
+ 367:Core/Src/test.c ****         ClearScreen();
+ 1588              		.loc 1 367 9 view .LVU435
+ 1589 0084 FFF7FEFF 		bl	ClearScreen
+ 1590              	.LVL234:
+ 340:Core/Src/test.c ****     {
+ 1591              		.loc 1 340 11 view .LVU436
+ 1592              	.L87:
+ 340:Core/Src/test.c ****     {
+ 1593              		.loc 1 340 5 view .LVU437
+ 343:Core/Src/test.c ****         {
+ 1594              		.loc 1 343 9 view .LVU438
+ 343:Core/Src/test.c ****         {
+ 1595              		.loc 1 343 12 is_stmt 0 view .LVU439
+ 1596 0088 642F     		cmp	r7, #100
+ 1597 008a F3D0     		beq	.L83
+ 1598 008c CEE7     		b	.L89
+ 1599              	.LVL235:
+ 1600              	.L86:
+ 354:Core/Src/test.c ****             DrawPixel(snow[i].x, snow[i].y + 1);
+ 1601              		.loc 1 354 13 is_stmt 1 view .LVU440
+ 354:Core/Src/test.c ****             DrawPixel(snow[i].x, snow[i].y + 1);
+ 1602              		.loc 1 354 33 is_stmt 0 view .LVU441
+ 1603 008e 05EB4502 		add	r2, r5, r5, lsl #1
+ 1604 0092 0DEB4203 		add	r3, sp, r2, lsl #1
+ 1605 0096 9C88     		ldrh	r4, [r3, #4]
+ 354:Core/Src/test.c ****             DrawPixel(snow[i].x, snow[i].y + 1);
+ 1606              		.loc 1 354 23 view .LVU442
+ 1607 0098 5988     		ldrh	r1, [r3, #2]
+ 1608 009a 0C44     		add	r4, r4, r1
+ 1609 009c 24B2     		sxth	r4, r4
+ 1610 009e 5C80     		strh	r4, [r3, #2]	@ movhi
+ 355:Core/Src/test.c ****             DrawPixel(snow[i].x + 1, snow[i].y);
+ 1611              		.loc 1 355 13 is_stmt 1 view .LVU443
+ 355:Core/Src/test.c ****             DrawPixel(snow[i].x + 1, snow[i].y);
+ 1612              		.loc 1 355 30 is_stmt 0 view .LVU444
+ 1613 00a0 3DF91260 		ldrsh	r6, [sp, r2, lsl #1]
+ 355:Core/Src/test.c ****             DrawPixel(snow[i].x + 1, snow[i].y);
+ 1614              		.loc 1 355 13 view .LVU445
+ 1615 00a4 611C     		adds	r1, r4, #1
+ 1616 00a6 3046     		mov	r0, r6
+ 1617 00a8 FFF7FEFF 		bl	DrawPixel
+ 1618              	.LVL236:
+ 356:Core/Src/test.c ****             DrawPixel(snow[i].x, snow[i].y);
+ 1619              		.loc 1 356 13 is_stmt 1 view .LVU446
+ 1620 00ac 2146     		mov	r1, r4
+ 1621 00ae 701C     		adds	r0, r6, #1
+ 1622 00b0 FFF7FEFF 		bl	DrawPixel
+ 1623              	.LVL237:
+ 357:Core/Src/test.c ****             DrawPixel(snow[i].x - 1, snow[i].y);
+ 1624              		.loc 1 357 13 view .LVU447
+ 1625 00b4 2146     		mov	r1, r4
+ 1626 00b6 3046     		mov	r0, r6
+ 1627 00b8 FFF7FEFF 		bl	DrawPixel
+ 1628              	.LVL238:
+ 358:Core/Src/test.c ****             DrawPixel(snow[i].x, snow[i].y - 1);
+ 1629              		.loc 1 358 13 view .LVU448
+ 1630 00bc 2146     		mov	r1, r4
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s 			page 42
+
+
+ 1631 00be 701E     		subs	r0, r6, #1
+ 1632 00c0 FFF7FEFF 		bl	DrawPixel
+ 1633              	.LVL239:
+ 359:Core/Src/test.c ****             if (snow[i].y > 63)
+ 1634              		.loc 1 359 13 view .LVU449
+ 1635 00c4 611E     		subs	r1, r4, #1
+ 1636 00c6 3046     		mov	r0, r6
+ 1637 00c8 FFF7FEFF 		bl	DrawPixel
+ 1638              	.LVL240:
+ 360:Core/Src/test.c ****             {
+ 1639              		.loc 1 360 13 view .LVU450
+ 360:Core/Src/test.c ****             {
+ 1640              		.loc 1 360 16 is_stmt 0 view .LVU451
+ 1641 00cc 3F2C     		cmp	r4, #63
+ 1642 00ce 05DD     		ble	.L85
+ 362:Core/Src/test.c ****             }
+ 1643              		.loc 1 362 17 is_stmt 1 view .LVU452
+ 362:Core/Src/test.c ****             }
+ 1644              		.loc 1 362 27 is_stmt 0 view .LVU453
+ 1645 00d0 05EB4503 		add	r3, r5, r5, lsl #1
+ 1646 00d4 0DEB4303 		add	r3, sp, r3, lsl #1
+ 1647 00d8 0022     		movs	r2, #0
+ 1648 00da 5A80     		strh	r2, [r3, #2]	@ movhi
+ 1649              	.L85:
+ 352:Core/Src/test.c ****         {
+ 1650              		.loc 1 352 30 is_stmt 1 discriminator 2 view .LVU454
+ 352:Core/Src/test.c ****         {
+ 1651              		.loc 1 352 31 is_stmt 0 discriminator 2 view .LVU455
+ 1652 00dc 0135     		adds	r5, r5, #1
+ 1653              	.LVL241:
+ 352:Core/Src/test.c ****         {
+ 1654              		.loc 1 352 31 discriminator 2 view .LVU456
+ 1655 00de CAE7     		b	.L84
+ 1656              	.L91:
+ 1657              		.align	2
+ 1658              	.L90:
+ 1659 00e0 E1830F3E 		.word	1041204193
+ 1660              		.cfi_endproc
+ 1661              	.LFE72:
+ 1663              		.text
+ 1664              	.Letext0:
+ 1665              		.file 2 "oledlib/oled_basic.h"
+ 1666              		.file 3 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 1667              		.file 4 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 1668              		.file 5 "Drivers/CMSIS/Include/core_cm3.h"
+ 1669              		.file 6 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/system_stm32f1xx.h"
+ 1670              		.file 7 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
+ 1671              		.file 8 "oledlib/oled_color.h"
+ 1672              		.file 9 "oledlib/oled_font.h"
+ 1673              		.file 10 "oledlib/oled_bmp.h"
+ 1674              		.file 11 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\sys\\lock.h"
+ 1675              		.file 12 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\sys\\_types.h"
+ 1676              		.file 13 "d:\\work_project\\9 2019-q4-major\\lib\\gcc\\arm-none-eabi\\9.2.1\\include\\stddef.h"
+ 1677              		.file 14 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\sys\\reent.h"
+ 1678              		.file 15 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\stdlib.h"
+ 1679              		.file 16 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\math.h"
+ 1680              		.file 17 "oledlib/draw_api.h"
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s 			page 43
+
+
+ 1681              		.file 18 "<built-in>"
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s 			page 44
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 test.c
+C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s:16     .text.ShowStars:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s:24     .text.ShowStars:00000000 ShowStars
+C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s:305    .text.ShowStars:0000015c $d
+C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s:311    .text.ShowWave:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s:318    .text.ShowWave:00000000 ShowWave
+C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s:340    .text.ShowTest:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s:347    .text.ShowTest:00000000 ShowTest
+C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s:559    .text.ShowTest:000000f0 $d
+C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s:567    .rodata.demo.str1.4:00000000 $d
+C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s:575    .text.demo:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s:582    .text.demo:00000000 demo
+C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s:1243   .text.demo:00000378 $d
+C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s:1251   .text.demo:0000038c $t
+C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s:1457   .text.demo:000004a0 $d
+C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s:1463   .text.ShowSnow:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s:1470   .text.ShowSnow:00000000 ShowSnow
+C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s:1659   .text.ShowSnow:000000e0 $d
+
+UNDEFINED SYMBOLS
+memset
+srand
+rand
+FrameRateUpdateScreen
+SetDrawColor
+DrawLine
+__aeabi_i2d
+__aeabi_dmul
+__aeabi_ddiv
+__aeabi_dadd
+__aeabi_d2iz
+HAL_Delay
+UpdateScreen
+ClearScreen
+cos
+sin
+__aeabi_i2f
+DrawBitmap
+SetFontSize
+DrawString
+DrawRect2
+DrawFillRect2
+SetFillcolor
+DrawRoundRect
+DrawfillRoundRect
+DrawEllipse
+DrawFillEllipse
+DrawCircle
+DrawFillCircle
+DrawTriangle
+DrawFillTriangle
+DrawArc
+TempLogo
+BmpTest1
+BmpTest2
+BmpTest3
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cchvwbbf.s 			page 45
+
+
+SetAngle
+SetRotateCenter
+GetRotateXY
+DZTBGZ
+DrawPixel

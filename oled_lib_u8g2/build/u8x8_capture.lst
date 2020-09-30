@@ -1,0 +1,957 @@
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc3e16gQ.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"u8x8_capture.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.u8x8_capture_get_pixel_1,"ax",%progbits
+  16              		.align	1
+  17              		.global	u8x8_capture_get_pixel_1
+  18              		.arch armv7-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu softvfp
+  24              	u8x8_capture_get_pixel_1:
+  25              	.LVL0:
+  26              	.LFB0:
+  27              		.file 1 "u8g2_lib/u8x8_capture.c"
+   1:u8g2_lib/u8x8_capture.c **** /*
+   2:u8g2_lib/u8x8_capture.c **** 
+   3:u8g2_lib/u8x8_capture.c ****   u8x8_capture.c
+   4:u8g2_lib/u8x8_capture.c ****   
+   5:u8g2_lib/u8x8_capture.c ****   Screen capture funcion
+   6:u8g2_lib/u8x8_capture.c ****   
+   7:u8g2_lib/u8x8_capture.c ****   Universal 8bit Graphics Library (https://github.com/olikraus/u8g2/)
+   8:u8g2_lib/u8x8_capture.c **** 
+   9:u8g2_lib/u8x8_capture.c ****   Copyright (c) 2016, olikraus@gmail.com
+  10:u8g2_lib/u8x8_capture.c ****   All rights reserved.
+  11:u8g2_lib/u8x8_capture.c **** 
+  12:u8g2_lib/u8x8_capture.c ****   Redistribution and use in source and binary forms, with or without modification, 
+  13:u8g2_lib/u8x8_capture.c ****   are permitted provided that the following conditions are met:
+  14:u8g2_lib/u8x8_capture.c **** 
+  15:u8g2_lib/u8x8_capture.c ****   * Redistributions of source code must retain the above copyright notice, this list 
+  16:u8g2_lib/u8x8_capture.c ****     of conditions and the following disclaimer.
+  17:u8g2_lib/u8x8_capture.c ****     
+  18:u8g2_lib/u8x8_capture.c ****   * Redistributions in binary form must reproduce the above copyright notice, this 
+  19:u8g2_lib/u8x8_capture.c ****     list of conditions and the following disclaimer in the documentation and/or other 
+  20:u8g2_lib/u8x8_capture.c ****     materials provided with the distribution.
+  21:u8g2_lib/u8x8_capture.c **** 
+  22:u8g2_lib/u8x8_capture.c ****   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND 
+  23:u8g2_lib/u8x8_capture.c ****   CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, 
+  24:u8g2_lib/u8x8_capture.c ****   INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF 
+  25:u8g2_lib/u8x8_capture.c ****   MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE 
+  26:u8g2_lib/u8x8_capture.c ****   DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR 
+  27:u8g2_lib/u8x8_capture.c ****   CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
+  28:u8g2_lib/u8x8_capture.c ****   SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
+  29:u8g2_lib/u8x8_capture.c ****   NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; 
+  30:u8g2_lib/u8x8_capture.c ****   LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER 
+  31:u8g2_lib/u8x8_capture.c ****   CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, 
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc3e16gQ.s 			page 2
+
+
+  32:u8g2_lib/u8x8_capture.c ****   STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+  33:u8g2_lib/u8x8_capture.c ****   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF 
+  34:u8g2_lib/u8x8_capture.c ****   ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.  
+  35:u8g2_lib/u8x8_capture.c **** 
+  36:u8g2_lib/u8x8_capture.c **** 
+  37:u8g2_lib/u8x8_capture.c **** */
+  38:u8g2_lib/u8x8_capture.c **** 
+  39:u8g2_lib/u8x8_capture.c **** #include "u8x8.h"
+  40:u8g2_lib/u8x8_capture.c **** 
+  41:u8g2_lib/u8x8_capture.c **** /*========================================================*/
+  42:u8g2_lib/u8x8_capture.c **** 
+  43:u8g2_lib/u8x8_capture.c **** 
+  44:u8g2_lib/u8x8_capture.c **** /* vertical top lsb memory architecture */
+  45:u8g2_lib/u8x8_capture.c **** uint8_t u8x8_capture_get_pixel_1(uint16_t x, uint16_t y, uint8_t *dest_ptr, uint8_t tile_width)
+  46:u8g2_lib/u8x8_capture.c **** {
+  28              		.loc 1 46 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33              		.loc 1 46 1 is_stmt 0 view .LVU1
+  34 0000 10B4     		push	{r4}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 4
+  37              		.cfi_offset 4, -4
+  47:u8g2_lib/u8x8_capture.c ****   //uint8_t *dest_ptr = capture->buffer;
+  48:u8g2_lib/u8x8_capture.c ****   //if ( dest_ptr == NULL )
+  49:u8g2_lib/u8x8_capture.c ****     //return 0;
+  50:u8g2_lib/u8x8_capture.c ****   //dest_ptr += (y/8)*capture->tile_width*8;
+  51:u8g2_lib/u8x8_capture.c ****   dest_ptr += (y/8)*tile_width*8;
+  38              		.loc 1 51 3 is_stmt 1 view .LVU2
+  39              		.loc 1 51 17 is_stmt 0 view .LVU3
+  40 0002 CC08     		lsrs	r4, r1, #3
+  41              		.loc 1 51 20 view .LVU4
+  42 0004 04FB03F4 		mul	r4, r4, r3
+  43              	.LVL1:
+  52:u8g2_lib/u8x8_capture.c ****   y &= 7;
+  44              		.loc 1 52 3 is_stmt 1 view .LVU5
+  45              		.loc 1 52 5 is_stmt 0 view .LVU6
+  46 0008 01F00701 		and	r1, r1, #7
+  47              	.LVL2:
+  53:u8g2_lib/u8x8_capture.c ****   dest_ptr += x;
+  48              		.loc 1 53 3 is_stmt 1 view .LVU7
+  49              		.loc 1 53 12 is_stmt 0 view .LVU8
+  50 000c 00EBC400 		add	r0, r0, r4, lsl #3
+  51              	.LVL3:
+  54:u8g2_lib/u8x8_capture.c ****   if ( (*dest_ptr & (1<<y)) == 0 )
+  52              		.loc 1 54 3 is_stmt 1 view .LVU9
+  53              		.loc 1 54 9 is_stmt 0 view .LVU10
+  54 0010 135C     		ldrb	r3, [r2, r0]	@ zero_extendqisi2
+  55              	.LVL4:
+  56              		.loc 1 54 29 view .LVU11
+  57 0012 43FA01F1 		asr	r1, r3, r1
+  58              	.LVL5:
+  59              		.loc 1 54 6 view .LVU12
+  60 0016 11F0010F 		tst	r1, #1
+  61 001a 02D0     		beq	.L3
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc3e16gQ.s 			page 3
+
+
+  55:u8g2_lib/u8x8_capture.c ****     return 0;
+  56:u8g2_lib/u8x8_capture.c ****   return 1;
+  62              		.loc 1 56 10 view .LVU13
+  63 001c 0120     		movs	r0, #1
+  64              	.LVL6:
+  65              	.L2:
+  57:u8g2_lib/u8x8_capture.c **** }
+  66              		.loc 1 57 1 view .LVU14
+  67 001e 10BC     		pop	{r4}
+  68              	.LCFI1:
+  69              		.cfi_remember_state
+  70              		.cfi_restore 4
+  71              		.cfi_def_cfa_offset 0
+  72              		.loc 1 57 1 view .LVU15
+  73 0020 7047     		bx	lr
+  74              	.LVL7:
+  75              	.L3:
+  76              	.LCFI2:
+  77              		.cfi_restore_state
+  55:u8g2_lib/u8x8_capture.c ****     return 0;
+  78              		.loc 1 55 12 view .LVU16
+  79 0022 0020     		movs	r0, #0
+  80              	.LVL8:
+  55:u8g2_lib/u8x8_capture.c ****     return 0;
+  81              		.loc 1 55 12 view .LVU17
+  82 0024 FBE7     		b	.L2
+  83              		.cfi_endproc
+  84              	.LFE0:
+  86              		.section	.text.u8x8_capture_get_pixel_2,"ax",%progbits
+  87              		.align	1
+  88              		.global	u8x8_capture_get_pixel_2
+  89              		.syntax unified
+  90              		.thumb
+  91              		.thumb_func
+  92              		.fpu softvfp
+  94              	u8x8_capture_get_pixel_2:
+  95              	.LVL9:
+  96              	.LFB1:
+  58:u8g2_lib/u8x8_capture.c **** 
+  59:u8g2_lib/u8x8_capture.c **** /* horizontal right lsb memory architecture */
+  60:u8g2_lib/u8x8_capture.c **** /* SH1122, LD7032, ST7920, ST7986, LC7981, T6963, SED1330, RA8835, MAX7219, LS0 */ 
+  61:u8g2_lib/u8x8_capture.c **** uint8_t u8x8_capture_get_pixel_2(uint16_t x, uint16_t y, uint8_t *dest_ptr, uint8_t tile_width)
+  62:u8g2_lib/u8x8_capture.c **** {
+  97              		.loc 1 62 1 is_stmt 1 view -0
+  98              		.cfi_startproc
+  99              		@ args = 0, pretend = 0, frame = 0
+ 100              		@ frame_needed = 0, uses_anonymous_args = 0
+ 101              		@ link register save eliminated.
+  63:u8g2_lib/u8x8_capture.c ****   //uint8_t *dest_ptr = capture->buffer;
+  64:u8g2_lib/u8x8_capture.c ****   //if ( dest_ptr == NULL )
+  65:u8g2_lib/u8x8_capture.c ****   //  return 0;
+  66:u8g2_lib/u8x8_capture.c ****   //dest_ptr += y*capture->tile_width;
+  67:u8g2_lib/u8x8_capture.c ****   y *= tile_width;
+ 102              		.loc 1 67 3 view .LVU19
+ 103              		.loc 1 67 5 is_stmt 0 view .LVU20
+ 104 0000 03FB01F3 		mul	r3, r3, r1
+ 105              	.LVL10:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc3e16gQ.s 			page 4
+
+
+ 106              		.loc 1 67 5 view .LVU21
+ 107 0004 9BB2     		uxth	r3, r3
+ 108              	.LVL11:
+  68:u8g2_lib/u8x8_capture.c ****   dest_ptr += y;
+ 109              		.loc 1 68 3 is_stmt 1 view .LVU22
+  69:u8g2_lib/u8x8_capture.c ****   dest_ptr += x>>3;
+ 110              		.loc 1 69 3 view .LVU23
+ 111              		.loc 1 69 12 is_stmt 0 view .LVU24
+ 112 0006 03EBD003 		add	r3, r3, r0, lsr #3
+ 113              	.LVL12:
+  70:u8g2_lib/u8x8_capture.c ****   if ( (*dest_ptr & (128>>(x&7))) == 0 )
+ 114              		.loc 1 70 3 is_stmt 1 view .LVU25
+ 115              		.loc 1 70 9 is_stmt 0 view .LVU26
+ 116 000a D25C     		ldrb	r2, [r2, r3]	@ zero_extendqisi2
+ 117              	.LVL13:
+ 118              		.loc 1 70 29 view .LVU27
+ 119 000c 00F00700 		and	r0, r0, #7
+ 120              	.LVL14:
+ 121              		.loc 1 70 25 view .LVU28
+ 122 0010 8023     		movs	r3, #128
+ 123              	.LVL15:
+ 124              		.loc 1 70 25 view .LVU29
+ 125 0012 43FA00F0 		asr	r0, r3, r0
+ 126              		.loc 1 70 6 view .LVU30
+ 127 0016 0242     		tst	r2, r0
+ 128 0018 01D0     		beq	.L7
+  71:u8g2_lib/u8x8_capture.c ****     return 0;
+  72:u8g2_lib/u8x8_capture.c ****   return 1;
+ 129              		.loc 1 72 10 view .LVU31
+ 130 001a 0120     		movs	r0, #1
+ 131 001c 7047     		bx	lr
+ 132              	.L7:
+  71:u8g2_lib/u8x8_capture.c ****     return 0;
+ 133              		.loc 1 71 12 view .LVU32
+ 134 001e 0020     		movs	r0, #0
+  73:u8g2_lib/u8x8_capture.c **** }
+ 135              		.loc 1 73 1 view .LVU33
+ 136 0020 7047     		bx	lr
+ 137              		.cfi_endproc
+ 138              	.LFE1:
+ 140              		.section	.rodata.u8x8_capture_write_pbm_pre.str1.4,"aMS",%progbits,1
+ 141              		.align	2
+ 142              	.LC0:
+ 143 0000 50310A00 		.ascii	"P1\012\000"
+ 144              		.align	2
+ 145              	.LC1:
+ 146 0004 0A00     		.ascii	"\012\000"
+ 147              		.section	.text.u8x8_capture_write_pbm_pre,"ax",%progbits
+ 148              		.align	1
+ 149              		.global	u8x8_capture_write_pbm_pre
+ 150              		.syntax unified
+ 151              		.thumb
+ 152              		.thumb_func
+ 153              		.fpu softvfp
+ 155              	u8x8_capture_write_pbm_pre:
+ 156              	.LVL16:
+ 157              	.LFB2:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc3e16gQ.s 			page 5
+
+
+  74:u8g2_lib/u8x8_capture.c **** 
+  75:u8g2_lib/u8x8_capture.c **** void u8x8_capture_write_pbm_pre(uint8_t tile_width, uint8_t tile_height, void (*out)(const char *s)
+  76:u8g2_lib/u8x8_capture.c **** {
+ 158              		.loc 1 76 1 is_stmt 1 view -0
+ 159              		.cfi_startproc
+ 160              		@ args = 0, pretend = 0, frame = 0
+ 161              		@ frame_needed = 0, uses_anonymous_args = 0
+ 162              		.loc 1 76 1 is_stmt 0 view .LVU35
+ 163 0000 70B5     		push	{r4, r5, r6, lr}
+ 164              	.LCFI3:
+ 165              		.cfi_def_cfa_offset 16
+ 166              		.cfi_offset 4, -16
+ 167              		.cfi_offset 5, -12
+ 168              		.cfi_offset 6, -8
+ 169              		.cfi_offset 14, -4
+ 170 0002 0646     		mov	r6, r0
+ 171 0004 0D46     		mov	r5, r1
+ 172 0006 1446     		mov	r4, r2
+  77:u8g2_lib/u8x8_capture.c ****   out("P1\n");
+ 173              		.loc 1 77 3 is_stmt 1 view .LVU36
+ 174 0008 0748     		ldr	r0, .L10
+ 175              	.LVL17:
+ 176              		.loc 1 77 3 is_stmt 0 view .LVU37
+ 177 000a 9047     		blx	r2
+ 178              	.LVL18:
+  78:u8g2_lib/u8x8_capture.c ****   out(u8x8_utoa((uint16_t)tile_width*8));
+ 179              		.loc 1 78 3 is_stmt 1 view .LVU38
+ 180 000c F000     		lsls	r0, r6, #3
+ 181 000e FFF7FEFF 		bl	u8x8_utoa
+ 182              	.LVL19:
+ 183 0012 A047     		blx	r4
+ 184              	.LVL20:
+  79:u8g2_lib/u8x8_capture.c ****   out("\n");
+ 185              		.loc 1 79 3 view .LVU39
+ 186 0014 054E     		ldr	r6, .L10+4
+ 187 0016 3046     		mov	r0, r6
+ 188 0018 A047     		blx	r4
+ 189              	.LVL21:
+  80:u8g2_lib/u8x8_capture.c ****   out(u8x8_utoa((uint16_t)tile_height*8));
+ 190              		.loc 1 80 3 view .LVU40
+ 191 001a E800     		lsls	r0, r5, #3
+ 192 001c FFF7FEFF 		bl	u8x8_utoa
+ 193              	.LVL22:
+ 194 0020 A047     		blx	r4
+ 195              	.LVL23:
+  81:u8g2_lib/u8x8_capture.c ****   out("\n");
+ 196              		.loc 1 81 3 view .LVU41
+ 197 0022 3046     		mov	r0, r6
+ 198 0024 A047     		blx	r4
+ 199              	.LVL24:
+  82:u8g2_lib/u8x8_capture.c **** }
+ 200              		.loc 1 82 1 is_stmt 0 view .LVU42
+ 201 0026 70BD     		pop	{r4, r5, r6, pc}
+ 202              	.LVL25:
+ 203              	.L11:
+ 204              		.loc 1 82 1 view .LVU43
+ 205              		.align	2
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc3e16gQ.s 			page 6
+
+
+ 206              	.L10:
+ 207 0028 00000000 		.word	.LC0
+ 208 002c 04000000 		.word	.LC1
+ 209              		.cfi_endproc
+ 210              	.LFE2:
+ 212              		.section	.rodata.u8x8_capture_write_pbm_buffer.str1.4,"aMS",%progbits,1
+ 213              		.align	2
+ 214              	.LC2:
+ 215 0000 3100     		.ascii	"1\000"
+ 216 0002 0000     		.align	2
+ 217              	.LC3:
+ 218 0004 3000     		.ascii	"0\000"
+ 219              		.section	.text.u8x8_capture_write_pbm_buffer,"ax",%progbits
+ 220              		.align	1
+ 221              		.global	u8x8_capture_write_pbm_buffer
+ 222              		.syntax unified
+ 223              		.thumb
+ 224              		.thumb_func
+ 225              		.fpu softvfp
+ 227              	u8x8_capture_write_pbm_buffer:
+ 228              	.LVL26:
+ 229              	.LFB3:
+  83:u8g2_lib/u8x8_capture.c **** 
+  84:u8g2_lib/u8x8_capture.c **** 
+  85:u8g2_lib/u8x8_capture.c **** void u8x8_capture_write_pbm_buffer(uint8_t *buffer, uint8_t tile_width, uint8_t tile_height, uint8_
+  86:u8g2_lib/u8x8_capture.c **** {
+ 230              		.loc 1 86 1 is_stmt 1 view -0
+ 231              		.cfi_startproc
+ 232              		@ args = 4, pretend = 0, frame = 0
+ 233              		@ frame_needed = 0, uses_anonymous_args = 0
+ 234              		.loc 1 86 1 is_stmt 0 view .LVU45
+ 235 0000 2DE9F84F 		push	{r3, r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 236              	.LCFI4:
+ 237              		.cfi_def_cfa_offset 40
+ 238              		.cfi_offset 3, -40
+ 239              		.cfi_offset 4, -36
+ 240              		.cfi_offset 5, -32
+ 241              		.cfi_offset 6, -28
+ 242              		.cfi_offset 7, -24
+ 243              		.cfi_offset 8, -20
+ 244              		.cfi_offset 9, -16
+ 245              		.cfi_offset 10, -12
+ 246              		.cfi_offset 11, -8
+ 247              		.cfi_offset 14, -4
+ 248 0004 8246     		mov	r10, r0
+ 249 0006 8846     		mov	r8, r1
+ 250 0008 9946     		mov	r9, r3
+ 251 000a 0A9F     		ldr	r7, [sp, #40]
+  87:u8g2_lib/u8x8_capture.c ****   uint16_t x, y;
+ 252              		.loc 1 87 3 is_stmt 1 view .LVU46
+  88:u8g2_lib/u8x8_capture.c ****   uint16_t w, h;
+ 253              		.loc 1 88 3 view .LVU47
+  89:u8g2_lib/u8x8_capture.c **** 
+  90:u8g2_lib/u8x8_capture.c ****   w = tile_width;
+ 254              		.loc 1 90 3 view .LVU48
+ 255              	.LVL27:
+  91:u8g2_lib/u8x8_capture.c ****   w *= 8;
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc3e16gQ.s 			page 7
+
+
+ 256              		.loc 1 91 3 view .LVU49
+ 257              		.loc 1 91 5 is_stmt 0 view .LVU50
+ 258 000c CE00     		lsls	r6, r1, #3
+ 259              	.LVL28:
+  92:u8g2_lib/u8x8_capture.c ****   h = tile_height;
+ 260              		.loc 1 92 3 is_stmt 1 view .LVU51
+  93:u8g2_lib/u8x8_capture.c ****   h *= 8;
+ 261              		.loc 1 93 3 view .LVU52
+ 262              		.loc 1 93 5 is_stmt 0 view .LVU53
+ 263 000e 4FEAC20B 		lsl	fp, r2, #3
+ 264              	.LVL29:
+  94:u8g2_lib/u8x8_capture.c ****     
+  95:u8g2_lib/u8x8_capture.c ****   for( y = 0; y < h; y++)
+ 265              		.loc 1 95 3 is_stmt 1 view .LVU54
+ 266              		.loc 1 95 10 is_stmt 0 view .LVU55
+ 267 0012 0025     		movs	r5, #0
+ 268              		.loc 1 95 3 view .LVU56
+ 269 0014 13E0     		b	.L13
+ 270              	.LVL30:
+ 271              	.L14:
+  96:u8g2_lib/u8x8_capture.c ****   {
+  97:u8g2_lib/u8x8_capture.c ****     for( x = 0; x < w; x++)
+  98:u8g2_lib/u8x8_capture.c ****     {
+  99:u8g2_lib/u8x8_capture.c ****       if ( get_pixel(x, y, buffer, tile_width) )
+ 100:u8g2_lib/u8x8_capture.c **** 	out("1");
+ 101:u8g2_lib/u8x8_capture.c ****       else
+ 102:u8g2_lib/u8x8_capture.c **** 	out("0"); 	  
+ 272              		.loc 1 102 2 is_stmt 1 view .LVU57
+ 273 0016 0D48     		ldr	r0, .L22
+ 274 0018 B847     		blx	r7
+ 275              	.LVL31:
+ 276              	.L15:
+  97:u8g2_lib/u8x8_capture.c ****     {
+ 277              		.loc 1 97 24 discriminator 2 view .LVU58
+  97:u8g2_lib/u8x8_capture.c ****     {
+ 278              		.loc 1 97 25 is_stmt 0 discriminator 2 view .LVU59
+ 279 001a 0134     		adds	r4, r4, #1
+ 280              	.LVL32:
+  97:u8g2_lib/u8x8_capture.c ****     {
+ 281              		.loc 1 97 25 discriminator 2 view .LVU60
+ 282 001c A4B2     		uxth	r4, r4
+ 283              	.LVL33:
+ 284              	.L17:
+  97:u8g2_lib/u8x8_capture.c ****     {
+ 285              		.loc 1 97 17 is_stmt 1 discriminator 1 view .LVU61
+  97:u8g2_lib/u8x8_capture.c ****     {
+ 286              		.loc 1 97 5 is_stmt 0 discriminator 1 view .LVU62
+ 287 001e B442     		cmp	r4, r6
+ 288 0020 09D2     		bcs	.L20
+  99:u8g2_lib/u8x8_capture.c **** 	out("1");
+ 289              		.loc 1 99 7 is_stmt 1 view .LVU63
+  99:u8g2_lib/u8x8_capture.c **** 	out("1");
+ 290              		.loc 1 99 12 is_stmt 0 view .LVU64
+ 291 0022 4346     		mov	r3, r8
+ 292 0024 5246     		mov	r2, r10
+ 293 0026 2946     		mov	r1, r5
+ 294 0028 2046     		mov	r0, r4
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc3e16gQ.s 			page 8
+
+
+ 295 002a C847     		blx	r9
+ 296              	.LVL34:
+  99:u8g2_lib/u8x8_capture.c **** 	out("1");
+ 297              		.loc 1 99 10 view .LVU65
+ 298 002c 0028     		cmp	r0, #0
+ 299 002e F2D0     		beq	.L14
+ 100:u8g2_lib/u8x8_capture.c ****       else
+ 300              		.loc 1 100 2 is_stmt 1 view .LVU66
+ 301 0030 0748     		ldr	r0, .L22+4
+ 302 0032 B847     		blx	r7
+ 303              	.LVL35:
+ 304 0034 F1E7     		b	.L15
+ 305              	.L20:
+ 103:u8g2_lib/u8x8_capture.c ****     }
+ 104:u8g2_lib/u8x8_capture.c ****     out("\n");
+ 306              		.loc 1 104 5 discriminator 2 view .LVU67
+ 307 0036 0748     		ldr	r0, .L22+8
+ 308 0038 B847     		blx	r7
+ 309              	.LVL36:
+  95:u8g2_lib/u8x8_capture.c ****   {
+ 310              		.loc 1 95 22 discriminator 2 view .LVU68
+  95:u8g2_lib/u8x8_capture.c ****   {
+ 311              		.loc 1 95 23 is_stmt 0 discriminator 2 view .LVU69
+ 312 003a 0135     		adds	r5, r5, #1
+ 313              	.LVL37:
+  95:u8g2_lib/u8x8_capture.c ****   {
+ 314              		.loc 1 95 23 discriminator 2 view .LVU70
+ 315 003c ADB2     		uxth	r5, r5
+ 316              	.LVL38:
+ 317              	.L13:
+  95:u8g2_lib/u8x8_capture.c ****   {
+ 318              		.loc 1 95 15 is_stmt 1 discriminator 1 view .LVU71
+  95:u8g2_lib/u8x8_capture.c ****   {
+ 319              		.loc 1 95 3 is_stmt 0 discriminator 1 view .LVU72
+ 320 003e 5D45     		cmp	r5, fp
+ 321 0040 01D2     		bcs	.L21
+  97:u8g2_lib/u8x8_capture.c ****     {
+ 322              		.loc 1 97 12 view .LVU73
+ 323 0042 0024     		movs	r4, #0
+ 324 0044 EBE7     		b	.L17
+ 325              	.L21:
+ 105:u8g2_lib/u8x8_capture.c ****   }
+ 106:u8g2_lib/u8x8_capture.c **** }
+ 326              		.loc 1 106 1 view .LVU74
+ 327 0046 BDE8F88F 		pop	{r3, r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 328              	.LVL39:
+ 329              	.L23:
+ 330              		.loc 1 106 1 view .LVU75
+ 331 004a 00BF     		.align	2
+ 332              	.L22:
+ 333 004c 04000000 		.word	.LC3
+ 334 0050 00000000 		.word	.LC2
+ 335 0054 04000000 		.word	.LC1
+ 336              		.cfi_endproc
+ 337              	.LFE3:
+ 339              		.section	.rodata.u8x8_capture_write_xbm_pre.str1.4,"aMS",%progbits,1
+ 340              		.align	2
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc3e16gQ.s 			page 9
+
+
+ 341              	.LC4:
+ 342 0000 23646566 		.ascii	"#define xbm_width \000"
+ 342      696E6520 
+ 342      78626D5F 
+ 342      77696474 
+ 342      682000
+ 343 0013 00       		.align	2
+ 344              	.LC5:
+ 345 0014 23646566 		.ascii	"#define xbm_height \000"
+ 345      696E6520 
+ 345      78626D5F 
+ 345      68656967 
+ 345      68742000 
+ 346              		.align	2
+ 347              	.LC6:
+ 348 0028 73746174 		.ascii	"static unsigned char xbm_bits[] = {\012\000"
+ 348      69632075 
+ 348      6E736967 
+ 348      6E656420 
+ 348      63686172 
+ 349              		.section	.text.u8x8_capture_write_xbm_pre,"ax",%progbits
+ 350              		.align	1
+ 351              		.global	u8x8_capture_write_xbm_pre
+ 352              		.syntax unified
+ 353              		.thumb
+ 354              		.thumb_func
+ 355              		.fpu softvfp
+ 357              	u8x8_capture_write_xbm_pre:
+ 358              	.LVL40:
+ 359              	.LFB4:
+ 107:u8g2_lib/u8x8_capture.c **** 
+ 108:u8g2_lib/u8x8_capture.c **** 
+ 109:u8g2_lib/u8x8_capture.c **** 
+ 110:u8g2_lib/u8x8_capture.c **** 
+ 111:u8g2_lib/u8x8_capture.c **** void u8x8_capture_write_xbm_pre(uint8_t tile_width, uint8_t tile_height, void (*out)(const char *s)
+ 112:u8g2_lib/u8x8_capture.c **** {
+ 360              		.loc 1 112 1 is_stmt 1 view -0
+ 361              		.cfi_startproc
+ 362              		@ args = 0, pretend = 0, frame = 0
+ 363              		@ frame_needed = 0, uses_anonymous_args = 0
+ 364              		.loc 1 112 1 is_stmt 0 view .LVU77
+ 365 0000 70B5     		push	{r4, r5, r6, lr}
+ 366              	.LCFI5:
+ 367              		.cfi_def_cfa_offset 16
+ 368              		.cfi_offset 4, -16
+ 369              		.cfi_offset 5, -12
+ 370              		.cfi_offset 6, -8
+ 371              		.cfi_offset 14, -4
+ 372 0002 0646     		mov	r6, r0
+ 373 0004 0D46     		mov	r5, r1
+ 374 0006 1446     		mov	r4, r2
+ 113:u8g2_lib/u8x8_capture.c ****   out("#define xbm_width ");
+ 375              		.loc 1 113 3 is_stmt 1 view .LVU78
+ 376 0008 0948     		ldr	r0, .L26
+ 377              	.LVL41:
+ 378              		.loc 1 113 3 is_stmt 0 view .LVU79
+ 379 000a 9047     		blx	r2
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc3e16gQ.s 			page 10
+
+
+ 380              	.LVL42:
+ 114:u8g2_lib/u8x8_capture.c ****   out(u8x8_utoa((uint16_t)tile_width*8));
+ 381              		.loc 1 114 3 is_stmt 1 view .LVU80
+ 382 000c F000     		lsls	r0, r6, #3
+ 383 000e FFF7FEFF 		bl	u8x8_utoa
+ 384              	.LVL43:
+ 385 0012 A047     		blx	r4
+ 386              	.LVL44:
+ 115:u8g2_lib/u8x8_capture.c ****   out("\n");
+ 387              		.loc 1 115 3 view .LVU81
+ 388 0014 074E     		ldr	r6, .L26+4
+ 389 0016 3046     		mov	r0, r6
+ 390 0018 A047     		blx	r4
+ 391              	.LVL45:
+ 116:u8g2_lib/u8x8_capture.c ****   out("#define xbm_height ");
+ 392              		.loc 1 116 3 view .LVU82
+ 393 001a 0748     		ldr	r0, .L26+8
+ 394 001c A047     		blx	r4
+ 395              	.LVL46:
+ 117:u8g2_lib/u8x8_capture.c ****   out(u8x8_utoa((uint16_t)tile_height*8));
+ 396              		.loc 1 117 3 view .LVU83
+ 397 001e E800     		lsls	r0, r5, #3
+ 398 0020 FFF7FEFF 		bl	u8x8_utoa
+ 399              	.LVL47:
+ 400 0024 A047     		blx	r4
+ 401              	.LVL48:
+ 118:u8g2_lib/u8x8_capture.c ****   out("\n");  
+ 402              		.loc 1 118 3 view .LVU84
+ 403 0026 3046     		mov	r0, r6
+ 404 0028 A047     		blx	r4
+ 405              	.LVL49:
+ 119:u8g2_lib/u8x8_capture.c ****   out("static unsigned char xbm_bits[] = {\n");  
+ 406              		.loc 1 119 3 view .LVU85
+ 407 002a 0448     		ldr	r0, .L26+12
+ 408 002c A047     		blx	r4
+ 409              	.LVL50:
+ 120:u8g2_lib/u8x8_capture.c **** }
+ 410              		.loc 1 120 1 is_stmt 0 view .LVU86
+ 411 002e 70BD     		pop	{r4, r5, r6, pc}
+ 412              	.LVL51:
+ 413              	.L27:
+ 414              		.loc 1 120 1 view .LVU87
+ 415              		.align	2
+ 416              	.L26:
+ 417 0030 00000000 		.word	.LC4
+ 418 0034 04000000 		.word	.LC1
+ 419 0038 14000000 		.word	.LC5
+ 420 003c 28000000 		.word	.LC6
+ 421              		.cfi_endproc
+ 422              	.LFE4:
+ 424              		.section	.rodata.u8x8_capture_write_xbm_buffer.str1.4,"aMS",%progbits,1
+ 425              		.align	2
+ 426              	.LC7:
+ 427 0000 307800   		.ascii	"0x\000"
+ 428 0003 00       		.align	2
+ 429              	.LC8:
+ 430 0004 2C00     		.ascii	",\000"
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc3e16gQ.s 			page 11
+
+
+ 431 0006 0000     		.align	2
+ 432              	.LC9:
+ 433 0008 7D3B0A00 		.ascii	"};\012\000"
+ 434              		.section	.text.u8x8_capture_write_xbm_buffer,"ax",%progbits
+ 435              		.align	1
+ 436              		.global	u8x8_capture_write_xbm_buffer
+ 437              		.syntax unified
+ 438              		.thumb
+ 439              		.thumb_func
+ 440              		.fpu softvfp
+ 442              	u8x8_capture_write_xbm_buffer:
+ 443              	.LVL52:
+ 444              	.LFB5:
+ 121:u8g2_lib/u8x8_capture.c **** 
+ 122:u8g2_lib/u8x8_capture.c **** void u8x8_capture_write_xbm_buffer(uint8_t *buffer, uint8_t tile_width, uint8_t tile_height, uint8_
+ 123:u8g2_lib/u8x8_capture.c **** {
+ 445              		.loc 1 123 1 is_stmt 1 view -0
+ 446              		.cfi_startproc
+ 447              		@ args = 4, pretend = 0, frame = 16
+ 448              		@ frame_needed = 0, uses_anonymous_args = 0
+ 449              		.loc 1 123 1 is_stmt 0 view .LVU89
+ 450 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 451              	.LCFI6:
+ 452              		.cfi_def_cfa_offset 36
+ 453              		.cfi_offset 4, -36
+ 454              		.cfi_offset 5, -32
+ 455              		.cfi_offset 6, -28
+ 456              		.cfi_offset 7, -24
+ 457              		.cfi_offset 8, -20
+ 458              		.cfi_offset 9, -16
+ 459              		.cfi_offset 10, -12
+ 460              		.cfi_offset 11, -8
+ 461              		.cfi_offset 14, -4
+ 462 0004 85B0     		sub	sp, sp, #20
+ 463              	.LCFI7:
+ 464              		.cfi_def_cfa_offset 56
+ 465 0006 8246     		mov	r10, r0
+ 466 0008 8846     		mov	r8, r1
+ 467 000a 9946     		mov	r9, r3
+ 468 000c DDF838B0 		ldr	fp, [sp, #56]
+ 124:u8g2_lib/u8x8_capture.c ****   uint16_t x, y;
+ 469              		.loc 1 124 3 is_stmt 1 view .LVU90
+ 125:u8g2_lib/u8x8_capture.c ****   uint16_t w, h;
+ 470              		.loc 1 125 3 view .LVU91
+ 126:u8g2_lib/u8x8_capture.c ****   uint8_t v, b;
+ 471              		.loc 1 126 3 view .LVU92
+ 127:u8g2_lib/u8x8_capture.c ****   char s[2];
+ 472              		.loc 1 127 3 view .LVU93
+ 128:u8g2_lib/u8x8_capture.c ****   s[1] = '\0';
+ 473              		.loc 1 128 3 view .LVU94
+ 474              		.loc 1 128 8 is_stmt 0 view .LVU95
+ 475 0010 0027     		movs	r7, #0
+ 476 0012 8DF80D70 		strb	r7, [sp, #13]
+ 129:u8g2_lib/u8x8_capture.c **** 
+ 130:u8g2_lib/u8x8_capture.c ****   w = tile_width;
+ 477              		.loc 1 130 3 is_stmt 1 view .LVU96
+ 478              	.LVL53:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc3e16gQ.s 			page 12
+
+
+ 131:u8g2_lib/u8x8_capture.c ****   w *= 8;
+ 479              		.loc 1 131 3 view .LVU97
+ 480              		.loc 1 131 5 is_stmt 0 view .LVU98
+ 481 0016 CB00     		lsls	r3, r1, #3
+ 482              	.LVL54:
+ 483              		.loc 1 131 5 view .LVU99
+ 484 0018 0093     		str	r3, [sp]
+ 485              	.LVL55:
+ 132:u8g2_lib/u8x8_capture.c ****   h = tile_height;
+ 486              		.loc 1 132 3 is_stmt 1 view .LVU100
+ 133:u8g2_lib/u8x8_capture.c ****   h *= 8;
+ 487              		.loc 1 133 3 view .LVU101
+ 488              		.loc 1 133 5 is_stmt 0 view .LVU102
+ 489 001a D300     		lsls	r3, r2, #3
+ 490 001c 0193     		str	r3, [sp, #4]
+ 491              	.LVL56:
+ 134:u8g2_lib/u8x8_capture.c **** 
+ 135:u8g2_lib/u8x8_capture.c ****   y = 0;
+ 492              		.loc 1 135 3 is_stmt 1 view .LVU103
+ 493              		.loc 1 135 3 is_stmt 0 view .LVU104
+ 494 001e 40E0     		b	.L39
+ 495              	.LVL57:
+ 496              	.L30:
+ 136:u8g2_lib/u8x8_capture.c ****   for(;;)
+ 137:u8g2_lib/u8x8_capture.c ****   {
+ 138:u8g2_lib/u8x8_capture.c ****     x = 0;
+ 139:u8g2_lib/u8x8_capture.c ****     for(;;)
+ 140:u8g2_lib/u8x8_capture.c ****     {
+ 141:u8g2_lib/u8x8_capture.c ****       v = 0;
+ 142:u8g2_lib/u8x8_capture.c ****       for( b = 0; b < 8; b++ )
+ 497              		.loc 1 142 26 is_stmt 1 discriminator 2 view .LVU105
+ 498              		.loc 1 142 27 is_stmt 0 discriminator 2 view .LVU106
+ 499 0020 0134     		adds	r4, r4, #1
+ 500              	.LVL58:
+ 501              		.loc 1 142 27 discriminator 2 view .LVU107
+ 502 0022 E4B2     		uxtb	r4, r4
+ 503              	.LVL59:
+ 504              	.L29:
+ 505              		.loc 1 142 19 is_stmt 1 discriminator 1 view .LVU108
+ 506              		.loc 1 142 7 is_stmt 0 discriminator 1 view .LVU109
+ 507 0024 072C     		cmp	r4, #7
+ 508 0026 0ED8     		bhi	.L41
+ 143:u8g2_lib/u8x8_capture.c ****       {
+ 144:u8g2_lib/u8x8_capture.c **** 	v <<= 1;
+ 509              		.loc 1 144 2 is_stmt 1 view .LVU110
+ 510              		.loc 1 144 4 is_stmt 0 view .LVU111
+ 511 0028 6D00     		lsls	r5, r5, #1
+ 512              	.LVL60:
+ 513              		.loc 1 144 4 view .LVU112
+ 514 002a EDB2     		uxtb	r5, r5
+ 515              	.LVL61:
+ 145:u8g2_lib/u8x8_capture.c **** 	if ( get_pixel(x+7-b, y, buffer, tile_width) )
+ 516              		.loc 1 145 2 is_stmt 1 view .LVU113
+ 517              		.loc 1 145 20 is_stmt 0 view .LVU114
+ 518 002c 301B     		subs	r0, r6, r4
+ 519 002e 80B2     		uxth	r0, r0
+ 520              		.loc 1 145 7 view .LVU115
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc3e16gQ.s 			page 13
+
+
+ 521 0030 0730     		adds	r0, r0, #7
+ 522 0032 4346     		mov	r3, r8
+ 523 0034 5246     		mov	r2, r10
+ 524 0036 3946     		mov	r1, r7
+ 525 0038 80B2     		uxth	r0, r0
+ 526 003a C847     		blx	r9
+ 527              	.LVL62:
+ 528              		.loc 1 145 5 view .LVU116
+ 529 003c 0028     		cmp	r0, #0
+ 530 003e EFD0     		beq	.L30
+ 146:u8g2_lib/u8x8_capture.c **** 	  v |= 1;
+ 531              		.loc 1 146 4 is_stmt 1 view .LVU117
+ 532              		.loc 1 146 6 is_stmt 0 view .LVU118
+ 533 0040 45F00105 		orr	r5, r5, #1
+ 534              	.LVL63:
+ 535              		.loc 1 146 6 view .LVU119
+ 536 0044 ECE7     		b	.L30
+ 537              	.L41:
+ 147:u8g2_lib/u8x8_capture.c ****       }
+ 148:u8g2_lib/u8x8_capture.c ****       out("0x");
+ 538              		.loc 1 148 7 is_stmt 1 view .LVU120
+ 539 0046 1A48     		ldr	r0, .L42
+ 540 0048 D847     		blx	fp
+ 541              	.LVL64:
+ 149:u8g2_lib/u8x8_capture.c ****       s[0] = (v>>4);
+ 542              		.loc 1 149 7 view .LVU121
+ 543              		.loc 1 149 12 is_stmt 0 view .LVU122
+ 544 004a 2B09     		lsrs	r3, r5, #4
+ 150:u8g2_lib/u8x8_capture.c ****       if ( s[0] <= 9 )
+ 545              		.loc 1 150 7 is_stmt 1 view .LVU123
+ 546              		.loc 1 150 10 is_stmt 0 view .LVU124
+ 547 004c 9F2D     		cmp	r5, #159
+ 548 004e 17D8     		bhi	.L32
+ 151:u8g2_lib/u8x8_capture.c **** 	s[0] += '0';
+ 549              		.loc 1 151 2 is_stmt 1 view .LVU125
+ 550              		.loc 1 151 7 is_stmt 0 view .LVU126
+ 551 0050 3033     		adds	r3, r3, #48
+ 552 0052 8DF80C30 		strb	r3, [sp, #12]
+ 553              	.L33:
+ 152:u8g2_lib/u8x8_capture.c ****       else
+ 153:u8g2_lib/u8x8_capture.c **** 	s[0] += 'a'-10;
+ 154:u8g2_lib/u8x8_capture.c ****       out(s);
+ 554              		.loc 1 154 7 is_stmt 1 view .LVU127
+ 555 0056 03A8     		add	r0, sp, #12
+ 556 0058 D847     		blx	fp
+ 557              	.LVL65:
+ 155:u8g2_lib/u8x8_capture.c ****       s[0] = (v&15);
+ 558              		.loc 1 155 7 view .LVU128
+ 559              		.loc 1 155 16 is_stmt 0 view .LVU129
+ 560 005a 05F00F05 		and	r5, r5, #15
+ 561              	.LVL66:
+ 156:u8g2_lib/u8x8_capture.c ****       if ( s[0] <= 9 )
+ 562              		.loc 1 156 7 is_stmt 1 view .LVU130
+ 563              		.loc 1 156 10 is_stmt 0 view .LVU131
+ 564 005e 092D     		cmp	r5, #9
+ 565 0060 12D8     		bhi	.L34
+ 157:u8g2_lib/u8x8_capture.c **** 	s[0] += '0';
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc3e16gQ.s 			page 14
+
+
+ 566              		.loc 1 157 2 is_stmt 1 view .LVU132
+ 567              		.loc 1 157 7 is_stmt 0 view .LVU133
+ 568 0062 3035     		adds	r5, r5, #48
+ 569 0064 8DF80C50 		strb	r5, [sp, #12]
+ 570              	.L35:
+ 158:u8g2_lib/u8x8_capture.c ****       else
+ 159:u8g2_lib/u8x8_capture.c **** 	s[0] += 'a'-10;
+ 160:u8g2_lib/u8x8_capture.c ****       out(s);
+ 571              		.loc 1 160 7 is_stmt 1 view .LVU134
+ 572 0068 03A8     		add	r0, sp, #12
+ 573 006a D847     		blx	fp
+ 574              	.LVL67:
+ 161:u8g2_lib/u8x8_capture.c ****       x += 8;
+ 575              		.loc 1 161 7 view .LVU135
+ 576              		.loc 1 161 9 is_stmt 0 view .LVU136
+ 577 006c 0836     		adds	r6, r6, #8
+ 578              	.LVL68:
+ 579              		.loc 1 161 9 view .LVU137
+ 580 006e B6B2     		uxth	r6, r6
+ 581              	.LVL69:
+ 162:u8g2_lib/u8x8_capture.c ****       if ( x >= w )
+ 582              		.loc 1 162 7 is_stmt 1 view .LVU138
+ 583              		.loc 1 162 10 is_stmt 0 view .LVU139
+ 584 0070 009B     		ldr	r3, [sp]
+ 585 0072 B342     		cmp	r3, r6
+ 586 0074 0CD9     		bls	.L36
+ 163:u8g2_lib/u8x8_capture.c **** 	break;
+ 164:u8g2_lib/u8x8_capture.c ****       out(",");
+ 587              		.loc 1 164 7 is_stmt 1 view .LVU140
+ 588 0076 0F48     		ldr	r0, .L42+4
+ 589 0078 D847     		blx	fp
+ 590              	.LVL70:
+ 139:u8g2_lib/u8x8_capture.c ****     {
+ 591              		.loc 1 139 10 view .LVU141
+ 592              	.L37:
+ 139:u8g2_lib/u8x8_capture.c ****     {
+ 593              		.loc 1 139 5 view .LVU142
+ 141:u8g2_lib/u8x8_capture.c ****       for( b = 0; b < 8; b++ )
+ 594              		.loc 1 141 7 view .LVU143
+ 142:u8g2_lib/u8x8_capture.c ****       {
+ 595              		.loc 1 142 7 view .LVU144
+ 142:u8g2_lib/u8x8_capture.c ****       {
+ 596              		.loc 1 142 14 is_stmt 0 view .LVU145
+ 597 007a 0024     		movs	r4, #0
+ 141:u8g2_lib/u8x8_capture.c ****       for( b = 0; b < 8; b++ )
+ 598              		.loc 1 141 9 view .LVU146
+ 599 007c 2546     		mov	r5, r4
+ 142:u8g2_lib/u8x8_capture.c ****       {
+ 600              		.loc 1 142 7 view .LVU147
+ 601 007e D1E7     		b	.L29
+ 602              	.LVL71:
+ 603              	.L32:
+ 153:u8g2_lib/u8x8_capture.c ****       out(s);
+ 604              		.loc 1 153 2 is_stmt 1 view .LVU148
+ 153:u8g2_lib/u8x8_capture.c ****       out(s);
+ 605              		.loc 1 153 7 is_stmt 0 view .LVU149
+ 606 0080 5733     		adds	r3, r3, #87
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc3e16gQ.s 			page 15
+
+
+ 607 0082 8DF80C30 		strb	r3, [sp, #12]
+ 608 0086 E6E7     		b	.L33
+ 609              	.LVL72:
+ 610              	.L34:
+ 159:u8g2_lib/u8x8_capture.c ****       out(s);
+ 611              		.loc 1 159 2 is_stmt 1 view .LVU150
+ 159:u8g2_lib/u8x8_capture.c ****       out(s);
+ 612              		.loc 1 159 7 is_stmt 0 view .LVU151
+ 613 0088 5735     		adds	r5, r5, #87
+ 614 008a 8DF80C50 		strb	r5, [sp, #12]
+ 615 008e EBE7     		b	.L35
+ 616              	.L36:
+ 165:u8g2_lib/u8x8_capture.c ****     }
+ 166:u8g2_lib/u8x8_capture.c ****     y++;
+ 617              		.loc 1 166 5 is_stmt 1 view .LVU152
+ 618              		.loc 1 166 6 is_stmt 0 view .LVU153
+ 619 0090 0137     		adds	r7, r7, #1
+ 620              	.LVL73:
+ 621              		.loc 1 166 6 view .LVU154
+ 622 0092 BFB2     		uxth	r7, r7
+ 623              	.LVL74:
+ 167:u8g2_lib/u8x8_capture.c ****     if ( y >= h )
+ 624              		.loc 1 167 5 is_stmt 1 view .LVU155
+ 625              		.loc 1 167 8 is_stmt 0 view .LVU156
+ 626 0094 019B     		ldr	r3, [sp, #4]
+ 627 0096 BB42     		cmp	r3, r7
+ 628 0098 05D9     		bls	.L38
+ 168:u8g2_lib/u8x8_capture.c ****       break;
+ 169:u8g2_lib/u8x8_capture.c ****     out(",");
+ 629              		.loc 1 169 5 is_stmt 1 view .LVU157
+ 630 009a 0648     		ldr	r0, .L42+4
+ 631 009c D847     		blx	fp
+ 632              	.LVL75:
+ 170:u8g2_lib/u8x8_capture.c ****     out("\n");
+ 633              		.loc 1 170 5 view .LVU158
+ 634 009e 0648     		ldr	r0, .L42+8
+ 635 00a0 D847     		blx	fp
+ 636              	.LVL76:
+ 136:u8g2_lib/u8x8_capture.c ****   {
+ 637              		.loc 1 136 8 view .LVU159
+ 638              	.L39:
+ 136:u8g2_lib/u8x8_capture.c ****   {
+ 639              		.loc 1 136 3 view .LVU160
+ 138:u8g2_lib/u8x8_capture.c ****     for(;;)
+ 640              		.loc 1 138 5 view .LVU161
+ 138:u8g2_lib/u8x8_capture.c ****     for(;;)
+ 641              		.loc 1 138 7 is_stmt 0 view .LVU162
+ 642 00a2 0026     		movs	r6, #0
+ 643 00a4 E9E7     		b	.L37
+ 644              	.LVL77:
+ 645              	.L38:
+ 171:u8g2_lib/u8x8_capture.c ****   }
+ 172:u8g2_lib/u8x8_capture.c ****   out("};\n");
+ 646              		.loc 1 172 3 is_stmt 1 view .LVU163
+ 647 00a6 0548     		ldr	r0, .L42+12
+ 648 00a8 D847     		blx	fp
+ 649              	.LVL78:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc3e16gQ.s 			page 16
+
+
+ 173:u8g2_lib/u8x8_capture.c ****   
+ 174:u8g2_lib/u8x8_capture.c **** }
+ 650              		.loc 1 174 1 is_stmt 0 view .LVU164
+ 651 00aa 05B0     		add	sp, sp, #20
+ 652              	.LCFI8:
+ 653              		.cfi_def_cfa_offset 36
+ 654              	.LVL79:
+ 655              		.loc 1 174 1 view .LVU165
+ 656              		@ sp needed
+ 657 00ac BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 658              	.LVL80:
+ 659              	.L43:
+ 660              		.loc 1 174 1 view .LVU166
+ 661              		.align	2
+ 662              	.L42:
+ 663 00b0 00000000 		.word	.LC7
+ 664 00b4 04000000 		.word	.LC8
+ 665 00b8 04000000 		.word	.LC1
+ 666 00bc 08000000 		.word	.LC9
+ 667              		.cfi_endproc
+ 668              	.LFE5:
+ 670              		.text
+ 671              	.Letext0:
+ 672              		.file 2 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 673              		.file 3 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 674              		.file 4 "u8g2_lib/u8x8.h"
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc3e16gQ.s 			page 17
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 u8x8_capture.c
+C:\Users\GKQ\AppData\Local\Temp\cc3e16gQ.s:16     .text.u8x8_capture_get_pixel_1:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\cc3e16gQ.s:24     .text.u8x8_capture_get_pixel_1:00000000 u8x8_capture_get_pixel_1
+C:\Users\GKQ\AppData\Local\Temp\cc3e16gQ.s:87     .text.u8x8_capture_get_pixel_2:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\cc3e16gQ.s:94     .text.u8x8_capture_get_pixel_2:00000000 u8x8_capture_get_pixel_2
+C:\Users\GKQ\AppData\Local\Temp\cc3e16gQ.s:141    .rodata.u8x8_capture_write_pbm_pre.str1.4:00000000 $d
+C:\Users\GKQ\AppData\Local\Temp\cc3e16gQ.s:148    .text.u8x8_capture_write_pbm_pre:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\cc3e16gQ.s:155    .text.u8x8_capture_write_pbm_pre:00000000 u8x8_capture_write_pbm_pre
+C:\Users\GKQ\AppData\Local\Temp\cc3e16gQ.s:207    .text.u8x8_capture_write_pbm_pre:00000028 $d
+C:\Users\GKQ\AppData\Local\Temp\cc3e16gQ.s:213    .rodata.u8x8_capture_write_pbm_buffer.str1.4:00000000 $d
+C:\Users\GKQ\AppData\Local\Temp\cc3e16gQ.s:220    .text.u8x8_capture_write_pbm_buffer:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\cc3e16gQ.s:227    .text.u8x8_capture_write_pbm_buffer:00000000 u8x8_capture_write_pbm_buffer
+C:\Users\GKQ\AppData\Local\Temp\cc3e16gQ.s:333    .text.u8x8_capture_write_pbm_buffer:0000004c $d
+C:\Users\GKQ\AppData\Local\Temp\cc3e16gQ.s:340    .rodata.u8x8_capture_write_xbm_pre.str1.4:00000000 $d
+C:\Users\GKQ\AppData\Local\Temp\cc3e16gQ.s:350    .text.u8x8_capture_write_xbm_pre:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\cc3e16gQ.s:357    .text.u8x8_capture_write_xbm_pre:00000000 u8x8_capture_write_xbm_pre
+C:\Users\GKQ\AppData\Local\Temp\cc3e16gQ.s:417    .text.u8x8_capture_write_xbm_pre:00000030 $d
+C:\Users\GKQ\AppData\Local\Temp\cc3e16gQ.s:425    .rodata.u8x8_capture_write_xbm_buffer.str1.4:00000000 $d
+C:\Users\GKQ\AppData\Local\Temp\cc3e16gQ.s:435    .text.u8x8_capture_write_xbm_buffer:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\cc3e16gQ.s:442    .text.u8x8_capture_write_xbm_buffer:00000000 u8x8_capture_write_xbm_buffer
+C:\Users\GKQ\AppData\Local\Temp\cc3e16gQ.s:663    .text.u8x8_capture_write_xbm_buffer:000000b0 $d
+
+UNDEFINED SYMBOLS
+u8x8_utoa

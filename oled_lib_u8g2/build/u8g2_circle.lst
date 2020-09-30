@@ -1,0 +1,2653 @@
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"u8g2_circle.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.u8g2_draw_circle_section,"ax",%progbits
+  16              		.align	1
+  17              		.arch armv7-m
+  18              		.syntax unified
+  19              		.thumb
+  20              		.thumb_func
+  21              		.fpu softvfp
+  23              	u8g2_draw_circle_section:
+  24              	.LVL0:
+  25              	.LFB0:
+  26              		.file 1 "u8g2_lib/u8g2_circle.c"
+   1:u8g2_lib/u8g2_circle.c **** /*
+   2:u8g2_lib/u8g2_circle.c **** 
+   3:u8g2_lib/u8g2_circle.c ****   u8g2_circle.c
+   4:u8g2_lib/u8g2_circle.c **** 
+   5:u8g2_lib/u8g2_circle.c ****   Universal 8bit Graphics Library (https://github.com/olikraus/u8g2/)
+   6:u8g2_lib/u8g2_circle.c **** 
+   7:u8g2_lib/u8g2_circle.c ****   Copyright (c) 2016, olikraus@gmail.com
+   8:u8g2_lib/u8g2_circle.c ****   All rights reserved.
+   9:u8g2_lib/u8g2_circle.c **** 
+  10:u8g2_lib/u8g2_circle.c ****   Redistribution and use in source and binary forms, with or without modification, 
+  11:u8g2_lib/u8g2_circle.c ****   are permitted provided that the following conditions are met:
+  12:u8g2_lib/u8g2_circle.c **** 
+  13:u8g2_lib/u8g2_circle.c ****   * Redistributions of source code must retain the above copyright notice, this list 
+  14:u8g2_lib/u8g2_circle.c ****     of conditions and the following disclaimer.
+  15:u8g2_lib/u8g2_circle.c ****     
+  16:u8g2_lib/u8g2_circle.c ****   * Redistributions in binary form must reproduce the above copyright notice, this 
+  17:u8g2_lib/u8g2_circle.c ****     list of conditions and the following disclaimer in the documentation and/or other 
+  18:u8g2_lib/u8g2_circle.c ****     materials provided with the distribution.
+  19:u8g2_lib/u8g2_circle.c **** 
+  20:u8g2_lib/u8g2_circle.c ****   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND 
+  21:u8g2_lib/u8g2_circle.c ****   CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, 
+  22:u8g2_lib/u8g2_circle.c ****   INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF 
+  23:u8g2_lib/u8g2_circle.c ****   MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE 
+  24:u8g2_lib/u8g2_circle.c ****   DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR 
+  25:u8g2_lib/u8g2_circle.c ****   CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
+  26:u8g2_lib/u8g2_circle.c ****   SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
+  27:u8g2_lib/u8g2_circle.c ****   NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; 
+  28:u8g2_lib/u8g2_circle.c ****   LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER 
+  29:u8g2_lib/u8g2_circle.c ****   CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, 
+  30:u8g2_lib/u8g2_circle.c ****   STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+  31:u8g2_lib/u8g2_circle.c ****   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF 
+  32:u8g2_lib/u8g2_circle.c ****   ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.  
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s 			page 2
+
+
+  33:u8g2_lib/u8g2_circle.c **** 
+  34:u8g2_lib/u8g2_circle.c **** */
+  35:u8g2_lib/u8g2_circle.c **** 
+  36:u8g2_lib/u8g2_circle.c **** #include "u8g2.h"
+  37:u8g2_lib/u8g2_circle.c **** 
+  38:u8g2_lib/u8g2_circle.c **** /*==============================================*/
+  39:u8g2_lib/u8g2_circle.c **** /* Circle */
+  40:u8g2_lib/u8g2_circle.c **** 
+  41:u8g2_lib/u8g2_circle.c **** static void u8g2_draw_circle_section(u8g2_t *u8g2, u8g2_uint_t x, u8g2_uint_t y, u8g2_uint_t x0, u8
+  42:u8g2_lib/u8g2_circle.c **** 
+  43:u8g2_lib/u8g2_circle.c **** static void u8g2_draw_circle_section(u8g2_t *u8g2, u8g2_uint_t x, u8g2_uint_t y, u8g2_uint_t x0, u8
+  44:u8g2_lib/u8g2_circle.c **** {
+  27              		.loc 1 44 1 view -0
+  28              		.cfi_startproc
+  29              		@ args = 8, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              		.loc 1 44 1 is_stmt 0 view .LVU1
+  32 0000 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
+  33              	.LCFI0:
+  34              		.cfi_def_cfa_offset 32
+  35              		.cfi_offset 3, -32
+  36              		.cfi_offset 4, -28
+  37              		.cfi_offset 5, -24
+  38              		.cfi_offset 6, -20
+  39              		.cfi_offset 7, -16
+  40              		.cfi_offset 8, -12
+  41              		.cfi_offset 9, -8
+  42              		.cfi_offset 14, -4
+  43 0004 8046     		mov	r8, r0
+  44 0006 0F46     		mov	r7, r1
+  45 0008 9146     		mov	r9, r2
+  46 000a 1C46     		mov	r4, r3
+  47 000c 9DF82060 		ldrb	r6, [sp, #32]	@ zero_extendqisi2
+  48 0010 9DF82450 		ldrb	r5, [sp, #36]	@ zero_extendqisi2
+  45:u8g2_lib/u8g2_circle.c ****     /* upper right */
+  46:u8g2_lib/u8g2_circle.c ****     if ( option & U8G2_DRAW_UPPER_RIGHT )
+  49              		.loc 1 46 5 is_stmt 1 view .LVU2
+  50              		.loc 1 46 8 is_stmt 0 view .LVU3
+  51 0014 15F0010F 		tst	r5, #1
+  52 0018 0AD1     		bne	.L7
+  53              	.LVL1:
+  54              	.L2:
+  47:u8g2_lib/u8g2_circle.c ****     {
+  48:u8g2_lib/u8g2_circle.c ****       u8g2_DrawPixel(u8g2, x0 + x, y0 - y);
+  49:u8g2_lib/u8g2_circle.c ****       u8g2_DrawPixel(u8g2, x0 + y, y0 - x);
+  50:u8g2_lib/u8g2_circle.c ****     }
+  51:u8g2_lib/u8g2_circle.c ****     
+  52:u8g2_lib/u8g2_circle.c ****     /* upper left */
+  53:u8g2_lib/u8g2_circle.c ****     if ( option & U8G2_DRAW_UPPER_LEFT )
+  55              		.loc 1 53 5 is_stmt 1 view .LVU4
+  56              		.loc 1 53 8 is_stmt 0 view .LVU5
+  57 001a 15F0020F 		tst	r5, #2
+  58 001e 16D1     		bne	.L8
+  59              	.L3:
+  54:u8g2_lib/u8g2_circle.c ****     {
+  55:u8g2_lib/u8g2_circle.c ****       u8g2_DrawPixel(u8g2, x0 - x, y0 - y);
+  56:u8g2_lib/u8g2_circle.c ****       u8g2_DrawPixel(u8g2, x0 - y, y0 - x);
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s 			page 3
+
+
+  57:u8g2_lib/u8g2_circle.c ****     }
+  58:u8g2_lib/u8g2_circle.c ****     
+  59:u8g2_lib/u8g2_circle.c ****     /* lower right */
+  60:u8g2_lib/u8g2_circle.c ****     if ( option & U8G2_DRAW_LOWER_RIGHT )
+  60              		.loc 1 60 5 is_stmt 1 view .LVU6
+  61              		.loc 1 60 8 is_stmt 0 view .LVU7
+  62 0020 15F0080F 		tst	r5, #8
+  63 0024 24D1     		bne	.L9
+  64              	.L4:
+  61:u8g2_lib/u8g2_circle.c ****     {
+  62:u8g2_lib/u8g2_circle.c ****       u8g2_DrawPixel(u8g2, x0 + x, y0 + y);
+  63:u8g2_lib/u8g2_circle.c ****       u8g2_DrawPixel(u8g2, x0 + y, y0 + x);
+  64:u8g2_lib/u8g2_circle.c ****     }
+  65:u8g2_lib/u8g2_circle.c ****     
+  66:u8g2_lib/u8g2_circle.c ****     /* lower left */
+  67:u8g2_lib/u8g2_circle.c ****     if ( option & U8G2_DRAW_LOWER_LEFT )
+  65              		.loc 1 67 5 is_stmt 1 view .LVU8
+  66              		.loc 1 67 8 is_stmt 0 view .LVU9
+  67 0026 15F0040F 		tst	r5, #4
+  68 002a 32D1     		bne	.L10
+  69              	.L1:
+  68:u8g2_lib/u8g2_circle.c ****     {
+  69:u8g2_lib/u8g2_circle.c ****       u8g2_DrawPixel(u8g2, x0 - x, y0 + y);
+  70:u8g2_lib/u8g2_circle.c ****       u8g2_DrawPixel(u8g2, x0 - y, y0 + x);
+  71:u8g2_lib/u8g2_circle.c ****     }
+  72:u8g2_lib/u8g2_circle.c **** }
+  70              		.loc 1 72 1 view .LVU10
+  71 002c BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+  72              	.LVL2:
+  73              	.L7:
+  48:u8g2_lib/u8g2_circle.c ****       u8g2_DrawPixel(u8g2, x0 + y, y0 - x);
+  74              		.loc 1 48 7 is_stmt 1 view .LVU11
+  75 0030 B21A     		subs	r2, r6, r2
+  76              	.LVL3:
+  48:u8g2_lib/u8g2_circle.c ****       u8g2_DrawPixel(u8g2, x0 + y, y0 - x);
+  77              		.loc 1 48 7 is_stmt 0 view .LVU12
+  78 0032 5918     		adds	r1, r3, r1
+  79              	.LVL4:
+  48:u8g2_lib/u8g2_circle.c ****       u8g2_DrawPixel(u8g2, x0 + y, y0 - x);
+  80              		.loc 1 48 7 view .LVU13
+  81 0034 D2B2     		uxtb	r2, r2
+  82 0036 C9B2     		uxtb	r1, r1
+  83 0038 FFF7FEFF 		bl	u8g2_DrawPixel
+  84              	.LVL5:
+  49:u8g2_lib/u8g2_circle.c ****     }
+  85              		.loc 1 49 7 is_stmt 1 view .LVU14
+  86 003c F21B     		subs	r2, r6, r7
+  87 003e 04EB0901 		add	r1, r4, r9
+  88 0042 D2B2     		uxtb	r2, r2
+  89 0044 C9B2     		uxtb	r1, r1
+  90 0046 4046     		mov	r0, r8
+  91 0048 FFF7FEFF 		bl	u8g2_DrawPixel
+  92              	.LVL6:
+  93 004c E5E7     		b	.L2
+  94              	.L8:
+  55:u8g2_lib/u8g2_circle.c ****       u8g2_DrawPixel(u8g2, x0 - y, y0 - x);
+  95              		.loc 1 55 7 view .LVU15
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s 			page 4
+
+
+  96 004e A6EB0902 		sub	r2, r6, r9
+  97 0052 E11B     		subs	r1, r4, r7
+  98 0054 D2B2     		uxtb	r2, r2
+  99 0056 C9B2     		uxtb	r1, r1
+ 100 0058 4046     		mov	r0, r8
+ 101 005a FFF7FEFF 		bl	u8g2_DrawPixel
+ 102              	.LVL7:
+  56:u8g2_lib/u8g2_circle.c ****     }
+ 103              		.loc 1 56 7 view .LVU16
+ 104 005e F21B     		subs	r2, r6, r7
+ 105 0060 A4EB0901 		sub	r1, r4, r9
+ 106 0064 D2B2     		uxtb	r2, r2
+ 107 0066 C9B2     		uxtb	r1, r1
+ 108 0068 4046     		mov	r0, r8
+ 109 006a FFF7FEFF 		bl	u8g2_DrawPixel
+ 110              	.LVL8:
+ 111 006e D7E7     		b	.L3
+ 112              	.L9:
+  62:u8g2_lib/u8g2_circle.c ****       u8g2_DrawPixel(u8g2, x0 + y, y0 + x);
+ 113              		.loc 1 62 7 view .LVU17
+ 114 0070 06EB0902 		add	r2, r6, r9
+ 115 0074 E119     		adds	r1, r4, r7
+ 116 0076 D2B2     		uxtb	r2, r2
+ 117 0078 C9B2     		uxtb	r1, r1
+ 118 007a 4046     		mov	r0, r8
+ 119 007c FFF7FEFF 		bl	u8g2_DrawPixel
+ 120              	.LVL9:
+  63:u8g2_lib/u8g2_circle.c ****     }
+ 121              		.loc 1 63 7 view .LVU18
+ 122 0080 BA19     		adds	r2, r7, r6
+ 123 0082 04EB0901 		add	r1, r4, r9
+ 124 0086 D2B2     		uxtb	r2, r2
+ 125 0088 C9B2     		uxtb	r1, r1
+ 126 008a 4046     		mov	r0, r8
+ 127 008c FFF7FEFF 		bl	u8g2_DrawPixel
+ 128              	.LVL10:
+ 129 0090 C9E7     		b	.L4
+ 130              	.L10:
+  69:u8g2_lib/u8g2_circle.c ****       u8g2_DrawPixel(u8g2, x0 - y, y0 + x);
+ 131              		.loc 1 69 7 view .LVU19
+ 132 0092 06EB0902 		add	r2, r6, r9
+ 133 0096 E11B     		subs	r1, r4, r7
+ 134 0098 D2B2     		uxtb	r2, r2
+ 135 009a C9B2     		uxtb	r1, r1
+ 136 009c 4046     		mov	r0, r8
+ 137 009e FFF7FEFF 		bl	u8g2_DrawPixel
+ 138              	.LVL11:
+  70:u8g2_lib/u8g2_circle.c ****     }
+ 139              		.loc 1 70 7 view .LVU20
+ 140 00a2 BA19     		adds	r2, r7, r6
+ 141 00a4 A4EB0901 		sub	r1, r4, r9
+ 142 00a8 D2B2     		uxtb	r2, r2
+ 143 00aa C9B2     		uxtb	r1, r1
+ 144 00ac 4046     		mov	r0, r8
+ 145 00ae FFF7FEFF 		bl	u8g2_DrawPixel
+ 146              	.LVL12:
+ 147              		.loc 1 72 1 is_stmt 0 view .LVU21
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s 			page 5
+
+
+ 148 00b2 BBE7     		b	.L1
+ 149              		.cfi_endproc
+ 150              	.LFE0:
+ 152              		.section	.text.u8g2_draw_circle,"ax",%progbits
+ 153              		.align	1
+ 154              		.syntax unified
+ 155              		.thumb
+ 156              		.thumb_func
+ 157              		.fpu softvfp
+ 159              	u8g2_draw_circle:
+ 160              	.LVL13:
+ 161              	.LFB1:
+  73:u8g2_lib/u8g2_circle.c **** 
+  74:u8g2_lib/u8g2_circle.c **** static void u8g2_draw_circle(u8g2_t *u8g2, u8g2_uint_t x0, u8g2_uint_t y0, u8g2_uint_t rad, uint8_t
+  75:u8g2_lib/u8g2_circle.c **** {
+ 162              		.loc 1 75 1 is_stmt 1 view -0
+ 163              		.cfi_startproc
+ 164              		@ args = 4, pretend = 0, frame = 8
+ 165              		@ frame_needed = 0, uses_anonymous_args = 0
+ 166              		.loc 1 75 1 is_stmt 0 view .LVU23
+ 167 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 168              	.LCFI1:
+ 169              		.cfi_def_cfa_offset 36
+ 170              		.cfi_offset 4, -36
+ 171              		.cfi_offset 5, -32
+ 172              		.cfi_offset 6, -28
+ 173              		.cfi_offset 7, -24
+ 174              		.cfi_offset 8, -20
+ 175              		.cfi_offset 9, -16
+ 176              		.cfi_offset 10, -12
+ 177              		.cfi_offset 11, -8
+ 178              		.cfi_offset 14, -4
+ 179 0004 85B0     		sub	sp, sp, #20
+ 180              	.LCFI2:
+ 181              		.cfi_def_cfa_offset 56
+ 182 0006 0390     		str	r0, [sp, #12]
+ 183 0008 8946     		mov	r9, r1
+ 184 000a 9246     		mov	r10, r2
+ 185 000c 1E46     		mov	r6, r3
+ 186 000e 9DF838B0 		ldrb	fp, [sp, #56]	@ zero_extendqisi2
+  76:u8g2_lib/u8g2_circle.c ****     u8g2_int_t f;
+ 187              		.loc 1 76 5 is_stmt 1 view .LVU24
+  77:u8g2_lib/u8g2_circle.c ****     u8g2_int_t ddF_x;
+ 188              		.loc 1 77 5 view .LVU25
+  78:u8g2_lib/u8g2_circle.c ****     u8g2_int_t ddF_y;
+ 189              		.loc 1 78 5 view .LVU26
+  79:u8g2_lib/u8g2_circle.c ****     u8g2_uint_t x;
+ 190              		.loc 1 79 5 view .LVU27
+  80:u8g2_lib/u8g2_circle.c ****     u8g2_uint_t y;
+ 191              		.loc 1 80 5 view .LVU28
+  81:u8g2_lib/u8g2_circle.c **** 
+  82:u8g2_lib/u8g2_circle.c ****     f = 1;
+ 192              		.loc 1 82 5 view .LVU29
+ 193              	.LVL14:
+  83:u8g2_lib/u8g2_circle.c ****     f -= rad;
+ 194              		.loc 1 83 5 view .LVU30
+ 195              		.loc 1 83 7 is_stmt 0 view .LVU31
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s 			page 6
+
+
+ 196 0012 C3F10104 		rsb	r4, r3, #1
+ 197 0016 64B2     		sxtb	r4, r4
+ 198              	.LVL15:
+  84:u8g2_lib/u8g2_circle.c ****     ddF_x = 1;
+ 199              		.loc 1 84 5 is_stmt 1 view .LVU32
+  85:u8g2_lib/u8g2_circle.c ****     ddF_y = 0;
+ 200              		.loc 1 85 5 view .LVU33
+  86:u8g2_lib/u8g2_circle.c ****     ddF_y -= rad;
+ 201              		.loc 1 86 5 view .LVU34
+  87:u8g2_lib/u8g2_circle.c ****     ddF_y *= 2;
+ 202              		.loc 1 87 5 view .LVU35
+ 203              		.loc 1 87 11 is_stmt 0 view .LVU36
+ 204 0018 C3EBC318 		rsb	r8, r3, r3, lsl #7
+ 205 001c 4FEA4808 		lsl	r8, r8, #1
+ 206 0020 4FFA88F8 		sxtb	r8, r8
+ 207              	.LVL16:
+  88:u8g2_lib/u8g2_circle.c ****     x = 0;
+ 208              		.loc 1 88 5 is_stmt 1 view .LVU37
+  89:u8g2_lib/u8g2_circle.c ****     y = rad;
+ 209              		.loc 1 89 5 view .LVU38
+  90:u8g2_lib/u8g2_circle.c **** 
+  91:u8g2_lib/u8g2_circle.c ****     u8g2_draw_circle_section(u8g2, x, y, x0, y0, option);
+ 210              		.loc 1 91 5 view .LVU39
+ 211 0024 CDF804B0 		str	fp, [sp, #4]
+ 212 0028 0092     		str	r2, [sp]
+ 213 002a 0B46     		mov	r3, r1
+ 214              	.LVL17:
+ 215              		.loc 1 91 5 is_stmt 0 view .LVU40
+ 216 002c 3246     		mov	r2, r6
+ 217              	.LVL18:
+ 218              		.loc 1 91 5 view .LVU41
+ 219 002e 0021     		movs	r1, #0
+ 220              	.LVL19:
+ 221              		.loc 1 91 5 view .LVU42
+ 222 0030 FFF7FEFF 		bl	u8g2_draw_circle_section
+ 223              	.LVL20:
+  92:u8g2_lib/u8g2_circle.c ****     
+  93:u8g2_lib/u8g2_circle.c ****     while ( x < y )
+ 224              		.loc 1 93 5 is_stmt 1 view .LVU43
+  88:u8g2_lib/u8g2_circle.c ****     y = rad;
+ 225              		.loc 1 88 7 is_stmt 0 view .LVU44
+ 226 0034 0025     		movs	r5, #0
+  84:u8g2_lib/u8g2_circle.c ****     ddF_y = 0;
+ 227              		.loc 1 84 11 view .LVU45
+ 228 0036 0127     		movs	r7, #1
+ 229              		.loc 1 93 11 view .LVU46
+ 230 0038 10E0     		b	.L12
+ 231              	.LVL21:
+ 232              	.L13:
+  94:u8g2_lib/u8g2_circle.c ****     {
+  95:u8g2_lib/u8g2_circle.c ****       if (f >= 0) 
+  96:u8g2_lib/u8g2_circle.c ****       {
+  97:u8g2_lib/u8g2_circle.c ****         y--;
+  98:u8g2_lib/u8g2_circle.c ****         ddF_y += 2;
+  99:u8g2_lib/u8g2_circle.c ****         f += ddF_y;
+ 100:u8g2_lib/u8g2_circle.c ****       }
+ 101:u8g2_lib/u8g2_circle.c ****       x++;
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s 			page 7
+
+
+ 233              		.loc 1 101 7 is_stmt 1 view .LVU47
+ 234              		.loc 1 101 8 is_stmt 0 view .LVU48
+ 235 003a 0135     		adds	r5, r5, #1
+ 236              	.LVL22:
+ 237              		.loc 1 101 8 view .LVU49
+ 238 003c EDB2     		uxtb	r5, r5
+ 239              	.LVL23:
+ 102:u8g2_lib/u8g2_circle.c ****       ddF_x += 2;
+ 240              		.loc 1 102 7 is_stmt 1 view .LVU50
+ 241              		.loc 1 102 13 is_stmt 0 view .LVU51
+ 242 003e 0237     		adds	r7, r7, #2
+ 243              	.LVL24:
+ 244              		.loc 1 102 13 view .LVU52
+ 245 0040 FBB2     		uxtb	r3, r7
+ 246 0042 7FB2     		sxtb	r7, r7
+ 247              	.LVL25:
+ 103:u8g2_lib/u8g2_circle.c ****       f += ddF_x;
+ 248              		.loc 1 103 7 is_stmt 1 view .LVU53
+ 249              		.loc 1 103 9 is_stmt 0 view .LVU54
+ 250 0044 1C44     		add	r4, r4, r3
+ 251              	.LVL26:
+ 252              		.loc 1 103 9 view .LVU55
+ 253 0046 64B2     		sxtb	r4, r4
+ 254              	.LVL27:
+ 104:u8g2_lib/u8g2_circle.c **** 
+ 105:u8g2_lib/u8g2_circle.c ****       u8g2_draw_circle_section(u8g2, x, y, x0, y0, option);    
+ 255              		.loc 1 105 7 is_stmt 1 view .LVU56
+ 256 0048 CDF804B0 		str	fp, [sp, #4]
+ 257 004c CDF800A0 		str	r10, [sp]
+ 258 0050 4B46     		mov	r3, r9
+ 259 0052 3246     		mov	r2, r6
+ 260 0054 2946     		mov	r1, r5
+ 261 0056 0398     		ldr	r0, [sp, #12]
+ 262 0058 FFF7FEFF 		bl	u8g2_draw_circle_section
+ 263              	.LVL28:
+ 264              	.L12:
+  93:u8g2_lib/u8g2_circle.c ****     {
+ 265              		.loc 1 93 11 view .LVU57
+ 266 005c B542     		cmp	r5, r6
+ 267 005e 0CD2     		bcs	.L16
+  95:u8g2_lib/u8g2_circle.c ****       {
+ 268              		.loc 1 95 7 view .LVU58
+  95:u8g2_lib/u8g2_circle.c ****       {
+ 269              		.loc 1 95 10 is_stmt 0 view .LVU59
+ 270 0060 002C     		cmp	r4, #0
+ 271 0062 EADB     		blt	.L13
+  97:u8g2_lib/u8g2_circle.c ****         ddF_y += 2;
+ 272              		.loc 1 97 9 is_stmt 1 view .LVU60
+  97:u8g2_lib/u8g2_circle.c ****         ddF_y += 2;
+ 273              		.loc 1 97 10 is_stmt 0 view .LVU61
+ 274 0064 013E     		subs	r6, r6, #1
+ 275              	.LVL29:
+  97:u8g2_lib/u8g2_circle.c ****         ddF_y += 2;
+ 276              		.loc 1 97 10 view .LVU62
+ 277 0066 F6B2     		uxtb	r6, r6
+ 278              	.LVL30:
+  98:u8g2_lib/u8g2_circle.c ****         f += ddF_y;
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s 			page 8
+
+
+ 279              		.loc 1 98 9 is_stmt 1 view .LVU63
+  98:u8g2_lib/u8g2_circle.c ****         f += ddF_y;
+ 280              		.loc 1 98 15 is_stmt 0 view .LVU64
+ 281 0068 08F10208 		add	r8, r8, #2
+ 282              	.LVL31:
+  98:u8g2_lib/u8g2_circle.c ****         f += ddF_y;
+ 283              		.loc 1 98 15 view .LVU65
+ 284 006c 5FFA88F3 		uxtb	r3, r8
+ 285 0070 4FFA88F8 		sxtb	r8, r8
+ 286              	.LVL32:
+  99:u8g2_lib/u8g2_circle.c ****       }
+ 287              		.loc 1 99 9 is_stmt 1 view .LVU66
+  99:u8g2_lib/u8g2_circle.c ****       }
+ 288              		.loc 1 99 11 is_stmt 0 view .LVU67
+ 289 0074 1C44     		add	r4, r4, r3
+ 290              	.LVL33:
+  99:u8g2_lib/u8g2_circle.c ****       }
+ 291              		.loc 1 99 11 view .LVU68
+ 292 0076 64B2     		sxtb	r4, r4
+ 293              	.LVL34:
+  99:u8g2_lib/u8g2_circle.c ****       }
+ 294              		.loc 1 99 11 view .LVU69
+ 295 0078 DFE7     		b	.L13
+ 296              	.L16:
+ 106:u8g2_lib/u8g2_circle.c ****     }
+ 107:u8g2_lib/u8g2_circle.c **** }
+ 297              		.loc 1 107 1 view .LVU70
+ 298 007a 05B0     		add	sp, sp, #20
+ 299              	.LCFI3:
+ 300              		.cfi_def_cfa_offset 36
+ 301              		@ sp needed
+ 302 007c BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 303              		.loc 1 107 1 view .LVU71
+ 304              		.cfi_endproc
+ 305              	.LFE1:
+ 307              		.section	.text.u8g2_draw_ellipse_section,"ax",%progbits
+ 308              		.align	1
+ 309              		.syntax unified
+ 310              		.thumb
+ 311              		.thumb_func
+ 312              		.fpu softvfp
+ 314              	u8g2_draw_ellipse_section:
+ 315              	.LVL35:
+ 316              	.LFB6:
+ 108:u8g2_lib/u8g2_circle.c **** 
+ 109:u8g2_lib/u8g2_circle.c **** void u8g2_DrawCircle(u8g2_t *u8g2, u8g2_uint_t x0, u8g2_uint_t y0, u8g2_uint_t rad, uint8_t option)
+ 110:u8g2_lib/u8g2_circle.c **** {
+ 111:u8g2_lib/u8g2_circle.c ****   /* check for bounding box */
+ 112:u8g2_lib/u8g2_circle.c **** #ifdef U8G2_WITH_INTERSECTION
+ 113:u8g2_lib/u8g2_circle.c ****   {
+ 114:u8g2_lib/u8g2_circle.c ****     if ( u8g2_IsIntersection(u8g2, x0-rad, y0-rad, x0+rad+1, y0+rad+1) == 0 ) 
+ 115:u8g2_lib/u8g2_circle.c ****       return;
+ 116:u8g2_lib/u8g2_circle.c ****   }
+ 117:u8g2_lib/u8g2_circle.c **** #endif /* U8G2_WITH_INTERSECTION */
+ 118:u8g2_lib/u8g2_circle.c ****   
+ 119:u8g2_lib/u8g2_circle.c ****   
+ 120:u8g2_lib/u8g2_circle.c ****   /* draw circle */
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s 			page 9
+
+
+ 121:u8g2_lib/u8g2_circle.c ****   u8g2_draw_circle(u8g2, x0, y0, rad, option);
+ 122:u8g2_lib/u8g2_circle.c **** }
+ 123:u8g2_lib/u8g2_circle.c **** 
+ 124:u8g2_lib/u8g2_circle.c **** /*==============================================*/
+ 125:u8g2_lib/u8g2_circle.c **** /* Disk */
+ 126:u8g2_lib/u8g2_circle.c **** 
+ 127:u8g2_lib/u8g2_circle.c **** static void u8g2_draw_disc_section(u8g2_t *u8g2, u8g2_uint_t x, u8g2_uint_t y, u8g2_uint_t x0, u8g2
+ 128:u8g2_lib/u8g2_circle.c **** 
+ 129:u8g2_lib/u8g2_circle.c **** static void u8g2_draw_disc_section(u8g2_t *u8g2, u8g2_uint_t x, u8g2_uint_t y, u8g2_uint_t x0, u8g2
+ 130:u8g2_lib/u8g2_circle.c **** {
+ 131:u8g2_lib/u8g2_circle.c ****     /* upper right */
+ 132:u8g2_lib/u8g2_circle.c ****     if ( option & U8G2_DRAW_UPPER_RIGHT )
+ 133:u8g2_lib/u8g2_circle.c ****     {
+ 134:u8g2_lib/u8g2_circle.c ****       u8g2_DrawVLine(u8g2, x0+x, y0-y, y+1);
+ 135:u8g2_lib/u8g2_circle.c ****       u8g2_DrawVLine(u8g2, x0+y, y0-x, x+1);
+ 136:u8g2_lib/u8g2_circle.c ****     }
+ 137:u8g2_lib/u8g2_circle.c ****     
+ 138:u8g2_lib/u8g2_circle.c ****     /* upper left */
+ 139:u8g2_lib/u8g2_circle.c ****     if ( option & U8G2_DRAW_UPPER_LEFT )
+ 140:u8g2_lib/u8g2_circle.c ****     {
+ 141:u8g2_lib/u8g2_circle.c ****       u8g2_DrawVLine(u8g2, x0-x, y0-y, y+1);
+ 142:u8g2_lib/u8g2_circle.c ****       u8g2_DrawVLine(u8g2, x0-y, y0-x, x+1);
+ 143:u8g2_lib/u8g2_circle.c ****     }
+ 144:u8g2_lib/u8g2_circle.c ****     
+ 145:u8g2_lib/u8g2_circle.c ****     /* lower right */
+ 146:u8g2_lib/u8g2_circle.c ****     if ( option & U8G2_DRAW_LOWER_RIGHT )
+ 147:u8g2_lib/u8g2_circle.c ****     {
+ 148:u8g2_lib/u8g2_circle.c ****       u8g2_DrawVLine(u8g2, x0+x, y0, y+1);
+ 149:u8g2_lib/u8g2_circle.c ****       u8g2_DrawVLine(u8g2, x0+y, y0, x+1);
+ 150:u8g2_lib/u8g2_circle.c ****     }
+ 151:u8g2_lib/u8g2_circle.c ****     
+ 152:u8g2_lib/u8g2_circle.c ****     /* lower left */
+ 153:u8g2_lib/u8g2_circle.c ****     if ( option & U8G2_DRAW_LOWER_LEFT )
+ 154:u8g2_lib/u8g2_circle.c ****     {
+ 155:u8g2_lib/u8g2_circle.c ****       u8g2_DrawVLine(u8g2, x0-x, y0, y+1);
+ 156:u8g2_lib/u8g2_circle.c ****       u8g2_DrawVLine(u8g2, x0-y, y0, x+1);
+ 157:u8g2_lib/u8g2_circle.c ****     }
+ 158:u8g2_lib/u8g2_circle.c **** }
+ 159:u8g2_lib/u8g2_circle.c **** 
+ 160:u8g2_lib/u8g2_circle.c **** static void u8g2_draw_disc(u8g2_t *u8g2, u8g2_uint_t x0, u8g2_uint_t y0, u8g2_uint_t rad, uint8_t o
+ 161:u8g2_lib/u8g2_circle.c **** {
+ 162:u8g2_lib/u8g2_circle.c ****   u8g2_int_t f;
+ 163:u8g2_lib/u8g2_circle.c ****   u8g2_int_t ddF_x;
+ 164:u8g2_lib/u8g2_circle.c ****   u8g2_int_t ddF_y;
+ 165:u8g2_lib/u8g2_circle.c ****   u8g2_uint_t x;
+ 166:u8g2_lib/u8g2_circle.c ****   u8g2_uint_t y;
+ 167:u8g2_lib/u8g2_circle.c **** 
+ 168:u8g2_lib/u8g2_circle.c ****   f = 1;
+ 169:u8g2_lib/u8g2_circle.c ****   f -= rad;
+ 170:u8g2_lib/u8g2_circle.c ****   ddF_x = 1;
+ 171:u8g2_lib/u8g2_circle.c ****   ddF_y = 0;
+ 172:u8g2_lib/u8g2_circle.c ****   ddF_y -= rad;
+ 173:u8g2_lib/u8g2_circle.c ****   ddF_y *= 2;
+ 174:u8g2_lib/u8g2_circle.c ****   x = 0;
+ 175:u8g2_lib/u8g2_circle.c ****   y = rad;
+ 176:u8g2_lib/u8g2_circle.c **** 
+ 177:u8g2_lib/u8g2_circle.c ****   u8g2_draw_disc_section(u8g2, x, y, x0, y0, option);
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s 			page 10
+
+
+ 178:u8g2_lib/u8g2_circle.c ****   
+ 179:u8g2_lib/u8g2_circle.c ****   while ( x < y )
+ 180:u8g2_lib/u8g2_circle.c ****   {
+ 181:u8g2_lib/u8g2_circle.c ****     if (f >= 0) 
+ 182:u8g2_lib/u8g2_circle.c ****     {
+ 183:u8g2_lib/u8g2_circle.c ****       y--;
+ 184:u8g2_lib/u8g2_circle.c ****       ddF_y += 2;
+ 185:u8g2_lib/u8g2_circle.c ****       f += ddF_y;
+ 186:u8g2_lib/u8g2_circle.c ****     }
+ 187:u8g2_lib/u8g2_circle.c ****     x++;
+ 188:u8g2_lib/u8g2_circle.c ****     ddF_x += 2;
+ 189:u8g2_lib/u8g2_circle.c ****     f += ddF_x;
+ 190:u8g2_lib/u8g2_circle.c **** 
+ 191:u8g2_lib/u8g2_circle.c ****     u8g2_draw_disc_section(u8g2, x, y, x0, y0, option);    
+ 192:u8g2_lib/u8g2_circle.c ****   }
+ 193:u8g2_lib/u8g2_circle.c **** }
+ 194:u8g2_lib/u8g2_circle.c **** 
+ 195:u8g2_lib/u8g2_circle.c **** void u8g2_DrawDisc(u8g2_t *u8g2, u8g2_uint_t x0, u8g2_uint_t y0, u8g2_uint_t rad, uint8_t option)
+ 196:u8g2_lib/u8g2_circle.c **** {
+ 197:u8g2_lib/u8g2_circle.c ****   /* check for bounding box */
+ 198:u8g2_lib/u8g2_circle.c **** #ifdef U8G2_WITH_INTERSECTION
+ 199:u8g2_lib/u8g2_circle.c ****   {
+ 200:u8g2_lib/u8g2_circle.c ****     if ( u8g2_IsIntersection(u8g2, x0-rad, y0-rad, x0+rad+1, y0+rad+1) == 0 ) 
+ 201:u8g2_lib/u8g2_circle.c ****       return;
+ 202:u8g2_lib/u8g2_circle.c ****   }
+ 203:u8g2_lib/u8g2_circle.c **** #endif /* U8G2_WITH_INTERSECTION */
+ 204:u8g2_lib/u8g2_circle.c ****   
+ 205:u8g2_lib/u8g2_circle.c ****   /* draw disc */
+ 206:u8g2_lib/u8g2_circle.c ****   u8g2_draw_disc(u8g2, x0, y0, rad, option);
+ 207:u8g2_lib/u8g2_circle.c **** }
+ 208:u8g2_lib/u8g2_circle.c **** 
+ 209:u8g2_lib/u8g2_circle.c **** /*==============================================*/
+ 210:u8g2_lib/u8g2_circle.c **** /* Ellipse */
+ 211:u8g2_lib/u8g2_circle.c **** 
+ 212:u8g2_lib/u8g2_circle.c **** /*
+ 213:u8g2_lib/u8g2_circle.c ****   Source: 
+ 214:u8g2_lib/u8g2_circle.c ****     Foley, Computer Graphics, p 90
+ 215:u8g2_lib/u8g2_circle.c **** */
+ 216:u8g2_lib/u8g2_circle.c **** static void u8g2_draw_ellipse_section(u8g2_t *u8g2, u8g2_uint_t x, u8g2_uint_t y, u8g2_uint_t x0, u
+ 217:u8g2_lib/u8g2_circle.c **** static void u8g2_draw_ellipse_section(u8g2_t *u8g2, u8g2_uint_t x, u8g2_uint_t y, u8g2_uint_t x0, u
+ 218:u8g2_lib/u8g2_circle.c **** {
+ 317              		.loc 1 218 1 is_stmt 1 view -0
+ 318              		.cfi_startproc
+ 319              		@ args = 8, pretend = 0, frame = 0
+ 320              		@ frame_needed = 0, uses_anonymous_args = 0
+ 321              		.loc 1 218 1 is_stmt 0 view .LVU73
+ 322 0000 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
+ 323              	.LCFI4:
+ 324              		.cfi_def_cfa_offset 32
+ 325              		.cfi_offset 3, -32
+ 326              		.cfi_offset 4, -28
+ 327              		.cfi_offset 5, -24
+ 328              		.cfi_offset 6, -20
+ 329              		.cfi_offset 7, -16
+ 330              		.cfi_offset 8, -12
+ 331              		.cfi_offset 9, -8
+ 332              		.cfi_offset 14, -4
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s 			page 11
+
+
+ 333 0004 0746     		mov	r7, r0
+ 334 0006 8846     		mov	r8, r1
+ 335 0008 9146     		mov	r9, r2
+ 336 000a 1D46     		mov	r5, r3
+ 337 000c 9DF82060 		ldrb	r6, [sp, #32]	@ zero_extendqisi2
+ 338 0010 9DF82440 		ldrb	r4, [sp, #36]	@ zero_extendqisi2
+ 219:u8g2_lib/u8g2_circle.c ****     /* upper right */
+ 220:u8g2_lib/u8g2_circle.c ****     if ( option & U8G2_DRAW_UPPER_RIGHT )
+ 339              		.loc 1 220 5 is_stmt 1 view .LVU74
+ 340              		.loc 1 220 8 is_stmt 0 view .LVU75
+ 341 0014 14F0010F 		tst	r4, #1
+ 342 0018 0AD1     		bne	.L23
+ 343              	.LVL36:
+ 344              	.L18:
+ 221:u8g2_lib/u8g2_circle.c ****     {
+ 222:u8g2_lib/u8g2_circle.c ****       u8g2_DrawPixel(u8g2, x0 + x, y0 - y);
+ 223:u8g2_lib/u8g2_circle.c ****     }
+ 224:u8g2_lib/u8g2_circle.c ****     
+ 225:u8g2_lib/u8g2_circle.c ****     /* upper left */
+ 226:u8g2_lib/u8g2_circle.c ****     if ( option & U8G2_DRAW_UPPER_LEFT )
+ 345              		.loc 1 226 5 is_stmt 1 view .LVU76
+ 346              		.loc 1 226 8 is_stmt 0 view .LVU77
+ 347 001a 14F0020F 		tst	r4, #2
+ 348 001e 0ED1     		bne	.L24
+ 349              	.L19:
+ 227:u8g2_lib/u8g2_circle.c ****     {
+ 228:u8g2_lib/u8g2_circle.c ****       u8g2_DrawPixel(u8g2, x0 - x, y0 - y);
+ 229:u8g2_lib/u8g2_circle.c ****     }
+ 230:u8g2_lib/u8g2_circle.c ****     
+ 231:u8g2_lib/u8g2_circle.c ****     /* lower right */
+ 232:u8g2_lib/u8g2_circle.c ****     if ( option & U8G2_DRAW_LOWER_RIGHT )
+ 350              		.loc 1 232 5 is_stmt 1 view .LVU78
+ 351              		.loc 1 232 8 is_stmt 0 view .LVU79
+ 352 0020 14F0080F 		tst	r4, #8
+ 353 0024 15D1     		bne	.L25
+ 354              	.L20:
+ 233:u8g2_lib/u8g2_circle.c ****     {
+ 234:u8g2_lib/u8g2_circle.c ****       u8g2_DrawPixel(u8g2, x0 + x, y0 + y);
+ 235:u8g2_lib/u8g2_circle.c ****     }
+ 236:u8g2_lib/u8g2_circle.c ****     
+ 237:u8g2_lib/u8g2_circle.c ****     /* lower left */
+ 238:u8g2_lib/u8g2_circle.c ****     if ( option & U8G2_DRAW_LOWER_LEFT )
+ 355              		.loc 1 238 5 is_stmt 1 view .LVU80
+ 356              		.loc 1 238 8 is_stmt 0 view .LVU81
+ 357 0026 14F0040F 		tst	r4, #4
+ 358 002a 1CD1     		bne	.L26
+ 359              	.L17:
+ 239:u8g2_lib/u8g2_circle.c ****     {
+ 240:u8g2_lib/u8g2_circle.c ****       u8g2_DrawPixel(u8g2, x0 - x, y0 + y);
+ 241:u8g2_lib/u8g2_circle.c ****     }
+ 242:u8g2_lib/u8g2_circle.c **** }
+ 360              		.loc 1 242 1 view .LVU82
+ 361 002c BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+ 362              	.LVL37:
+ 363              	.L23:
+ 222:u8g2_lib/u8g2_circle.c ****     }
+ 364              		.loc 1 222 7 is_stmt 1 view .LVU83
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s 			page 12
+
+
+ 365 0030 B21A     		subs	r2, r6, r2
+ 366              	.LVL38:
+ 222:u8g2_lib/u8g2_circle.c ****     }
+ 367              		.loc 1 222 7 is_stmt 0 view .LVU84
+ 368 0032 5918     		adds	r1, r3, r1
+ 369              	.LVL39:
+ 222:u8g2_lib/u8g2_circle.c ****     }
+ 370              		.loc 1 222 7 view .LVU85
+ 371 0034 D2B2     		uxtb	r2, r2
+ 372 0036 C9B2     		uxtb	r1, r1
+ 373 0038 FFF7FEFF 		bl	u8g2_DrawPixel
+ 374              	.LVL40:
+ 222:u8g2_lib/u8g2_circle.c ****     }
+ 375              		.loc 1 222 7 view .LVU86
+ 376 003c EDE7     		b	.L18
+ 377              	.L24:
+ 228:u8g2_lib/u8g2_circle.c ****     }
+ 378              		.loc 1 228 7 is_stmt 1 view .LVU87
+ 379 003e A6EB0902 		sub	r2, r6, r9
+ 380 0042 A5EB0801 		sub	r1, r5, r8
+ 381 0046 D2B2     		uxtb	r2, r2
+ 382 0048 C9B2     		uxtb	r1, r1
+ 383 004a 3846     		mov	r0, r7
+ 384 004c FFF7FEFF 		bl	u8g2_DrawPixel
+ 385              	.LVL41:
+ 386 0050 E6E7     		b	.L19
+ 387              	.L25:
+ 234:u8g2_lib/u8g2_circle.c ****     }
+ 388              		.loc 1 234 7 view .LVU88
+ 389 0052 06EB0902 		add	r2, r6, r9
+ 390 0056 05EB0801 		add	r1, r5, r8
+ 391 005a D2B2     		uxtb	r2, r2
+ 392 005c C9B2     		uxtb	r1, r1
+ 393 005e 3846     		mov	r0, r7
+ 394 0060 FFF7FEFF 		bl	u8g2_DrawPixel
+ 395              	.LVL42:
+ 396 0064 DFE7     		b	.L20
+ 397              	.L26:
+ 240:u8g2_lib/u8g2_circle.c ****     }
+ 398              		.loc 1 240 7 view .LVU89
+ 399 0066 06EB0902 		add	r2, r6, r9
+ 400 006a A5EB0801 		sub	r1, r5, r8
+ 401 006e D2B2     		uxtb	r2, r2
+ 402 0070 C9B2     		uxtb	r1, r1
+ 403 0072 3846     		mov	r0, r7
+ 404 0074 FFF7FEFF 		bl	u8g2_DrawPixel
+ 405              	.LVL43:
+ 406              		.loc 1 242 1 is_stmt 0 view .LVU90
+ 407 0078 D8E7     		b	.L17
+ 408              		.cfi_endproc
+ 409              	.LFE6:
+ 411              		.section	.text.u8g2_draw_ellipse,"ax",%progbits
+ 412              		.align	1
+ 413              		.syntax unified
+ 414              		.thumb
+ 415              		.thumb_func
+ 416              		.fpu softvfp
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s 			page 13
+
+
+ 418              	u8g2_draw_ellipse:
+ 419              	.LVL44:
+ 420              	.LFB7:
+ 243:u8g2_lib/u8g2_circle.c **** 
+ 244:u8g2_lib/u8g2_circle.c **** static void u8g2_draw_ellipse(u8g2_t *u8g2, u8g2_uint_t x0, u8g2_uint_t y0, u8g2_uint_t rx, u8g2_ui
+ 245:u8g2_lib/u8g2_circle.c **** {
+ 421              		.loc 1 245 1 is_stmt 1 view -0
+ 422              		.cfi_startproc
+ 423              		@ args = 8, pretend = 0, frame = 40
+ 424              		@ frame_needed = 0, uses_anonymous_args = 0
+ 425              		.loc 1 245 1 is_stmt 0 view .LVU92
+ 426 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 427              	.LCFI5:
+ 428              		.cfi_def_cfa_offset 36
+ 429              		.cfi_offset 4, -36
+ 430              		.cfi_offset 5, -32
+ 431              		.cfi_offset 6, -28
+ 432              		.cfi_offset 7, -24
+ 433              		.cfi_offset 8, -20
+ 434              		.cfi_offset 9, -16
+ 435              		.cfi_offset 10, -12
+ 436              		.cfi_offset 11, -8
+ 437              		.cfi_offset 14, -4
+ 438 0004 8DB0     		sub	sp, sp, #52
+ 439              	.LCFI6:
+ 440              		.cfi_def_cfa_offset 88
+ 441 0006 0590     		str	r0, [sp, #20]
+ 442 0008 0691     		str	r1, [sp, #24]
+ 443 000a 0792     		str	r2, [sp, #28]
+ 444 000c 1F46     		mov	r7, r3
+ 445 000e 9DF85880 		ldrb	r8, [sp, #88]	@ zero_extendqisi2
+ 446 0012 9DF85C30 		ldrb	r3, [sp, #92]	@ zero_extendqisi2
+ 447              	.LVL45:
+ 448              		.loc 1 245 1 view .LVU93
+ 449 0016 0893     		str	r3, [sp, #32]
+ 246:u8g2_lib/u8g2_circle.c ****   u8g2_uint_t x, y;
+ 450              		.loc 1 246 3 is_stmt 1 view .LVU94
+ 247:u8g2_lib/u8g2_circle.c ****   u8g2_long_t xchg, ychg;
+ 451              		.loc 1 247 3 view .LVU95
+ 248:u8g2_lib/u8g2_circle.c ****   u8g2_long_t err;
+ 452              		.loc 1 248 3 view .LVU96
+ 249:u8g2_lib/u8g2_circle.c ****   u8g2_long_t rxrx2;
+ 453              		.loc 1 249 3 view .LVU97
+ 250:u8g2_lib/u8g2_circle.c ****   u8g2_long_t ryry2;
+ 454              		.loc 1 250 3 view .LVU98
+ 251:u8g2_lib/u8g2_circle.c ****   u8g2_long_t stopx, stopy;
+ 455              		.loc 1 251 3 view .LVU99
+ 252:u8g2_lib/u8g2_circle.c ****   
+ 253:u8g2_lib/u8g2_circle.c ****   rxrx2 = rx;
+ 456              		.loc 1 253 3 view .LVU100
+ 457              	.LVL46:
+ 254:u8g2_lib/u8g2_circle.c ****   rxrx2 *= rx;
+ 458              		.loc 1 254 3 view .LVU101
+ 459              		.loc 1 254 9 is_stmt 0 view .LVU102
+ 460 0018 BBB2     		uxth	r3, r7
+ 461 001a 0A93     		str	r3, [sp, #40]
+ 462 001c 07FB07F9 		mul	r9, r7, r7
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s 			page 14
+
+
+ 463 0020 0FFA89F3 		sxth	r3, r9
+ 464 0024 0493     		str	r3, [sp, #16]
+ 465              	.LVL47:
+ 255:u8g2_lib/u8g2_circle.c ****   rxrx2 *= 2;
+ 466              		.loc 1 255 3 is_stmt 1 view .LVU103
+ 467              		.loc 1 255 9 is_stmt 0 view .LVU104
+ 468 0026 4FEA4909 		lsl	r9, r9, #1
+ 469 002a 1FFA89F9 		uxth	r9, r9
+ 470              	.LVL48:
+ 256:u8g2_lib/u8g2_circle.c ****   
+ 257:u8g2_lib/u8g2_circle.c ****   ryry2 = ry;
+ 471              		.loc 1 257 3 is_stmt 1 view .LVU105
+ 258:u8g2_lib/u8g2_circle.c ****   ryry2 *= ry;
+ 472              		.loc 1 258 3 view .LVU106
+ 473              		.loc 1 258 9 is_stmt 0 view .LVU107
+ 474 002e 1FFA88F3 		uxth	r3, r8
+ 475 0032 0B93     		str	r3, [sp, #44]
+ 476 0034 08FB08FA 		mul	r10, r8, r8
+ 477 0038 0FFA8AF3 		sxth	r3, r10
+ 478 003c 0393     		str	r3, [sp, #12]
+ 479              	.LVL49:
+ 259:u8g2_lib/u8g2_circle.c ****   ryry2 *= 2;
+ 480              		.loc 1 259 3 is_stmt 1 view .LVU108
+ 481              		.loc 1 259 9 is_stmt 0 view .LVU109
+ 482 003e 4FEA4A0A 		lsl	r10, r10, #1
+ 483 0042 1FFA8AFA 		uxth	r10, r10
+ 484              	.LVL50:
+ 260:u8g2_lib/u8g2_circle.c ****   
+ 261:u8g2_lib/u8g2_circle.c ****   x = rx;
+ 485              		.loc 1 261 3 is_stmt 1 view .LVU110
+ 262:u8g2_lib/u8g2_circle.c ****   y = 0;
+ 486              		.loc 1 262 3 view .LVU111
+ 263:u8g2_lib/u8g2_circle.c ****   
+ 264:u8g2_lib/u8g2_circle.c ****   xchg = 1;
+ 487              		.loc 1 264 3 view .LVU112
+ 265:u8g2_lib/u8g2_circle.c ****   xchg -= rx;
+ 488              		.loc 1 265 3 view .LVU113
+ 489              		.loc 1 265 8 is_stmt 0 view .LVU114
+ 490 0046 C7F10103 		rsb	r3, r7, #1
+ 491 004a 9BB2     		uxth	r3, r3
+ 492              	.LVL51:
+ 266:u8g2_lib/u8g2_circle.c ****   xchg -= rx;
+ 493              		.loc 1 266 3 is_stmt 1 view .LVU115
+ 494              		.loc 1 266 8 is_stmt 0 view .LVU116
+ 495 004c DB1B     		subs	r3, r3, r7
+ 496              	.LVL52:
+ 497              		.loc 1 266 8 view .LVU117
+ 498 004e 9BB2     		uxth	r3, r3
+ 499              	.LVL53:
+ 267:u8g2_lib/u8g2_circle.c ****   xchg *= ry;
+ 500              		.loc 1 267 3 is_stmt 1 view .LVU118
+ 501              		.loc 1 267 8 is_stmt 0 view .LVU119
+ 502 0050 08FB03F3 		mul	r3, r8, r3
+ 503              	.LVL54:
+ 504              		.loc 1 267 8 view .LVU120
+ 505 0054 9BB2     		uxth	r3, r3
+ 506              	.LVL55:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s 			page 15
+
+
+ 268:u8g2_lib/u8g2_circle.c ****   xchg *= ry;
+ 507              		.loc 1 268 3 is_stmt 1 view .LVU121
+ 508              		.loc 1 268 8 is_stmt 0 view .LVU122
+ 509 0056 08FB03F3 		mul	r3, r8, r3
+ 510              	.LVL56:
+ 511              		.loc 1 268 8 view .LVU123
+ 512 005a 1BB2     		sxth	r3, r3
+ 513 005c 0993     		str	r3, [sp, #36]
+ 514              	.LVL57:
+ 269:u8g2_lib/u8g2_circle.c ****   
+ 270:u8g2_lib/u8g2_circle.c ****   ychg = rx;
+ 515              		.loc 1 270 3 is_stmt 1 view .LVU124
+ 271:u8g2_lib/u8g2_circle.c ****   ychg *= rx;
+ 516              		.loc 1 271 3 view .LVU125
+ 272:u8g2_lib/u8g2_circle.c ****   
+ 273:u8g2_lib/u8g2_circle.c ****   err = 0;
+ 517              		.loc 1 273 3 view .LVU126
+ 274:u8g2_lib/u8g2_circle.c ****   
+ 275:u8g2_lib/u8g2_circle.c ****   stopx = ryry2;
+ 518              		.loc 1 275 3 view .LVU127
+ 276:u8g2_lib/u8g2_circle.c ****   stopx *= rx;
+ 519              		.loc 1 276 3 view .LVU128
+ 520              		.loc 1 276 9 is_stmt 0 view .LVU129
+ 521 005e 07FB0AFB 		mul	fp, r7, r10
+ 522 0062 0FFA8BFB 		sxth	fp, fp
+ 523              	.LVL58:
+ 277:u8g2_lib/u8g2_circle.c ****   stopy = 0;
+ 524              		.loc 1 277 3 is_stmt 1 view .LVU130
+ 278:u8g2_lib/u8g2_circle.c ****   
+ 279:u8g2_lib/u8g2_circle.c ****   while( stopx >= stopy )
+ 525              		.loc 1 279 3 view .LVU131
+ 277:u8g2_lib/u8g2_circle.c ****   stopy = 0;
+ 526              		.loc 1 277 9 is_stmt 0 view .LVU132
+ 527 0066 0025     		movs	r5, #0
+ 273:u8g2_lib/u8g2_circle.c ****   
+ 528              		.loc 1 273 7 view .LVU133
+ 529 0068 2C46     		mov	r4, r5
+ 262:u8g2_lib/u8g2_circle.c ****   
+ 530              		.loc 1 262 5 view .LVU134
+ 531 006a 2E46     		mov	r6, r5
+ 532              	.LVL59:
+ 533              	.L28:
+ 534              		.loc 1 279 8 is_stmt 1 view .LVU135
+ 535 006c AB45     		cmp	fp, r5
+ 536 006e 27DB     		blt	.L35
+ 280:u8g2_lib/u8g2_circle.c ****   {
+ 281:u8g2_lib/u8g2_circle.c ****     u8g2_draw_ellipse_section(u8g2, x, y, x0, y0, option);
+ 537              		.loc 1 281 5 view .LVU136
+ 538 0070 089B     		ldr	r3, [sp, #32]
+ 539 0072 0193     		str	r3, [sp, #4]
+ 540 0074 079B     		ldr	r3, [sp, #28]
+ 541 0076 0093     		str	r3, [sp]
+ 542 0078 069B     		ldr	r3, [sp, #24]
+ 543 007a 3246     		mov	r2, r6
+ 544 007c 3946     		mov	r1, r7
+ 545 007e 0598     		ldr	r0, [sp, #20]
+ 546 0080 FFF7FEFF 		bl	u8g2_draw_ellipse_section
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s 			page 16
+
+
+ 547              	.LVL60:
+ 282:u8g2_lib/u8g2_circle.c ****     y++;
+ 548              		.loc 1 282 5 view .LVU137
+ 549              		.loc 1 282 6 is_stmt 0 view .LVU138
+ 550 0084 0136     		adds	r6, r6, #1
+ 551              	.LVL61:
+ 552              		.loc 1 282 6 view .LVU139
+ 553 0086 F6B2     		uxtb	r6, r6
+ 554              	.LVL62:
+ 283:u8g2_lib/u8g2_circle.c ****     stopy += rxrx2;
+ 555              		.loc 1 283 5 is_stmt 1 view .LVU140
+ 556              		.loc 1 283 11 is_stmt 0 view .LVU141
+ 557 0088 4D44     		add	r5, r5, r9
+ 558              	.LVL63:
+ 559              		.loc 1 283 11 view .LVU142
+ 560 008a 2DB2     		sxth	r5, r5
+ 561              	.LVL64:
+ 284:u8g2_lib/u8g2_circle.c ****     err += ychg;
+ 562              		.loc 1 284 5 is_stmt 1 view .LVU143
+ 563              		.loc 1 284 9 is_stmt 0 view .LVU144
+ 564 008c BDF81030 		ldrh	r3, [sp, #16]
+ 565 0090 1C44     		add	r4, r4, r3
+ 566              	.LVL65:
+ 567              		.loc 1 284 9 view .LVU145
+ 568 0092 A2B2     		uxth	r2, r4
+ 569 0094 24B2     		sxth	r4, r4
+ 570              	.LVL66:
+ 285:u8g2_lib/u8g2_circle.c ****     ychg += rxrx2;
+ 571              		.loc 1 285 5 is_stmt 1 view .LVU146
+ 572              		.loc 1 285 10 is_stmt 0 view .LVU147
+ 573 0096 4B44     		add	r3, r3, r9
+ 574 0098 1BB2     		sxth	r3, r3
+ 575 009a 0493     		str	r3, [sp, #16]
+ 576              	.LVL67:
+ 286:u8g2_lib/u8g2_circle.c ****     if ( 2*err+xchg > 0 )
+ 577              		.loc 1 286 5 is_stmt 1 view .LVU148
+ 578              		.loc 1 286 15 is_stmt 0 view .LVU149
+ 579 009c 0999     		ldr	r1, [sp, #36]
+ 580 009e 01EB4403 		add	r3, r1, r4, lsl #1
+ 581              		.loc 1 286 8 view .LVU150
+ 582 00a2 002B     		cmp	r3, #0
+ 583 00a4 E2DD     		ble	.L28
+ 287:u8g2_lib/u8g2_circle.c ****     {
+ 288:u8g2_lib/u8g2_circle.c ****       x--;
+ 584              		.loc 1 288 7 is_stmt 1 view .LVU151
+ 585              		.loc 1 288 8 is_stmt 0 view .LVU152
+ 586 00a6 013F     		subs	r7, r7, #1
+ 587              	.LVL68:
+ 588              		.loc 1 288 8 view .LVU153
+ 589 00a8 FFB2     		uxtb	r7, r7
+ 590              	.LVL69:
+ 289:u8g2_lib/u8g2_circle.c ****       stopx -= ryry2;
+ 591              		.loc 1 289 7 is_stmt 1 view .LVU154
+ 592              		.loc 1 289 13 is_stmt 0 view .LVU155
+ 593 00aa ABEB0A0B 		sub	fp, fp, r10
+ 594              	.LVL70:
+ 595              		.loc 1 289 13 view .LVU156
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s 			page 17
+
+
+ 596 00ae 0FFA8BFB 		sxth	fp, fp
+ 597              	.LVL71:
+ 290:u8g2_lib/u8g2_circle.c ****       err += xchg;
+ 598              		.loc 1 290 7 is_stmt 1 view .LVU157
+ 599              		.loc 1 290 11 is_stmt 0 view .LVU158
+ 600 00b2 8BB2     		uxth	r3, r1
+ 601 00b4 D418     		adds	r4, r2, r3
+ 602              	.LVL72:
+ 603              		.loc 1 290 11 view .LVU159
+ 604 00b6 24B2     		sxth	r4, r4
+ 605              	.LVL73:
+ 291:u8g2_lib/u8g2_circle.c ****       xchg += ryry2;      
+ 606              		.loc 1 291 7 is_stmt 1 view .LVU160
+ 607              		.loc 1 291 12 is_stmt 0 view .LVU161
+ 608 00b8 5344     		add	r3, r3, r10
+ 609 00ba 1BB2     		sxth	r3, r3
+ 610 00bc 0993     		str	r3, [sp, #36]
+ 611              	.LVL74:
+ 612              		.loc 1 291 12 view .LVU162
+ 613 00be D5E7     		b	.L28
+ 614              	.L35:
+ 292:u8g2_lib/u8g2_circle.c ****     }
+ 293:u8g2_lib/u8g2_circle.c ****   }
+ 294:u8g2_lib/u8g2_circle.c **** 
+ 295:u8g2_lib/u8g2_circle.c ****   x = 0;
+ 615              		.loc 1 295 3 is_stmt 1 view .LVU163
+ 616              	.LVL75:
+ 296:u8g2_lib/u8g2_circle.c ****   y = ry;
+ 617              		.loc 1 296 3 view .LVU164
+ 297:u8g2_lib/u8g2_circle.c ****   
+ 298:u8g2_lib/u8g2_circle.c ****   xchg = ry;
+ 618              		.loc 1 298 3 view .LVU165
+ 299:u8g2_lib/u8g2_circle.c ****   xchg *= ry;
+ 619              		.loc 1 299 3 view .LVU166
+ 300:u8g2_lib/u8g2_circle.c ****   
+ 301:u8g2_lib/u8g2_circle.c ****   ychg = 1;
+ 620              		.loc 1 301 3 view .LVU167
+ 302:u8g2_lib/u8g2_circle.c ****   ychg -= ry;
+ 621              		.loc 1 302 3 view .LVU168
+ 622              		.loc 1 302 8 is_stmt 0 view .LVU169
+ 623 00c0 0B9B     		ldr	r3, [sp, #44]
+ 624 00c2 C3F10104 		rsb	r4, r3, #1
+ 625              	.LVL76:
+ 626              		.loc 1 302 8 view .LVU170
+ 627 00c6 A4B2     		uxth	r4, r4
+ 628              	.LVL77:
+ 303:u8g2_lib/u8g2_circle.c ****   ychg -= ry;
+ 629              		.loc 1 303 3 is_stmt 1 view .LVU171
+ 630              		.loc 1 303 8 is_stmt 0 view .LVU172
+ 631 00c8 E41A     		subs	r4, r4, r3
+ 632              	.LVL78:
+ 633              		.loc 1 303 8 view .LVU173
+ 634 00ca A4B2     		uxth	r4, r4
+ 635              	.LVL79:
+ 304:u8g2_lib/u8g2_circle.c ****   ychg *= rx;
+ 636              		.loc 1 304 3 is_stmt 1 view .LVU174
+ 637              		.loc 1 304 8 is_stmt 0 view .LVU175
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s 			page 18
+
+
+ 638 00cc 0A9A     		ldr	r2, [sp, #40]
+ 639 00ce 04FB02F4 		mul	r4, r4, r2
+ 640              	.LVL80:
+ 641              		.loc 1 304 8 view .LVU176
+ 642 00d2 A4B2     		uxth	r4, r4
+ 643              	.LVL81:
+ 305:u8g2_lib/u8g2_circle.c ****   ychg *= rx;
+ 644              		.loc 1 305 3 is_stmt 1 view .LVU177
+ 645              		.loc 1 305 8 is_stmt 0 view .LVU178
+ 646 00d4 04FB02F4 		mul	r4, r4, r2
+ 647              	.LVL82:
+ 648              		.loc 1 305 8 view .LVU179
+ 649 00d8 24B2     		sxth	r4, r4
+ 650              	.LVL83:
+ 306:u8g2_lib/u8g2_circle.c ****   
+ 307:u8g2_lib/u8g2_circle.c ****   err = 0;
+ 651              		.loc 1 307 3 is_stmt 1 view .LVU180
+ 308:u8g2_lib/u8g2_circle.c ****   
+ 309:u8g2_lib/u8g2_circle.c ****   stopx = 0;
+ 652              		.loc 1 309 3 view .LVU181
+ 310:u8g2_lib/u8g2_circle.c **** 
+ 311:u8g2_lib/u8g2_circle.c ****   stopy = rxrx2;
+ 653              		.loc 1 311 3 view .LVU182
+ 312:u8g2_lib/u8g2_circle.c ****   stopy *= ry;
+ 654              		.loc 1 312 3 view .LVU183
+ 655              		.loc 1 312 9 is_stmt 0 view .LVU184
+ 656 00da 03FB09FB 		mul	fp, r3, r9
+ 657 00de 0FFA8BFB 		sxth	fp, fp
+ 658              	.LVL84:
+ 313:u8g2_lib/u8g2_circle.c ****   
+ 314:u8g2_lib/u8g2_circle.c **** 
+ 315:u8g2_lib/u8g2_circle.c ****   while( stopx <= stopy )
+ 659              		.loc 1 315 3 is_stmt 1 view .LVU185
+ 309:u8g2_lib/u8g2_circle.c **** 
+ 660              		.loc 1 309 9 is_stmt 0 view .LVU186
+ 661 00e2 0026     		movs	r6, #0
+ 307:u8g2_lib/u8g2_circle.c ****   
+ 662              		.loc 1 307 7 view .LVU187
+ 663 00e4 3546     		mov	r5, r6
+ 295:u8g2_lib/u8g2_circle.c ****   y = ry;
+ 664              		.loc 1 295 5 view .LVU188
+ 665 00e6 3746     		mov	r7, r6
+ 666              	.LVL85:
+ 667              	.L31:
+ 668              		.loc 1 315 8 is_stmt 1 view .LVU189
+ 669 00e8 5E45     		cmp	r6, fp
+ 670 00ea 27DC     		bgt	.L36
+ 316:u8g2_lib/u8g2_circle.c ****   {
+ 317:u8g2_lib/u8g2_circle.c ****     u8g2_draw_ellipse_section(u8g2, x, y, x0, y0, option);
+ 671              		.loc 1 317 5 view .LVU190
+ 672 00ec 089B     		ldr	r3, [sp, #32]
+ 673 00ee 0193     		str	r3, [sp, #4]
+ 674 00f0 079B     		ldr	r3, [sp, #28]
+ 675 00f2 0093     		str	r3, [sp]
+ 676 00f4 069B     		ldr	r3, [sp, #24]
+ 677 00f6 4246     		mov	r2, r8
+ 678 00f8 3946     		mov	r1, r7
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s 			page 19
+
+
+ 679 00fa 0598     		ldr	r0, [sp, #20]
+ 680 00fc FFF7FEFF 		bl	u8g2_draw_ellipse_section
+ 681              	.LVL86:
+ 318:u8g2_lib/u8g2_circle.c ****     x++;
+ 682              		.loc 1 318 5 view .LVU191
+ 683              		.loc 1 318 6 is_stmt 0 view .LVU192
+ 684 0100 0137     		adds	r7, r7, #1
+ 685              	.LVL87:
+ 686              		.loc 1 318 6 view .LVU193
+ 687 0102 FFB2     		uxtb	r7, r7
+ 688              	.LVL88:
+ 319:u8g2_lib/u8g2_circle.c ****     stopx += ryry2;
+ 689              		.loc 1 319 5 is_stmt 1 view .LVU194
+ 690              		.loc 1 319 11 is_stmt 0 view .LVU195
+ 691 0104 5644     		add	r6, r6, r10
+ 692              	.LVL89:
+ 693              		.loc 1 319 11 view .LVU196
+ 694 0106 36B2     		sxth	r6, r6
+ 695              	.LVL90:
+ 320:u8g2_lib/u8g2_circle.c ****     err += xchg;
+ 696              		.loc 1 320 5 is_stmt 1 view .LVU197
+ 697              		.loc 1 320 9 is_stmt 0 view .LVU198
+ 698 0108 BDF80C30 		ldrh	r3, [sp, #12]
+ 699 010c 1D44     		add	r5, r5, r3
+ 700              	.LVL91:
+ 701              		.loc 1 320 9 view .LVU199
+ 702 010e AAB2     		uxth	r2, r5
+ 703 0110 2DB2     		sxth	r5, r5
+ 704              	.LVL92:
+ 321:u8g2_lib/u8g2_circle.c ****     xchg += ryry2;
+ 705              		.loc 1 321 5 is_stmt 1 view .LVU200
+ 706              		.loc 1 321 10 is_stmt 0 view .LVU201
+ 707 0112 5344     		add	r3, r3, r10
+ 708 0114 1BB2     		sxth	r3, r3
+ 709 0116 0393     		str	r3, [sp, #12]
+ 710              	.LVL93:
+ 322:u8g2_lib/u8g2_circle.c ****     if ( 2*err+ychg > 0 )
+ 711              		.loc 1 322 5 is_stmt 1 view .LVU202
+ 712              		.loc 1 322 15 is_stmt 0 view .LVU203
+ 713 0118 04EB4503 		add	r3, r4, r5, lsl #1
+ 714              		.loc 1 322 8 view .LVU204
+ 715 011c 002B     		cmp	r3, #0
+ 716 011e E3DD     		ble	.L31
+ 323:u8g2_lib/u8g2_circle.c ****     {
+ 324:u8g2_lib/u8g2_circle.c ****       y--;
+ 717              		.loc 1 324 7 is_stmt 1 view .LVU205
+ 718              		.loc 1 324 8 is_stmt 0 view .LVU206
+ 719 0120 08F1FF38 		add	r8, r8, #-1
+ 720              	.LVL94:
+ 721              		.loc 1 324 8 view .LVU207
+ 722 0124 5FFA88F8 		uxtb	r8, r8
+ 723              	.LVL95:
+ 325:u8g2_lib/u8g2_circle.c ****       stopy -= rxrx2;
+ 724              		.loc 1 325 7 is_stmt 1 view .LVU208
+ 725              		.loc 1 325 13 is_stmt 0 view .LVU209
+ 726 0128 ABEB090B 		sub	fp, fp, r9
+ 727              	.LVL96:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s 			page 20
+
+
+ 728              		.loc 1 325 13 view .LVU210
+ 729 012c 0FFA8BFB 		sxth	fp, fp
+ 730              	.LVL97:
+ 326:u8g2_lib/u8g2_circle.c ****       err += ychg;
+ 731              		.loc 1 326 7 is_stmt 1 view .LVU211
+ 732              		.loc 1 326 11 is_stmt 0 view .LVU212
+ 733 0130 A4B2     		uxth	r4, r4
+ 734              		.loc 1 326 11 view .LVU213
+ 735 0132 1519     		adds	r5, r2, r4
+ 736              	.LVL98:
+ 737              		.loc 1 326 11 view .LVU214
+ 738 0134 2DB2     		sxth	r5, r5
+ 739              	.LVL99:
+ 327:u8g2_lib/u8g2_circle.c ****       ychg += rxrx2;
+ 740              		.loc 1 327 7 is_stmt 1 view .LVU215
+ 741              		.loc 1 327 12 is_stmt 0 view .LVU216
+ 742 0136 4C44     		add	r4, r4, r9
+ 743              	.LVL100:
+ 744              		.loc 1 327 12 view .LVU217
+ 745 0138 24B2     		sxth	r4, r4
+ 746              	.LVL101:
+ 747              		.loc 1 327 12 view .LVU218
+ 748 013a D5E7     		b	.L31
+ 749              	.L36:
+ 328:u8g2_lib/u8g2_circle.c ****     }
+ 329:u8g2_lib/u8g2_circle.c ****   }
+ 330:u8g2_lib/u8g2_circle.c ****   
+ 331:u8g2_lib/u8g2_circle.c **** }
+ 750              		.loc 1 331 1 view .LVU219
+ 751 013c 0DB0     		add	sp, sp, #52
+ 752              	.LCFI7:
+ 753              		.cfi_def_cfa_offset 36
+ 754              		@ sp needed
+ 755 013e BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 756              		.loc 1 331 1 view .LVU220
+ 757              		.cfi_endproc
+ 758              	.LFE7:
+ 760              		.section	.text.u8g2_draw_disc_section,"ax",%progbits
+ 761              		.align	1
+ 762              		.syntax unified
+ 763              		.thumb
+ 764              		.thumb_func
+ 765              		.fpu softvfp
+ 767              	u8g2_draw_disc_section:
+ 768              	.LVL102:
+ 769              	.LFB3:
+ 130:u8g2_lib/u8g2_circle.c ****     /* upper right */
+ 770              		.loc 1 130 1 is_stmt 1 view -0
+ 771              		.cfi_startproc
+ 772              		@ args = 8, pretend = 0, frame = 0
+ 773              		@ frame_needed = 0, uses_anonymous_args = 0
+ 130:u8g2_lib/u8g2_circle.c ****     /* upper right */
+ 774              		.loc 1 130 1 is_stmt 0 view .LVU222
+ 775 0000 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
+ 776              	.LCFI8:
+ 777              		.cfi_def_cfa_offset 32
+ 778              		.cfi_offset 3, -32
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s 			page 21
+
+
+ 779              		.cfi_offset 4, -28
+ 780              		.cfi_offset 5, -24
+ 781              		.cfi_offset 6, -20
+ 782              		.cfi_offset 7, -16
+ 783              		.cfi_offset 8, -12
+ 784              		.cfi_offset 9, -8
+ 785              		.cfi_offset 14, -4
+ 786 0004 8046     		mov	r8, r0
+ 787 0006 0C46     		mov	r4, r1
+ 788 0008 1746     		mov	r7, r2
+ 789 000a 1D46     		mov	r5, r3
+ 790 000c 9DF82090 		ldrb	r9, [sp, #32]	@ zero_extendqisi2
+ 791 0010 9DF82460 		ldrb	r6, [sp, #36]	@ zero_extendqisi2
+ 132:u8g2_lib/u8g2_circle.c ****     {
+ 792              		.loc 1 132 5 is_stmt 1 view .LVU223
+ 132:u8g2_lib/u8g2_circle.c ****     {
+ 793              		.loc 1 132 8 is_stmt 0 view .LVU224
+ 794 0014 16F0010F 		tst	r6, #1
+ 795 0018 0AD1     		bne	.L43
+ 796              	.LVL103:
+ 797              	.L38:
+ 139:u8g2_lib/u8g2_circle.c ****     {
+ 798              		.loc 1 139 5 is_stmt 1 view .LVU225
+ 139:u8g2_lib/u8g2_circle.c ****     {
+ 799              		.loc 1 139 8 is_stmt 0 view .LVU226
+ 800 001a 16F0020F 		tst	r6, #2
+ 801 001e 1BD1     		bne	.L44
+ 802              	.L39:
+ 146:u8g2_lib/u8g2_circle.c ****     {
+ 803              		.loc 1 146 5 is_stmt 1 view .LVU227
+ 146:u8g2_lib/u8g2_circle.c ****     {
+ 804              		.loc 1 146 8 is_stmt 0 view .LVU228
+ 805 0020 16F0080F 		tst	r6, #8
+ 806 0024 2DD1     		bne	.L45
+ 807              	.L40:
+ 153:u8g2_lib/u8g2_circle.c ****     {
+ 808              		.loc 1 153 5 is_stmt 1 view .LVU229
+ 153:u8g2_lib/u8g2_circle.c ****     {
+ 809              		.loc 1 153 8 is_stmt 0 view .LVU230
+ 810 0026 16F0040F 		tst	r6, #4
+ 811 002a 3BD1     		bne	.L46
+ 812              	.L37:
+ 158:u8g2_lib/u8g2_circle.c **** 
+ 813              		.loc 1 158 1 view .LVU231
+ 814 002c BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+ 815              	.LVL104:
+ 816              	.L43:
+ 134:u8g2_lib/u8g2_circle.c ****       u8g2_DrawVLine(u8g2, x0+y, y0-x, x+1);
+ 817              		.loc 1 134 7 is_stmt 1 view .LVU232
+ 818 0030 531C     		adds	r3, r2, #1
+ 819              	.LVL105:
+ 134:u8g2_lib/u8g2_circle.c ****       u8g2_DrawVLine(u8g2, x0+y, y0-x, x+1);
+ 820              		.loc 1 134 7 is_stmt 0 view .LVU233
+ 821 0032 A9EB0202 		sub	r2, r9, r2
+ 822              	.LVL106:
+ 134:u8g2_lib/u8g2_circle.c ****       u8g2_DrawVLine(u8g2, x0+y, y0-x, x+1);
+ 823              		.loc 1 134 7 view .LVU234
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s 			page 22
+
+
+ 824 0036 6918     		adds	r1, r5, r1
+ 825              	.LVL107:
+ 134:u8g2_lib/u8g2_circle.c ****       u8g2_DrawVLine(u8g2, x0+y, y0-x, x+1);
+ 826              		.loc 1 134 7 view .LVU235
+ 827 0038 DBB2     		uxtb	r3, r3
+ 828 003a D2B2     		uxtb	r2, r2
+ 829 003c C9B2     		uxtb	r1, r1
+ 830 003e FFF7FEFF 		bl	u8g2_DrawVLine
+ 831              	.LVL108:
+ 135:u8g2_lib/u8g2_circle.c ****     }
+ 832              		.loc 1 135 7 is_stmt 1 view .LVU236
+ 833 0042 631C     		adds	r3, r4, #1
+ 834 0044 A9EB0402 		sub	r2, r9, r4
+ 835 0048 E919     		adds	r1, r5, r7
+ 836 004a DBB2     		uxtb	r3, r3
+ 837 004c D2B2     		uxtb	r2, r2
+ 838 004e C9B2     		uxtb	r1, r1
+ 839 0050 4046     		mov	r0, r8
+ 840 0052 FFF7FEFF 		bl	u8g2_DrawVLine
+ 841              	.LVL109:
+ 842 0056 E0E7     		b	.L38
+ 843              	.L44:
+ 141:u8g2_lib/u8g2_circle.c ****       u8g2_DrawVLine(u8g2, x0-y, y0-x, x+1);
+ 844              		.loc 1 141 7 view .LVU237
+ 845 0058 7B1C     		adds	r3, r7, #1
+ 846 005a A9EB0702 		sub	r2, r9, r7
+ 847 005e 291B     		subs	r1, r5, r4
+ 848 0060 DBB2     		uxtb	r3, r3
+ 849 0062 D2B2     		uxtb	r2, r2
+ 850 0064 C9B2     		uxtb	r1, r1
+ 851 0066 4046     		mov	r0, r8
+ 852 0068 FFF7FEFF 		bl	u8g2_DrawVLine
+ 853              	.LVL110:
+ 142:u8g2_lib/u8g2_circle.c ****     }
+ 854              		.loc 1 142 7 view .LVU238
+ 855 006c 631C     		adds	r3, r4, #1
+ 856 006e A9EB0402 		sub	r2, r9, r4
+ 857 0072 E91B     		subs	r1, r5, r7
+ 858 0074 DBB2     		uxtb	r3, r3
+ 859 0076 D2B2     		uxtb	r2, r2
+ 860 0078 C9B2     		uxtb	r1, r1
+ 861 007a 4046     		mov	r0, r8
+ 862 007c FFF7FEFF 		bl	u8g2_DrawVLine
+ 863              	.LVL111:
+ 864 0080 CEE7     		b	.L39
+ 865              	.L45:
+ 148:u8g2_lib/u8g2_circle.c ****       u8g2_DrawVLine(u8g2, x0+y, y0, x+1);
+ 866              		.loc 1 148 7 view .LVU239
+ 867 0082 7B1C     		adds	r3, r7, #1
+ 868 0084 2919     		adds	r1, r5, r4
+ 869 0086 DBB2     		uxtb	r3, r3
+ 870 0088 4A46     		mov	r2, r9
+ 871 008a C9B2     		uxtb	r1, r1
+ 872 008c 4046     		mov	r0, r8
+ 873 008e FFF7FEFF 		bl	u8g2_DrawVLine
+ 874              	.LVL112:
+ 149:u8g2_lib/u8g2_circle.c ****     }
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s 			page 23
+
+
+ 875              		.loc 1 149 7 view .LVU240
+ 876 0092 631C     		adds	r3, r4, #1
+ 877 0094 E919     		adds	r1, r5, r7
+ 878 0096 DBB2     		uxtb	r3, r3
+ 879 0098 4A46     		mov	r2, r9
+ 880 009a C9B2     		uxtb	r1, r1
+ 881 009c 4046     		mov	r0, r8
+ 882 009e FFF7FEFF 		bl	u8g2_DrawVLine
+ 883              	.LVL113:
+ 884 00a2 C0E7     		b	.L40
+ 885              	.L46:
+ 155:u8g2_lib/u8g2_circle.c ****       u8g2_DrawVLine(u8g2, x0-y, y0, x+1);
+ 886              		.loc 1 155 7 view .LVU241
+ 887 00a4 7B1C     		adds	r3, r7, #1
+ 888 00a6 291B     		subs	r1, r5, r4
+ 889 00a8 DBB2     		uxtb	r3, r3
+ 890 00aa 4A46     		mov	r2, r9
+ 891 00ac C9B2     		uxtb	r1, r1
+ 892 00ae 4046     		mov	r0, r8
+ 893 00b0 FFF7FEFF 		bl	u8g2_DrawVLine
+ 894              	.LVL114:
+ 156:u8g2_lib/u8g2_circle.c ****     }
+ 895              		.loc 1 156 7 view .LVU242
+ 896 00b4 631C     		adds	r3, r4, #1
+ 897 00b6 E91B     		subs	r1, r5, r7
+ 898 00b8 DBB2     		uxtb	r3, r3
+ 899 00ba 4A46     		mov	r2, r9
+ 900 00bc C9B2     		uxtb	r1, r1
+ 901 00be 4046     		mov	r0, r8
+ 902 00c0 FFF7FEFF 		bl	u8g2_DrawVLine
+ 903              	.LVL115:
+ 158:u8g2_lib/u8g2_circle.c **** 
+ 904              		.loc 1 158 1 is_stmt 0 view .LVU243
+ 905 00c4 B2E7     		b	.L37
+ 906              		.cfi_endproc
+ 907              	.LFE3:
+ 909              		.section	.text.u8g2_draw_disc,"ax",%progbits
+ 910              		.align	1
+ 911              		.syntax unified
+ 912              		.thumb
+ 913              		.thumb_func
+ 914              		.fpu softvfp
+ 916              	u8g2_draw_disc:
+ 917              	.LVL116:
+ 918              	.LFB4:
+ 161:u8g2_lib/u8g2_circle.c ****   u8g2_int_t f;
+ 919              		.loc 1 161 1 is_stmt 1 view -0
+ 920              		.cfi_startproc
+ 921              		@ args = 4, pretend = 0, frame = 8
+ 922              		@ frame_needed = 0, uses_anonymous_args = 0
+ 161:u8g2_lib/u8g2_circle.c ****   u8g2_int_t f;
+ 923              		.loc 1 161 1 is_stmt 0 view .LVU245
+ 924 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 925              	.LCFI9:
+ 926              		.cfi_def_cfa_offset 36
+ 927              		.cfi_offset 4, -36
+ 928              		.cfi_offset 5, -32
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s 			page 24
+
+
+ 929              		.cfi_offset 6, -28
+ 930              		.cfi_offset 7, -24
+ 931              		.cfi_offset 8, -20
+ 932              		.cfi_offset 9, -16
+ 933              		.cfi_offset 10, -12
+ 934              		.cfi_offset 11, -8
+ 935              		.cfi_offset 14, -4
+ 936 0004 85B0     		sub	sp, sp, #20
+ 937              	.LCFI10:
+ 938              		.cfi_def_cfa_offset 56
+ 939 0006 0390     		str	r0, [sp, #12]
+ 940 0008 8946     		mov	r9, r1
+ 941 000a 9246     		mov	r10, r2
+ 942 000c 1E46     		mov	r6, r3
+ 943 000e 9DF838B0 		ldrb	fp, [sp, #56]	@ zero_extendqisi2
+ 162:u8g2_lib/u8g2_circle.c ****   u8g2_int_t ddF_x;
+ 944              		.loc 1 162 3 is_stmt 1 view .LVU246
+ 163:u8g2_lib/u8g2_circle.c ****   u8g2_int_t ddF_y;
+ 945              		.loc 1 163 3 view .LVU247
+ 164:u8g2_lib/u8g2_circle.c ****   u8g2_uint_t x;
+ 946              		.loc 1 164 3 view .LVU248
+ 165:u8g2_lib/u8g2_circle.c ****   u8g2_uint_t y;
+ 947              		.loc 1 165 3 view .LVU249
+ 166:u8g2_lib/u8g2_circle.c **** 
+ 948              		.loc 1 166 3 view .LVU250
+ 168:u8g2_lib/u8g2_circle.c ****   f -= rad;
+ 949              		.loc 1 168 3 view .LVU251
+ 950              	.LVL117:
+ 169:u8g2_lib/u8g2_circle.c ****   ddF_x = 1;
+ 951              		.loc 1 169 3 view .LVU252
+ 169:u8g2_lib/u8g2_circle.c ****   ddF_x = 1;
+ 952              		.loc 1 169 5 is_stmt 0 view .LVU253
+ 953 0012 C3F10104 		rsb	r4, r3, #1
+ 954 0016 64B2     		sxtb	r4, r4
+ 955              	.LVL118:
+ 170:u8g2_lib/u8g2_circle.c ****   ddF_y = 0;
+ 956              		.loc 1 170 3 is_stmt 1 view .LVU254
+ 171:u8g2_lib/u8g2_circle.c ****   ddF_y -= rad;
+ 957              		.loc 1 171 3 view .LVU255
+ 172:u8g2_lib/u8g2_circle.c ****   ddF_y *= 2;
+ 958              		.loc 1 172 3 view .LVU256
+ 173:u8g2_lib/u8g2_circle.c ****   x = 0;
+ 959              		.loc 1 173 3 view .LVU257
+ 173:u8g2_lib/u8g2_circle.c ****   x = 0;
+ 960              		.loc 1 173 9 is_stmt 0 view .LVU258
+ 961 0018 C3EBC318 		rsb	r8, r3, r3, lsl #7
+ 962 001c 4FEA4808 		lsl	r8, r8, #1
+ 963 0020 4FFA88F8 		sxtb	r8, r8
+ 964              	.LVL119:
+ 174:u8g2_lib/u8g2_circle.c ****   y = rad;
+ 965              		.loc 1 174 3 is_stmt 1 view .LVU259
+ 175:u8g2_lib/u8g2_circle.c **** 
+ 966              		.loc 1 175 3 view .LVU260
+ 177:u8g2_lib/u8g2_circle.c ****   
+ 967              		.loc 1 177 3 view .LVU261
+ 968 0024 CDF804B0 		str	fp, [sp, #4]
+ 969 0028 0092     		str	r2, [sp]
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s 			page 25
+
+
+ 970 002a 0B46     		mov	r3, r1
+ 971              	.LVL120:
+ 177:u8g2_lib/u8g2_circle.c ****   
+ 972              		.loc 1 177 3 is_stmt 0 view .LVU262
+ 973 002c 3246     		mov	r2, r6
+ 974              	.LVL121:
+ 177:u8g2_lib/u8g2_circle.c ****   
+ 975              		.loc 1 177 3 view .LVU263
+ 976 002e 0021     		movs	r1, #0
+ 977              	.LVL122:
+ 177:u8g2_lib/u8g2_circle.c ****   
+ 978              		.loc 1 177 3 view .LVU264
+ 979 0030 FFF7FEFF 		bl	u8g2_draw_disc_section
+ 980              	.LVL123:
+ 179:u8g2_lib/u8g2_circle.c ****   {
+ 981              		.loc 1 179 3 is_stmt 1 view .LVU265
+ 174:u8g2_lib/u8g2_circle.c ****   y = rad;
+ 982              		.loc 1 174 5 is_stmt 0 view .LVU266
+ 983 0034 0025     		movs	r5, #0
+ 170:u8g2_lib/u8g2_circle.c ****   ddF_y = 0;
+ 984              		.loc 1 170 9 view .LVU267
+ 985 0036 0127     		movs	r7, #1
+ 179:u8g2_lib/u8g2_circle.c ****   {
+ 986              		.loc 1 179 9 view .LVU268
+ 987 0038 10E0     		b	.L48
+ 988              	.LVL124:
+ 989              	.L49:
+ 187:u8g2_lib/u8g2_circle.c ****     ddF_x += 2;
+ 990              		.loc 1 187 5 is_stmt 1 view .LVU269
+ 187:u8g2_lib/u8g2_circle.c ****     ddF_x += 2;
+ 991              		.loc 1 187 6 is_stmt 0 view .LVU270
+ 992 003a 0135     		adds	r5, r5, #1
+ 993              	.LVL125:
+ 187:u8g2_lib/u8g2_circle.c ****     ddF_x += 2;
+ 994              		.loc 1 187 6 view .LVU271
+ 995 003c EDB2     		uxtb	r5, r5
+ 996              	.LVL126:
+ 188:u8g2_lib/u8g2_circle.c ****     f += ddF_x;
+ 997              		.loc 1 188 5 is_stmt 1 view .LVU272
+ 188:u8g2_lib/u8g2_circle.c ****     f += ddF_x;
+ 998              		.loc 1 188 11 is_stmt 0 view .LVU273
+ 999 003e 0237     		adds	r7, r7, #2
+ 1000              	.LVL127:
+ 188:u8g2_lib/u8g2_circle.c ****     f += ddF_x;
+ 1001              		.loc 1 188 11 view .LVU274
+ 1002 0040 FBB2     		uxtb	r3, r7
+ 1003 0042 7FB2     		sxtb	r7, r7
+ 1004              	.LVL128:
+ 189:u8g2_lib/u8g2_circle.c **** 
+ 1005              		.loc 1 189 5 is_stmt 1 view .LVU275
+ 189:u8g2_lib/u8g2_circle.c **** 
+ 1006              		.loc 1 189 7 is_stmt 0 view .LVU276
+ 1007 0044 1C44     		add	r4, r4, r3
+ 1008              	.LVL129:
+ 189:u8g2_lib/u8g2_circle.c **** 
+ 1009              		.loc 1 189 7 view .LVU277
+ 1010 0046 64B2     		sxtb	r4, r4
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s 			page 26
+
+
+ 1011              	.LVL130:
+ 191:u8g2_lib/u8g2_circle.c ****   }
+ 1012              		.loc 1 191 5 is_stmt 1 view .LVU278
+ 1013 0048 CDF804B0 		str	fp, [sp, #4]
+ 1014 004c CDF800A0 		str	r10, [sp]
+ 1015 0050 4B46     		mov	r3, r9
+ 1016 0052 3246     		mov	r2, r6
+ 1017 0054 2946     		mov	r1, r5
+ 1018 0056 0398     		ldr	r0, [sp, #12]
+ 1019 0058 FFF7FEFF 		bl	u8g2_draw_disc_section
+ 1020              	.LVL131:
+ 1021              	.L48:
+ 179:u8g2_lib/u8g2_circle.c ****   {
+ 1022              		.loc 1 179 9 view .LVU279
+ 1023 005c B542     		cmp	r5, r6
+ 1024 005e 0CD2     		bcs	.L52
+ 181:u8g2_lib/u8g2_circle.c ****     {
+ 1025              		.loc 1 181 5 view .LVU280
+ 181:u8g2_lib/u8g2_circle.c ****     {
+ 1026              		.loc 1 181 8 is_stmt 0 view .LVU281
+ 1027 0060 002C     		cmp	r4, #0
+ 1028 0062 EADB     		blt	.L49
+ 183:u8g2_lib/u8g2_circle.c ****       ddF_y += 2;
+ 1029              		.loc 1 183 7 is_stmt 1 view .LVU282
+ 183:u8g2_lib/u8g2_circle.c ****       ddF_y += 2;
+ 1030              		.loc 1 183 8 is_stmt 0 view .LVU283
+ 1031 0064 013E     		subs	r6, r6, #1
+ 1032              	.LVL132:
+ 183:u8g2_lib/u8g2_circle.c ****       ddF_y += 2;
+ 1033              		.loc 1 183 8 view .LVU284
+ 1034 0066 F6B2     		uxtb	r6, r6
+ 1035              	.LVL133:
+ 184:u8g2_lib/u8g2_circle.c ****       f += ddF_y;
+ 1036              		.loc 1 184 7 is_stmt 1 view .LVU285
+ 184:u8g2_lib/u8g2_circle.c ****       f += ddF_y;
+ 1037              		.loc 1 184 13 is_stmt 0 view .LVU286
+ 1038 0068 08F10208 		add	r8, r8, #2
+ 1039              	.LVL134:
+ 184:u8g2_lib/u8g2_circle.c ****       f += ddF_y;
+ 1040              		.loc 1 184 13 view .LVU287
+ 1041 006c 5FFA88F3 		uxtb	r3, r8
+ 1042 0070 4FFA88F8 		sxtb	r8, r8
+ 1043              	.LVL135:
+ 185:u8g2_lib/u8g2_circle.c ****     }
+ 1044              		.loc 1 185 7 is_stmt 1 view .LVU288
+ 185:u8g2_lib/u8g2_circle.c ****     }
+ 1045              		.loc 1 185 9 is_stmt 0 view .LVU289
+ 1046 0074 1C44     		add	r4, r4, r3
+ 1047              	.LVL136:
+ 185:u8g2_lib/u8g2_circle.c ****     }
+ 1048              		.loc 1 185 9 view .LVU290
+ 1049 0076 64B2     		sxtb	r4, r4
+ 1050              	.LVL137:
+ 185:u8g2_lib/u8g2_circle.c ****     }
+ 1051              		.loc 1 185 9 view .LVU291
+ 1052 0078 DFE7     		b	.L49
+ 1053              	.L52:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s 			page 27
+
+
+ 193:u8g2_lib/u8g2_circle.c **** 
+ 1054              		.loc 1 193 1 view .LVU292
+ 1055 007a 05B0     		add	sp, sp, #20
+ 1056              	.LCFI11:
+ 1057              		.cfi_def_cfa_offset 36
+ 1058              		@ sp needed
+ 1059 007c BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 193:u8g2_lib/u8g2_circle.c **** 
+ 1060              		.loc 1 193 1 view .LVU293
+ 1061              		.cfi_endproc
+ 1062              	.LFE4:
+ 1064              		.section	.text.u8g2_draw_filled_ellipse_section,"ax",%progbits
+ 1065              		.align	1
+ 1066              		.syntax unified
+ 1067              		.thumb
+ 1068              		.thumb_func
+ 1069              		.fpu softvfp
+ 1071              	u8g2_draw_filled_ellipse_section:
+ 1072              	.LVL138:
+ 1073              	.LFB9:
+ 332:u8g2_lib/u8g2_circle.c **** 
+ 333:u8g2_lib/u8g2_circle.c **** void u8g2_DrawEllipse(u8g2_t *u8g2, u8g2_uint_t x0, u8g2_uint_t y0, u8g2_uint_t rx, u8g2_uint_t ry,
+ 334:u8g2_lib/u8g2_circle.c **** {
+ 335:u8g2_lib/u8g2_circle.c ****   /* check for bounding box */
+ 336:u8g2_lib/u8g2_circle.c **** #ifdef U8G2_WITH_INTERSECTION
+ 337:u8g2_lib/u8g2_circle.c ****   {
+ 338:u8g2_lib/u8g2_circle.c ****     if ( u8g2_IsIntersection(u8g2, x0-rx, y0-ry, x0+rx+1, y0+ry+1) == 0 ) 
+ 339:u8g2_lib/u8g2_circle.c ****       return;
+ 340:u8g2_lib/u8g2_circle.c ****   }
+ 341:u8g2_lib/u8g2_circle.c **** #endif /* U8G2_WITH_INTERSECTION */
+ 342:u8g2_lib/u8g2_circle.c ****   
+ 343:u8g2_lib/u8g2_circle.c ****   u8g2_draw_ellipse(u8g2, x0, y0, rx, ry, option);
+ 344:u8g2_lib/u8g2_circle.c **** }
+ 345:u8g2_lib/u8g2_circle.c **** 
+ 346:u8g2_lib/u8g2_circle.c **** /*==============================================*/
+ 347:u8g2_lib/u8g2_circle.c **** /* Filled Ellipse */
+ 348:u8g2_lib/u8g2_circle.c **** 
+ 349:u8g2_lib/u8g2_circle.c **** static void u8g2_draw_filled_ellipse_section(u8g2_t *u8g2, u8g2_uint_t x, u8g2_uint_t y, u8g2_uint_
+ 350:u8g2_lib/u8g2_circle.c **** static void u8g2_draw_filled_ellipse_section(u8g2_t *u8g2, u8g2_uint_t x, u8g2_uint_t y, u8g2_uint_
+ 351:u8g2_lib/u8g2_circle.c **** {
+ 1074              		.loc 1 351 1 is_stmt 1 view -0
+ 1075              		.cfi_startproc
+ 1076              		@ args = 8, pretend = 0, frame = 0
+ 1077              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1078              		.loc 1 351 1 is_stmt 0 view .LVU295
+ 1079 0000 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
+ 1080              	.LCFI12:
+ 1081              		.cfi_def_cfa_offset 32
+ 1082              		.cfi_offset 3, -32
+ 1083              		.cfi_offset 4, -28
+ 1084              		.cfi_offset 5, -24
+ 1085              		.cfi_offset 6, -20
+ 1086              		.cfi_offset 7, -16
+ 1087              		.cfi_offset 8, -12
+ 1088              		.cfi_offset 9, -8
+ 1089              		.cfi_offset 14, -4
+ 1090 0004 0746     		mov	r7, r0
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s 			page 28
+
+
+ 1091 0006 8846     		mov	r8, r1
+ 1092 0008 1446     		mov	r4, r2
+ 1093 000a 1E46     		mov	r6, r3
+ 1094 000c 9DF82090 		ldrb	r9, [sp, #32]	@ zero_extendqisi2
+ 1095 0010 9DF82450 		ldrb	r5, [sp, #36]	@ zero_extendqisi2
+ 352:u8g2_lib/u8g2_circle.c ****     /* upper right */
+ 353:u8g2_lib/u8g2_circle.c ****     if ( option & U8G2_DRAW_UPPER_RIGHT )
+ 1096              		.loc 1 353 5 is_stmt 1 view .LVU296
+ 1097              		.loc 1 353 8 is_stmt 0 view .LVU297
+ 1098 0014 15F0010F 		tst	r5, #1
+ 1099 0018 0AD1     		bne	.L59
+ 1100              	.LVL139:
+ 1101              	.L54:
+ 354:u8g2_lib/u8g2_circle.c ****     {
+ 355:u8g2_lib/u8g2_circle.c ****       u8g2_DrawVLine(u8g2, x0+x, y0-y, y+1);
+ 356:u8g2_lib/u8g2_circle.c ****     }
+ 357:u8g2_lib/u8g2_circle.c ****     
+ 358:u8g2_lib/u8g2_circle.c ****     /* upper left */
+ 359:u8g2_lib/u8g2_circle.c ****     if ( option & U8G2_DRAW_UPPER_LEFT )
+ 1102              		.loc 1 359 5 is_stmt 1 view .LVU298
+ 1103              		.loc 1 359 8 is_stmt 0 view .LVU299
+ 1104 001a 15F0020F 		tst	r5, #2
+ 1105 001e 11D1     		bne	.L60
+ 1106              	.L55:
+ 360:u8g2_lib/u8g2_circle.c ****     {
+ 361:u8g2_lib/u8g2_circle.c ****       u8g2_DrawVLine(u8g2, x0-x, y0-y, y+1);
+ 362:u8g2_lib/u8g2_circle.c ****     }
+ 363:u8g2_lib/u8g2_circle.c ****     
+ 364:u8g2_lib/u8g2_circle.c ****     /* lower right */
+ 365:u8g2_lib/u8g2_circle.c ****     if ( option & U8G2_DRAW_LOWER_RIGHT )
+ 1107              		.loc 1 365 5 is_stmt 1 view .LVU300
+ 1108              		.loc 1 365 8 is_stmt 0 view .LVU301
+ 1109 0020 15F0080F 		tst	r5, #8
+ 1110 0024 1AD1     		bne	.L61
+ 1111              	.L56:
+ 366:u8g2_lib/u8g2_circle.c ****     {
+ 367:u8g2_lib/u8g2_circle.c ****       u8g2_DrawVLine(u8g2, x0+x, y0, y+1);
+ 368:u8g2_lib/u8g2_circle.c ****     }
+ 369:u8g2_lib/u8g2_circle.c ****     
+ 370:u8g2_lib/u8g2_circle.c ****     /* lower left */
+ 371:u8g2_lib/u8g2_circle.c ****     if ( option & U8G2_DRAW_LOWER_LEFT )
+ 1112              		.loc 1 371 5 is_stmt 1 view .LVU302
+ 1113              		.loc 1 371 8 is_stmt 0 view .LVU303
+ 1114 0026 15F0040F 		tst	r5, #4
+ 1115 002a 21D1     		bne	.L62
+ 1116              	.L53:
+ 372:u8g2_lib/u8g2_circle.c ****     {
+ 373:u8g2_lib/u8g2_circle.c ****       u8g2_DrawVLine(u8g2, x0-x, y0, y+1);
+ 374:u8g2_lib/u8g2_circle.c ****     }
+ 375:u8g2_lib/u8g2_circle.c **** }
+ 1117              		.loc 1 375 1 view .LVU304
+ 1118 002c BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+ 1119              	.LVL140:
+ 1120              	.L59:
+ 355:u8g2_lib/u8g2_circle.c ****     }
+ 1121              		.loc 1 355 7 is_stmt 1 view .LVU305
+ 1122 0030 531C     		adds	r3, r2, #1
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s 			page 29
+
+
+ 1123              	.LVL141:
+ 355:u8g2_lib/u8g2_circle.c ****     }
+ 1124              		.loc 1 355 7 is_stmt 0 view .LVU306
+ 1125 0032 A9EB0202 		sub	r2, r9, r2
+ 1126              	.LVL142:
+ 355:u8g2_lib/u8g2_circle.c ****     }
+ 1127              		.loc 1 355 7 view .LVU307
+ 1128 0036 7118     		adds	r1, r6, r1
+ 1129              	.LVL143:
+ 355:u8g2_lib/u8g2_circle.c ****     }
+ 1130              		.loc 1 355 7 view .LVU308
+ 1131 0038 DBB2     		uxtb	r3, r3
+ 1132 003a D2B2     		uxtb	r2, r2
+ 1133 003c C9B2     		uxtb	r1, r1
+ 1134 003e FFF7FEFF 		bl	u8g2_DrawVLine
+ 1135              	.LVL144:
+ 355:u8g2_lib/u8g2_circle.c ****     }
+ 1136              		.loc 1 355 7 view .LVU309
+ 1137 0042 EAE7     		b	.L54
+ 1138              	.L60:
+ 361:u8g2_lib/u8g2_circle.c ****     }
+ 1139              		.loc 1 361 7 is_stmt 1 view .LVU310
+ 1140 0044 631C     		adds	r3, r4, #1
+ 1141 0046 A9EB0402 		sub	r2, r9, r4
+ 1142 004a A6EB0801 		sub	r1, r6, r8
+ 1143 004e DBB2     		uxtb	r3, r3
+ 1144 0050 D2B2     		uxtb	r2, r2
+ 1145 0052 C9B2     		uxtb	r1, r1
+ 1146 0054 3846     		mov	r0, r7
+ 1147 0056 FFF7FEFF 		bl	u8g2_DrawVLine
+ 1148              	.LVL145:
+ 1149 005a E1E7     		b	.L55
+ 1150              	.L61:
+ 367:u8g2_lib/u8g2_circle.c ****     }
+ 1151              		.loc 1 367 7 view .LVU311
+ 1152 005c 631C     		adds	r3, r4, #1
+ 1153 005e 06EB0801 		add	r1, r6, r8
+ 1154 0062 DBB2     		uxtb	r3, r3
+ 1155 0064 4A46     		mov	r2, r9
+ 1156 0066 C9B2     		uxtb	r1, r1
+ 1157 0068 3846     		mov	r0, r7
+ 1158 006a FFF7FEFF 		bl	u8g2_DrawVLine
+ 1159              	.LVL146:
+ 1160 006e DAE7     		b	.L56
+ 1161              	.L62:
+ 373:u8g2_lib/u8g2_circle.c ****     }
+ 1162              		.loc 1 373 7 view .LVU312
+ 1163 0070 631C     		adds	r3, r4, #1
+ 1164 0072 A6EB0801 		sub	r1, r6, r8
+ 1165 0076 DBB2     		uxtb	r3, r3
+ 1166 0078 4A46     		mov	r2, r9
+ 1167 007a C9B2     		uxtb	r1, r1
+ 1168 007c 3846     		mov	r0, r7
+ 1169 007e FFF7FEFF 		bl	u8g2_DrawVLine
+ 1170              	.LVL147:
+ 1171              		.loc 1 375 1 is_stmt 0 view .LVU313
+ 1172 0082 D3E7     		b	.L53
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s 			page 30
+
+
+ 1173              		.cfi_endproc
+ 1174              	.LFE9:
+ 1176              		.section	.text.u8g2_draw_filled_ellipse,"ax",%progbits
+ 1177              		.align	1
+ 1178              		.syntax unified
+ 1179              		.thumb
+ 1180              		.thumb_func
+ 1181              		.fpu softvfp
+ 1183              	u8g2_draw_filled_ellipse:
+ 1184              	.LVL148:
+ 1185              	.LFB10:
+ 376:u8g2_lib/u8g2_circle.c **** 
+ 377:u8g2_lib/u8g2_circle.c **** static void u8g2_draw_filled_ellipse(u8g2_t *u8g2, u8g2_uint_t x0, u8g2_uint_t y0, u8g2_uint_t rx, 
+ 378:u8g2_lib/u8g2_circle.c **** {
+ 1186              		.loc 1 378 1 is_stmt 1 view -0
+ 1187              		.cfi_startproc
+ 1188              		@ args = 8, pretend = 0, frame = 40
+ 1189              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1190              		.loc 1 378 1 is_stmt 0 view .LVU315
+ 1191 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 1192              	.LCFI13:
+ 1193              		.cfi_def_cfa_offset 36
+ 1194              		.cfi_offset 4, -36
+ 1195              		.cfi_offset 5, -32
+ 1196              		.cfi_offset 6, -28
+ 1197              		.cfi_offset 7, -24
+ 1198              		.cfi_offset 8, -20
+ 1199              		.cfi_offset 9, -16
+ 1200              		.cfi_offset 10, -12
+ 1201              		.cfi_offset 11, -8
+ 1202              		.cfi_offset 14, -4
+ 1203 0004 8DB0     		sub	sp, sp, #52
+ 1204              	.LCFI14:
+ 1205              		.cfi_def_cfa_offset 88
+ 1206 0006 0590     		str	r0, [sp, #20]
+ 1207 0008 0691     		str	r1, [sp, #24]
+ 1208 000a 0792     		str	r2, [sp, #28]
+ 1209 000c 1F46     		mov	r7, r3
+ 1210 000e 9DF85880 		ldrb	r8, [sp, #88]	@ zero_extendqisi2
+ 1211 0012 9DF85C30 		ldrb	r3, [sp, #92]	@ zero_extendqisi2
+ 1212              	.LVL149:
+ 1213              		.loc 1 378 1 view .LVU316
+ 1214 0016 0893     		str	r3, [sp, #32]
+ 379:u8g2_lib/u8g2_circle.c ****   u8g2_uint_t x, y;
+ 1215              		.loc 1 379 3 is_stmt 1 view .LVU317
+ 380:u8g2_lib/u8g2_circle.c ****   u8g2_long_t xchg, ychg;
+ 1216              		.loc 1 380 3 view .LVU318
+ 381:u8g2_lib/u8g2_circle.c ****   u8g2_long_t err;
+ 1217              		.loc 1 381 3 view .LVU319
+ 382:u8g2_lib/u8g2_circle.c ****   u8g2_long_t rxrx2;
+ 1218              		.loc 1 382 3 view .LVU320
+ 383:u8g2_lib/u8g2_circle.c ****   u8g2_long_t ryry2;
+ 1219              		.loc 1 383 3 view .LVU321
+ 384:u8g2_lib/u8g2_circle.c ****   u8g2_long_t stopx, stopy;
+ 1220              		.loc 1 384 3 view .LVU322
+ 385:u8g2_lib/u8g2_circle.c ****   
+ 386:u8g2_lib/u8g2_circle.c ****   rxrx2 = rx;
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s 			page 31
+
+
+ 1221              		.loc 1 386 3 view .LVU323
+ 1222              	.LVL150:
+ 387:u8g2_lib/u8g2_circle.c ****   rxrx2 *= rx;
+ 1223              		.loc 1 387 3 view .LVU324
+ 1224              		.loc 1 387 9 is_stmt 0 view .LVU325
+ 1225 0018 BBB2     		uxth	r3, r7
+ 1226 001a 0A93     		str	r3, [sp, #40]
+ 1227 001c 07FB07F9 		mul	r9, r7, r7
+ 1228 0020 0FFA89F3 		sxth	r3, r9
+ 1229 0024 0493     		str	r3, [sp, #16]
+ 1230              	.LVL151:
+ 388:u8g2_lib/u8g2_circle.c ****   rxrx2 *= 2;
+ 1231              		.loc 1 388 3 is_stmt 1 view .LVU326
+ 1232              		.loc 1 388 9 is_stmt 0 view .LVU327
+ 1233 0026 4FEA4909 		lsl	r9, r9, #1
+ 1234 002a 1FFA89F9 		uxth	r9, r9
+ 1235              	.LVL152:
+ 389:u8g2_lib/u8g2_circle.c ****   
+ 390:u8g2_lib/u8g2_circle.c ****   ryry2 = ry;
+ 1236              		.loc 1 390 3 is_stmt 1 view .LVU328
+ 391:u8g2_lib/u8g2_circle.c ****   ryry2 *= ry;
+ 1237              		.loc 1 391 3 view .LVU329
+ 1238              		.loc 1 391 9 is_stmt 0 view .LVU330
+ 1239 002e 1FFA88F3 		uxth	r3, r8
+ 1240 0032 0B93     		str	r3, [sp, #44]
+ 1241 0034 08FB08FA 		mul	r10, r8, r8
+ 1242 0038 0FFA8AF3 		sxth	r3, r10
+ 1243 003c 0393     		str	r3, [sp, #12]
+ 1244              	.LVL153:
+ 392:u8g2_lib/u8g2_circle.c ****   ryry2 *= 2;
+ 1245              		.loc 1 392 3 is_stmt 1 view .LVU331
+ 1246              		.loc 1 392 9 is_stmt 0 view .LVU332
+ 1247 003e 4FEA4A0A 		lsl	r10, r10, #1
+ 1248 0042 1FFA8AFA 		uxth	r10, r10
+ 1249              	.LVL154:
+ 393:u8g2_lib/u8g2_circle.c ****   
+ 394:u8g2_lib/u8g2_circle.c ****   x = rx;
+ 1250              		.loc 1 394 3 is_stmt 1 view .LVU333
+ 395:u8g2_lib/u8g2_circle.c ****   y = 0;
+ 1251              		.loc 1 395 3 view .LVU334
+ 396:u8g2_lib/u8g2_circle.c ****   
+ 397:u8g2_lib/u8g2_circle.c ****   xchg = 1;
+ 1252              		.loc 1 397 3 view .LVU335
+ 398:u8g2_lib/u8g2_circle.c ****   xchg -= rx;
+ 1253              		.loc 1 398 3 view .LVU336
+ 1254              		.loc 1 398 8 is_stmt 0 view .LVU337
+ 1255 0046 C7F10103 		rsb	r3, r7, #1
+ 1256 004a 9BB2     		uxth	r3, r3
+ 1257              	.LVL155:
+ 399:u8g2_lib/u8g2_circle.c ****   xchg -= rx;
+ 1258              		.loc 1 399 3 is_stmt 1 view .LVU338
+ 1259              		.loc 1 399 8 is_stmt 0 view .LVU339
+ 1260 004c DB1B     		subs	r3, r3, r7
+ 1261              	.LVL156:
+ 1262              		.loc 1 399 8 view .LVU340
+ 1263 004e 9BB2     		uxth	r3, r3
+ 1264              	.LVL157:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s 			page 32
+
+
+ 400:u8g2_lib/u8g2_circle.c ****   xchg *= ry;
+ 1265              		.loc 1 400 3 is_stmt 1 view .LVU341
+ 1266              		.loc 1 400 8 is_stmt 0 view .LVU342
+ 1267 0050 08FB03F3 		mul	r3, r8, r3
+ 1268              	.LVL158:
+ 1269              		.loc 1 400 8 view .LVU343
+ 1270 0054 9BB2     		uxth	r3, r3
+ 1271              	.LVL159:
+ 401:u8g2_lib/u8g2_circle.c ****   xchg *= ry;
+ 1272              		.loc 1 401 3 is_stmt 1 view .LVU344
+ 1273              		.loc 1 401 8 is_stmt 0 view .LVU345
+ 1274 0056 08FB03F3 		mul	r3, r8, r3
+ 1275              	.LVL160:
+ 1276              		.loc 1 401 8 view .LVU346
+ 1277 005a 1BB2     		sxth	r3, r3
+ 1278 005c 0993     		str	r3, [sp, #36]
+ 1279              	.LVL161:
+ 402:u8g2_lib/u8g2_circle.c ****   
+ 403:u8g2_lib/u8g2_circle.c ****   ychg = rx;
+ 1280              		.loc 1 403 3 is_stmt 1 view .LVU347
+ 404:u8g2_lib/u8g2_circle.c ****   ychg *= rx;
+ 1281              		.loc 1 404 3 view .LVU348
+ 405:u8g2_lib/u8g2_circle.c ****   
+ 406:u8g2_lib/u8g2_circle.c ****   err = 0;
+ 1282              		.loc 1 406 3 view .LVU349
+ 407:u8g2_lib/u8g2_circle.c ****   
+ 408:u8g2_lib/u8g2_circle.c ****   stopx = ryry2;
+ 1283              		.loc 1 408 3 view .LVU350
+ 409:u8g2_lib/u8g2_circle.c ****   stopx *= rx;
+ 1284              		.loc 1 409 3 view .LVU351
+ 1285              		.loc 1 409 9 is_stmt 0 view .LVU352
+ 1286 005e 07FB0AFB 		mul	fp, r7, r10
+ 1287 0062 0FFA8BFB 		sxth	fp, fp
+ 1288              	.LVL162:
+ 410:u8g2_lib/u8g2_circle.c ****   stopy = 0;
+ 1289              		.loc 1 410 3 is_stmt 1 view .LVU353
+ 411:u8g2_lib/u8g2_circle.c ****   
+ 412:u8g2_lib/u8g2_circle.c ****   while( stopx >= stopy )
+ 1290              		.loc 1 412 3 view .LVU354
+ 410:u8g2_lib/u8g2_circle.c ****   stopy = 0;
+ 1291              		.loc 1 410 9 is_stmt 0 view .LVU355
+ 1292 0066 0025     		movs	r5, #0
+ 406:u8g2_lib/u8g2_circle.c ****   
+ 1293              		.loc 1 406 7 view .LVU356
+ 1294 0068 2C46     		mov	r4, r5
+ 395:u8g2_lib/u8g2_circle.c ****   
+ 1295              		.loc 1 395 5 view .LVU357
+ 1296 006a 2E46     		mov	r6, r5
+ 1297              	.LVL163:
+ 1298              	.L64:
+ 1299              		.loc 1 412 8 is_stmt 1 view .LVU358
+ 1300 006c AB45     		cmp	fp, r5
+ 1301 006e 27DB     		blt	.L71
+ 413:u8g2_lib/u8g2_circle.c ****   {
+ 414:u8g2_lib/u8g2_circle.c ****     u8g2_draw_filled_ellipse_section(u8g2, x, y, x0, y0, option);
+ 1302              		.loc 1 414 5 view .LVU359
+ 1303 0070 089B     		ldr	r3, [sp, #32]
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s 			page 33
+
+
+ 1304 0072 0193     		str	r3, [sp, #4]
+ 1305 0074 079B     		ldr	r3, [sp, #28]
+ 1306 0076 0093     		str	r3, [sp]
+ 1307 0078 069B     		ldr	r3, [sp, #24]
+ 1308 007a 3246     		mov	r2, r6
+ 1309 007c 3946     		mov	r1, r7
+ 1310 007e 0598     		ldr	r0, [sp, #20]
+ 1311 0080 FFF7FEFF 		bl	u8g2_draw_filled_ellipse_section
+ 1312              	.LVL164:
+ 415:u8g2_lib/u8g2_circle.c ****     y++;
+ 1313              		.loc 1 415 5 view .LVU360
+ 1314              		.loc 1 415 6 is_stmt 0 view .LVU361
+ 1315 0084 0136     		adds	r6, r6, #1
+ 1316              	.LVL165:
+ 1317              		.loc 1 415 6 view .LVU362
+ 1318 0086 F6B2     		uxtb	r6, r6
+ 1319              	.LVL166:
+ 416:u8g2_lib/u8g2_circle.c ****     stopy += rxrx2;
+ 1320              		.loc 1 416 5 is_stmt 1 view .LVU363
+ 1321              		.loc 1 416 11 is_stmt 0 view .LVU364
+ 1322 0088 4D44     		add	r5, r5, r9
+ 1323              	.LVL167:
+ 1324              		.loc 1 416 11 view .LVU365
+ 1325 008a 2DB2     		sxth	r5, r5
+ 1326              	.LVL168:
+ 417:u8g2_lib/u8g2_circle.c ****     err += ychg;
+ 1327              		.loc 1 417 5 is_stmt 1 view .LVU366
+ 1328              		.loc 1 417 9 is_stmt 0 view .LVU367
+ 1329 008c BDF81030 		ldrh	r3, [sp, #16]
+ 1330 0090 1C44     		add	r4, r4, r3
+ 1331              	.LVL169:
+ 1332              		.loc 1 417 9 view .LVU368
+ 1333 0092 A2B2     		uxth	r2, r4
+ 1334 0094 24B2     		sxth	r4, r4
+ 1335              	.LVL170:
+ 418:u8g2_lib/u8g2_circle.c ****     ychg += rxrx2;
+ 1336              		.loc 1 418 5 is_stmt 1 view .LVU369
+ 1337              		.loc 1 418 10 is_stmt 0 view .LVU370
+ 1338 0096 4B44     		add	r3, r3, r9
+ 1339 0098 1BB2     		sxth	r3, r3
+ 1340 009a 0493     		str	r3, [sp, #16]
+ 1341              	.LVL171:
+ 419:u8g2_lib/u8g2_circle.c ****     if ( 2*err+xchg > 0 )
+ 1342              		.loc 1 419 5 is_stmt 1 view .LVU371
+ 1343              		.loc 1 419 15 is_stmt 0 view .LVU372
+ 1344 009c 0999     		ldr	r1, [sp, #36]
+ 1345 009e 01EB4403 		add	r3, r1, r4, lsl #1
+ 1346              		.loc 1 419 8 view .LVU373
+ 1347 00a2 002B     		cmp	r3, #0
+ 1348 00a4 E2DD     		ble	.L64
+ 420:u8g2_lib/u8g2_circle.c ****     {
+ 421:u8g2_lib/u8g2_circle.c ****       x--;
+ 1349              		.loc 1 421 7 is_stmt 1 view .LVU374
+ 1350              		.loc 1 421 8 is_stmt 0 view .LVU375
+ 1351 00a6 013F     		subs	r7, r7, #1
+ 1352              	.LVL172:
+ 1353              		.loc 1 421 8 view .LVU376
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s 			page 34
+
+
+ 1354 00a8 FFB2     		uxtb	r7, r7
+ 1355              	.LVL173:
+ 422:u8g2_lib/u8g2_circle.c ****       stopx -= ryry2;
+ 1356              		.loc 1 422 7 is_stmt 1 view .LVU377
+ 1357              		.loc 1 422 13 is_stmt 0 view .LVU378
+ 1358 00aa ABEB0A0B 		sub	fp, fp, r10
+ 1359              	.LVL174:
+ 1360              		.loc 1 422 13 view .LVU379
+ 1361 00ae 0FFA8BFB 		sxth	fp, fp
+ 1362              	.LVL175:
+ 423:u8g2_lib/u8g2_circle.c ****       err += xchg;
+ 1363              		.loc 1 423 7 is_stmt 1 view .LVU380
+ 1364              		.loc 1 423 11 is_stmt 0 view .LVU381
+ 1365 00b2 8BB2     		uxth	r3, r1
+ 1366 00b4 D418     		adds	r4, r2, r3
+ 1367              	.LVL176:
+ 1368              		.loc 1 423 11 view .LVU382
+ 1369 00b6 24B2     		sxth	r4, r4
+ 1370              	.LVL177:
+ 424:u8g2_lib/u8g2_circle.c ****       xchg += ryry2;      
+ 1371              		.loc 1 424 7 is_stmt 1 view .LVU383
+ 1372              		.loc 1 424 12 is_stmt 0 view .LVU384
+ 1373 00b8 5344     		add	r3, r3, r10
+ 1374 00ba 1BB2     		sxth	r3, r3
+ 1375 00bc 0993     		str	r3, [sp, #36]
+ 1376              	.LVL178:
+ 1377              		.loc 1 424 12 view .LVU385
+ 1378 00be D5E7     		b	.L64
+ 1379              	.L71:
+ 425:u8g2_lib/u8g2_circle.c ****     }
+ 426:u8g2_lib/u8g2_circle.c ****   }
+ 427:u8g2_lib/u8g2_circle.c **** 
+ 428:u8g2_lib/u8g2_circle.c ****   x = 0;
+ 1380              		.loc 1 428 3 is_stmt 1 view .LVU386
+ 1381              	.LVL179:
+ 429:u8g2_lib/u8g2_circle.c ****   y = ry;
+ 1382              		.loc 1 429 3 view .LVU387
+ 430:u8g2_lib/u8g2_circle.c ****   
+ 431:u8g2_lib/u8g2_circle.c ****   xchg = ry;
+ 1383              		.loc 1 431 3 view .LVU388
+ 432:u8g2_lib/u8g2_circle.c ****   xchg *= ry;
+ 1384              		.loc 1 432 3 view .LVU389
+ 433:u8g2_lib/u8g2_circle.c ****   
+ 434:u8g2_lib/u8g2_circle.c ****   ychg = 1;
+ 1385              		.loc 1 434 3 view .LVU390
+ 435:u8g2_lib/u8g2_circle.c ****   ychg -= ry;
+ 1386              		.loc 1 435 3 view .LVU391
+ 1387              		.loc 1 435 8 is_stmt 0 view .LVU392
+ 1388 00c0 0B9B     		ldr	r3, [sp, #44]
+ 1389 00c2 C3F10104 		rsb	r4, r3, #1
+ 1390              	.LVL180:
+ 1391              		.loc 1 435 8 view .LVU393
+ 1392 00c6 A4B2     		uxth	r4, r4
+ 1393              	.LVL181:
+ 436:u8g2_lib/u8g2_circle.c ****   ychg -= ry;
+ 1394              		.loc 1 436 3 is_stmt 1 view .LVU394
+ 1395              		.loc 1 436 8 is_stmt 0 view .LVU395
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s 			page 35
+
+
+ 1396 00c8 E41A     		subs	r4, r4, r3
+ 1397              	.LVL182:
+ 1398              		.loc 1 436 8 view .LVU396
+ 1399 00ca A4B2     		uxth	r4, r4
+ 1400              	.LVL183:
+ 437:u8g2_lib/u8g2_circle.c ****   ychg *= rx;
+ 1401              		.loc 1 437 3 is_stmt 1 view .LVU397
+ 1402              		.loc 1 437 8 is_stmt 0 view .LVU398
+ 1403 00cc 0A9A     		ldr	r2, [sp, #40]
+ 1404 00ce 04FB02F4 		mul	r4, r4, r2
+ 1405              	.LVL184:
+ 1406              		.loc 1 437 8 view .LVU399
+ 1407 00d2 A4B2     		uxth	r4, r4
+ 1408              	.LVL185:
+ 438:u8g2_lib/u8g2_circle.c ****   ychg *= rx;
+ 1409              		.loc 1 438 3 is_stmt 1 view .LVU400
+ 1410              		.loc 1 438 8 is_stmt 0 view .LVU401
+ 1411 00d4 04FB02F4 		mul	r4, r4, r2
+ 1412              	.LVL186:
+ 1413              		.loc 1 438 8 view .LVU402
+ 1414 00d8 24B2     		sxth	r4, r4
+ 1415              	.LVL187:
+ 439:u8g2_lib/u8g2_circle.c ****   
+ 440:u8g2_lib/u8g2_circle.c ****   err = 0;
+ 1416              		.loc 1 440 3 is_stmt 1 view .LVU403
+ 441:u8g2_lib/u8g2_circle.c ****   
+ 442:u8g2_lib/u8g2_circle.c ****   stopx = 0;
+ 1417              		.loc 1 442 3 view .LVU404
+ 443:u8g2_lib/u8g2_circle.c **** 
+ 444:u8g2_lib/u8g2_circle.c ****   stopy = rxrx2;
+ 1418              		.loc 1 444 3 view .LVU405
+ 445:u8g2_lib/u8g2_circle.c ****   stopy *= ry;
+ 1419              		.loc 1 445 3 view .LVU406
+ 1420              		.loc 1 445 9 is_stmt 0 view .LVU407
+ 1421 00da 03FB09FB 		mul	fp, r3, r9
+ 1422 00de 0FFA8BFB 		sxth	fp, fp
+ 1423              	.LVL188:
+ 446:u8g2_lib/u8g2_circle.c ****   
+ 447:u8g2_lib/u8g2_circle.c **** 
+ 448:u8g2_lib/u8g2_circle.c ****   while( stopx <= stopy )
+ 1424              		.loc 1 448 3 is_stmt 1 view .LVU408
+ 442:u8g2_lib/u8g2_circle.c **** 
+ 1425              		.loc 1 442 9 is_stmt 0 view .LVU409
+ 1426 00e2 0026     		movs	r6, #0
+ 440:u8g2_lib/u8g2_circle.c ****   
+ 1427              		.loc 1 440 7 view .LVU410
+ 1428 00e4 3546     		mov	r5, r6
+ 428:u8g2_lib/u8g2_circle.c ****   y = ry;
+ 1429              		.loc 1 428 5 view .LVU411
+ 1430 00e6 3746     		mov	r7, r6
+ 1431              	.LVL189:
+ 1432              	.L67:
+ 1433              		.loc 1 448 8 is_stmt 1 view .LVU412
+ 1434 00e8 5E45     		cmp	r6, fp
+ 1435 00ea 27DC     		bgt	.L72
+ 449:u8g2_lib/u8g2_circle.c ****   {
+ 450:u8g2_lib/u8g2_circle.c ****     u8g2_draw_filled_ellipse_section(u8g2, x, y, x0, y0, option);
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s 			page 36
+
+
+ 1436              		.loc 1 450 5 view .LVU413
+ 1437 00ec 089B     		ldr	r3, [sp, #32]
+ 1438 00ee 0193     		str	r3, [sp, #4]
+ 1439 00f0 079B     		ldr	r3, [sp, #28]
+ 1440 00f2 0093     		str	r3, [sp]
+ 1441 00f4 069B     		ldr	r3, [sp, #24]
+ 1442 00f6 4246     		mov	r2, r8
+ 1443 00f8 3946     		mov	r1, r7
+ 1444 00fa 0598     		ldr	r0, [sp, #20]
+ 1445 00fc FFF7FEFF 		bl	u8g2_draw_filled_ellipse_section
+ 1446              	.LVL190:
+ 451:u8g2_lib/u8g2_circle.c ****     x++;
+ 1447              		.loc 1 451 5 view .LVU414
+ 1448              		.loc 1 451 6 is_stmt 0 view .LVU415
+ 1449 0100 0137     		adds	r7, r7, #1
+ 1450              	.LVL191:
+ 1451              		.loc 1 451 6 view .LVU416
+ 1452 0102 FFB2     		uxtb	r7, r7
+ 1453              	.LVL192:
+ 452:u8g2_lib/u8g2_circle.c ****     stopx += ryry2;
+ 1454              		.loc 1 452 5 is_stmt 1 view .LVU417
+ 1455              		.loc 1 452 11 is_stmt 0 view .LVU418
+ 1456 0104 5644     		add	r6, r6, r10
+ 1457              	.LVL193:
+ 1458              		.loc 1 452 11 view .LVU419
+ 1459 0106 36B2     		sxth	r6, r6
+ 1460              	.LVL194:
+ 453:u8g2_lib/u8g2_circle.c ****     err += xchg;
+ 1461              		.loc 1 453 5 is_stmt 1 view .LVU420
+ 1462              		.loc 1 453 9 is_stmt 0 view .LVU421
+ 1463 0108 BDF80C30 		ldrh	r3, [sp, #12]
+ 1464 010c 1D44     		add	r5, r5, r3
+ 1465              	.LVL195:
+ 1466              		.loc 1 453 9 view .LVU422
+ 1467 010e AAB2     		uxth	r2, r5
+ 1468 0110 2DB2     		sxth	r5, r5
+ 1469              	.LVL196:
+ 454:u8g2_lib/u8g2_circle.c ****     xchg += ryry2;
+ 1470              		.loc 1 454 5 is_stmt 1 view .LVU423
+ 1471              		.loc 1 454 10 is_stmt 0 view .LVU424
+ 1472 0112 5344     		add	r3, r3, r10
+ 1473 0114 1BB2     		sxth	r3, r3
+ 1474 0116 0393     		str	r3, [sp, #12]
+ 1475              	.LVL197:
+ 455:u8g2_lib/u8g2_circle.c ****     if ( 2*err+ychg > 0 )
+ 1476              		.loc 1 455 5 is_stmt 1 view .LVU425
+ 1477              		.loc 1 455 15 is_stmt 0 view .LVU426
+ 1478 0118 04EB4503 		add	r3, r4, r5, lsl #1
+ 1479              		.loc 1 455 8 view .LVU427
+ 1480 011c 002B     		cmp	r3, #0
+ 1481 011e E3DD     		ble	.L67
+ 456:u8g2_lib/u8g2_circle.c ****     {
+ 457:u8g2_lib/u8g2_circle.c ****       y--;
+ 1482              		.loc 1 457 7 is_stmt 1 view .LVU428
+ 1483              		.loc 1 457 8 is_stmt 0 view .LVU429
+ 1484 0120 08F1FF38 		add	r8, r8, #-1
+ 1485              	.LVL198:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s 			page 37
+
+
+ 1486              		.loc 1 457 8 view .LVU430
+ 1487 0124 5FFA88F8 		uxtb	r8, r8
+ 1488              	.LVL199:
+ 458:u8g2_lib/u8g2_circle.c ****       stopy -= rxrx2;
+ 1489              		.loc 1 458 7 is_stmt 1 view .LVU431
+ 1490              		.loc 1 458 13 is_stmt 0 view .LVU432
+ 1491 0128 ABEB090B 		sub	fp, fp, r9
+ 1492              	.LVL200:
+ 1493              		.loc 1 458 13 view .LVU433
+ 1494 012c 0FFA8BFB 		sxth	fp, fp
+ 1495              	.LVL201:
+ 459:u8g2_lib/u8g2_circle.c ****       err += ychg;
+ 1496              		.loc 1 459 7 is_stmt 1 view .LVU434
+ 1497              		.loc 1 459 11 is_stmt 0 view .LVU435
+ 1498 0130 A4B2     		uxth	r4, r4
+ 1499              		.loc 1 459 11 view .LVU436
+ 1500 0132 1519     		adds	r5, r2, r4
+ 1501              	.LVL202:
+ 1502              		.loc 1 459 11 view .LVU437
+ 1503 0134 2DB2     		sxth	r5, r5
+ 1504              	.LVL203:
+ 460:u8g2_lib/u8g2_circle.c ****       ychg += rxrx2;
+ 1505              		.loc 1 460 7 is_stmt 1 view .LVU438
+ 1506              		.loc 1 460 12 is_stmt 0 view .LVU439
+ 1507 0136 4C44     		add	r4, r4, r9
+ 1508              	.LVL204:
+ 1509              		.loc 1 460 12 view .LVU440
+ 1510 0138 24B2     		sxth	r4, r4
+ 1511              	.LVL205:
+ 1512              		.loc 1 460 12 view .LVU441
+ 1513 013a D5E7     		b	.L67
+ 1514              	.L72:
+ 461:u8g2_lib/u8g2_circle.c ****     }
+ 462:u8g2_lib/u8g2_circle.c ****   }
+ 463:u8g2_lib/u8g2_circle.c ****   
+ 464:u8g2_lib/u8g2_circle.c **** }
+ 1515              		.loc 1 464 1 view .LVU442
+ 1516 013c 0DB0     		add	sp, sp, #52
+ 1517              	.LCFI15:
+ 1518              		.cfi_def_cfa_offset 36
+ 1519              		@ sp needed
+ 1520 013e BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 1521              		.loc 1 464 1 view .LVU443
+ 1522              		.cfi_endproc
+ 1523              	.LFE10:
+ 1525              		.section	.text.u8g2_DrawCircle,"ax",%progbits
+ 1526              		.align	1
+ 1527              		.global	u8g2_DrawCircle
+ 1528              		.syntax unified
+ 1529              		.thumb
+ 1530              		.thumb_func
+ 1531              		.fpu softvfp
+ 1533              	u8g2_DrawCircle:
+ 1534              	.LVL206:
+ 1535              	.LFB2:
+ 110:u8g2_lib/u8g2_circle.c ****   /* check for bounding box */
+ 1536              		.loc 1 110 1 is_stmt 1 view -0
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s 			page 38
+
+
+ 1537              		.cfi_startproc
+ 1538              		@ args = 4, pretend = 0, frame = 0
+ 1539              		@ frame_needed = 0, uses_anonymous_args = 0
+ 110:u8g2_lib/u8g2_circle.c ****   /* check for bounding box */
+ 1540              		.loc 1 110 1 is_stmt 0 view .LVU445
+ 1541 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 1542              	.LCFI16:
+ 1543              		.cfi_def_cfa_offset 24
+ 1544              		.cfi_offset 4, -24
+ 1545              		.cfi_offset 5, -20
+ 1546              		.cfi_offset 6, -16
+ 1547              		.cfi_offset 7, -12
+ 1548              		.cfi_offset 8, -8
+ 1549              		.cfi_offset 14, -4
+ 1550 0004 82B0     		sub	sp, sp, #8
+ 1551              	.LCFI17:
+ 1552              		.cfi_def_cfa_offset 32
+ 1553 0006 8046     		mov	r8, r0
+ 1554 0008 0E46     		mov	r6, r1
+ 1555 000a 1746     		mov	r7, r2
+ 1556 000c 1D46     		mov	r5, r3
+ 114:u8g2_lib/u8g2_circle.c ****       return;
+ 1557              		.loc 1 114 5 is_stmt 1 view .LVU446
+ 114:u8g2_lib/u8g2_circle.c ****       return;
+ 1558              		.loc 1 114 54 is_stmt 0 view .LVU447
+ 1559 000e CB18     		adds	r3, r1, r3
+ 1560              	.LVL207:
+ 114:u8g2_lib/u8g2_circle.c ****       return;
+ 1561              		.loc 1 114 54 view .LVU448
+ 1562 0010 DBB2     		uxtb	r3, r3
+ 114:u8g2_lib/u8g2_circle.c ****       return;
+ 1563              		.loc 1 114 64 view .LVU449
+ 1564 0012 AC18     		adds	r4, r5, r2
+ 1565 0014 E4B2     		uxtb	r4, r4
+ 114:u8g2_lib/u8g2_circle.c ****       return;
+ 1566              		.loc 1 114 10 view .LVU450
+ 1567 0016 0133     		adds	r3, r3, #1
+ 1568 0018 521B     		subs	r2, r2, r5
+ 1569              	.LVL208:
+ 114:u8g2_lib/u8g2_circle.c ****       return;
+ 1570              		.loc 1 114 10 view .LVU451
+ 1571 001a 491B     		subs	r1, r1, r5
+ 1572              	.LVL209:
+ 114:u8g2_lib/u8g2_circle.c ****       return;
+ 1573              		.loc 1 114 10 view .LVU452
+ 1574 001c 0134     		adds	r4, r4, #1
+ 1575 001e E4B2     		uxtb	r4, r4
+ 1576 0020 0094     		str	r4, [sp]
+ 1577 0022 DBB2     		uxtb	r3, r3
+ 1578 0024 D2B2     		uxtb	r2, r2
+ 1579 0026 C9B2     		uxtb	r1, r1
+ 1580 0028 FFF7FEFF 		bl	u8g2_IsIntersection
+ 1581              	.LVL210:
+ 114:u8g2_lib/u8g2_circle.c ****       return;
+ 1582              		.loc 1 114 8 view .LVU453
+ 1583 002c 10B9     		cbnz	r0, .L76
+ 1584              	.L73:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s 			page 39
+
+
+ 122:u8g2_lib/u8g2_circle.c **** 
+ 1585              		.loc 1 122 1 view .LVU454
+ 1586 002e 02B0     		add	sp, sp, #8
+ 1587              	.LCFI18:
+ 1588              		.cfi_remember_state
+ 1589              		.cfi_def_cfa_offset 24
+ 1590              		@ sp needed
+ 1591 0030 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 1592              	.LVL211:
+ 1593              	.L76:
+ 1594              	.LCFI19:
+ 1595              		.cfi_restore_state
+ 121:u8g2_lib/u8g2_circle.c **** }
+ 1596              		.loc 1 121 3 is_stmt 1 view .LVU455
+ 1597 0034 9DF82030 		ldrb	r3, [sp, #32]	@ zero_extendqisi2
+ 1598 0038 0093     		str	r3, [sp]
+ 1599 003a 2B46     		mov	r3, r5
+ 1600 003c 3A46     		mov	r2, r7
+ 1601 003e 3146     		mov	r1, r6
+ 1602 0040 4046     		mov	r0, r8
+ 1603 0042 FFF7FEFF 		bl	u8g2_draw_circle
+ 1604              	.LVL212:
+ 1605 0046 F2E7     		b	.L73
+ 1606              		.cfi_endproc
+ 1607              	.LFE2:
+ 1609              		.section	.text.u8g2_DrawDisc,"ax",%progbits
+ 1610              		.align	1
+ 1611              		.global	u8g2_DrawDisc
+ 1612              		.syntax unified
+ 1613              		.thumb
+ 1614              		.thumb_func
+ 1615              		.fpu softvfp
+ 1617              	u8g2_DrawDisc:
+ 1618              	.LVL213:
+ 1619              	.LFB5:
+ 196:u8g2_lib/u8g2_circle.c ****   /* check for bounding box */
+ 1620              		.loc 1 196 1 view -0
+ 1621              		.cfi_startproc
+ 1622              		@ args = 4, pretend = 0, frame = 0
+ 1623              		@ frame_needed = 0, uses_anonymous_args = 0
+ 196:u8g2_lib/u8g2_circle.c ****   /* check for bounding box */
+ 1624              		.loc 1 196 1 is_stmt 0 view .LVU457
+ 1625 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 1626              	.LCFI20:
+ 1627              		.cfi_def_cfa_offset 24
+ 1628              		.cfi_offset 4, -24
+ 1629              		.cfi_offset 5, -20
+ 1630              		.cfi_offset 6, -16
+ 1631              		.cfi_offset 7, -12
+ 1632              		.cfi_offset 8, -8
+ 1633              		.cfi_offset 14, -4
+ 1634 0004 82B0     		sub	sp, sp, #8
+ 1635              	.LCFI21:
+ 1636              		.cfi_def_cfa_offset 32
+ 1637 0006 8046     		mov	r8, r0
+ 1638 0008 0E46     		mov	r6, r1
+ 1639 000a 1746     		mov	r7, r2
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s 			page 40
+
+
+ 1640 000c 1D46     		mov	r5, r3
+ 200:u8g2_lib/u8g2_circle.c ****       return;
+ 1641              		.loc 1 200 5 is_stmt 1 view .LVU458
+ 200:u8g2_lib/u8g2_circle.c ****       return;
+ 1642              		.loc 1 200 54 is_stmt 0 view .LVU459
+ 1643 000e CB18     		adds	r3, r1, r3
+ 1644              	.LVL214:
+ 200:u8g2_lib/u8g2_circle.c ****       return;
+ 1645              		.loc 1 200 54 view .LVU460
+ 1646 0010 DBB2     		uxtb	r3, r3
+ 200:u8g2_lib/u8g2_circle.c ****       return;
+ 1647              		.loc 1 200 64 view .LVU461
+ 1648 0012 AC18     		adds	r4, r5, r2
+ 1649 0014 E4B2     		uxtb	r4, r4
+ 200:u8g2_lib/u8g2_circle.c ****       return;
+ 1650              		.loc 1 200 10 view .LVU462
+ 1651 0016 0133     		adds	r3, r3, #1
+ 1652 0018 521B     		subs	r2, r2, r5
+ 1653              	.LVL215:
+ 200:u8g2_lib/u8g2_circle.c ****       return;
+ 1654              		.loc 1 200 10 view .LVU463
+ 1655 001a 491B     		subs	r1, r1, r5
+ 1656              	.LVL216:
+ 200:u8g2_lib/u8g2_circle.c ****       return;
+ 1657              		.loc 1 200 10 view .LVU464
+ 1658 001c 0134     		adds	r4, r4, #1
+ 1659 001e E4B2     		uxtb	r4, r4
+ 1660 0020 0094     		str	r4, [sp]
+ 1661 0022 DBB2     		uxtb	r3, r3
+ 1662 0024 D2B2     		uxtb	r2, r2
+ 1663 0026 C9B2     		uxtb	r1, r1
+ 1664 0028 FFF7FEFF 		bl	u8g2_IsIntersection
+ 1665              	.LVL217:
+ 200:u8g2_lib/u8g2_circle.c ****       return;
+ 1666              		.loc 1 200 8 view .LVU465
+ 1667 002c 10B9     		cbnz	r0, .L80
+ 1668              	.L77:
+ 207:u8g2_lib/u8g2_circle.c **** 
+ 1669              		.loc 1 207 1 view .LVU466
+ 1670 002e 02B0     		add	sp, sp, #8
+ 1671              	.LCFI22:
+ 1672              		.cfi_remember_state
+ 1673              		.cfi_def_cfa_offset 24
+ 1674              		@ sp needed
+ 1675 0030 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 1676              	.LVL218:
+ 1677              	.L80:
+ 1678              	.LCFI23:
+ 1679              		.cfi_restore_state
+ 206:u8g2_lib/u8g2_circle.c **** }
+ 1680              		.loc 1 206 3 is_stmt 1 view .LVU467
+ 1681 0034 9DF82030 		ldrb	r3, [sp, #32]	@ zero_extendqisi2
+ 1682 0038 0093     		str	r3, [sp]
+ 1683 003a 2B46     		mov	r3, r5
+ 1684 003c 3A46     		mov	r2, r7
+ 1685 003e 3146     		mov	r1, r6
+ 1686 0040 4046     		mov	r0, r8
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s 			page 41
+
+
+ 1687 0042 FFF7FEFF 		bl	u8g2_draw_disc
+ 1688              	.LVL219:
+ 1689 0046 F2E7     		b	.L77
+ 1690              		.cfi_endproc
+ 1691              	.LFE5:
+ 1693              		.section	.text.u8g2_DrawEllipse,"ax",%progbits
+ 1694              		.align	1
+ 1695              		.global	u8g2_DrawEllipse
+ 1696              		.syntax unified
+ 1697              		.thumb
+ 1698              		.thumb_func
+ 1699              		.fpu softvfp
+ 1701              	u8g2_DrawEllipse:
+ 1702              	.LVL220:
+ 1703              	.LFB8:
+ 334:u8g2_lib/u8g2_circle.c ****   /* check for bounding box */
+ 1704              		.loc 1 334 1 view -0
+ 1705              		.cfi_startproc
+ 1706              		@ args = 8, pretend = 0, frame = 0
+ 1707              		@ frame_needed = 0, uses_anonymous_args = 0
+ 334:u8g2_lib/u8g2_circle.c ****   /* check for bounding box */
+ 1708              		.loc 1 334 1 is_stmt 0 view .LVU469
+ 1709 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
+ 1710              	.LCFI24:
+ 1711              		.cfi_def_cfa_offset 28
+ 1712              		.cfi_offset 4, -28
+ 1713              		.cfi_offset 5, -24
+ 1714              		.cfi_offset 6, -20
+ 1715              		.cfi_offset 7, -16
+ 1716              		.cfi_offset 8, -12
+ 1717              		.cfi_offset 9, -8
+ 1718              		.cfi_offset 14, -4
+ 1719 0004 83B0     		sub	sp, sp, #12
+ 1720              	.LCFI25:
+ 1721              		.cfi_def_cfa_offset 40
+ 1722 0006 8046     		mov	r8, r0
+ 1723 0008 0D46     		mov	r5, r1
+ 1724 000a 1646     		mov	r6, r2
+ 1725 000c 1F46     		mov	r7, r3
+ 1726 000e 9DF82890 		ldrb	r9, [sp, #40]	@ zero_extendqisi2
+ 338:u8g2_lib/u8g2_circle.c ****       return;
+ 1727              		.loc 1 338 5 is_stmt 1 view .LVU470
+ 338:u8g2_lib/u8g2_circle.c ****       return;
+ 1728              		.loc 1 338 52 is_stmt 0 view .LVU471
+ 1729 0012 CB18     		adds	r3, r1, r3
+ 1730              	.LVL221:
+ 338:u8g2_lib/u8g2_circle.c ****       return;
+ 1731              		.loc 1 338 52 view .LVU472
+ 1732 0014 DBB2     		uxtb	r3, r3
+ 338:u8g2_lib/u8g2_circle.c ****       return;
+ 1733              		.loc 1 338 61 view .LVU473
+ 1734 0016 02EB0904 		add	r4, r2, r9
+ 1735 001a E4B2     		uxtb	r4, r4
+ 338:u8g2_lib/u8g2_circle.c ****       return;
+ 1736              		.loc 1 338 10 view .LVU474
+ 1737 001c 0133     		adds	r3, r3, #1
+ 1738 001e A2EB0902 		sub	r2, r2, r9
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s 			page 42
+
+
+ 1739              	.LVL222:
+ 338:u8g2_lib/u8g2_circle.c ****       return;
+ 1740              		.loc 1 338 10 view .LVU475
+ 1741 0022 C91B     		subs	r1, r1, r7
+ 1742              	.LVL223:
+ 338:u8g2_lib/u8g2_circle.c ****       return;
+ 1743              		.loc 1 338 10 view .LVU476
+ 1744 0024 0134     		adds	r4, r4, #1
+ 1745 0026 E4B2     		uxtb	r4, r4
+ 1746 0028 0094     		str	r4, [sp]
+ 1747 002a DBB2     		uxtb	r3, r3
+ 1748 002c D2B2     		uxtb	r2, r2
+ 1749 002e C9B2     		uxtb	r1, r1
+ 1750 0030 FFF7FEFF 		bl	u8g2_IsIntersection
+ 1751              	.LVL224:
+ 338:u8g2_lib/u8g2_circle.c ****       return;
+ 1752              		.loc 1 338 8 view .LVU477
+ 1753 0034 10B9     		cbnz	r0, .L84
+ 1754              	.L81:
+ 344:u8g2_lib/u8g2_circle.c **** 
+ 1755              		.loc 1 344 1 view .LVU478
+ 1756 0036 03B0     		add	sp, sp, #12
+ 1757              	.LCFI26:
+ 1758              		.cfi_remember_state
+ 1759              		.cfi_def_cfa_offset 28
+ 1760              		@ sp needed
+ 1761 0038 BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+ 1762              	.LVL225:
+ 1763              	.L84:
+ 1764              	.LCFI27:
+ 1765              		.cfi_restore_state
+ 343:u8g2_lib/u8g2_circle.c **** }
+ 1766              		.loc 1 343 3 is_stmt 1 view .LVU479
+ 1767 003c 9DF82C30 		ldrb	r3, [sp, #44]	@ zero_extendqisi2
+ 1768 0040 0193     		str	r3, [sp, #4]
+ 1769 0042 CDF80090 		str	r9, [sp]
+ 1770 0046 3B46     		mov	r3, r7
+ 1771 0048 3246     		mov	r2, r6
+ 1772 004a 2946     		mov	r1, r5
+ 1773 004c 4046     		mov	r0, r8
+ 1774 004e FFF7FEFF 		bl	u8g2_draw_ellipse
+ 1775              	.LVL226:
+ 1776 0052 F0E7     		b	.L81
+ 1777              		.cfi_endproc
+ 1778              	.LFE8:
+ 1780              		.section	.text.u8g2_DrawFilledEllipse,"ax",%progbits
+ 1781              		.align	1
+ 1782              		.global	u8g2_DrawFilledEllipse
+ 1783              		.syntax unified
+ 1784              		.thumb
+ 1785              		.thumb_func
+ 1786              		.fpu softvfp
+ 1788              	u8g2_DrawFilledEllipse:
+ 1789              	.LVL227:
+ 1790              	.LFB11:
+ 465:u8g2_lib/u8g2_circle.c **** 
+ 466:u8g2_lib/u8g2_circle.c **** void u8g2_DrawFilledEllipse(u8g2_t *u8g2, u8g2_uint_t x0, u8g2_uint_t y0, u8g2_uint_t rx, u8g2_uint
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s 			page 43
+
+
+ 467:u8g2_lib/u8g2_circle.c **** {
+ 1791              		.loc 1 467 1 view -0
+ 1792              		.cfi_startproc
+ 1793              		@ args = 8, pretend = 0, frame = 0
+ 1794              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1795              		.loc 1 467 1 is_stmt 0 view .LVU481
+ 1796 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
+ 1797              	.LCFI28:
+ 1798              		.cfi_def_cfa_offset 28
+ 1799              		.cfi_offset 4, -28
+ 1800              		.cfi_offset 5, -24
+ 1801              		.cfi_offset 6, -20
+ 1802              		.cfi_offset 7, -16
+ 1803              		.cfi_offset 8, -12
+ 1804              		.cfi_offset 9, -8
+ 1805              		.cfi_offset 14, -4
+ 1806 0004 83B0     		sub	sp, sp, #12
+ 1807              	.LCFI29:
+ 1808              		.cfi_def_cfa_offset 40
+ 1809 0006 8046     		mov	r8, r0
+ 1810 0008 0D46     		mov	r5, r1
+ 1811 000a 1646     		mov	r6, r2
+ 1812 000c 1F46     		mov	r7, r3
+ 1813 000e 9DF82890 		ldrb	r9, [sp, #40]	@ zero_extendqisi2
+ 468:u8g2_lib/u8g2_circle.c ****   /* check for bounding box */
+ 469:u8g2_lib/u8g2_circle.c **** #ifdef U8G2_WITH_INTERSECTION
+ 470:u8g2_lib/u8g2_circle.c ****   {
+ 471:u8g2_lib/u8g2_circle.c ****     if ( u8g2_IsIntersection(u8g2, x0-rx, y0-ry, x0+rx+1, y0+ry+1) == 0 ) 
+ 1814              		.loc 1 471 5 is_stmt 1 view .LVU482
+ 1815              		.loc 1 471 52 is_stmt 0 view .LVU483
+ 1816 0012 CB18     		adds	r3, r1, r3
+ 1817              	.LVL228:
+ 1818              		.loc 1 471 52 view .LVU484
+ 1819 0014 DBB2     		uxtb	r3, r3
+ 1820              		.loc 1 471 61 view .LVU485
+ 1821 0016 02EB0904 		add	r4, r2, r9
+ 1822 001a E4B2     		uxtb	r4, r4
+ 1823              		.loc 1 471 10 view .LVU486
+ 1824 001c 0133     		adds	r3, r3, #1
+ 1825 001e A2EB0902 		sub	r2, r2, r9
+ 1826              	.LVL229:
+ 1827              		.loc 1 471 10 view .LVU487
+ 1828 0022 C91B     		subs	r1, r1, r7
+ 1829              	.LVL230:
+ 1830              		.loc 1 471 10 view .LVU488
+ 1831 0024 0134     		adds	r4, r4, #1
+ 1832 0026 E4B2     		uxtb	r4, r4
+ 1833 0028 0094     		str	r4, [sp]
+ 1834 002a DBB2     		uxtb	r3, r3
+ 1835 002c D2B2     		uxtb	r2, r2
+ 1836 002e C9B2     		uxtb	r1, r1
+ 1837 0030 FFF7FEFF 		bl	u8g2_IsIntersection
+ 1838              	.LVL231:
+ 1839              		.loc 1 471 8 view .LVU489
+ 1840 0034 10B9     		cbnz	r0, .L88
+ 1841              	.L85:
+ 472:u8g2_lib/u8g2_circle.c ****       return;
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s 			page 44
+
+
+ 473:u8g2_lib/u8g2_circle.c ****   }
+ 474:u8g2_lib/u8g2_circle.c **** #endif /* U8G2_WITH_INTERSECTION */
+ 475:u8g2_lib/u8g2_circle.c ****   
+ 476:u8g2_lib/u8g2_circle.c ****   u8g2_draw_filled_ellipse(u8g2, x0, y0, rx, ry, option);
+ 477:u8g2_lib/u8g2_circle.c **** }
+ 1842              		.loc 1 477 1 view .LVU490
+ 1843 0036 03B0     		add	sp, sp, #12
+ 1844              	.LCFI30:
+ 1845              		.cfi_remember_state
+ 1846              		.cfi_def_cfa_offset 28
+ 1847              		@ sp needed
+ 1848 0038 BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+ 1849              	.LVL232:
+ 1850              	.L88:
+ 1851              	.LCFI31:
+ 1852              		.cfi_restore_state
+ 476:u8g2_lib/u8g2_circle.c **** }
+ 1853              		.loc 1 476 3 is_stmt 1 view .LVU491
+ 1854 003c 9DF82C30 		ldrb	r3, [sp, #44]	@ zero_extendqisi2
+ 1855 0040 0193     		str	r3, [sp, #4]
+ 1856 0042 CDF80090 		str	r9, [sp]
+ 1857 0046 3B46     		mov	r3, r7
+ 1858 0048 3246     		mov	r2, r6
+ 1859 004a 2946     		mov	r1, r5
+ 1860 004c 4046     		mov	r0, r8
+ 1861 004e FFF7FEFF 		bl	u8g2_draw_filled_ellipse
+ 1862              	.LVL233:
+ 1863 0052 F0E7     		b	.L85
+ 1864              		.cfi_endproc
+ 1865              	.LFE11:
+ 1867              		.text
+ 1868              	.Letext0:
+ 1869              		.file 2 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 1870              		.file 3 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 1871              		.file 4 "u8g2_lib/u8x8.h"
+ 1872              		.file 5 "u8g2_lib/u8g2.h"
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s 			page 45
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 u8g2_circle.c
+C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s:16     .text.u8g2_draw_circle_section:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s:23     .text.u8g2_draw_circle_section:00000000 u8g2_draw_circle_section
+C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s:153    .text.u8g2_draw_circle:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s:159    .text.u8g2_draw_circle:00000000 u8g2_draw_circle
+C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s:308    .text.u8g2_draw_ellipse_section:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s:314    .text.u8g2_draw_ellipse_section:00000000 u8g2_draw_ellipse_section
+C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s:412    .text.u8g2_draw_ellipse:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s:418    .text.u8g2_draw_ellipse:00000000 u8g2_draw_ellipse
+C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s:761    .text.u8g2_draw_disc_section:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s:767    .text.u8g2_draw_disc_section:00000000 u8g2_draw_disc_section
+C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s:910    .text.u8g2_draw_disc:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s:916    .text.u8g2_draw_disc:00000000 u8g2_draw_disc
+C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s:1065   .text.u8g2_draw_filled_ellipse_section:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s:1071   .text.u8g2_draw_filled_ellipse_section:00000000 u8g2_draw_filled_ellipse_section
+C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s:1177   .text.u8g2_draw_filled_ellipse:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s:1183   .text.u8g2_draw_filled_ellipse:00000000 u8g2_draw_filled_ellipse
+C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s:1526   .text.u8g2_DrawCircle:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s:1533   .text.u8g2_DrawCircle:00000000 u8g2_DrawCircle
+C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s:1610   .text.u8g2_DrawDisc:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s:1617   .text.u8g2_DrawDisc:00000000 u8g2_DrawDisc
+C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s:1694   .text.u8g2_DrawEllipse:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s:1701   .text.u8g2_DrawEllipse:00000000 u8g2_DrawEllipse
+C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s:1781   .text.u8g2_DrawFilledEllipse:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccfxFLIX.s:1788   .text.u8g2_DrawFilledEllipse:00000000 u8g2_DrawFilledEllipse
+
+UNDEFINED SYMBOLS
+u8g2_DrawPixel
+u8g2_DrawVLine
+u8g2_IsIntersection

@@ -1,0 +1,1329 @@
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"u8log.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.u8log_clear_screen,"ax",%progbits
+  16              		.align	1
+  17              		.arch armv7-m
+  18              		.syntax unified
+  19              		.thumb
+  20              		.thumb_func
+  21              		.fpu softvfp
+  23              	u8log_clear_screen:
+  24              	.LVL0:
+  25              	.LFB0:
+  26              		.file 1 "u8g2_lib/u8log.c"
+   1:u8g2_lib/u8log.c **** /*
+   2:u8g2_lib/u8log.c **** 
+   3:u8g2_lib/u8log.c ****   u8log.c
+   4:u8g2_lib/u8log.c ****   
+   5:u8g2_lib/u8log.c **** 
+   6:u8g2_lib/u8log.c ****   Universal 8bit Graphics Library (https://github.com/olikraus/u8g2/)
+   7:u8g2_lib/u8log.c **** 
+   8:u8g2_lib/u8log.c ****   Copyright (c) 2018, olikraus@gmail.com
+   9:u8g2_lib/u8log.c ****   All rights reserved.
+  10:u8g2_lib/u8log.c **** 
+  11:u8g2_lib/u8log.c ****   Redistribution and use in source and binary forms, with or without modification, 
+  12:u8g2_lib/u8log.c ****   are permitted provided that the following conditions are met:
+  13:u8g2_lib/u8log.c **** 
+  14:u8g2_lib/u8log.c ****   * Redistributions of source code must retain the above copyright notice, this list 
+  15:u8g2_lib/u8log.c ****     of conditions and the following disclaimer.
+  16:u8g2_lib/u8log.c ****     
+  17:u8g2_lib/u8log.c ****   * Redistributions in binary form must reproduce the above copyright notice, this 
+  18:u8g2_lib/u8log.c ****     list of conditions and the following disclaimer in the documentation and/or other 
+  19:u8g2_lib/u8log.c ****     materials provided with the distribution.
+  20:u8g2_lib/u8log.c **** 
+  21:u8g2_lib/u8log.c ****   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND 
+  22:u8g2_lib/u8log.c ****   CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, 
+  23:u8g2_lib/u8log.c ****   INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF 
+  24:u8g2_lib/u8log.c ****   MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE 
+  25:u8g2_lib/u8log.c ****   DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR 
+  26:u8g2_lib/u8log.c ****   CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
+  27:u8g2_lib/u8log.c ****   SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
+  28:u8g2_lib/u8log.c ****   NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; 
+  29:u8g2_lib/u8log.c ****   LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER 
+  30:u8g2_lib/u8log.c ****   CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, 
+  31:u8g2_lib/u8log.c ****   STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+  32:u8g2_lib/u8log.c ****   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF 
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s 			page 2
+
+
+  33:u8g2_lib/u8log.c ****   ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.  
+  34:u8g2_lib/u8log.c **** 
+  35:u8g2_lib/u8log.c **** */
+  36:u8g2_lib/u8log.c **** 
+  37:u8g2_lib/u8log.c **** #include <stdint.h>
+  38:u8g2_lib/u8log.c **** #include <string.h>
+  39:u8g2_lib/u8log.c **** #include "u8x8.h"
+  40:u8g2_lib/u8log.c **** 
+  41:u8g2_lib/u8log.c **** 
+  42:u8g2_lib/u8log.c **** /*
+  43:u8g2_lib/u8log.c **** static uint8_t u8log_is_on_screen(u8log_t *u8log, uint8_t x, uint8_t y)
+  44:u8g2_lib/u8log.c **** {
+  45:u8g2_lib/u8log.c ****   if ( x >= u8log->width )
+  46:u8g2_lib/u8log.c ****     return 0;
+  47:u8g2_lib/u8log.c ****   if ( y >= u8log->height )
+  48:u8g2_lib/u8log.c ****     return 0;
+  49:u8g2_lib/u8log.c ****   return 1;
+  50:u8g2_lib/u8log.c **** }
+  51:u8g2_lib/u8log.c **** */
+  52:u8g2_lib/u8log.c **** 
+  53:u8g2_lib/u8log.c **** static void u8log_clear_screen(u8log_t *u8log)
+  54:u8g2_lib/u8log.c **** {
+  27              		.loc 1 54 1 view -0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              		@ link register save eliminated.
+  55:u8g2_lib/u8log.c ****   uint8_t *dest = u8log->screen_buffer;
+  32              		.loc 1 55 3 view .LVU1
+  33              		.loc 1 55 12 is_stmt 0 view .LVU2
+  34 0000 C168     		ldr	r1, [r0, #12]
+  35              	.LVL1:
+  56:u8g2_lib/u8log.c ****   uint16_t cnt = u8log->height;
+  36              		.loc 1 56 3 is_stmt 1 view .LVU3
+  37              		.loc 1 56 12 is_stmt 0 view .LVU4
+  38 0002 4379     		ldrb	r3, [r0, #5]	@ zero_extendqisi2
+  39              	.LVL2:
+  57:u8g2_lib/u8log.c ****   cnt *= u8log->width;
+  40              		.loc 1 57 3 is_stmt 1 view .LVU5
+  41              		.loc 1 57 15 is_stmt 0 view .LVU6
+  42 0004 0279     		ldrb	r2, [r0, #4]	@ zero_extendqisi2
+  43              		.loc 1 57 7 view .LVU7
+  44 0006 03FB02F3 		mul	r3, r3, r2
+  45              	.LVL3:
+  46              	.L2:
+  58:u8g2_lib/u8log.c ****   do
+  47              		.loc 1 58 3 is_stmt 1 discriminator 1 view .LVU8
+  59:u8g2_lib/u8log.c ****   {
+  60:u8g2_lib/u8log.c ****     *dest++ = ' ';
+  48              		.loc 1 60 5 discriminator 1 view .LVU9
+  49              		.loc 1 60 13 is_stmt 0 discriminator 1 view .LVU10
+  50 000a 2020     		movs	r0, #32
+  51 000c 0870     		strb	r0, [r1]
+  52 000e 0131     		adds	r1, r1, #1
+  53              	.LVL4:
+  61:u8g2_lib/u8log.c ****     cnt--;
+  54              		.loc 1 61 5 is_stmt 1 discriminator 1 view .LVU11
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s 			page 3
+
+
+  55              		.loc 1 61 8 is_stmt 0 discriminator 1 view .LVU12
+  56 0010 013B     		subs	r3, r3, #1
+  57              	.LVL5:
+  58              		.loc 1 61 8 discriminator 1 view .LVU13
+  59 0012 9BB2     		uxth	r3, r3
+  60              	.LVL6:
+  62:u8g2_lib/u8log.c ****   } while( cnt > 0 );
+  61              		.loc 1 62 10 is_stmt 1 discriminator 1 view .LVU14
+  62              		.loc 1 62 3 is_stmt 0 discriminator 1 view .LVU15
+  63 0014 002B     		cmp	r3, #0
+  64 0016 F8D1     		bne	.L2
+  63:u8g2_lib/u8log.c ****   
+  64:u8g2_lib/u8log.c **** }
+  65              		.loc 1 64 1 view .LVU16
+  66 0018 7047     		bx	lr
+  67              		.cfi_endproc
+  68              	.LFE0:
+  70              		.section	.text.u8log_scroll_up,"ax",%progbits
+  71              		.align	1
+  72              		.syntax unified
+  73              		.thumb
+  74              		.thumb_func
+  75              		.fpu softvfp
+  77              	u8log_scroll_up:
+  78              	.LVL7:
+  79              	.LFB1:
+  65:u8g2_lib/u8log.c **** 
+  66:u8g2_lib/u8log.c **** 
+  67:u8g2_lib/u8log.c **** /* scroll the content of the complete buffer, set redraw_line to 255 */
+  68:u8g2_lib/u8log.c **** static void u8log_scroll_up(u8log_t *u8log)
+  69:u8g2_lib/u8log.c **** {
+  80              		.loc 1 69 1 is_stmt 1 view -0
+  81              		.cfi_startproc
+  82              		@ args = 0, pretend = 0, frame = 0
+  83              		@ frame_needed = 0, uses_anonymous_args = 0
+  84              		@ link register save eliminated.
+  85              		.loc 1 69 1 is_stmt 0 view .LVU18
+  86 0000 30B4     		push	{r4, r5}
+  87              	.LCFI0:
+  88              		.cfi_def_cfa_offset 8
+  89              		.cfi_offset 4, -8
+  90              		.cfi_offset 5, -4
+  70:u8g2_lib/u8log.c ****   uint8_t *dest = u8log->screen_buffer;
+  91              		.loc 1 70 3 is_stmt 1 view .LVU19
+  92              		.loc 1 70 12 is_stmt 0 view .LVU20
+  93 0002 C368     		ldr	r3, [r0, #12]
+  94              	.LVL8:
+  71:u8g2_lib/u8log.c ****   uint8_t *src = dest+u8log->width;
+  95              		.loc 1 71 3 is_stmt 1 view .LVU21
+  96              		.loc 1 71 28 is_stmt 0 view .LVU22
+  97 0004 0279     		ldrb	r2, [r0, #4]	@ zero_extendqisi2
+  98              		.loc 1 71 12 view .LVU23
+  99 0006 9D18     		adds	r5, r3, r2
+ 100              	.LVL9:
+  72:u8g2_lib/u8log.c ****   uint16_t cnt = u8log->height;
+ 101              		.loc 1 72 3 is_stmt 1 view .LVU24
+ 102              		.loc 1 72 12 is_stmt 0 view .LVU25
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s 			page 4
+
+
+ 103 0008 4179     		ldrb	r1, [r0, #5]	@ zero_extendqisi2
+ 104              	.LVL10:
+  73:u8g2_lib/u8log.c ****   cnt--;
+ 105              		.loc 1 73 3 is_stmt 1 view .LVU26
+ 106              		.loc 1 73 6 is_stmt 0 view .LVU27
+ 107 000a 0139     		subs	r1, r1, #1
+ 108              	.LVL11:
+ 109              		.loc 1 73 6 view .LVU28
+ 110 000c 89B2     		uxth	r1, r1
+ 111              	.LVL12:
+  74:u8g2_lib/u8log.c ****   cnt *= u8log->width;
+ 112              		.loc 1 74 3 is_stmt 1 view .LVU29
+ 113              		.loc 1 74 7 is_stmt 0 view .LVU30
+ 114 000e 02FB01F2 		mul	r2, r2, r1
+ 115 0012 92B2     		uxth	r2, r2
+ 116              	.LVL13:
+ 117              	.L4:
+  75:u8g2_lib/u8log.c ****   do
+ 118              		.loc 1 75 3 is_stmt 1 discriminator 1 view .LVU31
+  76:u8g2_lib/u8log.c ****   {
+  77:u8g2_lib/u8log.c ****     *dest++ = *src++;
+ 119              		.loc 1 77 5 discriminator 1 view .LVU32
+ 120              		.loc 1 77 15 is_stmt 0 discriminator 1 view .LVU33
+ 121 0014 2C78     		ldrb	r4, [r5]	@ zero_extendqisi2
+ 122 0016 0135     		adds	r5, r5, #1
+ 123              	.LVL14:
+ 124              		.loc 1 77 13 discriminator 1 view .LVU34
+ 125 0018 1C70     		strb	r4, [r3]
+ 126 001a 0133     		adds	r3, r3, #1
+ 127              	.LVL15:
+  78:u8g2_lib/u8log.c ****     cnt--;
+ 128              		.loc 1 78 5 is_stmt 1 discriminator 1 view .LVU35
+ 129              		.loc 1 78 8 is_stmt 0 discriminator 1 view .LVU36
+ 130 001c 013A     		subs	r2, r2, #1
+ 131              	.LVL16:
+ 132              		.loc 1 78 8 discriminator 1 view .LVU37
+ 133 001e 92B2     		uxth	r2, r2
+ 134              	.LVL17:
+  79:u8g2_lib/u8log.c ****   } while( cnt > 0 );
+ 135              		.loc 1 79 10 is_stmt 1 discriminator 1 view .LVU38
+ 136              		.loc 1 79 3 is_stmt 0 discriminator 1 view .LVU39
+ 137 0020 002A     		cmp	r2, #0
+ 138 0022 F7D1     		bne	.L4
+  80:u8g2_lib/u8log.c ****   cnt = u8log->width;
+ 139              		.loc 1 80 3 is_stmt 1 view .LVU40
+ 140              		.loc 1 80 7 is_stmt 0 view .LVU41
+ 141 0024 0279     		ldrb	r2, [r0, #4]	@ zero_extendqisi2
+ 142              	.LVL18:
+ 143              	.L5:
+  81:u8g2_lib/u8log.c ****   do
+ 144              		.loc 1 81 3 is_stmt 1 discriminator 1 view .LVU42
+  82:u8g2_lib/u8log.c ****   {
+  83:u8g2_lib/u8log.c ****     *dest++ = ' ';
+ 145              		.loc 1 83 5 discriminator 1 view .LVU43
+ 146              		.loc 1 83 13 is_stmt 0 discriminator 1 view .LVU44
+ 147 0026 2024     		movs	r4, #32
+ 148 0028 1C70     		strb	r4, [r3]
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s 			page 5
+
+
+ 149 002a 0133     		adds	r3, r3, #1
+ 150              	.LVL19:
+  84:u8g2_lib/u8log.c ****     cnt--;
+ 151              		.loc 1 84 5 is_stmt 1 discriminator 1 view .LVU45
+ 152              		.loc 1 84 8 is_stmt 0 discriminator 1 view .LVU46
+ 153 002c 013A     		subs	r2, r2, #1
+ 154              	.LVL20:
+ 155              		.loc 1 84 8 discriminator 1 view .LVU47
+ 156 002e 92B2     		uxth	r2, r2
+ 157              	.LVL21:
+  85:u8g2_lib/u8log.c ****   } while(cnt > 0);
+ 158              		.loc 1 85 10 is_stmt 1 discriminator 1 view .LVU48
+ 159              		.loc 1 85 3 is_stmt 0 discriminator 1 view .LVU49
+ 160 0030 002A     		cmp	r2, #0
+ 161 0032 F8D1     		bne	.L5
+  86:u8g2_lib/u8log.c ****   
+  87:u8g2_lib/u8log.c ****   if ( u8log->is_redraw_line_for_each_char )
+ 162              		.loc 1 87 3 is_stmt 1 view .LVU50
+ 163              		.loc 1 87 13 is_stmt 0 view .LVU51
+ 164 0034 037C     		ldrb	r3, [r0, #16]	@ zero_extendqisi2
+ 165              	.LVL22:
+ 166              		.loc 1 87 6 view .LVU52
+ 167 0036 1BB1     		cbz	r3, .L6
+  88:u8g2_lib/u8log.c ****     u8log->is_redraw_all = 1;
+ 168              		.loc 1 88 5 is_stmt 1 view .LVU53
+ 169              		.loc 1 88 26 is_stmt 0 view .LVU54
+ 170 0038 0123     		movs	r3, #1
+ 171 003a 8375     		strb	r3, [r0, #22]
+ 172              	.L3:
+  89:u8g2_lib/u8log.c ****   else
+  90:u8g2_lib/u8log.c ****     u8log->is_redraw_all_required_for_next_nl = 1;
+  91:u8g2_lib/u8log.c **** }
+ 173              		.loc 1 91 1 view .LVU55
+ 174 003c 30BC     		pop	{r4, r5}
+ 175              	.LCFI1:
+ 176              		.cfi_remember_state
+ 177              		.cfi_restore 5
+ 178              		.cfi_restore 4
+ 179              		.cfi_def_cfa_offset 0
+ 180              	.LVL23:
+ 181              		.loc 1 91 1 view .LVU56
+ 182 003e 7047     		bx	lr
+ 183              	.LVL24:
+ 184              	.L6:
+ 185              	.LCFI2:
+ 186              		.cfi_restore_state
+  90:u8g2_lib/u8log.c **** }
+ 187              		.loc 1 90 5 is_stmt 1 view .LVU57
+  90:u8g2_lib/u8log.c **** }
+ 188              		.loc 1 90 47 is_stmt 0 view .LVU58
+ 189 0040 0123     		movs	r3, #1
+ 190 0042 C375     		strb	r3, [r0, #23]
+ 191              		.loc 1 91 1 view .LVU59
+ 192 0044 FAE7     		b	.L3
+ 193              		.cfi_endproc
+ 194              	.LFE1:
+ 196              		.section	.text.u8log_cursor_on_screen,"ax",%progbits
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s 			page 6
+
+
+ 197              		.align	1
+ 198              		.syntax unified
+ 199              		.thumb
+ 200              		.thumb_func
+ 201              		.fpu softvfp
+ 203              	u8log_cursor_on_screen:
+ 204              	.LVL25:
+ 205              	.LFB2:
+  92:u8g2_lib/u8log.c **** 
+  93:u8g2_lib/u8log.c **** /*
+  94:u8g2_lib/u8log.c ****   Place the cursor on the screen. This will also scroll, if required 
+  95:u8g2_lib/u8log.c **** */
+  96:u8g2_lib/u8log.c **** static void u8log_cursor_on_screen(u8log_t *u8log)
+  97:u8g2_lib/u8log.c **** {
+ 206              		.loc 1 97 1 is_stmt 1 view -0
+ 207              		.cfi_startproc
+ 208              		@ args = 0, pretend = 0, frame = 0
+ 209              		@ frame_needed = 0, uses_anonymous_args = 0
+ 210              		.loc 1 97 1 is_stmt 0 view .LVU61
+ 211 0000 10B5     		push	{r4, lr}
+ 212              	.LCFI3:
+ 213              		.cfi_def_cfa_offset 8
+ 214              		.cfi_offset 4, -8
+ 215              		.cfi_offset 14, -4
+ 216 0002 0446     		mov	r4, r0
+  98:u8g2_lib/u8log.c ****   //printf("u8log_cursor_on_screen, cursor_y=%d\n", u8log->cursor_y);
+  99:u8g2_lib/u8log.c ****   if ( u8log->cursor_x >= u8log->width )
+ 217              		.loc 1 99 3 is_stmt 1 view .LVU62
+ 218              		.loc 1 99 13 is_stmt 0 view .LVU63
+ 219 0004 827C     		ldrb	r2, [r0, #18]	@ zero_extendqisi2
+ 220              		.loc 1 99 32 view .LVU64
+ 221 0006 0379     		ldrb	r3, [r0, #4]	@ zero_extendqisi2
+ 222              		.loc 1 99 6 view .LVU65
+ 223 0008 9A42     		cmp	r2, r3
+ 224 000a 04D3     		bcc	.L11
+ 100:u8g2_lib/u8log.c ****   {
+ 101:u8g2_lib/u8log.c ****     u8log->cursor_x = 0;
+ 225              		.loc 1 101 5 is_stmt 1 view .LVU66
+ 226              		.loc 1 101 21 is_stmt 0 view .LVU67
+ 227 000c 0023     		movs	r3, #0
+ 228 000e 8374     		strb	r3, [r0, #18]
+ 102:u8g2_lib/u8log.c ****     u8log->cursor_y++;
+ 229              		.loc 1 102 5 is_stmt 1 view .LVU68
+ 230              		.loc 1 102 10 is_stmt 0 view .LVU69
+ 231 0010 C37C     		ldrb	r3, [r0, #19]	@ zero_extendqisi2
+ 232              		.loc 1 102 20 view .LVU70
+ 233 0012 0133     		adds	r3, r3, #1
+ 234 0014 C374     		strb	r3, [r0, #19]
+ 235              	.LVL26:
+ 236              	.L11:
+ 103:u8g2_lib/u8log.c ****   }
+ 104:u8g2_lib/u8log.c ****   while ( u8log->cursor_y >= u8log->height )
+ 237              		.loc 1 104 9 is_stmt 1 view .LVU71
+ 238              		.loc 1 104 16 is_stmt 0 view .LVU72
+ 239 0016 E27C     		ldrb	r2, [r4, #19]	@ zero_extendqisi2
+ 240              		.loc 1 104 35 view .LVU73
+ 241 0018 6379     		ldrb	r3, [r4, #5]	@ zero_extendqisi2
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s 			page 7
+
+
+ 242              		.loc 1 104 9 view .LVU74
+ 243 001a 9A42     		cmp	r2, r3
+ 244 001c 06D3     		bcc	.L14
+ 105:u8g2_lib/u8log.c ****   {
+ 106:u8g2_lib/u8log.c ****     u8log_scroll_up(u8log);
+ 245              		.loc 1 106 5 is_stmt 1 view .LVU75
+ 246 001e 2046     		mov	r0, r4
+ 247 0020 FFF7FEFF 		bl	u8log_scroll_up
+ 248              	.LVL27:
+ 107:u8g2_lib/u8log.c ****     u8log->cursor_y--;
+ 249              		.loc 1 107 5 view .LVU76
+ 250              		.loc 1 107 10 is_stmt 0 view .LVU77
+ 251 0024 E37C     		ldrb	r3, [r4, #19]	@ zero_extendqisi2
+ 252              		.loc 1 107 20 view .LVU78
+ 253 0026 013B     		subs	r3, r3, #1
+ 254 0028 E374     		strb	r3, [r4, #19]
+ 255 002a F4E7     		b	.L11
+ 256              	.L14:
+ 108:u8g2_lib/u8log.c ****   }
+ 109:u8g2_lib/u8log.c **** }
+ 257              		.loc 1 109 1 view .LVU79
+ 258 002c 10BD     		pop	{r4, pc}
+ 259              		.loc 1 109 1 view .LVU80
+ 260              		.cfi_endproc
+ 261              	.LFE2:
+ 263              		.section	.text.u8log_write_to_screen,"ax",%progbits
+ 264              		.align	1
+ 265              		.syntax unified
+ 266              		.thumb
+ 267              		.thumb_func
+ 268              		.fpu softvfp
+ 270              	u8log_write_to_screen:
+ 271              	.LVL28:
+ 272              	.LFB3:
+ 110:u8g2_lib/u8log.c **** 
+ 111:u8g2_lib/u8log.c **** /*
+ 112:u8g2_lib/u8log.c ****   Write a printable, single char on the screen, do any kind of scrolling
+ 113:u8g2_lib/u8log.c **** */
+ 114:u8g2_lib/u8log.c **** static void u8log_write_to_screen(u8log_t *u8log, uint8_t c)
+ 115:u8g2_lib/u8log.c **** {
+ 273              		.loc 1 115 1 is_stmt 1 view -0
+ 274              		.cfi_startproc
+ 275              		@ args = 0, pretend = 0, frame = 0
+ 276              		@ frame_needed = 0, uses_anonymous_args = 0
+ 277              		.loc 1 115 1 is_stmt 0 view .LVU82
+ 278 0000 38B5     		push	{r3, r4, r5, lr}
+ 279              	.LCFI4:
+ 280              		.cfi_def_cfa_offset 16
+ 281              		.cfi_offset 3, -16
+ 282              		.cfi_offset 4, -12
+ 283              		.cfi_offset 5, -8
+ 284              		.cfi_offset 14, -4
+ 285 0002 0446     		mov	r4, r0
+ 286 0004 0D46     		mov	r5, r1
+ 116:u8g2_lib/u8log.c ****   u8log_cursor_on_screen(u8log);
+ 287              		.loc 1 116 3 is_stmt 1 view .LVU83
+ 288 0006 FFF7FEFF 		bl	u8log_cursor_on_screen
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s 			page 8
+
+
+ 289              	.LVL29:
+ 117:u8g2_lib/u8log.c ****   u8log->screen_buffer[u8log->cursor_y * u8log->width + u8log->cursor_x] = c;
+ 290              		.loc 1 117 3 view .LVU84
+ 291              		.loc 1 117 8 is_stmt 0 view .LVU85
+ 292 000a E268     		ldr	r2, [r4, #12]
+ 293              		.loc 1 117 29 view .LVU86
+ 294 000c E37C     		ldrb	r3, [r4, #19]	@ zero_extendqisi2
+ 295              		.loc 1 117 47 view .LVU87
+ 296 000e 2079     		ldrb	r0, [r4, #4]	@ zero_extendqisi2
+ 297              		.loc 1 117 62 view .LVU88
+ 298 0010 A17C     		ldrb	r1, [r4, #18]	@ zero_extendqisi2
+ 299              		.loc 1 117 55 view .LVU89
+ 300 0012 00FB0313 		mla	r3, r0, r3, r1
+ 301              		.loc 1 117 74 view .LVU90
+ 302 0016 D554     		strb	r5, [r2, r3]
+ 118:u8g2_lib/u8log.c ****   u8log->cursor_x++;
+ 303              		.loc 1 118 3 is_stmt 1 view .LVU91
+ 304              		.loc 1 118 8 is_stmt 0 view .LVU92
+ 305 0018 A37C     		ldrb	r3, [r4, #18]	@ zero_extendqisi2
+ 306              		.loc 1 118 18 view .LVU93
+ 307 001a 0133     		adds	r3, r3, #1
+ 308 001c A374     		strb	r3, [r4, #18]
+ 119:u8g2_lib/u8log.c ****   
+ 120:u8g2_lib/u8log.c ****   if ( u8log->is_redraw_line_for_each_char )
+ 309              		.loc 1 120 3 is_stmt 1 view .LVU94
+ 310              		.loc 1 120 13 is_stmt 0 view .LVU95
+ 311 001e 237C     		ldrb	r3, [r4, #16]	@ zero_extendqisi2
+ 312              		.loc 1 120 6 view .LVU96
+ 313 0020 1BB1     		cbz	r3, .L15
+ 121:u8g2_lib/u8log.c ****   {
+ 122:u8g2_lib/u8log.c ****     u8log->is_redraw_line = 1;
+ 314              		.loc 1 122 5 is_stmt 1 view .LVU97
+ 315              		.loc 1 122 27 is_stmt 0 view .LVU98
+ 316 0022 0123     		movs	r3, #1
+ 317 0024 6375     		strb	r3, [r4, #21]
+ 123:u8g2_lib/u8log.c ****     u8log->redraw_line = u8log->cursor_y;
+ 318              		.loc 1 123 5 is_stmt 1 view .LVU99
+ 319              		.loc 1 123 31 is_stmt 0 view .LVU100
+ 320 0026 E37C     		ldrb	r3, [r4, #19]	@ zero_extendqisi2
+ 321              		.loc 1 123 24 view .LVU101
+ 322 0028 2375     		strb	r3, [r4, #20]
+ 323              	.L15:
+ 124:u8g2_lib/u8log.c ****   }
+ 125:u8g2_lib/u8log.c **** }
+ 324              		.loc 1 125 1 view .LVU102
+ 325 002a 38BD     		pop	{r3, r4, r5, pc}
+ 326              		.loc 1 125 1 view .LVU103
+ 327              		.cfi_endproc
+ 328              	.LFE3:
+ 330              		.section	.text.u8log_write_char,"ax",%progbits
+ 331              		.align	1
+ 332              		.global	u8log_write_char
+ 333              		.syntax unified
+ 334              		.thumb
+ 335              		.thumb_func
+ 336              		.fpu softvfp
+ 338              	u8log_write_char:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s 			page 9
+
+
+ 339              	.LVL30:
+ 340              	.LFB4:
+ 126:u8g2_lib/u8log.c **** 
+ 127:u8g2_lib/u8log.c **** /*
+ 128:u8g2_lib/u8log.c ****   Handle control codes or write the char to the screen.
+ 129:u8g2_lib/u8log.c ****   Supported control codes are:
+ 130:u8g2_lib/u8log.c ****   
+ 131:u8g2_lib/u8log.c ****     \n		10		Goto first position of the next line. Line is marked for redraw.
+ 132:u8g2_lib/u8log.c ****     \r		13		Goto first position in the same line. Line is marked for redraw.
+ 133:u8g2_lib/u8log.c ****     \t		9		Jump to the next tab position
+ 134:u8g2_lib/u8log.c ****     \f		12		Clear the screen and mark redraw for whole screen
+ 135:u8g2_lib/u8log.c ****     any other char	Write char to screen. Line redraw mark depends on 
+ 136:u8g2_lib/u8log.c **** 				is_redraw_line_for_each_char flag.
+ 137:u8g2_lib/u8log.c **** */
+ 138:u8g2_lib/u8log.c **** void u8log_write_char(u8log_t *u8log, uint8_t c)
+ 139:u8g2_lib/u8log.c **** {
+ 341              		.loc 1 139 1 is_stmt 1 view -0
+ 342              		.cfi_startproc
+ 343              		@ args = 0, pretend = 0, frame = 0
+ 344              		@ frame_needed = 0, uses_anonymous_args = 0
+ 345              		.loc 1 139 1 is_stmt 0 view .LVU105
+ 346 0000 10B5     		push	{r4, lr}
+ 347              	.LCFI5:
+ 348              		.cfi_def_cfa_offset 8
+ 349              		.cfi_offset 4, -8
+ 350              		.cfi_offset 14, -4
+ 351 0002 0446     		mov	r4, r0
+ 140:u8g2_lib/u8log.c ****   switch(c)
+ 352              		.loc 1 140 3 is_stmt 1 view .LVU106
+ 353 0004 A1F10903 		sub	r3, r1, #9
+ 354 0008 042B     		cmp	r3, #4
+ 355 000a 27D8     		bhi	.L19
+ 356 000c DFE803F0 		tbb	[pc, r3]
+ 357              	.L21:
+ 358 0010 18       		.byte	(.L24-.L21)/2
+ 359 0011 03       		.byte	(.L23-.L21)/2
+ 360 0012 26       		.byte	(.L19-.L21)/2
+ 361 0013 1E       		.byte	(.L22-.L21)/2
+ 362 0014 11       		.byte	(.L20-.L21)/2
+ 363 0015 00       		.p2align 1
+ 364              	.L23:
+ 141:u8g2_lib/u8log.c ****   {
+ 142:u8g2_lib/u8log.c ****     case '\n':	// 10
+ 143:u8g2_lib/u8log.c ****       u8log->is_redraw_line = 1;
+ 365              		.loc 1 143 7 view .LVU107
+ 366              		.loc 1 143 29 is_stmt 0 view .LVU108
+ 367 0016 0123     		movs	r3, #1
+ 368 0018 4375     		strb	r3, [r0, #21]
+ 144:u8g2_lib/u8log.c ****       u8log->redraw_line = u8log->cursor_y;
+ 369              		.loc 1 144 7 is_stmt 1 view .LVU109
+ 370              		.loc 1 144 33 is_stmt 0 view .LVU110
+ 371 001a C37C     		ldrb	r3, [r0, #19]	@ zero_extendqisi2
+ 372              		.loc 1 144 26 view .LVU111
+ 373 001c 0375     		strb	r3, [r0, #20]
+ 145:u8g2_lib/u8log.c ****       if ( u8log->is_redraw_all_required_for_next_nl )
+ 374              		.loc 1 145 7 is_stmt 1 view .LVU112
+ 375              		.loc 1 145 17 is_stmt 0 view .LVU113
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s 			page 10
+
+
+ 376 001e C27D     		ldrb	r2, [r0, #23]	@ zero_extendqisi2
+ 377              		.loc 1 145 10 view .LVU114
+ 378 0020 0AB1     		cbz	r2, .L25
+ 146:u8g2_lib/u8log.c **** 	u8log->is_redraw_all = 1;
+ 379              		.loc 1 146 2 is_stmt 1 view .LVU115
+ 380              		.loc 1 146 23 is_stmt 0 view .LVU116
+ 381 0022 0122     		movs	r2, #1
+ 382 0024 8275     		strb	r2, [r0, #22]
+ 383              	.L25:
+ 147:u8g2_lib/u8log.c ****       u8log->is_redraw_all_required_for_next_nl = 0;
+ 384              		.loc 1 147 7 is_stmt 1 view .LVU117
+ 385              		.loc 1 147 49 is_stmt 0 view .LVU118
+ 386 0026 0022     		movs	r2, #0
+ 387 0028 E275     		strb	r2, [r4, #23]
+ 148:u8g2_lib/u8log.c ****       u8log->cursor_y++;
+ 388              		.loc 1 148 7 is_stmt 1 view .LVU119
+ 389              		.loc 1 148 22 is_stmt 0 view .LVU120
+ 390 002a 0133     		adds	r3, r3, #1
+ 391 002c E374     		strb	r3, [r4, #19]
+ 149:u8g2_lib/u8log.c ****       u8log->cursor_x = 0;
+ 392              		.loc 1 149 7 is_stmt 1 view .LVU121
+ 393              		.loc 1 149 23 is_stmt 0 view .LVU122
+ 394 002e A274     		strb	r2, [r4, #18]
+ 150:u8g2_lib/u8log.c ****       break;	
+ 395              		.loc 1 150 7 is_stmt 1 view .LVU123
+ 396              	.LVL31:
+ 397              	.L18:
+ 151:u8g2_lib/u8log.c ****     case '\r':	// 13
+ 152:u8g2_lib/u8log.c ****       u8log->is_redraw_line = 1;
+ 153:u8g2_lib/u8log.c ****       u8log->redraw_line = u8log->cursor_y;
+ 154:u8g2_lib/u8log.c ****       u8log->cursor_x = 0;
+ 155:u8g2_lib/u8log.c ****       break;
+ 156:u8g2_lib/u8log.c ****     case '\t':	// 9
+ 157:u8g2_lib/u8log.c ****       u8log->cursor_x = (u8log->cursor_x + 8) & 0xf8;
+ 158:u8g2_lib/u8log.c ****       break;
+ 159:u8g2_lib/u8log.c ****     case '\f':	// 12
+ 160:u8g2_lib/u8log.c ****       u8log_clear_screen(u8log);
+ 161:u8g2_lib/u8log.c ****       u8log->is_redraw_all = 1;
+ 162:u8g2_lib/u8log.c ****       u8log->cursor_x = 0;
+ 163:u8g2_lib/u8log.c ****       u8log->cursor_y = 0;
+ 164:u8g2_lib/u8log.c ****       break;
+ 165:u8g2_lib/u8log.c ****     default:
+ 166:u8g2_lib/u8log.c ****       u8log_write_to_screen(u8log, c);
+ 167:u8g2_lib/u8log.c ****       break;
+ 168:u8g2_lib/u8log.c ****   }
+ 169:u8g2_lib/u8log.c **** }
+ 398              		.loc 1 169 1 is_stmt 0 view .LVU124
+ 399 0030 10BD     		pop	{r4, pc}
+ 400              	.LVL32:
+ 401              	.L20:
+ 152:u8g2_lib/u8log.c ****       u8log->redraw_line = u8log->cursor_y;
+ 402              		.loc 1 152 7 is_stmt 1 view .LVU125
+ 152:u8g2_lib/u8log.c ****       u8log->redraw_line = u8log->cursor_y;
+ 403              		.loc 1 152 29 is_stmt 0 view .LVU126
+ 404 0032 0123     		movs	r3, #1
+ 405 0034 4375     		strb	r3, [r0, #21]
+ 153:u8g2_lib/u8log.c ****       u8log->cursor_x = 0;
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s 			page 11
+
+
+ 406              		.loc 1 153 7 is_stmt 1 view .LVU127
+ 153:u8g2_lib/u8log.c ****       u8log->cursor_x = 0;
+ 407              		.loc 1 153 33 is_stmt 0 view .LVU128
+ 408 0036 C37C     		ldrb	r3, [r0, #19]	@ zero_extendqisi2
+ 153:u8g2_lib/u8log.c ****       u8log->cursor_x = 0;
+ 409              		.loc 1 153 26 view .LVU129
+ 410 0038 0375     		strb	r3, [r0, #20]
+ 154:u8g2_lib/u8log.c ****       break;
+ 411              		.loc 1 154 7 is_stmt 1 view .LVU130
+ 154:u8g2_lib/u8log.c ****       break;
+ 412              		.loc 1 154 23 is_stmt 0 view .LVU131
+ 413 003a 0023     		movs	r3, #0
+ 414 003c 8374     		strb	r3, [r0, #18]
+ 155:u8g2_lib/u8log.c ****     case '\t':	// 9
+ 415              		.loc 1 155 7 is_stmt 1 view .LVU132
+ 416 003e F7E7     		b	.L18
+ 417              	.L24:
+ 157:u8g2_lib/u8log.c ****       break;
+ 418              		.loc 1 157 7 view .LVU133
+ 157:u8g2_lib/u8log.c ****       break;
+ 419              		.loc 1 157 31 is_stmt 0 view .LVU134
+ 420 0040 837C     		ldrb	r3, [r0, #18]	@ zero_extendqisi2
+ 157:u8g2_lib/u8log.c ****       break;
+ 421              		.loc 1 157 42 view .LVU135
+ 422 0042 0833     		adds	r3, r3, #8
+ 157:u8g2_lib/u8log.c ****       break;
+ 423              		.loc 1 157 47 view .LVU136
+ 424 0044 03F0F803 		and	r3, r3, #248
+ 157:u8g2_lib/u8log.c ****       break;
+ 425              		.loc 1 157 23 view .LVU137
+ 426 0048 8374     		strb	r3, [r0, #18]
+ 158:u8g2_lib/u8log.c ****     case '\f':	// 12
+ 427              		.loc 1 158 7 is_stmt 1 view .LVU138
+ 428 004a F1E7     		b	.L18
+ 429              	.L22:
+ 160:u8g2_lib/u8log.c ****       u8log->is_redraw_all = 1;
+ 430              		.loc 1 160 7 view .LVU139
+ 431 004c FFF7FEFF 		bl	u8log_clear_screen
+ 432              	.LVL33:
+ 161:u8g2_lib/u8log.c ****       u8log->cursor_x = 0;
+ 433              		.loc 1 161 7 view .LVU140
+ 161:u8g2_lib/u8log.c ****       u8log->cursor_x = 0;
+ 434              		.loc 1 161 28 is_stmt 0 view .LVU141
+ 435 0050 0123     		movs	r3, #1
+ 436 0052 A375     		strb	r3, [r4, #22]
+ 162:u8g2_lib/u8log.c ****       u8log->cursor_y = 0;
+ 437              		.loc 1 162 7 is_stmt 1 view .LVU142
+ 162:u8g2_lib/u8log.c ****       u8log->cursor_y = 0;
+ 438              		.loc 1 162 23 is_stmt 0 view .LVU143
+ 439 0054 0023     		movs	r3, #0
+ 440 0056 A374     		strb	r3, [r4, #18]
+ 163:u8g2_lib/u8log.c ****       break;
+ 441              		.loc 1 163 7 is_stmt 1 view .LVU144
+ 163:u8g2_lib/u8log.c ****       break;
+ 442              		.loc 1 163 23 is_stmt 0 view .LVU145
+ 443 0058 E374     		strb	r3, [r4, #19]
+ 164:u8g2_lib/u8log.c ****     default:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s 			page 12
+
+
+ 444              		.loc 1 164 7 is_stmt 1 view .LVU146
+ 445 005a E9E7     		b	.L18
+ 446              	.LVL34:
+ 447              	.L19:
+ 166:u8g2_lib/u8log.c ****       break;
+ 448              		.loc 1 166 7 view .LVU147
+ 449 005c FFF7FEFF 		bl	u8log_write_to_screen
+ 450              	.LVL35:
+ 167:u8g2_lib/u8log.c ****   }
+ 451              		.loc 1 167 7 view .LVU148
+ 452              		.loc 1 169 1 is_stmt 0 view .LVU149
+ 453 0060 E6E7     		b	.L18
+ 454              		.cfi_endproc
+ 455              	.LFE4:
+ 457              		.section	.text.u8log_Init,"ax",%progbits
+ 458              		.align	1
+ 459              		.global	u8log_Init
+ 460              		.syntax unified
+ 461              		.thumb
+ 462              		.thumb_func
+ 463              		.fpu softvfp
+ 465              	u8log_Init:
+ 466              	.LVL36:
+ 467              	.LFB5:
+ 170:u8g2_lib/u8log.c **** 
+ 171:u8g2_lib/u8log.c **** void u8log_Init(u8log_t *u8log, uint8_t width, uint8_t height, uint8_t *buf)
+ 172:u8g2_lib/u8log.c **** {
+ 468              		.loc 1 172 1 is_stmt 1 view -0
+ 469              		.cfi_startproc
+ 470              		@ args = 0, pretend = 0, frame = 0
+ 471              		@ frame_needed = 0, uses_anonymous_args = 0
+ 472              		.loc 1 172 1 is_stmt 0 view .LVU151
+ 473 0000 38B5     		push	{r3, r4, r5, lr}
+ 474              	.LCFI6:
+ 475              		.cfi_def_cfa_offset 16
+ 476              		.cfi_offset 3, -16
+ 477              		.cfi_offset 4, -12
+ 478              		.cfi_offset 5, -8
+ 479              		.cfi_offset 14, -4
+ 173:u8g2_lib/u8log.c ****   memset(u8log, 0, sizeof(u8log_t));
+ 480              		.loc 1 173 3 is_stmt 1 view .LVU152
+ 481 0002 0025     		movs	r5, #0
+ 482 0004 0560     		str	r5, [r0]	@ unaligned
+ 483 0006 4560     		str	r5, [r0, #4]	@ unaligned
+ 484 0008 8560     		str	r5, [r0, #8]	@ unaligned
+ 485 000a 0561     		str	r5, [r0, #16]	@ unaligned
+ 486 000c 4561     		str	r5, [r0, #20]	@ unaligned
+ 174:u8g2_lib/u8log.c ****   u8log->width = width;
+ 487              		.loc 1 174 3 view .LVU153
+ 488              		.loc 1 174 16 is_stmt 0 view .LVU154
+ 489 000e 0171     		strb	r1, [r0, #4]
+ 175:u8g2_lib/u8log.c ****   u8log->height = height;
+ 490              		.loc 1 175 3 is_stmt 1 view .LVU155
+ 491              		.loc 1 175 17 is_stmt 0 view .LVU156
+ 492 0010 4271     		strb	r2, [r0, #5]
+ 176:u8g2_lib/u8log.c ****   u8log->screen_buffer = buf;
+ 493              		.loc 1 176 3 is_stmt 1 view .LVU157
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s 			page 13
+
+
+ 494              		.loc 1 176 24 is_stmt 0 view .LVU158
+ 495 0012 C360     		str	r3, [r0, #12]
+ 177:u8g2_lib/u8log.c ****   u8log_clear_screen(u8log);
+ 496              		.loc 1 177 3 is_stmt 1 view .LVU159
+ 497 0014 FFF7FEFF 		bl	u8log_clear_screen
+ 498              	.LVL37:
+ 178:u8g2_lib/u8log.c **** }
+ 499              		.loc 1 178 1 is_stmt 0 view .LVU160
+ 500 0018 38BD     		pop	{r3, r4, r5, pc}
+ 501              		.cfi_endproc
+ 502              	.LFE5:
+ 504              		.section	.text.u8log_SetCallback,"ax",%progbits
+ 505              		.align	1
+ 506              		.global	u8log_SetCallback
+ 507              		.syntax unified
+ 508              		.thumb
+ 509              		.thumb_func
+ 510              		.fpu softvfp
+ 512              	u8log_SetCallback:
+ 513              	.LVL38:
+ 514              	.LFB6:
+ 179:u8g2_lib/u8log.c **** 
+ 180:u8g2_lib/u8log.c **** void u8log_SetCallback(u8log_t *u8log, u8log_cb cb, void *aux_data)
+ 181:u8g2_lib/u8log.c **** {
+ 515              		.loc 1 181 1 is_stmt 1 view -0
+ 516              		.cfi_startproc
+ 517              		@ args = 0, pretend = 0, frame = 0
+ 518              		@ frame_needed = 0, uses_anonymous_args = 0
+ 519              		@ link register save eliminated.
+ 182:u8g2_lib/u8log.c ****   u8log->cb = cb;
+ 520              		.loc 1 182 3 view .LVU162
+ 521              		.loc 1 182 13 is_stmt 0 view .LVU163
+ 522 0000 8160     		str	r1, [r0, #8]
+ 183:u8g2_lib/u8log.c ****   u8log->aux_data = aux_data;
+ 523              		.loc 1 183 3 is_stmt 1 view .LVU164
+ 524              		.loc 1 183 19 is_stmt 0 view .LVU165
+ 525 0002 0260     		str	r2, [r0]
+ 184:u8g2_lib/u8log.c **** }
+ 526              		.loc 1 184 1 view .LVU166
+ 527 0004 7047     		bx	lr
+ 528              		.cfi_endproc
+ 529              	.LFE6:
+ 531              		.section	.text.u8log_SetRedrawMode,"ax",%progbits
+ 532              		.align	1
+ 533              		.global	u8log_SetRedrawMode
+ 534              		.syntax unified
+ 535              		.thumb
+ 536              		.thumb_func
+ 537              		.fpu softvfp
+ 539              	u8log_SetRedrawMode:
+ 540              	.LVL39:
+ 541              	.LFB7:
+ 185:u8g2_lib/u8log.c **** 
+ 186:u8g2_lib/u8log.c **** void u8log_SetRedrawMode(u8log_t *u8log, uint8_t is_redraw_line_for_each_char)
+ 187:u8g2_lib/u8log.c **** {
+ 542              		.loc 1 187 1 is_stmt 1 view -0
+ 543              		.cfi_startproc
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s 			page 14
+
+
+ 544              		@ args = 0, pretend = 0, frame = 0
+ 545              		@ frame_needed = 0, uses_anonymous_args = 0
+ 546              		@ link register save eliminated.
+ 188:u8g2_lib/u8log.c ****   u8log->is_redraw_line_for_each_char = is_redraw_line_for_each_char;
+ 547              		.loc 1 188 3 view .LVU168
+ 548              		.loc 1 188 39 is_stmt 0 view .LVU169
+ 549 0000 0174     		strb	r1, [r0, #16]
+ 189:u8g2_lib/u8log.c **** }
+ 550              		.loc 1 189 1 view .LVU170
+ 551 0002 7047     		bx	lr
+ 552              		.cfi_endproc
+ 553              	.LFE7:
+ 555              		.section	.text.u8log_SetLineHeightOffset,"ax",%progbits
+ 556              		.align	1
+ 557              		.global	u8log_SetLineHeightOffset
+ 558              		.syntax unified
+ 559              		.thumb
+ 560              		.thumb_func
+ 561              		.fpu softvfp
+ 563              	u8log_SetLineHeightOffset:
+ 564              	.LVL40:
+ 565              	.LFB8:
+ 190:u8g2_lib/u8log.c **** 
+ 191:u8g2_lib/u8log.c **** /* offset can be negative or positive, it is 0 by default */
+ 192:u8g2_lib/u8log.c **** void u8log_SetLineHeightOffset(u8log_t *u8log, int8_t line_height_offset)
+ 193:u8g2_lib/u8log.c **** {
+ 566              		.loc 1 193 1 is_stmt 1 view -0
+ 567              		.cfi_startproc
+ 568              		@ args = 0, pretend = 0, frame = 0
+ 569              		@ frame_needed = 0, uses_anonymous_args = 0
+ 570              		@ link register save eliminated.
+ 194:u8g2_lib/u8log.c ****   u8log->line_height_offset = line_height_offset;
+ 571              		.loc 1 194 3 view .LVU172
+ 572              		.loc 1 194 29 is_stmt 0 view .LVU173
+ 573 0000 4174     		strb	r1, [r0, #17]
+ 195:u8g2_lib/u8log.c **** }
+ 574              		.loc 1 195 1 view .LVU174
+ 575 0002 7047     		bx	lr
+ 576              		.cfi_endproc
+ 577              	.LFE8:
+ 579              		.section	.text.u8log_WriteChar,"ax",%progbits
+ 580              		.align	1
+ 581              		.global	u8log_WriteChar
+ 582              		.syntax unified
+ 583              		.thumb
+ 584              		.thumb_func
+ 585              		.fpu softvfp
+ 587              	u8log_WriteChar:
+ 588              	.LVL41:
+ 589              	.LFB9:
+ 196:u8g2_lib/u8log.c **** 
+ 197:u8g2_lib/u8log.c **** 
+ 198:u8g2_lib/u8log.c **** 
+ 199:u8g2_lib/u8log.c **** void u8log_WriteChar(u8log_t *u8log, uint8_t c)
+ 200:u8g2_lib/u8log.c **** {
+ 590              		.loc 1 200 1 is_stmt 1 view -0
+ 591              		.cfi_startproc
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s 			page 15
+
+
+ 592              		@ args = 0, pretend = 0, frame = 0
+ 593              		@ frame_needed = 0, uses_anonymous_args = 0
+ 594              		.loc 1 200 1 is_stmt 0 view .LVU176
+ 595 0000 10B5     		push	{r4, lr}
+ 596              	.LCFI7:
+ 597              		.cfi_def_cfa_offset 8
+ 598              		.cfi_offset 4, -8
+ 599              		.cfi_offset 14, -4
+ 600 0002 0446     		mov	r4, r0
+ 201:u8g2_lib/u8log.c ****   u8log_write_char(u8log, c);
+ 601              		.loc 1 201 3 is_stmt 1 view .LVU177
+ 602 0004 FFF7FEFF 		bl	u8log_write_char
+ 603              	.LVL42:
+ 202:u8g2_lib/u8log.c ****   if ( u8log->is_redraw_line || u8log->is_redraw_all )
+ 604              		.loc 1 202 3 view .LVU178
+ 605              		.loc 1 202 30 is_stmt 0 view .LVU179
+ 606 0008 6369     		ldr	r3, [r4, #20]
+ 607 000a 23F07F43 		bic	r3, r3, #-16777216
+ 608 000e 23F0FF03 		bic	r3, r3, #255
+ 609              		.loc 1 202 6 view .LVU180
+ 610 0012 33B1     		cbz	r3, .L33
+ 203:u8g2_lib/u8log.c ****   {
+ 204:u8g2_lib/u8log.c ****     if ( u8log->cb != 0 )
+ 611              		.loc 1 204 5 is_stmt 1 view .LVU181
+ 612              		.loc 1 204 15 is_stmt 0 view .LVU182
+ 613 0014 A368     		ldr	r3, [r4, #8]
+ 614              		.loc 1 204 8 view .LVU183
+ 615 0016 0BB1     		cbz	r3, .L35
+ 205:u8g2_lib/u8log.c ****     {
+ 206:u8g2_lib/u8log.c ****       u8log->cb(u8log);
+ 616              		.loc 1 206 7 is_stmt 1 view .LVU184
+ 617 0018 2046     		mov	r0, r4
+ 618 001a 9847     		blx	r3
+ 619              	.LVL43:
+ 620              	.L35:
+ 207:u8g2_lib/u8log.c ****     }
+ 208:u8g2_lib/u8log.c ****     u8log->is_redraw_line = 0;
+ 621              		.loc 1 208 5 view .LVU185
+ 622              		.loc 1 208 27 is_stmt 0 view .LVU186
+ 623 001c 0023     		movs	r3, #0
+ 624 001e 6375     		strb	r3, [r4, #21]
+ 209:u8g2_lib/u8log.c ****     u8log->is_redraw_all = 0;
+ 625              		.loc 1 209 5 is_stmt 1 view .LVU187
+ 626              		.loc 1 209 26 is_stmt 0 view .LVU188
+ 627 0020 A375     		strb	r3, [r4, #22]
+ 628              	.L33:
+ 210:u8g2_lib/u8log.c ****   }
+ 211:u8g2_lib/u8log.c **** }
+ 629              		.loc 1 211 1 view .LVU189
+ 630 0022 10BD     		pop	{r4, pc}
+ 631              		.loc 1 211 1 view .LVU190
+ 632              		.cfi_endproc
+ 633              	.LFE9:
+ 635              		.section	.text.u8log_WriteHexHalfByte,"ax",%progbits
+ 636              		.align	1
+ 637              		.syntax unified
+ 638              		.thumb
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s 			page 16
+
+
+ 639              		.thumb_func
+ 640              		.fpu softvfp
+ 642              	u8log_WriteHexHalfByte:
+ 643              	.LVL44:
+ 644              	.LFB11:
+ 212:u8g2_lib/u8log.c **** 
+ 213:u8g2_lib/u8log.c **** void u8log_WriteString(u8log_t *u8log, const char *s)
+ 214:u8g2_lib/u8log.c **** {
+ 215:u8g2_lib/u8log.c ****   while( *s != '\0' )
+ 216:u8g2_lib/u8log.c ****   {
+ 217:u8g2_lib/u8log.c ****     u8log_WriteChar(u8log, *s);
+ 218:u8g2_lib/u8log.c ****     s++;
+ 219:u8g2_lib/u8log.c ****   }
+ 220:u8g2_lib/u8log.c **** }
+ 221:u8g2_lib/u8log.c **** 
+ 222:u8g2_lib/u8log.c **** static void u8log_WriteHexHalfByte(u8log_t *u8log, uint8_t b) U8X8_NOINLINE;
+ 223:u8g2_lib/u8log.c **** static void u8log_WriteHexHalfByte(u8log_t *u8log, uint8_t b)
+ 224:u8g2_lib/u8log.c **** {
+ 645              		.loc 1 224 1 is_stmt 1 view -0
+ 646              		.cfi_startproc
+ 647              		@ args = 0, pretend = 0, frame = 0
+ 648              		@ frame_needed = 0, uses_anonymous_args = 0
+ 649              		.loc 1 224 1 is_stmt 0 view .LVU192
+ 650 0000 08B5     		push	{r3, lr}
+ 651              	.LCFI8:
+ 652              		.cfi_def_cfa_offset 8
+ 653              		.cfi_offset 3, -8
+ 654              		.cfi_offset 14, -4
+ 225:u8g2_lib/u8log.c ****   b &= 0x0f;
+ 655              		.loc 1 225 3 is_stmt 1 view .LVU193
+ 656              		.loc 1 225 5 is_stmt 0 view .LVU194
+ 657 0002 01F00F01 		and	r1, r1, #15
+ 658              	.LVL45:
+ 226:u8g2_lib/u8log.c ****   if ( b < 10 )
+ 659              		.loc 1 226 3 is_stmt 1 view .LVU195
+ 660              		.loc 1 226 6 is_stmt 0 view .LVU196
+ 661 0006 0929     		cmp	r1, #9
+ 662 0008 03D8     		bhi	.L38
+ 227:u8g2_lib/u8log.c ****     u8log_WriteChar(u8log, b+'0');
+ 663              		.loc 1 227 5 is_stmt 1 view .LVU197
+ 664 000a 3031     		adds	r1, r1, #48
+ 665              	.LVL46:
+ 666              		.loc 1 227 5 is_stmt 0 view .LVU198
+ 667 000c FFF7FEFF 		bl	u8log_WriteChar
+ 668              	.LVL47:
+ 669              	.L37:
+ 228:u8g2_lib/u8log.c ****   else
+ 229:u8g2_lib/u8log.c ****     u8log_WriteChar(u8log, b+'a'-10);
+ 230:u8g2_lib/u8log.c **** }
+ 670              		.loc 1 230 1 view .LVU199
+ 671 0010 08BD     		pop	{r3, pc}
+ 672              	.LVL48:
+ 673              	.L38:
+ 229:u8g2_lib/u8log.c **** }
+ 674              		.loc 1 229 5 is_stmt 1 view .LVU200
+ 675 0012 5731     		adds	r1, r1, #87
+ 676              	.LVL49:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s 			page 17
+
+
+ 229:u8g2_lib/u8log.c **** }
+ 677              		.loc 1 229 5 is_stmt 0 view .LVU201
+ 678 0014 FFF7FEFF 		bl	u8log_WriteChar
+ 679              	.LVL50:
+ 680              		.loc 1 230 1 view .LVU202
+ 681 0018 FAE7     		b	.L37
+ 682              		.cfi_endproc
+ 683              	.LFE11:
+ 685              		.section	.text.u8log_WriteString,"ax",%progbits
+ 686              		.align	1
+ 687              		.global	u8log_WriteString
+ 688              		.syntax unified
+ 689              		.thumb
+ 690              		.thumb_func
+ 691              		.fpu softvfp
+ 693              	u8log_WriteString:
+ 694              	.LVL51:
+ 695              	.LFB10:
+ 214:u8g2_lib/u8log.c ****   while( *s != '\0' )
+ 696              		.loc 1 214 1 is_stmt 1 view -0
+ 697              		.cfi_startproc
+ 698              		@ args = 0, pretend = 0, frame = 0
+ 699              		@ frame_needed = 0, uses_anonymous_args = 0
+ 214:u8g2_lib/u8log.c ****   while( *s != '\0' )
+ 700              		.loc 1 214 1 is_stmt 0 view .LVU204
+ 701 0000 38B5     		push	{r3, r4, r5, lr}
+ 702              	.LCFI9:
+ 703              		.cfi_def_cfa_offset 16
+ 704              		.cfi_offset 3, -16
+ 705              		.cfi_offset 4, -12
+ 706              		.cfi_offset 5, -8
+ 707              		.cfi_offset 14, -4
+ 708 0002 0546     		mov	r5, r0
+ 709 0004 0C46     		mov	r4, r1
+ 215:u8g2_lib/u8log.c ****   {
+ 710              		.loc 1 215 3 is_stmt 1 view .LVU205
+ 711              	.LVL52:
+ 712              	.L42:
+ 215:u8g2_lib/u8log.c ****   {
+ 713              		.loc 1 215 8 view .LVU206
+ 215:u8g2_lib/u8log.c ****   {
+ 714              		.loc 1 215 10 is_stmt 0 view .LVU207
+ 715 0006 2178     		ldrb	r1, [r4]	@ zero_extendqisi2
+ 215:u8g2_lib/u8log.c ****   {
+ 716              		.loc 1 215 8 view .LVU208
+ 717 0008 21B1     		cbz	r1, .L45
+ 217:u8g2_lib/u8log.c ****     s++;
+ 718              		.loc 1 217 5 is_stmt 1 view .LVU209
+ 719 000a 2846     		mov	r0, r5
+ 720 000c FFF7FEFF 		bl	u8log_WriteChar
+ 721              	.LVL53:
+ 218:u8g2_lib/u8log.c ****   }
+ 722              		.loc 1 218 5 view .LVU210
+ 218:u8g2_lib/u8log.c ****   }
+ 723              		.loc 1 218 6 is_stmt 0 view .LVU211
+ 724 0010 0134     		adds	r4, r4, #1
+ 725              	.LVL54:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s 			page 18
+
+
+ 218:u8g2_lib/u8log.c ****   }
+ 726              		.loc 1 218 6 view .LVU212
+ 727 0012 F8E7     		b	.L42
+ 728              	.L45:
+ 220:u8g2_lib/u8log.c **** 
+ 729              		.loc 1 220 1 view .LVU213
+ 730 0014 38BD     		pop	{r3, r4, r5, pc}
+ 220:u8g2_lib/u8log.c **** 
+ 731              		.loc 1 220 1 view .LVU214
+ 732              		.cfi_endproc
+ 733              	.LFE10:
+ 735              		.section	.text.u8log_WriteHex8,"ax",%progbits
+ 736              		.align	1
+ 737              		.global	u8log_WriteHex8
+ 738              		.syntax unified
+ 739              		.thumb
+ 740              		.thumb_func
+ 741              		.fpu softvfp
+ 743              	u8log_WriteHex8:
+ 744              	.LVL55:
+ 745              	.LFB12:
+ 231:u8g2_lib/u8log.c **** 
+ 232:u8g2_lib/u8log.c **** void u8log_WriteHex8(u8log_t *u8log, uint8_t b)
+ 233:u8g2_lib/u8log.c **** {
+ 746              		.loc 1 233 1 is_stmt 1 view -0
+ 747              		.cfi_startproc
+ 748              		@ args = 0, pretend = 0, frame = 0
+ 749              		@ frame_needed = 0, uses_anonymous_args = 0
+ 750              		.loc 1 233 1 is_stmt 0 view .LVU216
+ 751 0000 38B5     		push	{r3, r4, r5, lr}
+ 752              	.LCFI10:
+ 753              		.cfi_def_cfa_offset 16
+ 754              		.cfi_offset 3, -16
+ 755              		.cfi_offset 4, -12
+ 756              		.cfi_offset 5, -8
+ 757              		.cfi_offset 14, -4
+ 758 0002 0546     		mov	r5, r0
+ 759 0004 0C46     		mov	r4, r1
+ 234:u8g2_lib/u8log.c ****   u8log_WriteHexHalfByte(u8log, b >> 4);
+ 760              		.loc 1 234 3 is_stmt 1 view .LVU217
+ 761 0006 0909     		lsrs	r1, r1, #4
+ 762              	.LVL56:
+ 763              		.loc 1 234 3 is_stmt 0 view .LVU218
+ 764 0008 FFF7FEFF 		bl	u8log_WriteHexHalfByte
+ 765              	.LVL57:
+ 235:u8g2_lib/u8log.c ****   u8log_WriteHexHalfByte(u8log, b);
+ 766              		.loc 1 235 3 is_stmt 1 view .LVU219
+ 767 000c 2146     		mov	r1, r4
+ 768 000e 2846     		mov	r0, r5
+ 769 0010 FFF7FEFF 		bl	u8log_WriteHexHalfByte
+ 770              	.LVL58:
+ 236:u8g2_lib/u8log.c **** }
+ 771              		.loc 1 236 1 is_stmt 0 view .LVU220
+ 772 0014 38BD     		pop	{r3, r4, r5, pc}
+ 773              		.loc 1 236 1 view .LVU221
+ 774              		.cfi_endproc
+ 775              	.LFE12:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s 			page 19
+
+
+ 777              		.section	.text.u8log_WriteHex16,"ax",%progbits
+ 778              		.align	1
+ 779              		.global	u8log_WriteHex16
+ 780              		.syntax unified
+ 781              		.thumb
+ 782              		.thumb_func
+ 783              		.fpu softvfp
+ 785              	u8log_WriteHex16:
+ 786              	.LVL59:
+ 787              	.LFB13:
+ 237:u8g2_lib/u8log.c **** 
+ 238:u8g2_lib/u8log.c **** void u8log_WriteHex16(u8log_t *u8log, uint16_t v)
+ 239:u8g2_lib/u8log.c **** {
+ 788              		.loc 1 239 1 is_stmt 1 view -0
+ 789              		.cfi_startproc
+ 790              		@ args = 0, pretend = 0, frame = 0
+ 791              		@ frame_needed = 0, uses_anonymous_args = 0
+ 792              		.loc 1 239 1 is_stmt 0 view .LVU223
+ 793 0000 38B5     		push	{r3, r4, r5, lr}
+ 794              	.LCFI11:
+ 795              		.cfi_def_cfa_offset 16
+ 796              		.cfi_offset 3, -16
+ 797              		.cfi_offset 4, -12
+ 798              		.cfi_offset 5, -8
+ 799              		.cfi_offset 14, -4
+ 800 0002 0546     		mov	r5, r0
+ 801 0004 0C46     		mov	r4, r1
+ 240:u8g2_lib/u8log.c ****   u8log_WriteHex8(u8log, v>>8);
+ 802              		.loc 1 240 3 is_stmt 1 view .LVU224
+ 803 0006 090A     		lsrs	r1, r1, #8
+ 804              	.LVL60:
+ 805              		.loc 1 240 3 is_stmt 0 view .LVU225
+ 806 0008 FFF7FEFF 		bl	u8log_WriteHex8
+ 807              	.LVL61:
+ 241:u8g2_lib/u8log.c ****   u8log_WriteHex8(u8log, v);
+ 808              		.loc 1 241 3 is_stmt 1 view .LVU226
+ 809 000c E1B2     		uxtb	r1, r4
+ 810 000e 2846     		mov	r0, r5
+ 811 0010 FFF7FEFF 		bl	u8log_WriteHex8
+ 812              	.LVL62:
+ 242:u8g2_lib/u8log.c **** }
+ 813              		.loc 1 242 1 is_stmt 0 view .LVU227
+ 814 0014 38BD     		pop	{r3, r4, r5, pc}
+ 815              		.loc 1 242 1 view .LVU228
+ 816              		.cfi_endproc
+ 817              	.LFE13:
+ 819              		.section	.text.u8log_WriteHex32,"ax",%progbits
+ 820              		.align	1
+ 821              		.global	u8log_WriteHex32
+ 822              		.syntax unified
+ 823              		.thumb
+ 824              		.thumb_func
+ 825              		.fpu softvfp
+ 827              	u8log_WriteHex32:
+ 828              	.LVL63:
+ 829              	.LFB14:
+ 243:u8g2_lib/u8log.c **** 
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s 			page 20
+
+
+ 244:u8g2_lib/u8log.c **** void u8log_WriteHex32(u8log_t *u8log, uint32_t v)
+ 245:u8g2_lib/u8log.c **** {
+ 830              		.loc 1 245 1 is_stmt 1 view -0
+ 831              		.cfi_startproc
+ 832              		@ args = 0, pretend = 0, frame = 0
+ 833              		@ frame_needed = 0, uses_anonymous_args = 0
+ 834              		.loc 1 245 1 is_stmt 0 view .LVU230
+ 835 0000 38B5     		push	{r3, r4, r5, lr}
+ 836              	.LCFI12:
+ 837              		.cfi_def_cfa_offset 16
+ 838              		.cfi_offset 3, -16
+ 839              		.cfi_offset 4, -12
+ 840              		.cfi_offset 5, -8
+ 841              		.cfi_offset 14, -4
+ 842 0002 0546     		mov	r5, r0
+ 843 0004 0C46     		mov	r4, r1
+ 246:u8g2_lib/u8log.c ****   u8log_WriteHex16(u8log, v>>16);
+ 844              		.loc 1 246 3 is_stmt 1 view .LVU231
+ 845 0006 090C     		lsrs	r1, r1, #16
+ 846              	.LVL64:
+ 847              		.loc 1 246 3 is_stmt 0 view .LVU232
+ 848 0008 FFF7FEFF 		bl	u8log_WriteHex16
+ 849              	.LVL65:
+ 247:u8g2_lib/u8log.c ****   u8log_WriteHex16(u8log, v);
+ 850              		.loc 1 247 3 is_stmt 1 view .LVU233
+ 851 000c A1B2     		uxth	r1, r4
+ 852 000e 2846     		mov	r0, r5
+ 853 0010 FFF7FEFF 		bl	u8log_WriteHex16
+ 854              	.LVL66:
+ 248:u8g2_lib/u8log.c **** }
+ 855              		.loc 1 248 1 is_stmt 0 view .LVU234
+ 856 0014 38BD     		pop	{r3, r4, r5, pc}
+ 857              		.loc 1 248 1 view .LVU235
+ 858              		.cfi_endproc
+ 859              	.LFE14:
+ 861              		.section	.text.u8log_WriteDec8,"ax",%progbits
+ 862              		.align	1
+ 863              		.global	u8log_WriteDec8
+ 864              		.syntax unified
+ 865              		.thumb
+ 866              		.thumb_func
+ 867              		.fpu softvfp
+ 869              	u8log_WriteDec8:
+ 870              	.LVL67:
+ 871              	.LFB15:
+ 249:u8g2_lib/u8log.c **** 
+ 250:u8g2_lib/u8log.c **** /* v = value, d = number of digits (1..3) */
+ 251:u8g2_lib/u8log.c **** void u8log_WriteDec8(u8log_t *u8log, uint8_t v, uint8_t d)
+ 252:u8g2_lib/u8log.c **** {
+ 872              		.loc 1 252 1 is_stmt 1 view -0
+ 873              		.cfi_startproc
+ 874              		@ args = 0, pretend = 0, frame = 0
+ 875              		@ frame_needed = 0, uses_anonymous_args = 0
+ 876              		.loc 1 252 1 is_stmt 0 view .LVU237
+ 877 0000 10B5     		push	{r4, lr}
+ 878              	.LCFI13:
+ 879              		.cfi_def_cfa_offset 8
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s 			page 21
+
+
+ 880              		.cfi_offset 4, -8
+ 881              		.cfi_offset 14, -4
+ 882 0002 0446     		mov	r4, r0
+ 883 0004 0846     		mov	r0, r1
+ 884              	.LVL68:
+ 253:u8g2_lib/u8log.c ****   u8log_WriteString(u8log, u8x8_u8toa(v, d));
+ 885              		.loc 1 253 3 is_stmt 1 view .LVU238
+ 886 0006 1146     		mov	r1, r2
+ 887              	.LVL69:
+ 888              		.loc 1 253 3 is_stmt 0 view .LVU239
+ 889 0008 FFF7FEFF 		bl	u8x8_u8toa
+ 890              	.LVL70:
+ 891              		.loc 1 253 3 view .LVU240
+ 892 000c 0146     		mov	r1, r0
+ 893 000e 2046     		mov	r0, r4
+ 894 0010 FFF7FEFF 		bl	u8log_WriteString
+ 895              	.LVL71:
+ 254:u8g2_lib/u8log.c **** }
+ 896              		.loc 1 254 1 view .LVU241
+ 897 0014 10BD     		pop	{r4, pc}
+ 898              		.loc 1 254 1 view .LVU242
+ 899              		.cfi_endproc
+ 900              	.LFE15:
+ 902              		.section	.text.u8log_WriteDec16,"ax",%progbits
+ 903              		.align	1
+ 904              		.global	u8log_WriteDec16
+ 905              		.syntax unified
+ 906              		.thumb
+ 907              		.thumb_func
+ 908              		.fpu softvfp
+ 910              	u8log_WriteDec16:
+ 911              	.LVL72:
+ 912              	.LFB16:
+ 255:u8g2_lib/u8log.c **** 
+ 256:u8g2_lib/u8log.c **** /* v = value, d = number of digits (1..5) */
+ 257:u8g2_lib/u8log.c **** void u8log_WriteDec16(u8log_t *u8log, uint16_t v, uint8_t d)
+ 258:u8g2_lib/u8log.c **** {
+ 913              		.loc 1 258 1 is_stmt 1 view -0
+ 914              		.cfi_startproc
+ 915              		@ args = 0, pretend = 0, frame = 0
+ 916              		@ frame_needed = 0, uses_anonymous_args = 0
+ 917              		.loc 1 258 1 is_stmt 0 view .LVU244
+ 918 0000 10B5     		push	{r4, lr}
+ 919              	.LCFI14:
+ 920              		.cfi_def_cfa_offset 8
+ 921              		.cfi_offset 4, -8
+ 922              		.cfi_offset 14, -4
+ 923 0002 0446     		mov	r4, r0
+ 924 0004 0846     		mov	r0, r1
+ 925              	.LVL73:
+ 259:u8g2_lib/u8log.c ****   u8log_WriteString(u8log, u8x8_u16toa(v, d));
+ 926              		.loc 1 259 3 is_stmt 1 view .LVU245
+ 927 0006 1146     		mov	r1, r2
+ 928              	.LVL74:
+ 929              		.loc 1 259 3 is_stmt 0 view .LVU246
+ 930 0008 FFF7FEFF 		bl	u8x8_u16toa
+ 931              	.LVL75:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s 			page 22
+
+
+ 932              		.loc 1 259 3 view .LVU247
+ 933 000c 0146     		mov	r1, r0
+ 934 000e 2046     		mov	r0, r4
+ 935 0010 FFF7FEFF 		bl	u8log_WriteString
+ 936              	.LVL76:
+ 260:u8g2_lib/u8log.c **** }
+ 937              		.loc 1 260 1 view .LVU248
+ 938 0014 10BD     		pop	{r4, pc}
+ 939              		.loc 1 260 1 view .LVU249
+ 940              		.cfi_endproc
+ 941              	.LFE16:
+ 943              		.text
+ 944              	.Letext0:
+ 945              		.file 2 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 946              		.file 3 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 947              		.file 4 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\sys\\lock.h"
+ 948              		.file 5 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\sys\\_types.h"
+ 949              		.file 6 "d:\\work_project\\9 2019-q4-major\\lib\\gcc\\arm-none-eabi\\9.2.1\\include\\stddef.h"
+ 950              		.file 7 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\sys\\reent.h"
+ 951              		.file 8 "u8g2_lib/u8x8.h"
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s 			page 23
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 u8log.c
+C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s:16     .text.u8log_clear_screen:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s:23     .text.u8log_clear_screen:00000000 u8log_clear_screen
+C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s:71     .text.u8log_scroll_up:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s:77     .text.u8log_scroll_up:00000000 u8log_scroll_up
+C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s:197    .text.u8log_cursor_on_screen:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s:203    .text.u8log_cursor_on_screen:00000000 u8log_cursor_on_screen
+C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s:264    .text.u8log_write_to_screen:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s:270    .text.u8log_write_to_screen:00000000 u8log_write_to_screen
+C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s:331    .text.u8log_write_char:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s:338    .text.u8log_write_char:00000000 u8log_write_char
+C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s:358    .text.u8log_write_char:00000010 $d
+C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s:458    .text.u8log_Init:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s:465    .text.u8log_Init:00000000 u8log_Init
+C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s:505    .text.u8log_SetCallback:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s:512    .text.u8log_SetCallback:00000000 u8log_SetCallback
+C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s:532    .text.u8log_SetRedrawMode:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s:539    .text.u8log_SetRedrawMode:00000000 u8log_SetRedrawMode
+C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s:556    .text.u8log_SetLineHeightOffset:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s:563    .text.u8log_SetLineHeightOffset:00000000 u8log_SetLineHeightOffset
+C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s:580    .text.u8log_WriteChar:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s:587    .text.u8log_WriteChar:00000000 u8log_WriteChar
+C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s:636    .text.u8log_WriteHexHalfByte:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s:642    .text.u8log_WriteHexHalfByte:00000000 u8log_WriteHexHalfByte
+C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s:686    .text.u8log_WriteString:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s:693    .text.u8log_WriteString:00000000 u8log_WriteString
+C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s:736    .text.u8log_WriteHex8:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s:743    .text.u8log_WriteHex8:00000000 u8log_WriteHex8
+C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s:778    .text.u8log_WriteHex16:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s:785    .text.u8log_WriteHex16:00000000 u8log_WriteHex16
+C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s:820    .text.u8log_WriteHex32:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s:827    .text.u8log_WriteHex32:00000000 u8log_WriteHex32
+C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s:862    .text.u8log_WriteDec8:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s:869    .text.u8log_WriteDec8:00000000 u8log_WriteDec8
+C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s:903    .text.u8log_WriteDec16:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s:910    .text.u8log_WriteDec16:00000000 u8log_WriteDec16
+C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s:363    .text.u8log_write_char:00000015 $d
+C:\Users\GKQ\AppData\Local\Temp\ccjjvtOB.s:363    .text.u8log_write_char:00000016 $t
+
+UNDEFINED SYMBOLS
+u8x8_u8toa
+u8x8_u16toa

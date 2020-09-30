@@ -1,0 +1,227 @@
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccLpgMRl.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"oled_config.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.DriverInit,"ax",%progbits
+  16              		.align	1
+  17              		.global	DriverInit
+  18              		.arch armv7-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu softvfp
+  24              	DriverInit:
+  25              	.LFB65:
+  26              		.file 1 "oledlib/oled_config.c"
+   1:oledlib/oled_config.c **** #include "oled_config.h"
+   2:oledlib/oled_config.c **** /* 屏幕驱动文件引用 */
+   3:oledlib/oled_config.c **** #include "oled_driver.h"
+   4:oledlib/oled_config.c **** 
+   5:oledlib/oled_config.c **** extern unsigned char ScreenBuffer[SCREEN_PAGE_NUM][SCREEN_COLUMN];
+   6:oledlib/oled_config.c **** extern unsigned char TempBuffer[SCREEN_PAGE_NUM][SCREEN_COLUMN];
+   7:oledlib/oled_config.c **** unsigned int OledTimeMs = 0;
+   8:oledlib/oled_config.c **** 
+   9:oledlib/oled_config.c **** //初始化图形库，请将硬件初始化信息放入此中
+  10:oledlib/oled_config.c **** void DriverInit(void)
+  11:oledlib/oled_config.c **** {
+  27              		.loc 1 11 1 view -0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31 0000 08B5     		push	{r3, lr}
+  32              	.LCFI0:
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 3, -8
+  35              		.cfi_offset 14, -4
+  12:oledlib/oled_config.c ****     if(TRANSFER_METHOD == HW_IIC)
+  36              		.loc 1 12 5 view .LVU1
+  13:oledlib/oled_config.c ****     {
+  14:oledlib/oled_config.c ****         I2C_Configuration();
+  37              		.loc 1 14 9 view .LVU2
+  38 0002 FFF7FEFF 		bl	I2C_Configuration
+  39              	.LVL0:
+  15:oledlib/oled_config.c ****     }
+  16:oledlib/oled_config.c ****     OLED_Init();
+  40              		.loc 1 16 5 view .LVU3
+  41 0006 FFF7FEFF 		bl	OLED_Init
+  42              	.LVL1:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccLpgMRl.s 			page 2
+
+
+  17:oledlib/oled_config.c **** }
+  43              		.loc 1 17 1 is_stmt 0 view .LVU4
+  44 000a 08BD     		pop	{r3, pc}
+  45              		.cfi_endproc
+  46              	.LFE65:
+  48              		.section	.text.UpdateScreenBuffer,"ax",%progbits
+  49              		.align	1
+  50              		.global	UpdateScreenBuffer
+  51              		.syntax unified
+  52              		.thumb
+  53              		.thumb_func
+  54              		.fpu softvfp
+  56              	UpdateScreenBuffer:
+  57              	.LFB66:
+  18:oledlib/oled_config.c **** 
+  19:oledlib/oled_config.c **** //为上层提供硬件操作接口OLED_FILL
+  20:oledlib/oled_config.c **** void UpdateScreenBuffer(void)
+  21:oledlib/oled_config.c **** {
+  58              		.loc 1 21 1 is_stmt 1 view -0
+  59              		.cfi_startproc
+  60              		@ args = 0, pretend = 0, frame = 0
+  61              		@ frame_needed = 0, uses_anonymous_args = 0
+  62 0000 08B5     		push	{r3, lr}
+  63              	.LCFI1:
+  64              		.cfi_def_cfa_offset 8
+  65              		.cfi_offset 3, -8
+  66              		.cfi_offset 14, -4
+  22:oledlib/oled_config.c ****     OLED_FILL(ScreenBuffer[0]);
+  67              		.loc 1 22 5 view .LVU6
+  68 0002 0248     		ldr	r0, .L5
+  69 0004 FFF7FEFF 		bl	OLED_FILL
+  70              	.LVL2:
+  23:oledlib/oled_config.c **** }
+  71              		.loc 1 23 1 is_stmt 0 view .LVU7
+  72 0008 08BD     		pop	{r3, pc}
+  73              	.L6:
+  74 000a 00BF     		.align	2
+  75              	.L5:
+  76 000c 00000000 		.word	ScreenBuffer
+  77              		.cfi_endproc
+  78              	.LFE66:
+  80              		.section	.text.UpdateTempBuffer,"ax",%progbits
+  81              		.align	1
+  82              		.global	UpdateTempBuffer
+  83              		.syntax unified
+  84              		.thumb
+  85              		.thumb_func
+  86              		.fpu softvfp
+  88              	UpdateTempBuffer:
+  89              	.LFB67:
+  24:oledlib/oled_config.c **** //为上层提供硬件操作接口OLED_FILL
+  25:oledlib/oled_config.c **** void UpdateTempBuffer(void)
+  26:oledlib/oled_config.c **** {
+  90              		.loc 1 26 1 is_stmt 1 view -0
+  91              		.cfi_startproc
+  92              		@ args = 0, pretend = 0, frame = 0
+  93              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccLpgMRl.s 			page 3
+
+
+  94 0000 08B5     		push	{r3, lr}
+  95              	.LCFI2:
+  96              		.cfi_def_cfa_offset 8
+  97              		.cfi_offset 3, -8
+  98              		.cfi_offset 14, -4
+  27:oledlib/oled_config.c ****     OLED_FILL(TempBuffer[0]);
+  99              		.loc 1 27 5 view .LVU9
+ 100 0002 0248     		ldr	r0, .L9
+ 101 0004 FFF7FEFF 		bl	OLED_FILL
+ 102              	.LVL3:
+  28:oledlib/oled_config.c **** }
+ 103              		.loc 1 28 1 is_stmt 0 view .LVU10
+ 104 0008 08BD     		pop	{r3, pc}
+ 105              	.L10:
+ 106 000a 00BF     		.align	2
+ 107              	.L9:
+ 108 000c 00000000 		.word	TempBuffer
+ 109              		.cfi_endproc
+ 110              	.LFE67:
+ 112              		.section	.text.OledTimeMsFunc,"ax",%progbits
+ 113              		.align	1
+ 114              		.global	OledTimeMsFunc
+ 115              		.syntax unified
+ 116              		.thumb
+ 117              		.thumb_func
+ 118              		.fpu softvfp
+ 120              	OledTimeMsFunc:
+ 121              	.LFB68:
+  29:oledlib/oled_config.c **** 
+  30:oledlib/oled_config.c **** //请将此函数放入1ms中断里，为图形提供时基
+  31:oledlib/oled_config.c **** void OledTimeMsFunc(void)
+  32:oledlib/oled_config.c **** {
+ 122              		.loc 1 32 1 is_stmt 1 view -0
+ 123              		.cfi_startproc
+ 124              		@ args = 0, pretend = 0, frame = 0
+ 125              		@ frame_needed = 0, uses_anonymous_args = 0
+ 126              		@ link register save eliminated.
+  33:oledlib/oled_config.c ****     if (OledTimeMs != 0x00)
+ 127              		.loc 1 33 5 view .LVU12
+ 128              		.loc 1 33 20 is_stmt 0 view .LVU13
+ 129 0000 034B     		ldr	r3, .L13
+ 130 0002 1B68     		ldr	r3, [r3]
+ 131              		.loc 1 33 8 view .LVU14
+ 132 0004 13B1     		cbz	r3, .L11
+  34:oledlib/oled_config.c ****     {
+  35:oledlib/oled_config.c ****         OledTimeMs--;
+ 133              		.loc 1 35 9 is_stmt 1 view .LVU15
+ 134              		.loc 1 35 19 is_stmt 0 view .LVU16
+ 135 0006 013B     		subs	r3, r3, #1
+ 136 0008 014A     		ldr	r2, .L13
+ 137 000a 1360     		str	r3, [r2]
+ 138              	.L11:
+  36:oledlib/oled_config.c ****     }
+  37:oledlib/oled_config.c **** }
+ 139              		.loc 1 37 1 view .LVU17
+ 140 000c 7047     		bx	lr
+ 141              	.L14:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccLpgMRl.s 			page 4
+
+
+ 142 000e 00BF     		.align	2
+ 143              	.L13:
+ 144 0010 00000000 		.word	.LANCHOR0
+ 145              		.cfi_endproc
+ 146              	.LFE68:
+ 148              		.global	OledTimeMs
+ 149              		.section	.bss.OledTimeMs,"aw",%nobits
+ 150              		.align	2
+ 151              		.set	.LANCHOR0,. + 0
+ 154              	OledTimeMs:
+ 155 0000 00000000 		.space	4
+ 156              		.text
+ 157              	.Letext0:
+ 158              		.file 2 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 159              		.file 3 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 160              		.file 4 "Drivers/CMSIS/Include/core_cm3.h"
+ 161              		.file 5 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/system_stm32f1xx.h"
+ 162              		.file 6 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
+ 163              		.file 7 "oledlib/oled_driver.h"
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccLpgMRl.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 oled_config.c
+C:\Users\GKQ\AppData\Local\Temp\ccLpgMRl.s:16     .text.DriverInit:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccLpgMRl.s:24     .text.DriverInit:00000000 DriverInit
+C:\Users\GKQ\AppData\Local\Temp\ccLpgMRl.s:49     .text.UpdateScreenBuffer:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccLpgMRl.s:56     .text.UpdateScreenBuffer:00000000 UpdateScreenBuffer
+C:\Users\GKQ\AppData\Local\Temp\ccLpgMRl.s:76     .text.UpdateScreenBuffer:0000000c $d
+C:\Users\GKQ\AppData\Local\Temp\ccLpgMRl.s:81     .text.UpdateTempBuffer:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccLpgMRl.s:88     .text.UpdateTempBuffer:00000000 UpdateTempBuffer
+C:\Users\GKQ\AppData\Local\Temp\ccLpgMRl.s:108    .text.UpdateTempBuffer:0000000c $d
+C:\Users\GKQ\AppData\Local\Temp\ccLpgMRl.s:113    .text.OledTimeMsFunc:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccLpgMRl.s:120    .text.OledTimeMsFunc:00000000 OledTimeMsFunc
+C:\Users\GKQ\AppData\Local\Temp\ccLpgMRl.s:144    .text.OledTimeMsFunc:00000010 $d
+C:\Users\GKQ\AppData\Local\Temp\ccLpgMRl.s:154    .bss.OledTimeMs:00000000 OledTimeMs
+C:\Users\GKQ\AppData\Local\Temp\ccLpgMRl.s:150    .bss.OledTimeMs:00000000 $d
+
+UNDEFINED SYMBOLS
+I2C_Configuration
+OLED_Init
+OLED_FILL
+ScreenBuffer
+TempBuffer

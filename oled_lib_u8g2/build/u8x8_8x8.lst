@@ -1,0 +1,2873 @@
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"u8x8_8x8.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.u8x8_get_glyph_data,"ax",%progbits
+  16              		.align	1
+  17              		.arch armv7-m
+  18              		.syntax unified
+  19              		.thumb
+  20              		.thumb_func
+  21              		.fpu softvfp
+  23              	u8x8_get_glyph_data:
+  24              	.LVL0:
+  25              	.LFB1:
+  26              		.file 1 "u8g2_lib/u8x8_8x8.c"
+   1:u8g2_lib/u8x8_8x8.c **** /*
+   2:u8g2_lib/u8x8_8x8.c **** 
+   3:u8g2_lib/u8x8_8x8.c ****   u8x8_8x8.c
+   4:u8g2_lib/u8x8_8x8.c ****   
+   5:u8g2_lib/u8x8_8x8.c ****   font procedures, directly interfaces display procedures
+   6:u8g2_lib/u8x8_8x8.c ****   
+   7:u8g2_lib/u8x8_8x8.c ****   Universal 8bit Graphics Library (https://github.com/olikraus/u8g2/)
+   8:u8g2_lib/u8x8_8x8.c **** 
+   9:u8g2_lib/u8x8_8x8.c ****   Copyright (c) 2016, olikraus@gmail.com
+  10:u8g2_lib/u8x8_8x8.c ****   All rights reserved.
+  11:u8g2_lib/u8x8_8x8.c **** 
+  12:u8g2_lib/u8x8_8x8.c ****   Redistribution and use in source and binary forms, with or without modification, 
+  13:u8g2_lib/u8x8_8x8.c ****   are permitted provided that the following conditions are met:
+  14:u8g2_lib/u8x8_8x8.c **** 
+  15:u8g2_lib/u8x8_8x8.c ****   * Redistributions of source code must retain the above copyright notice, this list 
+  16:u8g2_lib/u8x8_8x8.c ****     of conditions and the following disclaimer.
+  17:u8g2_lib/u8x8_8x8.c ****     
+  18:u8g2_lib/u8x8_8x8.c ****   * Redistributions in binary form must reproduce the above copyright notice, this 
+  19:u8g2_lib/u8x8_8x8.c ****     list of conditions and the following disclaimer in the documentation and/or other 
+  20:u8g2_lib/u8x8_8x8.c ****     materials provided with the distribution.
+  21:u8g2_lib/u8x8_8x8.c **** 
+  22:u8g2_lib/u8x8_8x8.c ****   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND 
+  23:u8g2_lib/u8x8_8x8.c ****   CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, 
+  24:u8g2_lib/u8x8_8x8.c ****   INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF 
+  25:u8g2_lib/u8x8_8x8.c ****   MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE 
+  26:u8g2_lib/u8x8_8x8.c ****   DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR 
+  27:u8g2_lib/u8x8_8x8.c ****   CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
+  28:u8g2_lib/u8x8_8x8.c ****   SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
+  29:u8g2_lib/u8x8_8x8.c ****   NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; 
+  30:u8g2_lib/u8x8_8x8.c ****   LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER 
+  31:u8g2_lib/u8x8_8x8.c ****   CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, 
+  32:u8g2_lib/u8x8_8x8.c ****   STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s 			page 2
+
+
+  33:u8g2_lib/u8x8_8x8.c ****   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF 
+  34:u8g2_lib/u8x8_8x8.c ****   ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.    
+  35:u8g2_lib/u8x8_8x8.c **** 
+  36:u8g2_lib/u8x8_8x8.c **** */
+  37:u8g2_lib/u8x8_8x8.c **** 
+  38:u8g2_lib/u8x8_8x8.c **** #include "u8x8.h"
+  39:u8g2_lib/u8x8_8x8.c **** 
+  40:u8g2_lib/u8x8_8x8.c **** #if defined(ESP8266)
+  41:u8g2_lib/u8x8_8x8.c **** uint8_t u8x8_pgm_read_esp(const uint8_t * addr) 
+  42:u8g2_lib/u8x8_8x8.c **** {
+  43:u8g2_lib/u8x8_8x8.c ****     uint32_t bytes;
+  44:u8g2_lib/u8x8_8x8.c ****     bytes = *(uint32_t*)((uint32_t)addr & ~3);
+  45:u8g2_lib/u8x8_8x8.c ****     return ((uint8_t*)&bytes)[(uint32_t)addr & 3];
+  46:u8g2_lib/u8x8_8x8.c **** }
+  47:u8g2_lib/u8x8_8x8.c **** #endif
+  48:u8g2_lib/u8x8_8x8.c **** 
+  49:u8g2_lib/u8x8_8x8.c **** 
+  50:u8g2_lib/u8x8_8x8.c **** void u8x8_SetFont(u8x8_t *u8x8, const uint8_t *font_8x8)
+  51:u8g2_lib/u8x8_8x8.c **** {
+  52:u8g2_lib/u8x8_8x8.c ****   u8x8->font = font_8x8;
+  53:u8g2_lib/u8x8_8x8.c **** }
+  54:u8g2_lib/u8x8_8x8.c **** 
+  55:u8g2_lib/u8x8_8x8.c **** /*
+  56:u8g2_lib/u8x8_8x8.c ****  Args:
+  57:u8g2_lib/u8x8_8x8.c ****    u8x8: ptr to u8x8 structure
+  58:u8g2_lib/u8x8_8x8.c ****    encoding: glyph for which the data is requested (must be between 0 and 255)
+  59:u8g2_lib/u8x8_8x8.c ****    buf: pointer to 8 bytes
+  60:u8g2_lib/u8x8_8x8.c **** */
+  61:u8g2_lib/u8x8_8x8.c **** static void u8x8_get_glyph_data(u8x8_t *u8x8, uint8_t encoding, uint8_t *buf, uint8_t tile_offset) 
+  62:u8g2_lib/u8x8_8x8.c **** static void u8x8_get_glyph_data(u8x8_t *u8x8, uint8_t encoding, uint8_t *buf, uint8_t tile_offset) 
+  63:u8g2_lib/u8x8_8x8.c **** {
+  27              		.loc 1 63 1 view -0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              		@ link register save eliminated.
+  32              		.loc 1 63 1 is_stmt 0 view .LVU1
+  33 0000 F0B4     		push	{r4, r5, r6, r7}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 16
+  36              		.cfi_offset 4, -16
+  37              		.cfi_offset 5, -12
+  38              		.cfi_offset 6, -8
+  39              		.cfi_offset 7, -4
+  64:u8g2_lib/u8x8_8x8.c ****   uint8_t first, last, tiles, i;
+  40              		.loc 1 64 3 is_stmt 1 view .LVU2
+  65:u8g2_lib/u8x8_8x8.c ****   uint16_t offset;
+  41              		.loc 1 65 3 view .LVU3
+  66:u8g2_lib/u8x8_8x8.c ****   first = u8x8_pgm_read(u8x8->font+0);
+  42              		.loc 1 66 3 view .LVU4
+  43              		.loc 1 66 11 is_stmt 0 view .LVU5
+  44 0002 C569     		ldr	r5, [r0, #28]
+  45              		.loc 1 66 9 view .LVU6
+  46 0004 2E78     		ldrb	r6, [r5]	@ zero_extendqisi2
+  47              	.LVL1:
+  67:u8g2_lib/u8x8_8x8.c ****   last = u8x8_pgm_read(u8x8->font+1);
+  48              		.loc 1 67 3 is_stmt 1 view .LVU7
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s 			page 3
+
+
+  49              		.loc 1 67 8 is_stmt 0 view .LVU8
+  50 0006 6F78     		ldrb	r7, [r5, #1]	@ zero_extendqisi2
+  51              	.LVL2:
+  68:u8g2_lib/u8x8_8x8.c ****   tiles = u8x8_pgm_read(u8x8->font+2);		/* new 2019 format */
+  52              		.loc 1 68 3 is_stmt 1 view .LVU9
+  53              		.loc 1 68 9 is_stmt 0 view .LVU10
+  54 0008 AC78     		ldrb	r4, [r5, #2]	@ zero_extendqisi2
+  55              	.LVL3:
+  69:u8g2_lib/u8x8_8x8.c ****   tiles *= u8x8_pgm_read(u8x8->font+3);	/* new 2019 format */
+  56              		.loc 1 69 3 is_stmt 1 view .LVU11
+  57              		.loc 1 69 12 is_stmt 0 view .LVU12
+  58 000a ED78     		ldrb	r5, [r5, #3]	@ zero_extendqisi2
+  59              		.loc 1 69 9 view .LVU13
+  60 000c 04FB05F4 		mul	r4, r4, r5
+  61              	.LVL4:
+  70:u8g2_lib/u8x8_8x8.c ****   
+  71:u8g2_lib/u8x8_8x8.c ****   /* get the glyph bitmap from the font */
+  72:u8g2_lib/u8x8_8x8.c ****   if ( first <= encoding && encoding <= last )
+  62              		.loc 1 72 3 is_stmt 1 view .LVU14
+  63              		.loc 1 72 6 is_stmt 0 view .LVU15
+  64 0010 8E42     		cmp	r6, r1
+  65 0012 24D8     		bhi	.L11
+  66 0014 E4B2     		uxtb	r4, r4
+  67              		.loc 1 72 26 discriminator 1 view .LVU16
+  68 0016 8F42     		cmp	r7, r1
+  69 0018 23D3     		bcc	.L12
+  73:u8g2_lib/u8x8_8x8.c ****   {
+  74:u8g2_lib/u8x8_8x8.c ****     offset = encoding;
+  70              		.loc 1 74 5 is_stmt 1 view .LVU17
+  71              	.LVL5:
+  75:u8g2_lib/u8x8_8x8.c ****     offset -= first;
+  72              		.loc 1 75 5 view .LVU18
+  73              		.loc 1 75 12 is_stmt 0 view .LVU19
+  74 001a 891B     		subs	r1, r1, r6
+  75              	.LVL6:
+  76              		.loc 1 75 12 view .LVU20
+  77 001c 89B2     		uxth	r1, r1
+  78              	.LVL7:
+  76:u8g2_lib/u8x8_8x8.c ****     offset *= tiles;		/* new 2019 format */
+  79              		.loc 1 76 5 is_stmt 1 view .LVU21
+  80              		.loc 1 76 12 is_stmt 0 view .LVU22
+  81 001e 04FB01F4 		mul	r4, r4, r1
+  82              	.LVL8:
+  83              		.loc 1 76 12 view .LVU23
+  84 0022 A4B2     		uxth	r4, r4
+  85              	.LVL9:
+  77:u8g2_lib/u8x8_8x8.c ****     offset += tile_offset;	/* new 2019 format */
+  86              		.loc 1 77 5 is_stmt 1 view .LVU24
+  87              		.loc 1 77 12 is_stmt 0 view .LVU25
+  88 0024 2344     		add	r3, r3, r4
+  89              	.LVL10:
+  90              		.loc 1 77 12 view .LVU26
+  91 0026 9BB2     		uxth	r3, r3
+  92              	.LVL11:
+  78:u8g2_lib/u8x8_8x8.c ****     offset *= 8;
+  93              		.loc 1 78 5 is_stmt 1 view .LVU27
+  94              		.loc 1 78 12 is_stmt 0 view .LVU28
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s 			page 4
+
+
+  95 0028 DB00     		lsls	r3, r3, #3
+  96              	.LVL12:
+  97              		.loc 1 78 12 view .LVU29
+  98 002a 9BB2     		uxth	r3, r3
+  99              	.LVL13:
+  79:u8g2_lib/u8x8_8x8.c ****     offset +=4;			/* changed from 2 to 4, new 2019 format */
+ 100              		.loc 1 79 5 is_stmt 1 view .LVU30
+ 101              		.loc 1 79 12 is_stmt 0 view .LVU31
+ 102 002c 0433     		adds	r3, r3, #4
+ 103              	.LVL14:
+ 104              		.loc 1 79 12 view .LVU32
+ 105 002e 9BB2     		uxth	r3, r3
+ 106              	.LVL15:
+  80:u8g2_lib/u8x8_8x8.c ****     for( i = 0; i < 8; i++ )
+ 107              		.loc 1 80 5 is_stmt 1 view .LVU33
+ 108              		.loc 1 80 12 is_stmt 0 view .LVU34
+ 109 0030 0021     		movs	r1, #0
+ 110              		.loc 1 80 5 view .LVU35
+ 111 0032 06E0     		b	.L3
+ 112              	.LVL16:
+ 113              	.L4:
+  81:u8g2_lib/u8x8_8x8.c ****     {
+  82:u8g2_lib/u8x8_8x8.c ****       buf[i] = u8x8_pgm_read(u8x8->font+offset);
+ 114              		.loc 1 82 7 is_stmt 1 discriminator 3 view .LVU36
+ 115              		.loc 1 82 16 is_stmt 0 discriminator 3 view .LVU37
+ 116 0034 C469     		ldr	r4, [r0, #28]
+ 117 0036 E45C     		ldrb	r4, [r4, r3]	@ zero_extendqisi2
+ 118              		.loc 1 82 14 discriminator 3 view .LVU38
+ 119 0038 5454     		strb	r4, [r2, r1]
+  83:u8g2_lib/u8x8_8x8.c ****       offset++;
+ 120              		.loc 1 83 7 is_stmt 1 discriminator 3 view .LVU39
+ 121              		.loc 1 83 13 is_stmt 0 discriminator 3 view .LVU40
+ 122 003a 0133     		adds	r3, r3, #1
+ 123              	.LVL17:
+ 124              		.loc 1 83 13 discriminator 3 view .LVU41
+ 125 003c 9BB2     		uxth	r3, r3
+ 126              	.LVL18:
+  80:u8g2_lib/u8x8_8x8.c ****     for( i = 0; i < 8; i++ )
+ 127              		.loc 1 80 24 is_stmt 1 discriminator 3 view .LVU42
+  80:u8g2_lib/u8x8_8x8.c ****     for( i = 0; i < 8; i++ )
+ 128              		.loc 1 80 25 is_stmt 0 discriminator 3 view .LVU43
+ 129 003e 0131     		adds	r1, r1, #1
+ 130              	.LVL19:
+  80:u8g2_lib/u8x8_8x8.c ****     for( i = 0; i < 8; i++ )
+ 131              		.loc 1 80 25 discriminator 3 view .LVU44
+ 132 0040 C9B2     		uxtb	r1, r1
+ 133              	.LVL20:
+ 134              	.L3:
+  80:u8g2_lib/u8x8_8x8.c ****     for( i = 0; i < 8; i++ )
+ 135              		.loc 1 80 17 is_stmt 1 discriminator 1 view .LVU45
+  80:u8g2_lib/u8x8_8x8.c ****     for( i = 0; i < 8; i++ )
+ 136              		.loc 1 80 5 is_stmt 0 discriminator 1 view .LVU46
+ 137 0042 0729     		cmp	r1, #7
+ 138 0044 F6D9     		bls	.L4
+  80:u8g2_lib/u8x8_8x8.c ****     for( i = 0; i < 8; i++ )
+ 139              		.loc 1 80 5 discriminator 1 view .LVU47
+ 140 0046 05E0     		b	.L5
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s 			page 5
+
+
+ 141              	.LVL21:
+ 142              	.L7:
+  84:u8g2_lib/u8x8_8x8.c ****     }
+  85:u8g2_lib/u8x8_8x8.c ****   }
+  86:u8g2_lib/u8x8_8x8.c ****   else
+  87:u8g2_lib/u8x8_8x8.c ****   {
+  88:u8g2_lib/u8x8_8x8.c ****     for( i = 0; i < 8; i++ )
+  89:u8g2_lib/u8x8_8x8.c ****     {
+  90:u8g2_lib/u8x8_8x8.c ****       buf[i] = 0;
+ 143              		.loc 1 90 7 is_stmt 1 discriminator 3 view .LVU48
+ 144              		.loc 1 90 14 is_stmt 0 discriminator 3 view .LVU49
+ 145 0048 0021     		movs	r1, #0
+ 146 004a D154     		strb	r1, [r2, r3]
+  88:u8g2_lib/u8x8_8x8.c ****     {
+ 147              		.loc 1 88 24 is_stmt 1 discriminator 3 view .LVU50
+  88:u8g2_lib/u8x8_8x8.c ****     {
+ 148              		.loc 1 88 25 is_stmt 0 discriminator 3 view .LVU51
+ 149 004c 0133     		adds	r3, r3, #1
+ 150              	.LVL22:
+  88:u8g2_lib/u8x8_8x8.c ****     {
+ 151              		.loc 1 88 25 discriminator 3 view .LVU52
+ 152 004e DBB2     		uxtb	r3, r3
+ 153              	.LVL23:
+ 154              	.L6:
+  88:u8g2_lib/u8x8_8x8.c ****     {
+ 155              		.loc 1 88 17 is_stmt 1 discriminator 1 view .LVU53
+  88:u8g2_lib/u8x8_8x8.c ****     {
+ 156              		.loc 1 88 5 is_stmt 0 discriminator 1 view .LVU54
+ 157 0050 072B     		cmp	r3, #7
+ 158 0052 F9D9     		bls	.L7
+ 159              	.LVL24:
+ 160              	.L5:
+  91:u8g2_lib/u8x8_8x8.c ****     }
+  92:u8g2_lib/u8x8_8x8.c ****   }
+  93:u8g2_lib/u8x8_8x8.c ****   
+  94:u8g2_lib/u8x8_8x8.c ****   /* invert the bitmap if required */
+  95:u8g2_lib/u8x8_8x8.c ****   if ( u8x8->is_font_inverse_mode )
+ 161              		.loc 1 95 3 is_stmt 1 view .LVU55
+ 162              		.loc 1 95 12 is_stmt 0 view .LVU56
+ 163 0054 90F82330 		ldrb	r3, [r0, #35]	@ zero_extendqisi2
+ 164              		.loc 1 95 6 view .LVU57
+ 165 0058 63B1     		cbz	r3, .L1
+  96:u8g2_lib/u8x8_8x8.c ****   {
+  97:u8g2_lib/u8x8_8x8.c ****     for( i = 0; i < 8; i++ )
+ 166              		.loc 1 97 12 view .LVU58
+ 167 005a 0023     		movs	r3, #0
+ 168 005c 08E0     		b	.L8
+ 169              	.LVL25:
+ 170              	.L11:
+ 171              		.loc 1 97 12 view .LVU59
+ 172 005e 0023     		movs	r3, #0
+ 173              	.LVL26:
+ 174              		.loc 1 97 12 view .LVU60
+ 175 0060 F6E7     		b	.L6
+ 176              	.LVL27:
+ 177              	.L12:
+ 178              		.loc 1 97 12 view .LVU61
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s 			page 6
+
+
+ 179 0062 0023     		movs	r3, #0
+ 180              	.LVL28:
+ 181              		.loc 1 97 12 view .LVU62
+ 182 0064 F4E7     		b	.L6
+ 183              	.LVL29:
+ 184              	.L10:
+  98:u8g2_lib/u8x8_8x8.c ****     {
+  99:u8g2_lib/u8x8_8x8.c ****       buf[i] ^= 255;
+ 185              		.loc 1 99 7 is_stmt 1 discriminator 3 view .LVU63
+ 186              		.loc 1 99 14 is_stmt 0 discriminator 3 view .LVU64
+ 187 0066 D15C     		ldrb	r1, [r2, r3]	@ zero_extendqisi2
+ 188 0068 C943     		mvns	r1, r1
+ 189 006a D154     		strb	r1, [r2, r3]
+  97:u8g2_lib/u8x8_8x8.c ****     {
+ 190              		.loc 1 97 24 is_stmt 1 discriminator 3 view .LVU65
+  97:u8g2_lib/u8x8_8x8.c ****     {
+ 191              		.loc 1 97 25 is_stmt 0 discriminator 3 view .LVU66
+ 192 006c 0133     		adds	r3, r3, #1
+ 193              	.LVL30:
+  97:u8g2_lib/u8x8_8x8.c ****     {
+ 194              		.loc 1 97 25 discriminator 3 view .LVU67
+ 195 006e DBB2     		uxtb	r3, r3
+ 196              	.LVL31:
+ 197              	.L8:
+  97:u8g2_lib/u8x8_8x8.c ****     {
+ 198              		.loc 1 97 17 is_stmt 1 discriminator 1 view .LVU68
+  97:u8g2_lib/u8x8_8x8.c ****     {
+ 199              		.loc 1 97 5 is_stmt 0 discriminator 1 view .LVU69
+ 200 0070 072B     		cmp	r3, #7
+ 201 0072 F8D9     		bls	.L10
+ 202              	.LVL32:
+ 203              	.L1:
+ 100:u8g2_lib/u8x8_8x8.c ****     }
+ 101:u8g2_lib/u8x8_8x8.c ****   }
+ 102:u8g2_lib/u8x8_8x8.c ****   
+ 103:u8g2_lib/u8x8_8x8.c **** }
+ 204              		.loc 1 103 1 view .LVU70
+ 205 0074 F0BC     		pop	{r4, r5, r6, r7}
+ 206              	.LCFI1:
+ 207              		.cfi_restore 7
+ 208              		.cfi_restore 6
+ 209              		.cfi_restore 5
+ 210              		.cfi_restore 4
+ 211              		.cfi_def_cfa_offset 0
+ 212              	.LVL33:
+ 213              		.loc 1 103 1 view .LVU71
+ 214 0076 7047     		bx	lr
+ 215              		.cfi_endproc
+ 216              	.LFE1:
+ 218              		.section	.text.u8x8_upscale_buf,"ax",%progbits
+ 219              		.align	1
+ 220              		.syntax unified
+ 221              		.thumb
+ 222              		.thumb_func
+ 223              		.fpu softvfp
+ 225              	u8x8_upscale_buf:
+ 226              	.LVL34:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s 			page 7
+
+
+ 227              	.LFB4:
+ 104:u8g2_lib/u8x8_8x8.c **** 
+ 105:u8g2_lib/u8x8_8x8.c **** void u8x8_DrawGlyph(u8x8_t *u8x8, uint8_t x, uint8_t y, uint8_t encoding)
+ 106:u8g2_lib/u8x8_8x8.c **** {
+ 107:u8g2_lib/u8x8_8x8.c ****   uint8_t th = u8x8_pgm_read(u8x8->font+2);		/* new 2019 format */
+ 108:u8g2_lib/u8x8_8x8.c ****   uint8_t tv = u8x8_pgm_read(u8x8->font+3);	/* new 2019 format */
+ 109:u8g2_lib/u8x8_8x8.c ****   uint8_t xx, tile;
+ 110:u8g2_lib/u8x8_8x8.c ****   uint8_t buf[8];
+ 111:u8g2_lib/u8x8_8x8.c ****   th += x;
+ 112:u8g2_lib/u8x8_8x8.c ****   tv += y;
+ 113:u8g2_lib/u8x8_8x8.c ****   tile = 0;
+ 114:u8g2_lib/u8x8_8x8.c ****   do
+ 115:u8g2_lib/u8x8_8x8.c ****   {
+ 116:u8g2_lib/u8x8_8x8.c ****     xx = x;
+ 117:u8g2_lib/u8x8_8x8.c ****     do
+ 118:u8g2_lib/u8x8_8x8.c ****     {
+ 119:u8g2_lib/u8x8_8x8.c ****       u8x8_get_glyph_data(u8x8, encoding, buf, tile);
+ 120:u8g2_lib/u8x8_8x8.c ****       u8x8_DrawTile(u8x8, xx, y, 1, buf);
+ 121:u8g2_lib/u8x8_8x8.c ****       tile++;
+ 122:u8g2_lib/u8x8_8x8.c ****       xx++;
+ 123:u8g2_lib/u8x8_8x8.c ****     } while( xx < th );
+ 124:u8g2_lib/u8x8_8x8.c ****     y++;
+ 125:u8g2_lib/u8x8_8x8.c ****   } while( y < tv );
+ 126:u8g2_lib/u8x8_8x8.c **** }
+ 127:u8g2_lib/u8x8_8x8.c **** 
+ 128:u8g2_lib/u8x8_8x8.c **** 
+ 129:u8g2_lib/u8x8_8x8.c **** /*
+ 130:u8g2_lib/u8x8_8x8.c ****   Source: http://graphics.stanford.edu/~seander/bithacks.html
+ 131:u8g2_lib/u8x8_8x8.c **** 	Section: Interleave bits by Binary Magic Numbers 
+ 132:u8g2_lib/u8x8_8x8.c ****    Original codes is here:
+ 133:u8g2_lib/u8x8_8x8.c **** 		static const unsigned int B[] = {0x55555555, 0x33333333, 0x0F0F0F0F, 0x00FF00FF};
+ 134:u8g2_lib/u8x8_8x8.c **** 		static const unsigned int S[] = {1, 2, 4, 8};
+ 135:u8g2_lib/u8x8_8x8.c **** 
+ 136:u8g2_lib/u8x8_8x8.c **** 		unsigned int x; // Interleave lower 16 bits of x and y, so the bits of x
+ 137:u8g2_lib/u8x8_8x8.c **** 		unsigned int y; // are in the even positions and bits from y in the odd;
+ 138:u8g2_lib/u8x8_8x8.c **** 		unsigned int z; // z gets the resulting 32-bit Morton Number.  
+ 139:u8g2_lib/u8x8_8x8.c **** 				// x and y must initially be less than 65536.
+ 140:u8g2_lib/u8x8_8x8.c **** 
+ 141:u8g2_lib/u8x8_8x8.c **** 		x = (x | (x << S[3])) & B[3];
+ 142:u8g2_lib/u8x8_8x8.c **** 		x = (x | (x << S[2])) & B[2];
+ 143:u8g2_lib/u8x8_8x8.c **** 		x = (x | (x << S[1])) & B[1];
+ 144:u8g2_lib/u8x8_8x8.c **** 		x = (x | (x << S[0])) & B[0];
+ 145:u8g2_lib/u8x8_8x8.c **** 
+ 146:u8g2_lib/u8x8_8x8.c **** 		y = (y | (y << S[3])) & B[3];
+ 147:u8g2_lib/u8x8_8x8.c **** 		y = (y | (y << S[2])) & B[2];
+ 148:u8g2_lib/u8x8_8x8.c **** 		y = (y | (y << S[1])) & B[1];
+ 149:u8g2_lib/u8x8_8x8.c **** 		y = (y | (y << S[0])) & B[0];
+ 150:u8g2_lib/u8x8_8x8.c **** 
+ 151:u8g2_lib/u8x8_8x8.c **** 		z = x | (y << 1);
+ 152:u8g2_lib/u8x8_8x8.c **** */
+ 153:u8g2_lib/u8x8_8x8.c **** uint16_t u8x8_upscale_byte(uint8_t x) 
+ 154:u8g2_lib/u8x8_8x8.c **** {
+ 155:u8g2_lib/u8x8_8x8.c **** 	uint16_t y = x;
+ 156:u8g2_lib/u8x8_8x8.c **** 	y |= (y << 4);		// x = (x | (x << S[2])) & B[2];
+ 157:u8g2_lib/u8x8_8x8.c **** 	y &= 0x0f0f;
+ 158:u8g2_lib/u8x8_8x8.c **** 	y |= (y << 2);		// x = (x | (x << S[1])) & B[1];
+ 159:u8g2_lib/u8x8_8x8.c **** 	y &= 0x3333;
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s 			page 8
+
+
+ 160:u8g2_lib/u8x8_8x8.c **** 	y |= (y << 1);		// x = (x | (x << S[0])) & B[0];
+ 161:u8g2_lib/u8x8_8x8.c **** 	y &= 0x5555;
+ 162:u8g2_lib/u8x8_8x8.c ****   
+ 163:u8g2_lib/u8x8_8x8.c **** 	y |= (y << 1);		// z = x | (y << 1);
+ 164:u8g2_lib/u8x8_8x8.c **** 	return y;
+ 165:u8g2_lib/u8x8_8x8.c **** }
+ 166:u8g2_lib/u8x8_8x8.c **** 
+ 167:u8g2_lib/u8x8_8x8.c **** static void u8x8_upscale_buf(uint8_t *src, uint8_t *dest) U8X8_NOINLINE;
+ 168:u8g2_lib/u8x8_8x8.c **** static void u8x8_upscale_buf(uint8_t *src, uint8_t *dest)
+ 169:u8g2_lib/u8x8_8x8.c **** {
+ 228              		.loc 1 169 1 is_stmt 1 view -0
+ 229              		.cfi_startproc
+ 230              		@ args = 0, pretend = 0, frame = 0
+ 231              		@ frame_needed = 0, uses_anonymous_args = 0
+ 232              		@ link register save eliminated.
+ 233              		.loc 1 169 1 is_stmt 0 view .LVU73
+ 234 0000 10B4     		push	{r4}
+ 235              	.LCFI2:
+ 236              		.cfi_def_cfa_offset 4
+ 237              		.cfi_offset 4, -4
+ 170:u8g2_lib/u8x8_8x8.c ****   uint8_t i = 4;  
+ 238              		.loc 1 170 3 is_stmt 1 view .LVU74
+ 239              	.LVL35:
+ 240              		.loc 1 170 11 is_stmt 0 view .LVU75
+ 241 0002 0423     		movs	r3, #4
+ 242              	.LVL36:
+ 243              	.L16:
+ 171:u8g2_lib/u8x8_8x8.c ****   do 
+ 244              		.loc 1 171 3 is_stmt 1 discriminator 1 view .LVU76
+ 172:u8g2_lib/u8x8_8x8.c ****   {
+ 173:u8g2_lib/u8x8_8x8.c ****     *dest++ = *src;
+ 245              		.loc 1 173 5 discriminator 1 view .LVU77
+ 246              		.loc 1 173 15 is_stmt 0 discriminator 1 view .LVU78
+ 247 0004 0278     		ldrb	r2, [r0]	@ zero_extendqisi2
+ 248              		.loc 1 173 13 discriminator 1 view .LVU79
+ 249 0006 0A70     		strb	r2, [r1]
+ 174:u8g2_lib/u8x8_8x8.c ****     *dest++ = *src++;
+ 250              		.loc 1 174 5 is_stmt 1 discriminator 1 view .LVU80
+ 251              	.LVL37:
+ 252              		.loc 1 174 15 is_stmt 0 discriminator 1 view .LVU81
+ 253 0008 0478     		ldrb	r4, [r0]	@ zero_extendqisi2
+ 254 000a 0130     		adds	r0, r0, #1
+ 255              	.LVL38:
+ 256              		.loc 1 174 13 discriminator 1 view .LVU82
+ 257 000c 4C70     		strb	r4, [r1, #1]
+ 258 000e 0231     		adds	r1, r1, #2
+ 259              	.LVL39:
+ 175:u8g2_lib/u8x8_8x8.c ****     i--;
+ 260              		.loc 1 175 5 is_stmt 1 discriminator 1 view .LVU83
+ 261              		.loc 1 175 6 is_stmt 0 discriminator 1 view .LVU84
+ 262 0010 013B     		subs	r3, r3, #1
+ 263              	.LVL40:
+ 176:u8g2_lib/u8x8_8x8.c ****   } while( i > 0 );
+ 264              		.loc 1 176 10 is_stmt 1 discriminator 1 view .LVU85
+ 265              		.loc 1 176 3 is_stmt 0 discriminator 1 view .LVU86
+ 266 0012 13F0FF03 		ands	r3, r3, #255
+ 267              	.LVL41:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s 			page 9
+
+
+ 268              		.loc 1 176 3 discriminator 1 view .LVU87
+ 269 0016 F5D1     		bne	.L16
+ 177:u8g2_lib/u8x8_8x8.c **** }
+ 270              		.loc 1 177 1 view .LVU88
+ 271 0018 10BC     		pop	{r4}
+ 272              	.LCFI3:
+ 273              		.cfi_restore 4
+ 274              		.cfi_def_cfa_offset 0
+ 275 001a 7047     		bx	lr
+ 276              		.cfi_endproc
+ 277              	.LFE4:
+ 279              		.section	.text.u8x8_ascii_next,"ax",%progbits
+ 280              		.align	1
+ 281              		.global	u8x8_ascii_next
+ 282              		.syntax unified
+ 283              		.thumb
+ 284              		.thumb_func
+ 285              		.fpu softvfp
+ 287              	u8x8_ascii_next:
+ 288              	.LVL42:
+ 289              	.LFB10:
+ 178:u8g2_lib/u8x8_8x8.c **** 
+ 179:u8g2_lib/u8x8_8x8.c **** static void u8x8_draw_2x2_subglyph(u8x8_t *u8x8, uint8_t x, uint8_t y, uint8_t encoding, uint8_t ti
+ 180:u8g2_lib/u8x8_8x8.c **** {
+ 181:u8g2_lib/u8x8_8x8.c ****   uint8_t i;
+ 182:u8g2_lib/u8x8_8x8.c ****   uint16_t t;
+ 183:u8g2_lib/u8x8_8x8.c ****   uint8_t buf[8];
+ 184:u8g2_lib/u8x8_8x8.c ****   uint8_t buf1[8];
+ 185:u8g2_lib/u8x8_8x8.c ****   uint8_t buf2[8];
+ 186:u8g2_lib/u8x8_8x8.c ****   u8x8_get_glyph_data(u8x8, encoding, buf, tile);
+ 187:u8g2_lib/u8x8_8x8.c ****   for( i = 0; i < 8; i ++ )
+ 188:u8g2_lib/u8x8_8x8.c ****   {
+ 189:u8g2_lib/u8x8_8x8.c ****       t = u8x8_upscale_byte(buf[i]);
+ 190:u8g2_lib/u8x8_8x8.c ****       buf1[i] = t >> 8;
+ 191:u8g2_lib/u8x8_8x8.c ****       buf2[i] = t & 255;
+ 192:u8g2_lib/u8x8_8x8.c ****   }
+ 193:u8g2_lib/u8x8_8x8.c ****   u8x8_upscale_buf(buf2, buf);
+ 194:u8g2_lib/u8x8_8x8.c ****   u8x8_DrawTile(u8x8, x, y, 1, buf);
+ 195:u8g2_lib/u8x8_8x8.c ****   
+ 196:u8g2_lib/u8x8_8x8.c ****   u8x8_upscale_buf(buf2+4, buf);
+ 197:u8g2_lib/u8x8_8x8.c ****   u8x8_DrawTile(u8x8, x+1, y, 1, buf);
+ 198:u8g2_lib/u8x8_8x8.c ****   
+ 199:u8g2_lib/u8x8_8x8.c ****   u8x8_upscale_buf(buf1, buf);
+ 200:u8g2_lib/u8x8_8x8.c ****   u8x8_DrawTile(u8x8, x, y+1, 1, buf);
+ 201:u8g2_lib/u8x8_8x8.c ****   
+ 202:u8g2_lib/u8x8_8x8.c ****   u8x8_upscale_buf(buf1+4, buf);
+ 203:u8g2_lib/u8x8_8x8.c ****   u8x8_DrawTile(u8x8, x+1, y+1, 1, buf);  
+ 204:u8g2_lib/u8x8_8x8.c **** }
+ 205:u8g2_lib/u8x8_8x8.c **** 
+ 206:u8g2_lib/u8x8_8x8.c **** 
+ 207:u8g2_lib/u8x8_8x8.c **** void u8x8_Draw2x2Glyph(u8x8_t *u8x8, uint8_t x, uint8_t y, uint8_t encoding)
+ 208:u8g2_lib/u8x8_8x8.c **** {
+ 209:u8g2_lib/u8x8_8x8.c ****   uint8_t th = u8x8_pgm_read(u8x8->font+2);		/* new 2019 format */
+ 210:u8g2_lib/u8x8_8x8.c ****   uint8_t tv = u8x8_pgm_read(u8x8->font+3);	/* new 2019 format */
+ 211:u8g2_lib/u8x8_8x8.c ****   uint8_t xx, tile;
+ 212:u8g2_lib/u8x8_8x8.c ****   th *= 2;
+ 213:u8g2_lib/u8x8_8x8.c ****   th += x;
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s 			page 10
+
+
+ 214:u8g2_lib/u8x8_8x8.c ****   tv *= 2;
+ 215:u8g2_lib/u8x8_8x8.c ****   tv += y;
+ 216:u8g2_lib/u8x8_8x8.c ****   tile = 0;
+ 217:u8g2_lib/u8x8_8x8.c ****   do
+ 218:u8g2_lib/u8x8_8x8.c ****   {
+ 219:u8g2_lib/u8x8_8x8.c ****     xx = x;
+ 220:u8g2_lib/u8x8_8x8.c ****     do
+ 221:u8g2_lib/u8x8_8x8.c ****     {
+ 222:u8g2_lib/u8x8_8x8.c ****       u8x8_draw_2x2_subglyph(u8x8, xx, y, encoding, tile);
+ 223:u8g2_lib/u8x8_8x8.c ****       tile++;
+ 224:u8g2_lib/u8x8_8x8.c ****       xx+=2;
+ 225:u8g2_lib/u8x8_8x8.c ****     } while( xx < th );
+ 226:u8g2_lib/u8x8_8x8.c ****     y+=2;
+ 227:u8g2_lib/u8x8_8x8.c ****   } while( y < tv );  
+ 228:u8g2_lib/u8x8_8x8.c **** }
+ 229:u8g2_lib/u8x8_8x8.c **** 
+ 230:u8g2_lib/u8x8_8x8.c **** /* https://github.com/olikraus/u8g2/issues/474 */
+ 231:u8g2_lib/u8x8_8x8.c **** static void u8x8_draw_1x2_subglyph(u8x8_t *u8x8, uint8_t x, uint8_t y, uint8_t encoding, uint8_t ti
+ 232:u8g2_lib/u8x8_8x8.c **** {
+ 233:u8g2_lib/u8x8_8x8.c ****   uint8_t i;
+ 234:u8g2_lib/u8x8_8x8.c ****   uint16_t t;
+ 235:u8g2_lib/u8x8_8x8.c ****   uint8_t buf[8];
+ 236:u8g2_lib/u8x8_8x8.c ****   uint8_t buf1[8];
+ 237:u8g2_lib/u8x8_8x8.c ****   uint8_t buf2[8];
+ 238:u8g2_lib/u8x8_8x8.c ****   u8x8_get_glyph_data(u8x8, encoding, buf, tile);
+ 239:u8g2_lib/u8x8_8x8.c ****   for( i = 0; i < 8; i ++ )
+ 240:u8g2_lib/u8x8_8x8.c ****   {
+ 241:u8g2_lib/u8x8_8x8.c ****       t = u8x8_upscale_byte(buf[i]);
+ 242:u8g2_lib/u8x8_8x8.c ****       buf1[i] = t >> 8;
+ 243:u8g2_lib/u8x8_8x8.c ****       buf2[i] = t & 255;
+ 244:u8g2_lib/u8x8_8x8.c ****   }
+ 245:u8g2_lib/u8x8_8x8.c ****   u8x8_DrawTile(u8x8, x,   y, 1, buf2);
+ 246:u8g2_lib/u8x8_8x8.c ****   u8x8_DrawTile(u8x8, x, y+1, 1, buf1);
+ 247:u8g2_lib/u8x8_8x8.c **** }
+ 248:u8g2_lib/u8x8_8x8.c **** 
+ 249:u8g2_lib/u8x8_8x8.c **** void u8x8_Draw1x2Glyph(u8x8_t *u8x8, uint8_t x, uint8_t y, uint8_t encoding)
+ 250:u8g2_lib/u8x8_8x8.c **** {
+ 251:u8g2_lib/u8x8_8x8.c ****   uint8_t th = u8x8_pgm_read(u8x8->font+2);		/* new 2019 format */
+ 252:u8g2_lib/u8x8_8x8.c ****   uint8_t tv = u8x8_pgm_read(u8x8->font+3);	/* new 2019 format */
+ 253:u8g2_lib/u8x8_8x8.c ****   uint8_t xx, tile;
+ 254:u8g2_lib/u8x8_8x8.c ****   th += x;
+ 255:u8g2_lib/u8x8_8x8.c ****   tv *= 2;
+ 256:u8g2_lib/u8x8_8x8.c ****   tv += y;
+ 257:u8g2_lib/u8x8_8x8.c ****   tile = 0;
+ 258:u8g2_lib/u8x8_8x8.c ****   do
+ 259:u8g2_lib/u8x8_8x8.c ****   {
+ 260:u8g2_lib/u8x8_8x8.c ****     xx = x;
+ 261:u8g2_lib/u8x8_8x8.c ****     do
+ 262:u8g2_lib/u8x8_8x8.c ****     {
+ 263:u8g2_lib/u8x8_8x8.c ****       u8x8_draw_1x2_subglyph(u8x8, xx, y, encoding, tile);
+ 264:u8g2_lib/u8x8_8x8.c ****       tile++;
+ 265:u8g2_lib/u8x8_8x8.c ****       xx++;
+ 266:u8g2_lib/u8x8_8x8.c ****     } while( xx < th );
+ 267:u8g2_lib/u8x8_8x8.c ****     y+=2;
+ 268:u8g2_lib/u8x8_8x8.c ****   } while( y < tv );  
+ 269:u8g2_lib/u8x8_8x8.c **** }
+ 270:u8g2_lib/u8x8_8x8.c **** 
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s 			page 11
+
+
+ 271:u8g2_lib/u8x8_8x8.c **** /*
+ 272:u8g2_lib/u8x8_8x8.c **** source: https://en.wikipedia.org/wiki/UTF-8
+ 273:u8g2_lib/u8x8_8x8.c **** Bits	from 		to			bytes	Byte 1 		Byte 2 		Byte 3 		Byte 4 		Byte 5 		Byte 6
+ 274:u8g2_lib/u8x8_8x8.c ****   7 	U+0000 		U+007F 		1 		0xxxxxxx
+ 275:u8g2_lib/u8x8_8x8.c **** 11 	U+0080 		U+07FF 		2 		110xxxxx 	10xxxxxx
+ 276:u8g2_lib/u8x8_8x8.c **** 16 	U+0800 		U+FFFF 		3 		1110xxxx 	10xxxxxx 	10xxxxxx
+ 277:u8g2_lib/u8x8_8x8.c **** 21 	U+10000 	U+1FFFFF 	4 		11110xxx 	10xxxxxx 	10xxxxxx 	10xxxxxx
+ 278:u8g2_lib/u8x8_8x8.c **** 26 	U+200000 	U+3FFFFFF 	5 		111110xx 	10xxxxxx 	10xxxxxx 	10xxxxxx 	10xxxxxx
+ 279:u8g2_lib/u8x8_8x8.c **** 31 	U+4000000 	U+7FFFFFFF 	6 		1111110x 	10xxxxxx 	10xxxxxx 	10xxxxxx 	10xxxxxx 	10xxxxxx  
+ 280:u8g2_lib/u8x8_8x8.c **** 
+ 281:u8g2_lib/u8x8_8x8.c **** 
+ 282:u8g2_lib/u8x8_8x8.c **** */
+ 283:u8g2_lib/u8x8_8x8.c **** 
+ 284:u8g2_lib/u8x8_8x8.c **** /* reset the internal state machine */
+ 285:u8g2_lib/u8x8_8x8.c **** void u8x8_utf8_init(u8x8_t *u8x8)
+ 286:u8g2_lib/u8x8_8x8.c **** {
+ 287:u8g2_lib/u8x8_8x8.c ****   u8x8->utf8_state = 0;	/* also reset during u8x8_SetupDefaults() */
+ 288:u8g2_lib/u8x8_8x8.c **** }
+ 289:u8g2_lib/u8x8_8x8.c **** 
+ 290:u8g2_lib/u8x8_8x8.c **** uint16_t u8x8_ascii_next(U8X8_UNUSED u8x8_t *u8x8, uint8_t b)
+ 291:u8g2_lib/u8x8_8x8.c **** {
+ 290              		.loc 1 291 1 is_stmt 1 view -0
+ 291              		.cfi_startproc
+ 292              		@ args = 0, pretend = 0, frame = 0
+ 293              		@ frame_needed = 0, uses_anonymous_args = 0
+ 294              		@ link register save eliminated.
+ 292:u8g2_lib/u8x8_8x8.c ****   if ( b == 0 || b == '\n' ) /* '\n' terminates the string to support the string list procedures */
+ 295              		.loc 1 292 3 view .LVU90
+ 296              		.loc 1 292 6 is_stmt 0 view .LVU91
+ 297 0000 19B1     		cbz	r1, .L20
+ 298              		.loc 1 292 15 discriminator 1 view .LVU92
+ 299 0002 0A29     		cmp	r1, #10
+ 300 0004 04D0     		beq	.L21
+ 293:u8g2_lib/u8x8_8x8.c ****     return 0x0ffff;	/* end of string detected*/
+ 294:u8g2_lib/u8x8_8x8.c ****   return b;
+ 301              		.loc 1 294 3 is_stmt 1 view .LVU93
+ 302              		.loc 1 294 10 is_stmt 0 view .LVU94
+ 303 0006 88B2     		uxth	r0, r1
+ 304              	.LVL43:
+ 305              		.loc 1 294 10 view .LVU95
+ 306 0008 7047     		bx	lr
+ 307              	.LVL44:
+ 308              	.L20:
+ 293:u8g2_lib/u8x8_8x8.c ****     return 0x0ffff;	/* end of string detected*/
+ 309              		.loc 1 293 12 view .LVU96
+ 310 000a 4FF6FF70 		movw	r0, #65535
+ 311              	.LVL45:
+ 293:u8g2_lib/u8x8_8x8.c ****     return 0x0ffff;	/* end of string detected*/
+ 312              		.loc 1 293 12 view .LVU97
+ 313 000e 7047     		bx	lr
+ 314              	.LVL46:
+ 315              	.L21:
+ 293:u8g2_lib/u8x8_8x8.c ****     return 0x0ffff;	/* end of string detected*/
+ 316              		.loc 1 293 12 view .LVU98
+ 317 0010 4FF6FF70 		movw	r0, #65535
+ 318              	.LVL47:
+ 295:u8g2_lib/u8x8_8x8.c **** }
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s 			page 12
+
+
+ 319              		.loc 1 295 1 view .LVU99
+ 320 0014 7047     		bx	lr
+ 321              		.cfi_endproc
+ 322              	.LFE10:
+ 324              		.section	.text.u8x8_utf8_next,"ax",%progbits
+ 325              		.align	1
+ 326              		.global	u8x8_utf8_next
+ 327              		.syntax unified
+ 328              		.thumb
+ 329              		.thumb_func
+ 330              		.fpu softvfp
+ 332              	u8x8_utf8_next:
+ 333              	.LVL48:
+ 334              	.LFB11:
+ 296:u8g2_lib/u8x8_8x8.c **** 
+ 297:u8g2_lib/u8x8_8x8.c **** /*
+ 298:u8g2_lib/u8x8_8x8.c ****   pass a byte from an utf8 encoded string to the utf8 decoder state machine
+ 299:u8g2_lib/u8x8_8x8.c ****   returns 
+ 300:u8g2_lib/u8x8_8x8.c ****     0x0fffe: no glyph, just continue
+ 301:u8g2_lib/u8x8_8x8.c ****     0x0ffff: end of string
+ 302:u8g2_lib/u8x8_8x8.c ****     anything else: The decoded encoding
+ 303:u8g2_lib/u8x8_8x8.c **** */
+ 304:u8g2_lib/u8x8_8x8.c **** uint16_t u8x8_utf8_next(u8x8_t *u8x8, uint8_t b)
+ 305:u8g2_lib/u8x8_8x8.c **** {
+ 335              		.loc 1 305 1 is_stmt 1 view -0
+ 336              		.cfi_startproc
+ 337              		@ args = 0, pretend = 0, frame = 0
+ 338              		@ frame_needed = 0, uses_anonymous_args = 0
+ 339              		@ link register save eliminated.
+ 340              		.loc 1 305 1 is_stmt 0 view .LVU101
+ 341 0000 0346     		mov	r3, r0
+ 306:u8g2_lib/u8x8_8x8.c ****   if ( b == 0 || b == '\n' )	/* '\n' terminates the string to support the string list procedures */
+ 342              		.loc 1 306 3 is_stmt 1 view .LVU102
+ 343              		.loc 1 306 6 is_stmt 0 view .LVU103
+ 344 0002 0A46     		mov	r2, r1
+ 345 0004 0029     		cmp	r1, #0
+ 346 0006 3ED0     		beq	.L31
+ 347              		.loc 1 306 15 discriminator 1 view .LVU104
+ 348 0008 0A29     		cmp	r1, #10
+ 349 000a 3FD0     		beq	.L32
+ 307:u8g2_lib/u8x8_8x8.c ****     return 0x0ffff;	/* end of string detected, pending UTF8 is discarded */
+ 308:u8g2_lib/u8x8_8x8.c ****   if ( u8x8->utf8_state == 0 )
+ 350              		.loc 1 308 3 is_stmt 1 view .LVU105
+ 351              		.loc 1 308 12 is_stmt 0 view .LVU106
+ 352 000c 90F82610 		ldrb	r1, [r0, #38]	@ zero_extendqisi2
+ 353              	.LVL49:
+ 354              		.loc 1 308 6 view .LVU107
+ 355 0010 61BB     		cbnz	r1, .L24
+ 309:u8g2_lib/u8x8_8x8.c ****   {
+ 310:u8g2_lib/u8x8_8x8.c ****     if ( b >= 0xfc )	/* 6 byte sequence */
+ 356              		.loc 1 310 5 is_stmt 1 view .LVU108
+ 357              		.loc 1 310 8 is_stmt 0 view .LVU109
+ 358 0012 FB2A     		cmp	r2, #251
+ 359 0014 09D8     		bhi	.L34
+ 311:u8g2_lib/u8x8_8x8.c ****     {
+ 312:u8g2_lib/u8x8_8x8.c ****       u8x8->utf8_state = 5;
+ 313:u8g2_lib/u8x8_8x8.c ****       b &= 1;
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s 			page 13
+
+
+ 314:u8g2_lib/u8x8_8x8.c ****     }
+ 315:u8g2_lib/u8x8_8x8.c ****     else if ( b >= 0xf8 )
+ 360              		.loc 1 315 10 is_stmt 1 view .LVU110
+ 361              		.loc 1 315 13 is_stmt 0 view .LVU111
+ 362 0016 F72A     		cmp	r2, #247
+ 363 0018 10D8     		bhi	.L35
+ 316:u8g2_lib/u8x8_8x8.c ****     {
+ 317:u8g2_lib/u8x8_8x8.c ****       u8x8->utf8_state = 4;
+ 318:u8g2_lib/u8x8_8x8.c ****       b &= 3;
+ 319:u8g2_lib/u8x8_8x8.c ****     }
+ 320:u8g2_lib/u8x8_8x8.c ****     else if ( b >= 0xf0 )
+ 364              		.loc 1 320 10 is_stmt 1 view .LVU112
+ 365              		.loc 1 320 13 is_stmt 0 view .LVU113
+ 366 001a EF2A     		cmp	r2, #239
+ 367 001c 14D8     		bhi	.L36
+ 321:u8g2_lib/u8x8_8x8.c ****     {
+ 322:u8g2_lib/u8x8_8x8.c ****       u8x8->utf8_state = 3;
+ 323:u8g2_lib/u8x8_8x8.c ****       b &= 7;      
+ 324:u8g2_lib/u8x8_8x8.c ****     }
+ 325:u8g2_lib/u8x8_8x8.c ****     else if ( b >= 0xe0 )
+ 368              		.loc 1 325 10 is_stmt 1 view .LVU114
+ 369              		.loc 1 325 13 is_stmt 0 view .LVU115
+ 370 001e DF2A     		cmp	r2, #223
+ 371 0020 18D8     		bhi	.L37
+ 326:u8g2_lib/u8x8_8x8.c ****     {
+ 327:u8g2_lib/u8x8_8x8.c ****       u8x8->utf8_state = 2;
+ 328:u8g2_lib/u8x8_8x8.c ****       b &= 15;
+ 329:u8g2_lib/u8x8_8x8.c ****     }
+ 330:u8g2_lib/u8x8_8x8.c ****     else if ( b >= 0xc0 )
+ 372              		.loc 1 330 10 is_stmt 1 view .LVU116
+ 373              		.loc 1 330 13 is_stmt 0 view .LVU117
+ 374 0022 BF2A     		cmp	r2, #191
+ 375 0024 1CD8     		bhi	.L38
+ 331:u8g2_lib/u8x8_8x8.c ****     {
+ 332:u8g2_lib/u8x8_8x8.c ****       u8x8->utf8_state = 1;
+ 333:u8g2_lib/u8x8_8x8.c ****       b &= 0x01f;
+ 334:u8g2_lib/u8x8_8x8.c ****     }
+ 335:u8g2_lib/u8x8_8x8.c ****     else
+ 336:u8g2_lib/u8x8_8x8.c ****     {
+ 337:u8g2_lib/u8x8_8x8.c ****       /* do nothing, just use the value as encoding */
+ 338:u8g2_lib/u8x8_8x8.c ****       return b;
+ 376              		.loc 1 338 7 is_stmt 1 view .LVU118
+ 377              		.loc 1 338 14 is_stmt 0 view .LVU119
+ 378 0026 90B2     		uxth	r0, r2
+ 379              	.LVL50:
+ 380              		.loc 1 338 14 view .LVU120
+ 381 0028 7047     		bx	lr
+ 382              	.LVL51:
+ 383              	.L34:
+ 312:u8g2_lib/u8x8_8x8.c ****       b &= 1;
+ 384              		.loc 1 312 7 is_stmt 1 view .LVU121
+ 312:u8g2_lib/u8x8_8x8.c ****       b &= 1;
+ 385              		.loc 1 312 24 is_stmt 0 view .LVU122
+ 386 002a 0521     		movs	r1, #5
+ 387 002c 80F82610 		strb	r1, [r0, #38]
+ 313:u8g2_lib/u8x8_8x8.c ****     }
+ 388              		.loc 1 313 7 is_stmt 1 view .LVU123
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s 			page 14
+
+
+ 313:u8g2_lib/u8x8_8x8.c ****     }
+ 389              		.loc 1 313 9 is_stmt 0 view .LVU124
+ 390 0030 02F00102 		and	r2, r2, #1
+ 391              	.LVL52:
+ 392              	.L26:
+ 339:u8g2_lib/u8x8_8x8.c ****     }
+ 340:u8g2_lib/u8x8_8x8.c ****     u8x8->encoding = b;
+ 393              		.loc 1 340 5 is_stmt 1 view .LVU125
+ 394              		.loc 1 340 20 is_stmt 0 view .LVU126
+ 395 0034 1A84     		strh	r2, [r3, #32]	@ movhi
+ 341:u8g2_lib/u8x8_8x8.c ****     return 0x0fffe;
+ 396              		.loc 1 341 5 is_stmt 1 view .LVU127
+ 397              		.loc 1 341 12 is_stmt 0 view .LVU128
+ 398 0036 4FF6FE70 		movw	r0, #65534
+ 399              	.LVL53:
+ 400              		.loc 1 341 12 view .LVU129
+ 401 003a 7047     		bx	lr
+ 402              	.LVL54:
+ 403              	.L35:
+ 317:u8g2_lib/u8x8_8x8.c ****       b &= 3;
+ 404              		.loc 1 317 7 is_stmt 1 view .LVU130
+ 317:u8g2_lib/u8x8_8x8.c ****       b &= 3;
+ 405              		.loc 1 317 24 is_stmt 0 view .LVU131
+ 406 003c 0421     		movs	r1, #4
+ 407 003e 80F82610 		strb	r1, [r0, #38]
+ 318:u8g2_lib/u8x8_8x8.c ****     }
+ 408              		.loc 1 318 7 is_stmt 1 view .LVU132
+ 318:u8g2_lib/u8x8_8x8.c ****     }
+ 409              		.loc 1 318 9 is_stmt 0 view .LVU133
+ 410 0042 02F00302 		and	r2, r2, #3
+ 411              	.LVL55:
+ 318:u8g2_lib/u8x8_8x8.c ****     }
+ 412              		.loc 1 318 9 view .LVU134
+ 413 0046 F5E7     		b	.L26
+ 414              	.LVL56:
+ 415              	.L36:
+ 322:u8g2_lib/u8x8_8x8.c ****       b &= 7;      
+ 416              		.loc 1 322 7 is_stmt 1 view .LVU135
+ 322:u8g2_lib/u8x8_8x8.c ****       b &= 7;      
+ 417              		.loc 1 322 24 is_stmt 0 view .LVU136
+ 418 0048 0321     		movs	r1, #3
+ 419 004a 80F82610 		strb	r1, [r0, #38]
+ 323:u8g2_lib/u8x8_8x8.c ****     }
+ 420              		.loc 1 323 7 is_stmt 1 view .LVU137
+ 323:u8g2_lib/u8x8_8x8.c ****     }
+ 421              		.loc 1 323 9 is_stmt 0 view .LVU138
+ 422 004e 02F00702 		and	r2, r2, #7
+ 423              	.LVL57:
+ 323:u8g2_lib/u8x8_8x8.c ****     }
+ 424              		.loc 1 323 9 view .LVU139
+ 425 0052 EFE7     		b	.L26
+ 426              	.LVL58:
+ 427              	.L37:
+ 327:u8g2_lib/u8x8_8x8.c ****       b &= 15;
+ 428              		.loc 1 327 7 is_stmt 1 view .LVU140
+ 327:u8g2_lib/u8x8_8x8.c ****       b &= 15;
+ 429              		.loc 1 327 24 is_stmt 0 view .LVU141
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s 			page 15
+
+
+ 430 0054 0221     		movs	r1, #2
+ 431 0056 80F82610 		strb	r1, [r0, #38]
+ 328:u8g2_lib/u8x8_8x8.c ****     }
+ 432              		.loc 1 328 7 is_stmt 1 view .LVU142
+ 328:u8g2_lib/u8x8_8x8.c ****     }
+ 433              		.loc 1 328 9 is_stmt 0 view .LVU143
+ 434 005a 02F00F02 		and	r2, r2, #15
+ 435              	.LVL59:
+ 328:u8g2_lib/u8x8_8x8.c ****     }
+ 436              		.loc 1 328 9 view .LVU144
+ 437 005e E9E7     		b	.L26
+ 438              	.LVL60:
+ 439              	.L38:
+ 332:u8g2_lib/u8x8_8x8.c ****       b &= 0x01f;
+ 440              		.loc 1 332 7 is_stmt 1 view .LVU145
+ 332:u8g2_lib/u8x8_8x8.c ****       b &= 0x01f;
+ 441              		.loc 1 332 24 is_stmt 0 view .LVU146
+ 442 0060 0121     		movs	r1, #1
+ 443 0062 80F82610 		strb	r1, [r0, #38]
+ 333:u8g2_lib/u8x8_8x8.c ****     }
+ 444              		.loc 1 333 7 is_stmt 1 view .LVU147
+ 333:u8g2_lib/u8x8_8x8.c ****     }
+ 445              		.loc 1 333 9 is_stmt 0 view .LVU148
+ 446 0066 02F01F02 		and	r2, r2, #31
+ 447              	.LVL61:
+ 333:u8g2_lib/u8x8_8x8.c ****     }
+ 448              		.loc 1 333 9 view .LVU149
+ 449 006a E3E7     		b	.L26
+ 450              	.LVL62:
+ 451              	.L24:
+ 342:u8g2_lib/u8x8_8x8.c ****   }
+ 343:u8g2_lib/u8x8_8x8.c ****   else
+ 344:u8g2_lib/u8x8_8x8.c ****   {
+ 345:u8g2_lib/u8x8_8x8.c ****     u8x8->utf8_state--;
+ 452              		.loc 1 345 5 is_stmt 1 view .LVU150
+ 453              		.loc 1 345 21 is_stmt 0 view .LVU151
+ 454 006c 0139     		subs	r1, r1, #1
+ 455 006e C9B2     		uxtb	r1, r1
+ 456 0070 80F82610 		strb	r1, [r0, #38]
+ 346:u8g2_lib/u8x8_8x8.c ****     /* The case b < 0x080 (an illegal UTF8 encoding) is not checked here. */
+ 347:u8g2_lib/u8x8_8x8.c ****     u8x8->encoding<<=6;
+ 457              		.loc 1 347 5 is_stmt 1 view .LVU152
+ 458              		.loc 1 347 19 is_stmt 0 view .LVU153
+ 459 0074 008C     		ldrh	r0, [r0, #32]
+ 460              	.LVL63:
+ 461              		.loc 1 347 19 view .LVU154
+ 462 0076 8001     		lsls	r0, r0, #6
+ 463 0078 80B2     		uxth	r0, r0
+ 348:u8g2_lib/u8x8_8x8.c ****     b &= 0x03f;
+ 464              		.loc 1 348 5 is_stmt 1 view .LVU155
+ 465              		.loc 1 348 7 is_stmt 0 view .LVU156
+ 466 007a 02F03F02 		and	r2, r2, #63
+ 467              	.LVL64:
+ 349:u8g2_lib/u8x8_8x8.c ****     u8x8->encoding |= b;
+ 468              		.loc 1 349 5 is_stmt 1 view .LVU157
+ 469              		.loc 1 349 20 is_stmt 0 view .LVU158
+ 470 007e 1043     		orrs	r0, r0, r2
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s 			page 16
+
+
+ 471 0080 1884     		strh	r0, [r3, #32]	@ movhi
+ 350:u8g2_lib/u8x8_8x8.c ****     if ( u8x8->utf8_state != 0 )
+ 472              		.loc 1 350 5 is_stmt 1 view .LVU159
+ 473              		.loc 1 350 8 is_stmt 0 view .LVU160
+ 474 0082 31B9     		cbnz	r1, .L39
+ 475              	.L23:
+ 351:u8g2_lib/u8x8_8x8.c ****       return 0x0fffe;	/* nothing to do yet */
+ 352:u8g2_lib/u8x8_8x8.c ****   }
+ 353:u8g2_lib/u8x8_8x8.c ****   return u8x8->encoding;
+ 354:u8g2_lib/u8x8_8x8.c **** }
+ 476              		.loc 1 354 1 view .LVU161
+ 477 0084 7047     		bx	lr
+ 478              	.LVL65:
+ 479              	.L31:
+ 307:u8g2_lib/u8x8_8x8.c ****   if ( u8x8->utf8_state == 0 )
+ 480              		.loc 1 307 12 view .LVU162
+ 481 0086 4FF6FF70 		movw	r0, #65535
+ 482              	.LVL66:
+ 307:u8g2_lib/u8x8_8x8.c ****   if ( u8x8->utf8_state == 0 )
+ 483              		.loc 1 307 12 view .LVU163
+ 484 008a 7047     		bx	lr
+ 485              	.LVL67:
+ 486              	.L32:
+ 307:u8g2_lib/u8x8_8x8.c ****   if ( u8x8->utf8_state == 0 )
+ 487              		.loc 1 307 12 view .LVU164
+ 488 008c 4FF6FF70 		movw	r0, #65535
+ 489              	.LVL68:
+ 307:u8g2_lib/u8x8_8x8.c ****   if ( u8x8->utf8_state == 0 )
+ 490              		.loc 1 307 12 view .LVU165
+ 491 0090 7047     		bx	lr
+ 492              	.LVL69:
+ 493              	.L39:
+ 351:u8g2_lib/u8x8_8x8.c ****       return 0x0fffe;	/* nothing to do yet */
+ 494              		.loc 1 351 14 view .LVU166
+ 495 0092 4FF6FE70 		movw	r0, #65534
+ 496 0096 F5E7     		b	.L23
+ 497              		.cfi_endproc
+ 498              	.LFE11:
+ 500              		.section	.text.u8x8_SetFont,"ax",%progbits
+ 501              		.align	1
+ 502              		.global	u8x8_SetFont
+ 503              		.syntax unified
+ 504              		.thumb
+ 505              		.thumb_func
+ 506              		.fpu softvfp
+ 508              	u8x8_SetFont:
+ 509              	.LVL70:
+ 510              	.LFB0:
+  51:u8g2_lib/u8x8_8x8.c ****   u8x8->font = font_8x8;
+ 511              		.loc 1 51 1 is_stmt 1 view -0
+ 512              		.cfi_startproc
+ 513              		@ args = 0, pretend = 0, frame = 0
+ 514              		@ frame_needed = 0, uses_anonymous_args = 0
+ 515              		@ link register save eliminated.
+  52:u8g2_lib/u8x8_8x8.c **** }
+ 516              		.loc 1 52 3 view .LVU168
+  52:u8g2_lib/u8x8_8x8.c **** }
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s 			page 17
+
+
+ 517              		.loc 1 52 14 is_stmt 0 view .LVU169
+ 518 0000 C161     		str	r1, [r0, #28]
+  53:u8g2_lib/u8x8_8x8.c **** 
+ 519              		.loc 1 53 1 view .LVU170
+ 520 0002 7047     		bx	lr
+ 521              		.cfi_endproc
+ 522              	.LFE0:
+ 524              		.section	.text.u8x8_DrawGlyph,"ax",%progbits
+ 525              		.align	1
+ 526              		.global	u8x8_DrawGlyph
+ 527              		.syntax unified
+ 528              		.thumb
+ 529              		.thumb_func
+ 530              		.fpu softvfp
+ 532              	u8x8_DrawGlyph:
+ 533              	.LVL71:
+ 534              	.LFB2:
+ 106:u8g2_lib/u8x8_8x8.c ****   uint8_t th = u8x8_pgm_read(u8x8->font+2);		/* new 2019 format */
+ 535              		.loc 1 106 1 is_stmt 1 view -0
+ 536              		.cfi_startproc
+ 537              		@ args = 0, pretend = 0, frame = 16
+ 538              		@ frame_needed = 0, uses_anonymous_args = 0
+ 106:u8g2_lib/u8x8_8x8.c ****   uint8_t th = u8x8_pgm_read(u8x8->font+2);		/* new 2019 format */
+ 539              		.loc 1 106 1 is_stmt 0 view .LVU172
+ 540 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 541              	.LCFI4:
+ 542              		.cfi_def_cfa_offset 36
+ 543              		.cfi_offset 4, -36
+ 544              		.cfi_offset 5, -32
+ 545              		.cfi_offset 6, -28
+ 546              		.cfi_offset 7, -24
+ 547              		.cfi_offset 8, -20
+ 548              		.cfi_offset 9, -16
+ 549              		.cfi_offset 10, -12
+ 550              		.cfi_offset 11, -8
+ 551              		.cfi_offset 14, -4
+ 552 0004 87B0     		sub	sp, sp, #28
+ 553              	.LCFI5:
+ 554              		.cfi_def_cfa_offset 64
+ 555 0006 0746     		mov	r7, r0
+ 556 0008 0391     		str	r1, [sp, #12]
+ 557 000a 9046     		mov	r8, r2
+ 558 000c 9A46     		mov	r10, r3
+ 107:u8g2_lib/u8x8_8x8.c ****   uint8_t tv = u8x8_pgm_read(u8x8->font+3);	/* new 2019 format */
+ 559              		.loc 1 107 3 is_stmt 1 view .LVU173
+ 107:u8g2_lib/u8x8_8x8.c ****   uint8_t tv = u8x8_pgm_read(u8x8->font+3);	/* new 2019 format */
+ 560              		.loc 1 107 16 is_stmt 0 view .LVU174
+ 561 000e C369     		ldr	r3, [r0, #28]
+ 562              	.LVL72:
+ 107:u8g2_lib/u8x8_8x8.c ****   uint8_t tv = u8x8_pgm_read(u8x8->font+3);	/* new 2019 format */
+ 563              		.loc 1 107 11 view .LVU175
+ 564 0010 93F80290 		ldrb	r9, [r3, #2]	@ zero_extendqisi2
+ 565              	.LVL73:
+ 108:u8g2_lib/u8x8_8x8.c ****   uint8_t xx, tile;
+ 566              		.loc 1 108 3 is_stmt 1 view .LVU176
+ 108:u8g2_lib/u8x8_8x8.c ****   uint8_t xx, tile;
+ 567              		.loc 1 108 11 is_stmt 0 view .LVU177
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s 			page 18
+
+
+ 568 0014 93F803B0 		ldrb	fp, [r3, #3]	@ zero_extendqisi2
+ 569              	.LVL74:
+ 109:u8g2_lib/u8x8_8x8.c ****   uint8_t buf[8];
+ 570              		.loc 1 109 3 is_stmt 1 view .LVU178
+ 110:u8g2_lib/u8x8_8x8.c ****   th += x;
+ 571              		.loc 1 110 3 view .LVU179
+ 111:u8g2_lib/u8x8_8x8.c ****   tv += y;
+ 572              		.loc 1 111 3 view .LVU180
+ 111:u8g2_lib/u8x8_8x8.c ****   tv += y;
+ 573              		.loc 1 111 6 is_stmt 0 view .LVU181
+ 574 0018 8944     		add	r9, r9, r1
+ 575              	.LVL75:
+ 111:u8g2_lib/u8x8_8x8.c ****   tv += y;
+ 576              		.loc 1 111 6 view .LVU182
+ 577 001a 5FFA89F9 		uxtb	r9, r9
+ 578              	.LVL76:
+ 112:u8g2_lib/u8x8_8x8.c ****   tile = 0;
+ 579              		.loc 1 112 3 is_stmt 1 view .LVU183
+ 112:u8g2_lib/u8x8_8x8.c ****   tile = 0;
+ 580              		.loc 1 112 6 is_stmt 0 view .LVU184
+ 581 001e 9344     		add	fp, fp, r2
+ 582              	.LVL77:
+ 112:u8g2_lib/u8x8_8x8.c ****   tile = 0;
+ 583              		.loc 1 112 6 view .LVU185
+ 584 0020 5FFA8BFB 		uxtb	fp, fp
+ 585              	.LVL78:
+ 113:u8g2_lib/u8x8_8x8.c ****   do
+ 586              		.loc 1 113 3 is_stmt 1 view .LVU186
+ 113:u8g2_lib/u8x8_8x8.c ****   do
+ 587              		.loc 1 113 8 is_stmt 0 view .LVU187
+ 588 0024 0025     		movs	r5, #0
+ 589              	.LVL79:
+ 590              	.L43:
+ 114:u8g2_lib/u8x8_8x8.c ****   {
+ 591              		.loc 1 114 3 is_stmt 1 view .LVU188
+ 116:u8g2_lib/u8x8_8x8.c ****     do
+ 592              		.loc 1 116 5 view .LVU189
+ 116:u8g2_lib/u8x8_8x8.c ****     do
+ 593              		.loc 1 116 8 is_stmt 0 view .LVU190
+ 594 0026 039C     		ldr	r4, [sp, #12]
+ 595              	.LVL80:
+ 596              	.L42:
+ 117:u8g2_lib/u8x8_8x8.c ****     {
+ 597              		.loc 1 117 5 is_stmt 1 discriminator 1 view .LVU191
+ 119:u8g2_lib/u8x8_8x8.c ****       u8x8_DrawTile(u8x8, xx, y, 1, buf);
+ 598              		.loc 1 119 7 discriminator 1 view .LVU192
+ 599 0028 04AE     		add	r6, sp, #16
+ 600 002a 2B46     		mov	r3, r5
+ 601 002c 3246     		mov	r2, r6
+ 602 002e 5146     		mov	r1, r10
+ 603 0030 3846     		mov	r0, r7
+ 604 0032 FFF7FEFF 		bl	u8x8_get_glyph_data
+ 605              	.LVL81:
+ 120:u8g2_lib/u8x8_8x8.c ****       tile++;
+ 606              		.loc 1 120 7 discriminator 1 view .LVU193
+ 607 0036 0096     		str	r6, [sp]
+ 608 0038 0123     		movs	r3, #1
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s 			page 19
+
+
+ 609 003a 4246     		mov	r2, r8
+ 610 003c 2146     		mov	r1, r4
+ 611 003e 3846     		mov	r0, r7
+ 612 0040 FFF7FEFF 		bl	u8x8_DrawTile
+ 613              	.LVL82:
+ 121:u8g2_lib/u8x8_8x8.c ****       xx++;
+ 614              		.loc 1 121 7 discriminator 1 view .LVU194
+ 121:u8g2_lib/u8x8_8x8.c ****       xx++;
+ 615              		.loc 1 121 11 is_stmt 0 discriminator 1 view .LVU195
+ 616 0044 0135     		adds	r5, r5, #1
+ 617              	.LVL83:
+ 121:u8g2_lib/u8x8_8x8.c ****       xx++;
+ 618              		.loc 1 121 11 discriminator 1 view .LVU196
+ 619 0046 EDB2     		uxtb	r5, r5
+ 620              	.LVL84:
+ 122:u8g2_lib/u8x8_8x8.c ****     } while( xx < th );
+ 621              		.loc 1 122 7 is_stmt 1 discriminator 1 view .LVU197
+ 122:u8g2_lib/u8x8_8x8.c ****     } while( xx < th );
+ 622              		.loc 1 122 9 is_stmt 0 discriminator 1 view .LVU198
+ 623 0048 0134     		adds	r4, r4, #1
+ 624              	.LVL85:
+ 122:u8g2_lib/u8x8_8x8.c ****     } while( xx < th );
+ 625              		.loc 1 122 9 discriminator 1 view .LVU199
+ 626 004a E4B2     		uxtb	r4, r4
+ 627              	.LVL86:
+ 123:u8g2_lib/u8x8_8x8.c ****     y++;
+ 628              		.loc 1 123 12 is_stmt 1 discriminator 1 view .LVU200
+ 123:u8g2_lib/u8x8_8x8.c ****     y++;
+ 629              		.loc 1 123 5 is_stmt 0 discriminator 1 view .LVU201
+ 630 004c A145     		cmp	r9, r4
+ 631 004e EBD8     		bhi	.L42
+ 124:u8g2_lib/u8x8_8x8.c ****   } while( y < tv );
+ 632              		.loc 1 124 5 is_stmt 1 view .LVU202
+ 124:u8g2_lib/u8x8_8x8.c ****   } while( y < tv );
+ 633              		.loc 1 124 6 is_stmt 0 view .LVU203
+ 634 0050 08F10108 		add	r8, r8, #1
+ 635              	.LVL87:
+ 124:u8g2_lib/u8x8_8x8.c ****   } while( y < tv );
+ 636              		.loc 1 124 6 view .LVU204
+ 637 0054 5FFA88F8 		uxtb	r8, r8
+ 638              	.LVL88:
+ 125:u8g2_lib/u8x8_8x8.c **** }
+ 639              		.loc 1 125 10 is_stmt 1 view .LVU205
+ 125:u8g2_lib/u8x8_8x8.c **** }
+ 640              		.loc 1 125 3 is_stmt 0 view .LVU206
+ 641 0058 C345     		cmp	fp, r8
+ 642 005a E4D8     		bhi	.L43
+ 126:u8g2_lib/u8x8_8x8.c **** 
+ 643              		.loc 1 126 1 view .LVU207
+ 644 005c 07B0     		add	sp, sp, #28
+ 645              	.LCFI6:
+ 646              		.cfi_def_cfa_offset 36
+ 647              		@ sp needed
+ 648 005e BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 126:u8g2_lib/u8x8_8x8.c **** 
+ 649              		.loc 1 126 1 view .LVU208
+ 650              		.cfi_endproc
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s 			page 20
+
+
+ 651              	.LFE2:
+ 653              		.section	.text.u8x8_upscale_byte,"ax",%progbits
+ 654              		.align	1
+ 655              		.global	u8x8_upscale_byte
+ 656              		.syntax unified
+ 657              		.thumb
+ 658              		.thumb_func
+ 659              		.fpu softvfp
+ 661              	u8x8_upscale_byte:
+ 662              	.LVL89:
+ 663              	.LFB3:
+ 154:u8g2_lib/u8x8_8x8.c **** 	uint16_t y = x;
+ 664              		.loc 1 154 1 is_stmt 1 view -0
+ 665              		.cfi_startproc
+ 666              		@ args = 0, pretend = 0, frame = 0
+ 667              		@ frame_needed = 0, uses_anonymous_args = 0
+ 668              		@ link register save eliminated.
+ 155:u8g2_lib/u8x8_8x8.c **** 	y |= (y << 4);		// x = (x | (x << S[2])) & B[2];
+ 669              		.loc 1 155 2 view .LVU210
+ 156:u8g2_lib/u8x8_8x8.c **** 	y &= 0x0f0f;
+ 670              		.loc 1 156 2 view .LVU211
+ 156:u8g2_lib/u8x8_8x8.c **** 	y &= 0x0f0f;
+ 671              		.loc 1 156 4 is_stmt 0 view .LVU212
+ 672 0000 40EA0010 		orr	r0, r0, r0, lsl #4
+ 673              	.LVL90:
+ 157:u8g2_lib/u8x8_8x8.c **** 	y |= (y << 2);		// x = (x | (x << S[1])) & B[1];
+ 674              		.loc 1 157 2 is_stmt 1 view .LVU213
+ 157:u8g2_lib/u8x8_8x8.c **** 	y |= (y << 2);		// x = (x | (x << S[1])) & B[1];
+ 675              		.loc 1 157 4 is_stmt 0 view .LVU214
+ 676 0004 20F0F000 		bic	r0, r0, #240
+ 677              	.LVL91:
+ 157:u8g2_lib/u8x8_8x8.c **** 	y |= (y << 2);		// x = (x | (x << S[1])) & B[1];
+ 678              		.loc 1 157 4 view .LVU215
+ 679 0008 0005     		lsls	r0, r0, #20
+ 680 000a 000D     		lsrs	r0, r0, #20
+ 681              	.LVL92:
+ 158:u8g2_lib/u8x8_8x8.c **** 	y &= 0x3333;
+ 682              		.loc 1 158 2 is_stmt 1 view .LVU216
+ 158:u8g2_lib/u8x8_8x8.c **** 	y &= 0x3333;
+ 683              		.loc 1 158 4 is_stmt 0 view .LVU217
+ 684 000c 40EA8000 		orr	r0, r0, r0, lsl #2
+ 685              	.LVL93:
+ 159:u8g2_lib/u8x8_8x8.c **** 	y |= (y << 1);		// x = (x | (x << S[0])) & B[0];
+ 686              		.loc 1 159 2 is_stmt 1 view .LVU218
+ 159:u8g2_lib/u8x8_8x8.c **** 	y |= (y << 1);		// x = (x | (x << S[0])) & B[0];
+ 687              		.loc 1 159 4 is_stmt 0 view .LVU219
+ 688 0010 20F44C60 		bic	r0, r0, #3264
+ 689              	.LVL94:
+ 159:u8g2_lib/u8x8_8x8.c **** 	y |= (y << 1);		// x = (x | (x << S[0])) & B[0];
+ 690              		.loc 1 159 4 view .LVU220
+ 691 0014 20F00C00 		bic	r0, r0, #12
+ 692 0018 8004     		lsls	r0, r0, #18
+ 693 001a 800C     		lsrs	r0, r0, #18
+ 694              	.LVL95:
+ 160:u8g2_lib/u8x8_8x8.c **** 	y &= 0x5555;
+ 695              		.loc 1 160 2 is_stmt 1 view .LVU221
+ 160:u8g2_lib/u8x8_8x8.c **** 	y &= 0x5555;
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s 			page 21
+
+
+ 696              		.loc 1 160 4 is_stmt 0 view .LVU222
+ 697 001c 40EA4000 		orr	r0, r0, r0, lsl #1
+ 698              	.LVL96:
+ 161:u8g2_lib/u8x8_8x8.c ****   
+ 699              		.loc 1 161 2 is_stmt 1 view .LVU223
+ 161:u8g2_lib/u8x8_8x8.c ****   
+ 700              		.loc 1 161 4 is_stmt 0 view .LVU224
+ 701 0020 20F42A50 		bic	r0, r0, #10880
+ 702              	.LVL97:
+ 161:u8g2_lib/u8x8_8x8.c ****   
+ 703              		.loc 1 161 4 view .LVU225
+ 704 0024 20F02A00 		bic	r0, r0, #42
+ 705 0028 4004     		lsls	r0, r0, #17
+ 706 002a 400C     		lsrs	r0, r0, #17
+ 707              	.LVL98:
+ 163:u8g2_lib/u8x8_8x8.c **** 	return y;
+ 708              		.loc 1 163 2 is_stmt 1 view .LVU226
+ 164:u8g2_lib/u8x8_8x8.c **** }
+ 709              		.loc 1 164 2 view .LVU227
+ 165:u8g2_lib/u8x8_8x8.c **** 
+ 710              		.loc 1 165 1 is_stmt 0 view .LVU228
+ 711 002c 40EA4000 		orr	r0, r0, r0, lsl #1
+ 712              	.LVL99:
+ 165:u8g2_lib/u8x8_8x8.c **** 
+ 713              		.loc 1 165 1 view .LVU229
+ 714 0030 7047     		bx	lr
+ 715              		.cfi_endproc
+ 716              	.LFE3:
+ 718              		.section	.text.u8x8_draw_2x2_subglyph,"ax",%progbits
+ 719              		.align	1
+ 720              		.syntax unified
+ 721              		.thumb
+ 722              		.thumb_func
+ 723              		.fpu softvfp
+ 725              	u8x8_draw_2x2_subglyph:
+ 726              	.LVL100:
+ 727              	.LFB5:
+ 180:u8g2_lib/u8x8_8x8.c ****   uint8_t i;
+ 728              		.loc 1 180 1 is_stmt 1 view -0
+ 729              		.cfi_startproc
+ 730              		@ args = 4, pretend = 0, frame = 24
+ 731              		@ frame_needed = 0, uses_anonymous_args = 0
+ 180:u8g2_lib/u8x8_8x8.c ****   uint8_t i;
+ 732              		.loc 1 180 1 is_stmt 0 view .LVU231
+ 733 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 734              	.LCFI7:
+ 735              		.cfi_def_cfa_offset 24
+ 736              		.cfi_offset 4, -24
+ 737              		.cfi_offset 5, -20
+ 738              		.cfi_offset 6, -16
+ 739              		.cfi_offset 7, -12
+ 740              		.cfi_offset 8, -8
+ 741              		.cfi_offset 14, -4
+ 742 0004 88B0     		sub	sp, sp, #32
+ 743              	.LCFI8:
+ 744              		.cfi_def_cfa_offset 56
+ 745 0006 0746     		mov	r7, r0
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s 			page 22
+
+
+ 746 0008 8846     		mov	r8, r1
+ 747 000a 1646     		mov	r6, r2
+ 748 000c 1946     		mov	r1, r3
+ 749              	.LVL101:
+ 181:u8g2_lib/u8x8_8x8.c ****   uint16_t t;
+ 750              		.loc 1 181 3 is_stmt 1 view .LVU232
+ 182:u8g2_lib/u8x8_8x8.c ****   uint8_t buf[8];
+ 751              		.loc 1 182 3 view .LVU233
+ 183:u8g2_lib/u8x8_8x8.c ****   uint8_t buf1[8];
+ 752              		.loc 1 183 3 view .LVU234
+ 184:u8g2_lib/u8x8_8x8.c ****   uint8_t buf2[8];
+ 753              		.loc 1 184 3 view .LVU235
+ 185:u8g2_lib/u8x8_8x8.c ****   u8x8_get_glyph_data(u8x8, encoding, buf, tile);
+ 754              		.loc 1 185 3 view .LVU236
+ 186:u8g2_lib/u8x8_8x8.c ****   for( i = 0; i < 8; i ++ )
+ 755              		.loc 1 186 3 view .LVU237
+ 756 000e 9DF83830 		ldrb	r3, [sp, #56]	@ zero_extendqisi2
+ 757              	.LVL102:
+ 186:u8g2_lib/u8x8_8x8.c ****   for( i = 0; i < 8; i ++ )
+ 758              		.loc 1 186 3 is_stmt 0 view .LVU238
+ 759 0012 06AA     		add	r2, sp, #24
+ 760              	.LVL103:
+ 186:u8g2_lib/u8x8_8x8.c ****   for( i = 0; i < 8; i ++ )
+ 761              		.loc 1 186 3 view .LVU239
+ 762 0014 FFF7FEFF 		bl	u8x8_get_glyph_data
+ 763              	.LVL104:
+ 187:u8g2_lib/u8x8_8x8.c ****   {
+ 764              		.loc 1 187 3 is_stmt 1 view .LVU240
+ 187:u8g2_lib/u8x8_8x8.c ****   {
+ 765              		.loc 1 187 10 is_stmt 0 view .LVU241
+ 766 0018 0024     		movs	r4, #0
+ 187:u8g2_lib/u8x8_8x8.c ****   {
+ 767              		.loc 1 187 3 view .LVU242
+ 768 001a 0CE0     		b	.L47
+ 769              	.LVL105:
+ 770              	.L48:
+ 189:u8g2_lib/u8x8_8x8.c ****       buf1[i] = t >> 8;
+ 771              		.loc 1 189 7 is_stmt 1 discriminator 3 view .LVU243
+ 189:u8g2_lib/u8x8_8x8.c ****       buf1[i] = t >> 8;
+ 772              		.loc 1 189 11 is_stmt 0 discriminator 3 view .LVU244
+ 773 001c 08AB     		add	r3, sp, #32
+ 774 001e 1D19     		adds	r5, r3, r4
+ 775 0020 15F8080C 		ldrb	r0, [r5, #-8]	@ zero_extendqisi2
+ 776 0024 FFF7FEFF 		bl	u8x8_upscale_byte
+ 777              	.LVL106:
+ 190:u8g2_lib/u8x8_8x8.c ****       buf2[i] = t & 255;
+ 778              		.loc 1 190 7 is_stmt 1 discriminator 3 view .LVU245
+ 190:u8g2_lib/u8x8_8x8.c ****       buf2[i] = t & 255;
+ 779              		.loc 1 190 15 is_stmt 0 discriminator 3 view .LVU246
+ 780 0028 030A     		lsrs	r3, r0, #8
+ 781 002a 05F8103C 		strb	r3, [r5, #-16]
+ 191:u8g2_lib/u8x8_8x8.c ****   }
+ 782              		.loc 1 191 7 is_stmt 1 discriminator 3 view .LVU247
+ 191:u8g2_lib/u8x8_8x8.c ****   }
+ 783              		.loc 1 191 15 is_stmt 0 discriminator 3 view .LVU248
+ 784 002e 05F8180C 		strb	r0, [r5, #-24]
+ 187:u8g2_lib/u8x8_8x8.c ****   {
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s 			page 23
+
+
+ 785              		.loc 1 187 22 is_stmt 1 discriminator 3 view .LVU249
+ 187:u8g2_lib/u8x8_8x8.c ****   {
+ 786              		.loc 1 187 24 is_stmt 0 discriminator 3 view .LVU250
+ 787 0032 0134     		adds	r4, r4, #1
+ 788              	.LVL107:
+ 187:u8g2_lib/u8x8_8x8.c ****   {
+ 789              		.loc 1 187 24 discriminator 3 view .LVU251
+ 790 0034 E4B2     		uxtb	r4, r4
+ 791              	.LVL108:
+ 792              	.L47:
+ 187:u8g2_lib/u8x8_8x8.c ****   {
+ 793              		.loc 1 187 15 is_stmt 1 discriminator 1 view .LVU252
+ 187:u8g2_lib/u8x8_8x8.c ****   {
+ 794              		.loc 1 187 3 is_stmt 0 discriminator 1 view .LVU253
+ 795 0036 072C     		cmp	r4, #7
+ 796 0038 F0D9     		bls	.L48
+ 193:u8g2_lib/u8x8_8x8.c ****   u8x8_DrawTile(u8x8, x, y, 1, buf);
+ 797              		.loc 1 193 3 is_stmt 1 view .LVU254
+ 798 003a 06AC     		add	r4, sp, #24
+ 799              	.LVL109:
+ 193:u8g2_lib/u8x8_8x8.c ****   u8x8_DrawTile(u8x8, x, y, 1, buf);
+ 800              		.loc 1 193 3 is_stmt 0 view .LVU255
+ 801 003c 2146     		mov	r1, r4
+ 802 003e 02A8     		add	r0, sp, #8
+ 803 0040 FFF7FEFF 		bl	u8x8_upscale_buf
+ 804              	.LVL110:
+ 194:u8g2_lib/u8x8_8x8.c ****   
+ 805              		.loc 1 194 3 is_stmt 1 view .LVU256
+ 806 0044 0094     		str	r4, [sp]
+ 807 0046 0123     		movs	r3, #1
+ 808 0048 3246     		mov	r2, r6
+ 809 004a 4146     		mov	r1, r8
+ 810 004c 3846     		mov	r0, r7
+ 811 004e FFF7FEFF 		bl	u8x8_DrawTile
+ 812              	.LVL111:
+ 196:u8g2_lib/u8x8_8x8.c ****   u8x8_DrawTile(u8x8, x+1, y, 1, buf);
+ 813              		.loc 1 196 3 view .LVU257
+ 814 0052 2146     		mov	r1, r4
+ 815 0054 03A8     		add	r0, sp, #12
+ 816 0056 FFF7FEFF 		bl	u8x8_upscale_buf
+ 817              	.LVL112:
+ 197:u8g2_lib/u8x8_8x8.c ****   
+ 818              		.loc 1 197 3 view .LVU258
+ 819 005a 08F10105 		add	r5, r8, #1
+ 820 005e EDB2     		uxtb	r5, r5
+ 821 0060 0094     		str	r4, [sp]
+ 822 0062 0123     		movs	r3, #1
+ 823 0064 3246     		mov	r2, r6
+ 824 0066 2946     		mov	r1, r5
+ 825 0068 3846     		mov	r0, r7
+ 826 006a FFF7FEFF 		bl	u8x8_DrawTile
+ 827              	.LVL113:
+ 199:u8g2_lib/u8x8_8x8.c ****   u8x8_DrawTile(u8x8, x, y+1, 1, buf);
+ 828              		.loc 1 199 3 view .LVU259
+ 829 006e 2146     		mov	r1, r4
+ 830 0070 04A8     		add	r0, sp, #16
+ 831 0072 FFF7FEFF 		bl	u8x8_upscale_buf
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s 			page 24
+
+
+ 832              	.LVL114:
+ 200:u8g2_lib/u8x8_8x8.c ****   
+ 833              		.loc 1 200 3 view .LVU260
+ 834 0076 0136     		adds	r6, r6, #1
+ 835 0078 F6B2     		uxtb	r6, r6
+ 836 007a 0094     		str	r4, [sp]
+ 837 007c 0123     		movs	r3, #1
+ 838 007e 3246     		mov	r2, r6
+ 839 0080 4146     		mov	r1, r8
+ 840 0082 3846     		mov	r0, r7
+ 841 0084 FFF7FEFF 		bl	u8x8_DrawTile
+ 842              	.LVL115:
+ 202:u8g2_lib/u8x8_8x8.c ****   u8x8_DrawTile(u8x8, x+1, y+1, 1, buf);  
+ 843              		.loc 1 202 3 view .LVU261
+ 844 0088 2146     		mov	r1, r4
+ 845 008a 05A8     		add	r0, sp, #20
+ 846 008c FFF7FEFF 		bl	u8x8_upscale_buf
+ 847              	.LVL116:
+ 203:u8g2_lib/u8x8_8x8.c **** }
+ 848              		.loc 1 203 3 view .LVU262
+ 849 0090 0094     		str	r4, [sp]
+ 850 0092 0123     		movs	r3, #1
+ 851 0094 3246     		mov	r2, r6
+ 852 0096 2946     		mov	r1, r5
+ 853 0098 3846     		mov	r0, r7
+ 854 009a FFF7FEFF 		bl	u8x8_DrawTile
+ 855              	.LVL117:
+ 204:u8g2_lib/u8x8_8x8.c **** 
+ 856              		.loc 1 204 1 is_stmt 0 view .LVU263
+ 857 009e 08B0     		add	sp, sp, #32
+ 858              	.LCFI9:
+ 859              		.cfi_def_cfa_offset 24
+ 860              		@ sp needed
+ 861 00a0 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 204:u8g2_lib/u8x8_8x8.c **** 
+ 862              		.loc 1 204 1 view .LVU264
+ 863              		.cfi_endproc
+ 864              	.LFE5:
+ 866              		.section	.text.u8x8_draw_1x2_subglyph,"ax",%progbits
+ 867              		.align	1
+ 868              		.syntax unified
+ 869              		.thumb
+ 870              		.thumb_func
+ 871              		.fpu softvfp
+ 873              	u8x8_draw_1x2_subglyph:
+ 874              	.LVL118:
+ 875              	.LFB7:
+ 232:u8g2_lib/u8x8_8x8.c ****   uint8_t i;
+ 876              		.loc 1 232 1 is_stmt 1 view -0
+ 877              		.cfi_startproc
+ 878              		@ args = 4, pretend = 0, frame = 24
+ 879              		@ frame_needed = 0, uses_anonymous_args = 0
+ 232:u8g2_lib/u8x8_8x8.c ****   uint8_t i;
+ 880              		.loc 1 232 1 is_stmt 0 view .LVU266
+ 881 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 882              	.LCFI10:
+ 883              		.cfi_def_cfa_offset 24
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s 			page 25
+
+
+ 884              		.cfi_offset 4, -24
+ 885              		.cfi_offset 5, -20
+ 886              		.cfi_offset 6, -16
+ 887              		.cfi_offset 7, -12
+ 888              		.cfi_offset 8, -8
+ 889              		.cfi_offset 14, -4
+ 890 0004 88B0     		sub	sp, sp, #32
+ 891              	.LCFI11:
+ 892              		.cfi_def_cfa_offset 56
+ 893 0006 0746     		mov	r7, r0
+ 894 0008 8846     		mov	r8, r1
+ 895 000a 1646     		mov	r6, r2
+ 896 000c 1946     		mov	r1, r3
+ 897              	.LVL119:
+ 233:u8g2_lib/u8x8_8x8.c ****   uint16_t t;
+ 898              		.loc 1 233 3 is_stmt 1 view .LVU267
+ 234:u8g2_lib/u8x8_8x8.c ****   uint8_t buf[8];
+ 899              		.loc 1 234 3 view .LVU268
+ 235:u8g2_lib/u8x8_8x8.c ****   uint8_t buf1[8];
+ 900              		.loc 1 235 3 view .LVU269
+ 236:u8g2_lib/u8x8_8x8.c ****   uint8_t buf2[8];
+ 901              		.loc 1 236 3 view .LVU270
+ 237:u8g2_lib/u8x8_8x8.c ****   u8x8_get_glyph_data(u8x8, encoding, buf, tile);
+ 902              		.loc 1 237 3 view .LVU271
+ 238:u8g2_lib/u8x8_8x8.c ****   for( i = 0; i < 8; i ++ )
+ 903              		.loc 1 238 3 view .LVU272
+ 904 000e 9DF83830 		ldrb	r3, [sp, #56]	@ zero_extendqisi2
+ 905              	.LVL120:
+ 238:u8g2_lib/u8x8_8x8.c ****   for( i = 0; i < 8; i ++ )
+ 906              		.loc 1 238 3 is_stmt 0 view .LVU273
+ 907 0012 06AA     		add	r2, sp, #24
+ 908              	.LVL121:
+ 238:u8g2_lib/u8x8_8x8.c ****   for( i = 0; i < 8; i ++ )
+ 909              		.loc 1 238 3 view .LVU274
+ 910 0014 FFF7FEFF 		bl	u8x8_get_glyph_data
+ 911              	.LVL122:
+ 239:u8g2_lib/u8x8_8x8.c ****   {
+ 912              		.loc 1 239 3 is_stmt 1 view .LVU275
+ 239:u8g2_lib/u8x8_8x8.c ****   {
+ 913              		.loc 1 239 10 is_stmt 0 view .LVU276
+ 914 0018 0024     		movs	r4, #0
+ 239:u8g2_lib/u8x8_8x8.c ****   {
+ 915              		.loc 1 239 3 view .LVU277
+ 916 001a 0CE0     		b	.L51
+ 917              	.LVL123:
+ 918              	.L52:
+ 241:u8g2_lib/u8x8_8x8.c ****       buf1[i] = t >> 8;
+ 919              		.loc 1 241 7 is_stmt 1 discriminator 3 view .LVU278
+ 241:u8g2_lib/u8x8_8x8.c ****       buf1[i] = t >> 8;
+ 920              		.loc 1 241 11 is_stmt 0 discriminator 3 view .LVU279
+ 921 001c 08AB     		add	r3, sp, #32
+ 922 001e 1D19     		adds	r5, r3, r4
+ 923 0020 15F8080C 		ldrb	r0, [r5, #-8]	@ zero_extendqisi2
+ 924 0024 FFF7FEFF 		bl	u8x8_upscale_byte
+ 925              	.LVL124:
+ 242:u8g2_lib/u8x8_8x8.c ****       buf2[i] = t & 255;
+ 926              		.loc 1 242 7 is_stmt 1 discriminator 3 view .LVU280
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s 			page 26
+
+
+ 242:u8g2_lib/u8x8_8x8.c ****       buf2[i] = t & 255;
+ 927              		.loc 1 242 15 is_stmt 0 discriminator 3 view .LVU281
+ 928 0028 030A     		lsrs	r3, r0, #8
+ 929 002a 05F8103C 		strb	r3, [r5, #-16]
+ 243:u8g2_lib/u8x8_8x8.c ****   }
+ 930              		.loc 1 243 7 is_stmt 1 discriminator 3 view .LVU282
+ 243:u8g2_lib/u8x8_8x8.c ****   }
+ 931              		.loc 1 243 15 is_stmt 0 discriminator 3 view .LVU283
+ 932 002e 05F8180C 		strb	r0, [r5, #-24]
+ 239:u8g2_lib/u8x8_8x8.c ****   {
+ 933              		.loc 1 239 22 is_stmt 1 discriminator 3 view .LVU284
+ 239:u8g2_lib/u8x8_8x8.c ****   {
+ 934              		.loc 1 239 24 is_stmt 0 discriminator 3 view .LVU285
+ 935 0032 0134     		adds	r4, r4, #1
+ 936              	.LVL125:
+ 239:u8g2_lib/u8x8_8x8.c ****   {
+ 937              		.loc 1 239 24 discriminator 3 view .LVU286
+ 938 0034 E4B2     		uxtb	r4, r4
+ 939              	.LVL126:
+ 940              	.L51:
+ 239:u8g2_lib/u8x8_8x8.c ****   {
+ 941              		.loc 1 239 15 is_stmt 1 discriminator 1 view .LVU287
+ 239:u8g2_lib/u8x8_8x8.c ****   {
+ 942              		.loc 1 239 3 is_stmt 0 discriminator 1 view .LVU288
+ 943 0036 072C     		cmp	r4, #7
+ 944 0038 F0D9     		bls	.L52
+ 245:u8g2_lib/u8x8_8x8.c ****   u8x8_DrawTile(u8x8, x, y+1, 1, buf1);
+ 945              		.loc 1 245 3 is_stmt 1 view .LVU289
+ 946 003a 02AB     		add	r3, sp, #8
+ 947 003c 0093     		str	r3, [sp]
+ 948 003e 0123     		movs	r3, #1
+ 949 0040 3246     		mov	r2, r6
+ 950 0042 4146     		mov	r1, r8
+ 951 0044 3846     		mov	r0, r7
+ 952 0046 FFF7FEFF 		bl	u8x8_DrawTile
+ 953              	.LVL127:
+ 246:u8g2_lib/u8x8_8x8.c **** }
+ 954              		.loc 1 246 3 view .LVU290
+ 955 004a 721C     		adds	r2, r6, #1
+ 956 004c 04AB     		add	r3, sp, #16
+ 957 004e 0093     		str	r3, [sp]
+ 958 0050 0123     		movs	r3, #1
+ 959 0052 D2B2     		uxtb	r2, r2
+ 960 0054 4146     		mov	r1, r8
+ 961 0056 3846     		mov	r0, r7
+ 962 0058 FFF7FEFF 		bl	u8x8_DrawTile
+ 963              	.LVL128:
+ 247:u8g2_lib/u8x8_8x8.c **** 
+ 964              		.loc 1 247 1 is_stmt 0 view .LVU291
+ 965 005c 08B0     		add	sp, sp, #32
+ 966              	.LCFI12:
+ 967              		.cfi_def_cfa_offset 24
+ 968              		@ sp needed
+ 969 005e BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 247:u8g2_lib/u8x8_8x8.c **** 
+ 970              		.loc 1 247 1 view .LVU292
+ 971              		.cfi_endproc
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s 			page 27
+
+
+ 972              	.LFE7:
+ 974              		.section	.text.u8x8_Draw2x2Glyph,"ax",%progbits
+ 975              		.align	1
+ 976              		.global	u8x8_Draw2x2Glyph
+ 977              		.syntax unified
+ 978              		.thumb
+ 979              		.thumb_func
+ 980              		.fpu softvfp
+ 982              	u8x8_Draw2x2Glyph:
+ 983              	.LVL129:
+ 984              	.LFB6:
+ 208:u8g2_lib/u8x8_8x8.c ****   uint8_t th = u8x8_pgm_read(u8x8->font+2);		/* new 2019 format */
+ 985              		.loc 1 208 1 is_stmt 1 view -0
+ 986              		.cfi_startproc
+ 987              		@ args = 0, pretend = 0, frame = 0
+ 988              		@ frame_needed = 0, uses_anonymous_args = 0
+ 208:u8g2_lib/u8x8_8x8.c ****   uint8_t th = u8x8_pgm_read(u8x8->font+2);		/* new 2019 format */
+ 989              		.loc 1 208 1 is_stmt 0 view .LVU294
+ 990 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 991              	.LCFI13:
+ 992              		.cfi_def_cfa_offset 36
+ 993              		.cfi_offset 4, -36
+ 994              		.cfi_offset 5, -32
+ 995              		.cfi_offset 6, -28
+ 996              		.cfi_offset 7, -24
+ 997              		.cfi_offset 8, -20
+ 998              		.cfi_offset 9, -16
+ 999              		.cfi_offset 10, -12
+ 1000              		.cfi_offset 11, -8
+ 1001              		.cfi_offset 14, -4
+ 1002 0004 83B0     		sub	sp, sp, #12
+ 1003              	.LCFI14:
+ 1004              		.cfi_def_cfa_offset 48
+ 1005 0006 8046     		mov	r8, r0
+ 1006 0008 8B46     		mov	fp, r1
+ 1007 000a 1646     		mov	r6, r2
+ 1008 000c 9946     		mov	r9, r3
+ 209:u8g2_lib/u8x8_8x8.c ****   uint8_t tv = u8x8_pgm_read(u8x8->font+3);	/* new 2019 format */
+ 1009              		.loc 1 209 3 is_stmt 1 view .LVU295
+ 209:u8g2_lib/u8x8_8x8.c ****   uint8_t tv = u8x8_pgm_read(u8x8->font+3);	/* new 2019 format */
+ 1010              		.loc 1 209 16 is_stmt 0 view .LVU296
+ 1011 000e C369     		ldr	r3, [r0, #28]
+ 1012              	.LVL130:
+ 209:u8g2_lib/u8x8_8x8.c ****   uint8_t tv = u8x8_pgm_read(u8x8->font+3);	/* new 2019 format */
+ 1013              		.loc 1 209 11 view .LVU297
+ 1014 0010 9F78     		ldrb	r7, [r3, #2]	@ zero_extendqisi2
+ 1015              	.LVL131:
+ 210:u8g2_lib/u8x8_8x8.c ****   uint8_t xx, tile;
+ 1016              		.loc 1 210 3 is_stmt 1 view .LVU298
+ 210:u8g2_lib/u8x8_8x8.c ****   uint8_t xx, tile;
+ 1017              		.loc 1 210 11 is_stmt 0 view .LVU299
+ 1018 0012 93F803A0 		ldrb	r10, [r3, #3]	@ zero_extendqisi2
+ 1019              	.LVL132:
+ 211:u8g2_lib/u8x8_8x8.c ****   th *= 2;
+ 1020              		.loc 1 211 3 is_stmt 1 view .LVU300
+ 212:u8g2_lib/u8x8_8x8.c ****   th += x;
+ 1021              		.loc 1 212 3 view .LVU301
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s 			page 28
+
+
+ 212:u8g2_lib/u8x8_8x8.c ****   th += x;
+ 1022              		.loc 1 212 6 is_stmt 0 view .LVU302
+ 1023 0016 7F00     		lsls	r7, r7, #1
+ 1024              	.LVL133:
+ 212:u8g2_lib/u8x8_8x8.c ****   th += x;
+ 1025              		.loc 1 212 6 view .LVU303
+ 1026 0018 FFB2     		uxtb	r7, r7
+ 1027              	.LVL134:
+ 213:u8g2_lib/u8x8_8x8.c ****   tv *= 2;
+ 1028              		.loc 1 213 3 is_stmt 1 view .LVU304
+ 213:u8g2_lib/u8x8_8x8.c ****   tv *= 2;
+ 1029              		.loc 1 213 6 is_stmt 0 view .LVU305
+ 1030 001a 0F44     		add	r7, r7, r1
+ 1031              	.LVL135:
+ 213:u8g2_lib/u8x8_8x8.c ****   tv *= 2;
+ 1032              		.loc 1 213 6 view .LVU306
+ 1033 001c FFB2     		uxtb	r7, r7
+ 1034              	.LVL136:
+ 214:u8g2_lib/u8x8_8x8.c ****   tv += y;
+ 1035              		.loc 1 214 3 is_stmt 1 view .LVU307
+ 214:u8g2_lib/u8x8_8x8.c ****   tv += y;
+ 1036              		.loc 1 214 6 is_stmt 0 view .LVU308
+ 1037 001e 4FEA4A0A 		lsl	r10, r10, #1
+ 1038              	.LVL137:
+ 214:u8g2_lib/u8x8_8x8.c ****   tv += y;
+ 1039              		.loc 1 214 6 view .LVU309
+ 1040 0022 5FFA8AFA 		uxtb	r10, r10
+ 1041              	.LVL138:
+ 215:u8g2_lib/u8x8_8x8.c ****   tile = 0;
+ 1042              		.loc 1 215 3 is_stmt 1 view .LVU310
+ 215:u8g2_lib/u8x8_8x8.c ****   tile = 0;
+ 1043              		.loc 1 215 6 is_stmt 0 view .LVU311
+ 1044 0026 9244     		add	r10, r10, r2
+ 1045              	.LVL139:
+ 215:u8g2_lib/u8x8_8x8.c ****   tile = 0;
+ 1046              		.loc 1 215 6 view .LVU312
+ 1047 0028 5FFA8AFA 		uxtb	r10, r10
+ 1048              	.LVL140:
+ 216:u8g2_lib/u8x8_8x8.c ****   do
+ 1049              		.loc 1 216 3 is_stmt 1 view .LVU313
+ 216:u8g2_lib/u8x8_8x8.c ****   do
+ 1050              		.loc 1 216 8 is_stmt 0 view .LVU314
+ 1051 002c 0025     		movs	r5, #0
+ 1052              	.LVL141:
+ 1053              	.L56:
+ 217:u8g2_lib/u8x8_8x8.c ****   {
+ 1054              		.loc 1 217 3 is_stmt 1 view .LVU315
+ 219:u8g2_lib/u8x8_8x8.c ****     do
+ 1055              		.loc 1 219 5 view .LVU316
+ 219:u8g2_lib/u8x8_8x8.c ****     do
+ 1056              		.loc 1 219 8 is_stmt 0 view .LVU317
+ 1057 002e 5C46     		mov	r4, fp
+ 1058              	.LVL142:
+ 1059              	.L55:
+ 220:u8g2_lib/u8x8_8x8.c ****     {
+ 1060              		.loc 1 220 5 is_stmt 1 discriminator 1 view .LVU318
+ 222:u8g2_lib/u8x8_8x8.c ****       tile++;
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s 			page 29
+
+
+ 1061              		.loc 1 222 7 discriminator 1 view .LVU319
+ 1062 0030 0095     		str	r5, [sp]
+ 1063 0032 4B46     		mov	r3, r9
+ 1064 0034 3246     		mov	r2, r6
+ 1065 0036 2146     		mov	r1, r4
+ 1066 0038 4046     		mov	r0, r8
+ 1067 003a FFF7FEFF 		bl	u8x8_draw_2x2_subglyph
+ 1068              	.LVL143:
+ 223:u8g2_lib/u8x8_8x8.c ****       xx+=2;
+ 1069              		.loc 1 223 7 discriminator 1 view .LVU320
+ 223:u8g2_lib/u8x8_8x8.c ****       xx+=2;
+ 1070              		.loc 1 223 11 is_stmt 0 discriminator 1 view .LVU321
+ 1071 003e 0135     		adds	r5, r5, #1
+ 1072              	.LVL144:
+ 223:u8g2_lib/u8x8_8x8.c ****       xx+=2;
+ 1073              		.loc 1 223 11 discriminator 1 view .LVU322
+ 1074 0040 EDB2     		uxtb	r5, r5
+ 1075              	.LVL145:
+ 224:u8g2_lib/u8x8_8x8.c ****     } while( xx < th );
+ 1076              		.loc 1 224 7 is_stmt 1 discriminator 1 view .LVU323
+ 224:u8g2_lib/u8x8_8x8.c ****     } while( xx < th );
+ 1077              		.loc 1 224 9 is_stmt 0 discriminator 1 view .LVU324
+ 1078 0042 0234     		adds	r4, r4, #2
+ 1079              	.LVL146:
+ 224:u8g2_lib/u8x8_8x8.c ****     } while( xx < th );
+ 1080              		.loc 1 224 9 discriminator 1 view .LVU325
+ 1081 0044 E4B2     		uxtb	r4, r4
+ 1082              	.LVL147:
+ 225:u8g2_lib/u8x8_8x8.c ****     y+=2;
+ 1083              		.loc 1 225 12 is_stmt 1 discriminator 1 view .LVU326
+ 225:u8g2_lib/u8x8_8x8.c ****     y+=2;
+ 1084              		.loc 1 225 5 is_stmt 0 discriminator 1 view .LVU327
+ 1085 0046 A742     		cmp	r7, r4
+ 1086 0048 F2D8     		bhi	.L55
+ 226:u8g2_lib/u8x8_8x8.c ****   } while( y < tv );  
+ 1087              		.loc 1 226 5 is_stmt 1 view .LVU328
+ 226:u8g2_lib/u8x8_8x8.c ****   } while( y < tv );  
+ 1088              		.loc 1 226 6 is_stmt 0 view .LVU329
+ 1089 004a 0236     		adds	r6, r6, #2
+ 1090              	.LVL148:
+ 226:u8g2_lib/u8x8_8x8.c ****   } while( y < tv );  
+ 1091              		.loc 1 226 6 view .LVU330
+ 1092 004c F6B2     		uxtb	r6, r6
+ 1093              	.LVL149:
+ 227:u8g2_lib/u8x8_8x8.c **** }
+ 1094              		.loc 1 227 10 is_stmt 1 view .LVU331
+ 227:u8g2_lib/u8x8_8x8.c **** }
+ 1095              		.loc 1 227 3 is_stmt 0 view .LVU332
+ 1096 004e B245     		cmp	r10, r6
+ 1097 0050 EDD8     		bhi	.L56
+ 228:u8g2_lib/u8x8_8x8.c **** 
+ 1098              		.loc 1 228 1 view .LVU333
+ 1099 0052 03B0     		add	sp, sp, #12
+ 1100              	.LCFI15:
+ 1101              		.cfi_def_cfa_offset 36
+ 1102              		@ sp needed
+ 1103 0054 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s 			page 30
+
+
+ 228:u8g2_lib/u8x8_8x8.c **** 
+ 1104              		.loc 1 228 1 view .LVU334
+ 1105              		.cfi_endproc
+ 1106              	.LFE6:
+ 1108              		.section	.text.u8x8_Draw1x2Glyph,"ax",%progbits
+ 1109              		.align	1
+ 1110              		.global	u8x8_Draw1x2Glyph
+ 1111              		.syntax unified
+ 1112              		.thumb
+ 1113              		.thumb_func
+ 1114              		.fpu softvfp
+ 1116              	u8x8_Draw1x2Glyph:
+ 1117              	.LVL150:
+ 1118              	.LFB8:
+ 250:u8g2_lib/u8x8_8x8.c ****   uint8_t th = u8x8_pgm_read(u8x8->font+2);		/* new 2019 format */
+ 1119              		.loc 1 250 1 is_stmt 1 view -0
+ 1120              		.cfi_startproc
+ 1121              		@ args = 0, pretend = 0, frame = 0
+ 1122              		@ frame_needed = 0, uses_anonymous_args = 0
+ 250:u8g2_lib/u8x8_8x8.c ****   uint8_t th = u8x8_pgm_read(u8x8->font+2);		/* new 2019 format */
+ 1123              		.loc 1 250 1 is_stmt 0 view .LVU336
+ 1124 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 1125              	.LCFI16:
+ 1126              		.cfi_def_cfa_offset 36
+ 1127              		.cfi_offset 4, -36
+ 1128              		.cfi_offset 5, -32
+ 1129              		.cfi_offset 6, -28
+ 1130              		.cfi_offset 7, -24
+ 1131              		.cfi_offset 8, -20
+ 1132              		.cfi_offset 9, -16
+ 1133              		.cfi_offset 10, -12
+ 1134              		.cfi_offset 11, -8
+ 1135              		.cfi_offset 14, -4
+ 1136 0004 83B0     		sub	sp, sp, #12
+ 1137              	.LCFI17:
+ 1138              		.cfi_def_cfa_offset 48
+ 1139 0006 8046     		mov	r8, r0
+ 1140 0008 8B46     		mov	fp, r1
+ 1141 000a 1646     		mov	r6, r2
+ 1142 000c 9946     		mov	r9, r3
+ 251:u8g2_lib/u8x8_8x8.c ****   uint8_t tv = u8x8_pgm_read(u8x8->font+3);	/* new 2019 format */
+ 1143              		.loc 1 251 3 is_stmt 1 view .LVU337
+ 251:u8g2_lib/u8x8_8x8.c ****   uint8_t tv = u8x8_pgm_read(u8x8->font+3);	/* new 2019 format */
+ 1144              		.loc 1 251 16 is_stmt 0 view .LVU338
+ 1145 000e C369     		ldr	r3, [r0, #28]
+ 1146              	.LVL151:
+ 251:u8g2_lib/u8x8_8x8.c ****   uint8_t tv = u8x8_pgm_read(u8x8->font+3);	/* new 2019 format */
+ 1147              		.loc 1 251 11 view .LVU339
+ 1148 0010 9F78     		ldrb	r7, [r3, #2]	@ zero_extendqisi2
+ 1149              	.LVL152:
+ 252:u8g2_lib/u8x8_8x8.c ****   uint8_t xx, tile;
+ 1150              		.loc 1 252 3 is_stmt 1 view .LVU340
+ 252:u8g2_lib/u8x8_8x8.c ****   uint8_t xx, tile;
+ 1151              		.loc 1 252 11 is_stmt 0 view .LVU341
+ 1152 0012 93F803A0 		ldrb	r10, [r3, #3]	@ zero_extendqisi2
+ 1153              	.LVL153:
+ 253:u8g2_lib/u8x8_8x8.c ****   th += x;
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s 			page 31
+
+
+ 1154              		.loc 1 253 3 is_stmt 1 view .LVU342
+ 254:u8g2_lib/u8x8_8x8.c ****   tv *= 2;
+ 1155              		.loc 1 254 3 view .LVU343
+ 254:u8g2_lib/u8x8_8x8.c ****   tv *= 2;
+ 1156              		.loc 1 254 6 is_stmt 0 view .LVU344
+ 1157 0016 0F44     		add	r7, r7, r1
+ 1158              	.LVL154:
+ 254:u8g2_lib/u8x8_8x8.c ****   tv *= 2;
+ 1159              		.loc 1 254 6 view .LVU345
+ 1160 0018 FFB2     		uxtb	r7, r7
+ 1161              	.LVL155:
+ 255:u8g2_lib/u8x8_8x8.c ****   tv += y;
+ 1162              		.loc 1 255 3 is_stmt 1 view .LVU346
+ 255:u8g2_lib/u8x8_8x8.c ****   tv += y;
+ 1163              		.loc 1 255 6 is_stmt 0 view .LVU347
+ 1164 001a 4FEA4A0A 		lsl	r10, r10, #1
+ 1165              	.LVL156:
+ 255:u8g2_lib/u8x8_8x8.c ****   tv += y;
+ 1166              		.loc 1 255 6 view .LVU348
+ 1167 001e 5FFA8AFA 		uxtb	r10, r10
+ 1168              	.LVL157:
+ 256:u8g2_lib/u8x8_8x8.c ****   tile = 0;
+ 1169              		.loc 1 256 3 is_stmt 1 view .LVU349
+ 256:u8g2_lib/u8x8_8x8.c ****   tile = 0;
+ 1170              		.loc 1 256 6 is_stmt 0 view .LVU350
+ 1171 0022 9244     		add	r10, r10, r2
+ 1172              	.LVL158:
+ 256:u8g2_lib/u8x8_8x8.c ****   tile = 0;
+ 1173              		.loc 1 256 6 view .LVU351
+ 1174 0024 5FFA8AFA 		uxtb	r10, r10
+ 1175              	.LVL159:
+ 257:u8g2_lib/u8x8_8x8.c ****   do
+ 1176              		.loc 1 257 3 is_stmt 1 view .LVU352
+ 257:u8g2_lib/u8x8_8x8.c ****   do
+ 1177              		.loc 1 257 8 is_stmt 0 view .LVU353
+ 1178 0028 0025     		movs	r5, #0
+ 1179              	.LVL160:
+ 1180              	.L60:
+ 258:u8g2_lib/u8x8_8x8.c ****   {
+ 1181              		.loc 1 258 3 is_stmt 1 view .LVU354
+ 260:u8g2_lib/u8x8_8x8.c ****     do
+ 1182              		.loc 1 260 5 view .LVU355
+ 260:u8g2_lib/u8x8_8x8.c ****     do
+ 1183              		.loc 1 260 8 is_stmt 0 view .LVU356
+ 1184 002a 5C46     		mov	r4, fp
+ 1185              	.LVL161:
+ 1186              	.L59:
+ 261:u8g2_lib/u8x8_8x8.c ****     {
+ 1187              		.loc 1 261 5 is_stmt 1 discriminator 1 view .LVU357
+ 263:u8g2_lib/u8x8_8x8.c ****       tile++;
+ 1188              		.loc 1 263 7 discriminator 1 view .LVU358
+ 1189 002c 0095     		str	r5, [sp]
+ 1190 002e 4B46     		mov	r3, r9
+ 1191 0030 3246     		mov	r2, r6
+ 1192 0032 2146     		mov	r1, r4
+ 1193 0034 4046     		mov	r0, r8
+ 1194 0036 FFF7FEFF 		bl	u8x8_draw_1x2_subglyph
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s 			page 32
+
+
+ 1195              	.LVL162:
+ 264:u8g2_lib/u8x8_8x8.c ****       xx++;
+ 1196              		.loc 1 264 7 discriminator 1 view .LVU359
+ 264:u8g2_lib/u8x8_8x8.c ****       xx++;
+ 1197              		.loc 1 264 11 is_stmt 0 discriminator 1 view .LVU360
+ 1198 003a 0135     		adds	r5, r5, #1
+ 1199              	.LVL163:
+ 264:u8g2_lib/u8x8_8x8.c ****       xx++;
+ 1200              		.loc 1 264 11 discriminator 1 view .LVU361
+ 1201 003c EDB2     		uxtb	r5, r5
+ 1202              	.LVL164:
+ 265:u8g2_lib/u8x8_8x8.c ****     } while( xx < th );
+ 1203              		.loc 1 265 7 is_stmt 1 discriminator 1 view .LVU362
+ 265:u8g2_lib/u8x8_8x8.c ****     } while( xx < th );
+ 1204              		.loc 1 265 9 is_stmt 0 discriminator 1 view .LVU363
+ 1205 003e 0134     		adds	r4, r4, #1
+ 1206              	.LVL165:
+ 265:u8g2_lib/u8x8_8x8.c ****     } while( xx < th );
+ 1207              		.loc 1 265 9 discriminator 1 view .LVU364
+ 1208 0040 E4B2     		uxtb	r4, r4
+ 1209              	.LVL166:
+ 266:u8g2_lib/u8x8_8x8.c ****     y+=2;
+ 1210              		.loc 1 266 12 is_stmt 1 discriminator 1 view .LVU365
+ 266:u8g2_lib/u8x8_8x8.c ****     y+=2;
+ 1211              		.loc 1 266 5 is_stmt 0 discriminator 1 view .LVU366
+ 1212 0042 A742     		cmp	r7, r4
+ 1213 0044 F2D8     		bhi	.L59
+ 267:u8g2_lib/u8x8_8x8.c ****   } while( y < tv );  
+ 1214              		.loc 1 267 5 is_stmt 1 view .LVU367
+ 267:u8g2_lib/u8x8_8x8.c ****   } while( y < tv );  
+ 1215              		.loc 1 267 6 is_stmt 0 view .LVU368
+ 1216 0046 0236     		adds	r6, r6, #2
+ 1217              	.LVL167:
+ 267:u8g2_lib/u8x8_8x8.c ****   } while( y < tv );  
+ 1218              		.loc 1 267 6 view .LVU369
+ 1219 0048 F6B2     		uxtb	r6, r6
+ 1220              	.LVL168:
+ 268:u8g2_lib/u8x8_8x8.c **** }
+ 1221              		.loc 1 268 10 is_stmt 1 view .LVU370
+ 268:u8g2_lib/u8x8_8x8.c **** }
+ 1222              		.loc 1 268 3 is_stmt 0 view .LVU371
+ 1223 004a B245     		cmp	r10, r6
+ 1224 004c EDD8     		bhi	.L60
+ 269:u8g2_lib/u8x8_8x8.c **** 
+ 1225              		.loc 1 269 1 view .LVU372
+ 1226 004e 03B0     		add	sp, sp, #12
+ 1227              	.LCFI18:
+ 1228              		.cfi_def_cfa_offset 36
+ 1229              		@ sp needed
+ 1230 0050 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 269:u8g2_lib/u8x8_8x8.c **** 
+ 1231              		.loc 1 269 1 view .LVU373
+ 1232              		.cfi_endproc
+ 1233              	.LFE8:
+ 1235              		.section	.text.u8x8_utf8_init,"ax",%progbits
+ 1236              		.align	1
+ 1237              		.global	u8x8_utf8_init
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s 			page 33
+
+
+ 1238              		.syntax unified
+ 1239              		.thumb
+ 1240              		.thumb_func
+ 1241              		.fpu softvfp
+ 1243              	u8x8_utf8_init:
+ 1244              	.LVL169:
+ 1245              	.LFB9:
+ 286:u8g2_lib/u8x8_8x8.c ****   u8x8->utf8_state = 0;	/* also reset during u8x8_SetupDefaults() */
+ 1246              		.loc 1 286 1 is_stmt 1 view -0
+ 1247              		.cfi_startproc
+ 1248              		@ args = 0, pretend = 0, frame = 0
+ 1249              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1250              		@ link register save eliminated.
+ 287:u8g2_lib/u8x8_8x8.c **** }
+ 1251              		.loc 1 287 3 view .LVU375
+ 287:u8g2_lib/u8x8_8x8.c **** }
+ 1252              		.loc 1 287 20 is_stmt 0 view .LVU376
+ 1253 0000 0023     		movs	r3, #0
+ 1254 0002 80F82630 		strb	r3, [r0, #38]
+ 288:u8g2_lib/u8x8_8x8.c **** 
+ 1255              		.loc 1 288 1 view .LVU377
+ 1256 0006 7047     		bx	lr
+ 1257              		.cfi_endproc
+ 1258              	.LFE9:
+ 1260              		.section	.text.u8x8_draw_string,"ax",%progbits
+ 1261              		.align	1
+ 1262              		.syntax unified
+ 1263              		.thumb
+ 1264              		.thumb_func
+ 1265              		.fpu softvfp
+ 1267              	u8x8_draw_string:
+ 1268              	.LVL170:
+ 1269              	.LFB12:
+ 355:u8g2_lib/u8x8_8x8.c **** 
+ 356:u8g2_lib/u8x8_8x8.c **** 
+ 357:u8g2_lib/u8x8_8x8.c **** 
+ 358:u8g2_lib/u8x8_8x8.c **** static uint8_t u8x8_draw_string(u8x8_t *u8x8, uint8_t x, uint8_t y, const char *s) U8X8_NOINLINE;
+ 359:u8g2_lib/u8x8_8x8.c **** static uint8_t u8x8_draw_string(u8x8_t *u8x8, uint8_t x, uint8_t y, const char *s)
+ 360:u8g2_lib/u8x8_8x8.c **** {
+ 1270              		.loc 1 360 1 is_stmt 1 view -0
+ 1271              		.cfi_startproc
+ 1272              		@ args = 0, pretend = 0, frame = 0
+ 1273              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1274              		.loc 1 360 1 is_stmt 0 view .LVU379
+ 1275 0000 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
+ 1276              	.LCFI19:
+ 1277              		.cfi_def_cfa_offset 32
+ 1278              		.cfi_offset 3, -32
+ 1279              		.cfi_offset 4, -28
+ 1280              		.cfi_offset 5, -24
+ 1281              		.cfi_offset 6, -20
+ 1282              		.cfi_offset 7, -16
+ 1283              		.cfi_offset 8, -12
+ 1284              		.cfi_offset 9, -8
+ 1285              		.cfi_offset 14, -4
+ 1286 0004 0546     		mov	r5, r0
+ 1287 0006 0E46     		mov	r6, r1
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s 			page 34
+
+
+ 1288 0008 9046     		mov	r8, r2
+ 1289 000a 1C46     		mov	r4, r3
+ 361:u8g2_lib/u8x8_8x8.c ****   uint16_t e;
+ 1290              		.loc 1 361 3 is_stmt 1 view .LVU380
+ 362:u8g2_lib/u8x8_8x8.c ****   uint8_t cnt = 0;
+ 1291              		.loc 1 362 3 view .LVU381
+ 1292              	.LVL171:
+ 363:u8g2_lib/u8x8_8x8.c ****   uint8_t th = u8x8_pgm_read(u8x8->font+2);		/* new 2019 format */
+ 1293              		.loc 1 363 3 view .LVU382
+ 1294              		.loc 1 363 16 is_stmt 0 view .LVU383
+ 1295 000c C369     		ldr	r3, [r0, #28]
+ 1296              	.LVL172:
+ 1297              		.loc 1 363 11 view .LVU384
+ 1298 000e 93F80290 		ldrb	r9, [r3, #2]	@ zero_extendqisi2
+ 1299              	.LVL173:
+ 364:u8g2_lib/u8x8_8x8.c **** 
+ 365:u8g2_lib/u8x8_8x8.c ****   u8x8_utf8_init(u8x8);
+ 1300              		.loc 1 365 3 is_stmt 1 view .LVU385
+ 1301 0012 FFF7FEFF 		bl	u8x8_utf8_init
+ 1302              	.LVL174:
+ 362:u8g2_lib/u8x8_8x8.c ****   uint8_t th = u8x8_pgm_read(u8x8->font+2);		/* new 2019 format */
+ 1303              		.loc 1 362 11 is_stmt 0 view .LVU386
+ 1304 0016 0027     		movs	r7, #0
+ 1305 0018 09E0     		b	.L64
+ 1306              	.LVL175:
+ 1307              	.L68:
+ 366:u8g2_lib/u8x8_8x8.c ****   for(;;)
+ 367:u8g2_lib/u8x8_8x8.c ****   {
+ 368:u8g2_lib/u8x8_8x8.c ****     e = u8x8->next_cb(u8x8, (uint8_t)*s);
+ 369:u8g2_lib/u8x8_8x8.c ****     if ( e == 0x0ffff )
+ 370:u8g2_lib/u8x8_8x8.c ****       break;
+ 371:u8g2_lib/u8x8_8x8.c ****     s++;
+ 372:u8g2_lib/u8x8_8x8.c ****     if ( e != 0x0fffe )
+ 373:u8g2_lib/u8x8_8x8.c ****     {
+ 374:u8g2_lib/u8x8_8x8.c ****       u8x8_DrawGlyph(u8x8, x, y, e);
+ 1308              		.loc 1 374 7 is_stmt 1 view .LVU387
+ 1309 001a C3B2     		uxtb	r3, r0
+ 1310 001c 4246     		mov	r2, r8
+ 1311 001e 3146     		mov	r1, r6
+ 1312 0020 2846     		mov	r0, r5
+ 1313              	.LVL176:
+ 1314              		.loc 1 374 7 is_stmt 0 view .LVU388
+ 1315 0022 FFF7FEFF 		bl	u8x8_DrawGlyph
+ 1316              	.LVL177:
+ 375:u8g2_lib/u8x8_8x8.c ****       x+=th;
+ 1317              		.loc 1 375 7 is_stmt 1 view .LVU389
+ 1318              		.loc 1 375 8 is_stmt 0 view .LVU390
+ 1319 0026 4E44     		add	r6, r6, r9
+ 1320              	.LVL178:
+ 1321              		.loc 1 375 8 view .LVU391
+ 1322 0028 F6B2     		uxtb	r6, r6
+ 1323              	.LVL179:
+ 376:u8g2_lib/u8x8_8x8.c ****       cnt++;
+ 1324              		.loc 1 376 7 is_stmt 1 view .LVU392
+ 1325              		.loc 1 376 10 is_stmt 0 view .LVU393
+ 1326 002a 0137     		adds	r7, r7, #1
+ 1327              	.LVL180:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s 			page 35
+
+
+ 1328              		.loc 1 376 10 view .LVU394
+ 1329 002c FFB2     		uxtb	r7, r7
+ 1330              	.LVL181:
+ 1331              	.L64:
+ 366:u8g2_lib/u8x8_8x8.c ****   for(;;)
+ 1332              		.loc 1 366 3 is_stmt 1 view .LVU395
+ 368:u8g2_lib/u8x8_8x8.c ****     if ( e == 0x0ffff )
+ 1333              		.loc 1 368 5 view .LVU396
+ 368:u8g2_lib/u8x8_8x8.c ****     if ( e == 0x0ffff )
+ 1334              		.loc 1 368 13 is_stmt 0 view .LVU397
+ 1335 002e 6B68     		ldr	r3, [r5, #4]
+ 368:u8g2_lib/u8x8_8x8.c ****     if ( e == 0x0ffff )
+ 1336              		.loc 1 368 9 view .LVU398
+ 1337 0030 2178     		ldrb	r1, [r4]	@ zero_extendqisi2
+ 1338 0032 2846     		mov	r0, r5
+ 1339 0034 9847     		blx	r3
+ 1340              	.LVL182:
+ 369:u8g2_lib/u8x8_8x8.c ****       break;
+ 1341              		.loc 1 369 5 is_stmt 1 view .LVU399
+ 369:u8g2_lib/u8x8_8x8.c ****       break;
+ 1342              		.loc 1 369 8 is_stmt 0 view .LVU400
+ 1343 0036 4FF6FF73 		movw	r3, #65535
+ 1344 003a 9842     		cmp	r0, r3
+ 1345 003c 05D0     		beq	.L65
+ 371:u8g2_lib/u8x8_8x8.c ****     if ( e != 0x0fffe )
+ 1346              		.loc 1 371 5 is_stmt 1 view .LVU401
+ 371:u8g2_lib/u8x8_8x8.c ****     if ( e != 0x0fffe )
+ 1347              		.loc 1 371 6 is_stmt 0 view .LVU402
+ 1348 003e 0134     		adds	r4, r4, #1
+ 1349              	.LVL183:
+ 372:u8g2_lib/u8x8_8x8.c ****     {
+ 1350              		.loc 1 372 5 is_stmt 1 view .LVU403
+ 372:u8g2_lib/u8x8_8x8.c ****     {
+ 1351              		.loc 1 372 8 is_stmt 0 view .LVU404
+ 1352 0040 4FF6FE73 		movw	r3, #65534
+ 1353 0044 9842     		cmp	r0, r3
+ 1354 0046 F2D0     		beq	.L64
+ 1355 0048 E7E7     		b	.L68
+ 1356              	.L65:
+ 377:u8g2_lib/u8x8_8x8.c ****     }
+ 378:u8g2_lib/u8x8_8x8.c ****   }
+ 379:u8g2_lib/u8x8_8x8.c ****   return cnt;
+ 1357              		.loc 1 379 3 is_stmt 1 view .LVU405
+ 380:u8g2_lib/u8x8_8x8.c **** }
+ 1358              		.loc 1 380 1 is_stmt 0 view .LVU406
+ 1359 004a 3846     		mov	r0, r7
+ 1360              	.LVL184:
+ 1361              		.loc 1 380 1 view .LVU407
+ 1362 004c BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+ 1363              		.loc 1 380 1 view .LVU408
+ 1364              		.cfi_endproc
+ 1365              	.LFE12:
+ 1367              		.section	.text.u8x8_draw_2x2_string,"ax",%progbits
+ 1368              		.align	1
+ 1369              		.syntax unified
+ 1370              		.thumb
+ 1371              		.thumb_func
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s 			page 36
+
+
+ 1372              		.fpu softvfp
+ 1374              	u8x8_draw_2x2_string:
+ 1375              	.LVL185:
+ 1376              	.LFB15:
+ 381:u8g2_lib/u8x8_8x8.c **** 
+ 382:u8g2_lib/u8x8_8x8.c **** 
+ 383:u8g2_lib/u8x8_8x8.c **** uint8_t u8x8_DrawString(u8x8_t *u8x8, uint8_t x, uint8_t y, const char *s)
+ 384:u8g2_lib/u8x8_8x8.c **** {
+ 385:u8g2_lib/u8x8_8x8.c ****   u8x8->next_cb = u8x8_ascii_next;
+ 386:u8g2_lib/u8x8_8x8.c ****   return u8x8_draw_string(u8x8, x, y, s);
+ 387:u8g2_lib/u8x8_8x8.c **** }
+ 388:u8g2_lib/u8x8_8x8.c **** 
+ 389:u8g2_lib/u8x8_8x8.c **** uint8_t u8x8_DrawUTF8(u8x8_t *u8x8, uint8_t x, uint8_t y, const char *s)
+ 390:u8g2_lib/u8x8_8x8.c **** {
+ 391:u8g2_lib/u8x8_8x8.c ****   u8x8->next_cb = u8x8_utf8_next;
+ 392:u8g2_lib/u8x8_8x8.c ****   return u8x8_draw_string(u8x8, x, y, s);
+ 393:u8g2_lib/u8x8_8x8.c **** }
+ 394:u8g2_lib/u8x8_8x8.c **** 
+ 395:u8g2_lib/u8x8_8x8.c **** 
+ 396:u8g2_lib/u8x8_8x8.c **** 
+ 397:u8g2_lib/u8x8_8x8.c **** static uint8_t u8x8_draw_2x2_string(u8x8_t *u8x8, uint8_t x, uint8_t y, const char *s) U8X8_NOINLIN
+ 398:u8g2_lib/u8x8_8x8.c **** static uint8_t u8x8_draw_2x2_string(u8x8_t *u8x8, uint8_t x, uint8_t y, const char *s)
+ 399:u8g2_lib/u8x8_8x8.c **** {
+ 1377              		.loc 1 399 1 is_stmt 1 view -0
+ 1378              		.cfi_startproc
+ 1379              		@ args = 0, pretend = 0, frame = 0
+ 1380              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1381              		.loc 1 399 1 is_stmt 0 view .LVU410
+ 1382 0000 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
+ 1383              	.LCFI20:
+ 1384              		.cfi_def_cfa_offset 32
+ 1385              		.cfi_offset 3, -32
+ 1386              		.cfi_offset 4, -28
+ 1387              		.cfi_offset 5, -24
+ 1388              		.cfi_offset 6, -20
+ 1389              		.cfi_offset 7, -16
+ 1390              		.cfi_offset 8, -12
+ 1391              		.cfi_offset 9, -8
+ 1392              		.cfi_offset 14, -4
+ 1393 0004 0546     		mov	r5, r0
+ 1394 0006 0E46     		mov	r6, r1
+ 1395 0008 9146     		mov	r9, r2
+ 1396 000a 1C46     		mov	r4, r3
+ 400:u8g2_lib/u8x8_8x8.c ****   uint16_t e;
+ 1397              		.loc 1 400 3 is_stmt 1 view .LVU411
+ 401:u8g2_lib/u8x8_8x8.c ****   uint8_t cnt = 0;
+ 1398              		.loc 1 401 3 view .LVU412
+ 1399              	.LVL186:
+ 402:u8g2_lib/u8x8_8x8.c ****   uint8_t th = u8x8_pgm_read(u8x8->font+2);	/* new 2019 format */
+ 1400              		.loc 1 402 3 view .LVU413
+ 1401              		.loc 1 402 16 is_stmt 0 view .LVU414
+ 1402 000c C369     		ldr	r3, [r0, #28]
+ 1403              	.LVL187:
+ 1404              		.loc 1 402 11 view .LVU415
+ 1405 000e 93F80280 		ldrb	r8, [r3, #2]	@ zero_extendqisi2
+ 1406              	.LVL188:
+ 403:u8g2_lib/u8x8_8x8.c ****   
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s 			page 37
+
+
+ 404:u8g2_lib/u8x8_8x8.c ****   th <<= 1;
+ 1407              		.loc 1 404 3 is_stmt 1 view .LVU416
+ 1408              		.loc 1 404 6 is_stmt 0 view .LVU417
+ 1409 0012 4FEA4808 		lsl	r8, r8, #1
+ 1410              	.LVL189:
+ 1411              		.loc 1 404 6 view .LVU418
+ 1412 0016 5FFA88F8 		uxtb	r8, r8
+ 1413              	.LVL190:
+ 405:u8g2_lib/u8x8_8x8.c ****   
+ 406:u8g2_lib/u8x8_8x8.c ****   u8x8_utf8_init(u8x8);
+ 1414              		.loc 1 406 3 is_stmt 1 view .LVU419
+ 1415 001a FFF7FEFF 		bl	u8x8_utf8_init
+ 1416              	.LVL191:
+ 401:u8g2_lib/u8x8_8x8.c ****   uint8_t th = u8x8_pgm_read(u8x8->font+2);	/* new 2019 format */
+ 1417              		.loc 1 401 11 is_stmt 0 view .LVU420
+ 1418 001e 0027     		movs	r7, #0
+ 1419 0020 09E0     		b	.L70
+ 1420              	.LVL192:
+ 1421              	.L74:
+ 407:u8g2_lib/u8x8_8x8.c ****   for(;;)
+ 408:u8g2_lib/u8x8_8x8.c ****   {
+ 409:u8g2_lib/u8x8_8x8.c ****     e = u8x8->next_cb(u8x8, (uint8_t)*s);
+ 410:u8g2_lib/u8x8_8x8.c ****     if ( e == 0x0ffff )
+ 411:u8g2_lib/u8x8_8x8.c ****       break;
+ 412:u8g2_lib/u8x8_8x8.c ****     s++;
+ 413:u8g2_lib/u8x8_8x8.c ****     if ( e != 0x0fffe )
+ 414:u8g2_lib/u8x8_8x8.c ****     {
+ 415:u8g2_lib/u8x8_8x8.c ****       u8x8_Draw2x2Glyph(u8x8, x, y, e);
+ 1422              		.loc 1 415 7 is_stmt 1 view .LVU421
+ 1423 0022 C3B2     		uxtb	r3, r0
+ 1424 0024 4A46     		mov	r2, r9
+ 1425 0026 3146     		mov	r1, r6
+ 1426 0028 2846     		mov	r0, r5
+ 1427              	.LVL193:
+ 1428              		.loc 1 415 7 is_stmt 0 view .LVU422
+ 1429 002a FFF7FEFF 		bl	u8x8_Draw2x2Glyph
+ 1430              	.LVL194:
+ 416:u8g2_lib/u8x8_8x8.c ****       x+=th;
+ 1431              		.loc 1 416 7 is_stmt 1 view .LVU423
+ 1432              		.loc 1 416 8 is_stmt 0 view .LVU424
+ 1433 002e 4644     		add	r6, r6, r8
+ 1434              	.LVL195:
+ 1435              		.loc 1 416 8 view .LVU425
+ 1436 0030 F6B2     		uxtb	r6, r6
+ 1437              	.LVL196:
+ 417:u8g2_lib/u8x8_8x8.c ****       cnt++;
+ 1438              		.loc 1 417 7 is_stmt 1 view .LVU426
+ 1439              		.loc 1 417 10 is_stmt 0 view .LVU427
+ 1440 0032 0137     		adds	r7, r7, #1
+ 1441              	.LVL197:
+ 1442              		.loc 1 417 10 view .LVU428
+ 1443 0034 FFB2     		uxtb	r7, r7
+ 1444              	.LVL198:
+ 1445              	.L70:
+ 407:u8g2_lib/u8x8_8x8.c ****   for(;;)
+ 1446              		.loc 1 407 3 is_stmt 1 view .LVU429
+ 409:u8g2_lib/u8x8_8x8.c ****     if ( e == 0x0ffff )
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s 			page 38
+
+
+ 1447              		.loc 1 409 5 view .LVU430
+ 409:u8g2_lib/u8x8_8x8.c ****     if ( e == 0x0ffff )
+ 1448              		.loc 1 409 13 is_stmt 0 view .LVU431
+ 1449 0036 6B68     		ldr	r3, [r5, #4]
+ 409:u8g2_lib/u8x8_8x8.c ****     if ( e == 0x0ffff )
+ 1450              		.loc 1 409 9 view .LVU432
+ 1451 0038 2178     		ldrb	r1, [r4]	@ zero_extendqisi2
+ 1452 003a 2846     		mov	r0, r5
+ 1453 003c 9847     		blx	r3
+ 1454              	.LVL199:
+ 410:u8g2_lib/u8x8_8x8.c ****       break;
+ 1455              		.loc 1 410 5 is_stmt 1 view .LVU433
+ 410:u8g2_lib/u8x8_8x8.c ****       break;
+ 1456              		.loc 1 410 8 is_stmt 0 view .LVU434
+ 1457 003e 4FF6FF73 		movw	r3, #65535
+ 1458 0042 9842     		cmp	r0, r3
+ 1459 0044 05D0     		beq	.L71
+ 412:u8g2_lib/u8x8_8x8.c ****     if ( e != 0x0fffe )
+ 1460              		.loc 1 412 5 is_stmt 1 view .LVU435
+ 412:u8g2_lib/u8x8_8x8.c ****     if ( e != 0x0fffe )
+ 1461              		.loc 1 412 6 is_stmt 0 view .LVU436
+ 1462 0046 0134     		adds	r4, r4, #1
+ 1463              	.LVL200:
+ 413:u8g2_lib/u8x8_8x8.c ****     {
+ 1464              		.loc 1 413 5 is_stmt 1 view .LVU437
+ 413:u8g2_lib/u8x8_8x8.c ****     {
+ 1465              		.loc 1 413 8 is_stmt 0 view .LVU438
+ 1466 0048 4FF6FE73 		movw	r3, #65534
+ 1467 004c 9842     		cmp	r0, r3
+ 1468 004e F2D0     		beq	.L70
+ 1469 0050 E7E7     		b	.L74
+ 1470              	.L71:
+ 418:u8g2_lib/u8x8_8x8.c ****     }
+ 419:u8g2_lib/u8x8_8x8.c ****   }
+ 420:u8g2_lib/u8x8_8x8.c ****   return cnt;
+ 1471              		.loc 1 420 3 is_stmt 1 view .LVU439
+ 421:u8g2_lib/u8x8_8x8.c **** }
+ 1472              		.loc 1 421 1 is_stmt 0 view .LVU440
+ 1473 0052 3846     		mov	r0, r7
+ 1474              	.LVL201:
+ 1475              		.loc 1 421 1 view .LVU441
+ 1476 0054 BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+ 1477              		.loc 1 421 1 view .LVU442
+ 1478              		.cfi_endproc
+ 1479              	.LFE15:
+ 1481              		.section	.text.u8x8_draw_1x2_string,"ax",%progbits
+ 1482              		.align	1
+ 1483              		.syntax unified
+ 1484              		.thumb
+ 1485              		.thumb_func
+ 1486              		.fpu softvfp
+ 1488              	u8x8_draw_1x2_string:
+ 1489              	.LVL202:
+ 1490              	.LFB18:
+ 422:u8g2_lib/u8x8_8x8.c **** 
+ 423:u8g2_lib/u8x8_8x8.c **** 
+ 424:u8g2_lib/u8x8_8x8.c **** uint8_t u8x8_Draw2x2String(u8x8_t *u8x8, uint8_t x, uint8_t y, const char *s)
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s 			page 39
+
+
+ 425:u8g2_lib/u8x8_8x8.c **** {
+ 426:u8g2_lib/u8x8_8x8.c ****   u8x8->next_cb = u8x8_ascii_next;
+ 427:u8g2_lib/u8x8_8x8.c ****   return u8x8_draw_2x2_string(u8x8, x, y, s);
+ 428:u8g2_lib/u8x8_8x8.c **** }
+ 429:u8g2_lib/u8x8_8x8.c **** 
+ 430:u8g2_lib/u8x8_8x8.c **** uint8_t u8x8_Draw2x2UTF8(u8x8_t *u8x8, uint8_t x, uint8_t y, const char *s)
+ 431:u8g2_lib/u8x8_8x8.c **** {
+ 432:u8g2_lib/u8x8_8x8.c ****   u8x8->next_cb = u8x8_utf8_next;
+ 433:u8g2_lib/u8x8_8x8.c ****   return u8x8_draw_2x2_string(u8x8, x, y, s);
+ 434:u8g2_lib/u8x8_8x8.c **** }
+ 435:u8g2_lib/u8x8_8x8.c **** 
+ 436:u8g2_lib/u8x8_8x8.c **** 
+ 437:u8g2_lib/u8x8_8x8.c **** 
+ 438:u8g2_lib/u8x8_8x8.c **** static uint8_t u8x8_draw_1x2_string(u8x8_t *u8x8, uint8_t x, uint8_t y, const char *s) U8X8_NOINLIN
+ 439:u8g2_lib/u8x8_8x8.c **** static uint8_t u8x8_draw_1x2_string(u8x8_t *u8x8, uint8_t x, uint8_t y, const char *s)
+ 440:u8g2_lib/u8x8_8x8.c **** {  
+ 1491              		.loc 1 440 1 is_stmt 1 view -0
+ 1492              		.cfi_startproc
+ 1493              		@ args = 0, pretend = 0, frame = 0
+ 1494              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1495              		.loc 1 440 1 is_stmt 0 view .LVU444
+ 1496 0000 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
+ 1497              	.LCFI21:
+ 1498              		.cfi_def_cfa_offset 32
+ 1499              		.cfi_offset 3, -32
+ 1500              		.cfi_offset 4, -28
+ 1501              		.cfi_offset 5, -24
+ 1502              		.cfi_offset 6, -20
+ 1503              		.cfi_offset 7, -16
+ 1504              		.cfi_offset 8, -12
+ 1505              		.cfi_offset 9, -8
+ 1506              		.cfi_offset 14, -4
+ 1507 0004 0546     		mov	r5, r0
+ 1508 0006 0E46     		mov	r6, r1
+ 1509 0008 9046     		mov	r8, r2
+ 1510 000a 1C46     		mov	r4, r3
+ 441:u8g2_lib/u8x8_8x8.c ****   uint16_t e;
+ 1511              		.loc 1 441 3 is_stmt 1 view .LVU445
+ 442:u8g2_lib/u8x8_8x8.c ****   uint8_t cnt = 0;
+ 1512              		.loc 1 442 3 view .LVU446
+ 1513              	.LVL203:
+ 443:u8g2_lib/u8x8_8x8.c ****   uint8_t th = u8x8_pgm_read(u8x8->font+2);	/* new 2019 format */
+ 1514              		.loc 1 443 3 view .LVU447
+ 1515              		.loc 1 443 16 is_stmt 0 view .LVU448
+ 1516 000c C369     		ldr	r3, [r0, #28]
+ 1517              	.LVL204:
+ 1518              		.loc 1 443 11 view .LVU449
+ 1519 000e 93F80290 		ldrb	r9, [r3, #2]	@ zero_extendqisi2
+ 1520              	.LVL205:
+ 444:u8g2_lib/u8x8_8x8.c ****   u8x8_utf8_init(u8x8);
+ 1521              		.loc 1 444 3 is_stmt 1 view .LVU450
+ 1522 0012 FFF7FEFF 		bl	u8x8_utf8_init
+ 1523              	.LVL206:
+ 442:u8g2_lib/u8x8_8x8.c ****   uint8_t cnt = 0;
+ 1524              		.loc 1 442 11 is_stmt 0 view .LVU451
+ 1525 0016 0027     		movs	r7, #0
+ 1526 0018 09E0     		b	.L76
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s 			page 40
+
+
+ 1527              	.LVL207:
+ 1528              	.L80:
+ 445:u8g2_lib/u8x8_8x8.c ****   for(;;)
+ 446:u8g2_lib/u8x8_8x8.c ****   {
+ 447:u8g2_lib/u8x8_8x8.c ****     e = u8x8->next_cb(u8x8, (uint8_t)*s);
+ 448:u8g2_lib/u8x8_8x8.c ****     if ( e == 0x0ffff )
+ 449:u8g2_lib/u8x8_8x8.c ****       break;
+ 450:u8g2_lib/u8x8_8x8.c ****     s++;
+ 451:u8g2_lib/u8x8_8x8.c ****     if ( e != 0x0fffe )
+ 452:u8g2_lib/u8x8_8x8.c ****     {
+ 453:u8g2_lib/u8x8_8x8.c ****       u8x8_Draw1x2Glyph(u8x8, x, y, e);
+ 1529              		.loc 1 453 7 is_stmt 1 view .LVU452
+ 1530 001a C3B2     		uxtb	r3, r0
+ 1531 001c 4246     		mov	r2, r8
+ 1532 001e 3146     		mov	r1, r6
+ 1533 0020 2846     		mov	r0, r5
+ 1534              	.LVL208:
+ 1535              		.loc 1 453 7 is_stmt 0 view .LVU453
+ 1536 0022 FFF7FEFF 		bl	u8x8_Draw1x2Glyph
+ 1537              	.LVL209:
+ 454:u8g2_lib/u8x8_8x8.c ****       x+=th;
+ 1538              		.loc 1 454 7 is_stmt 1 view .LVU454
+ 1539              		.loc 1 454 8 is_stmt 0 view .LVU455
+ 1540 0026 4E44     		add	r6, r6, r9
+ 1541              	.LVL210:
+ 1542              		.loc 1 454 8 view .LVU456
+ 1543 0028 F6B2     		uxtb	r6, r6
+ 1544              	.LVL211:
+ 455:u8g2_lib/u8x8_8x8.c ****       cnt++;
+ 1545              		.loc 1 455 7 is_stmt 1 view .LVU457
+ 1546              		.loc 1 455 10 is_stmt 0 view .LVU458
+ 1547 002a 0137     		adds	r7, r7, #1
+ 1548              	.LVL212:
+ 1549              		.loc 1 455 10 view .LVU459
+ 1550 002c FFB2     		uxtb	r7, r7
+ 1551              	.LVL213:
+ 1552              	.L76:
+ 445:u8g2_lib/u8x8_8x8.c ****   for(;;)
+ 1553              		.loc 1 445 3 is_stmt 1 view .LVU460
+ 447:u8g2_lib/u8x8_8x8.c ****     if ( e == 0x0ffff )
+ 1554              		.loc 1 447 5 view .LVU461
+ 447:u8g2_lib/u8x8_8x8.c ****     if ( e == 0x0ffff )
+ 1555              		.loc 1 447 13 is_stmt 0 view .LVU462
+ 1556 002e 6B68     		ldr	r3, [r5, #4]
+ 447:u8g2_lib/u8x8_8x8.c ****     if ( e == 0x0ffff )
+ 1557              		.loc 1 447 9 view .LVU463
+ 1558 0030 2178     		ldrb	r1, [r4]	@ zero_extendqisi2
+ 1559 0032 2846     		mov	r0, r5
+ 1560 0034 9847     		blx	r3
+ 1561              	.LVL214:
+ 448:u8g2_lib/u8x8_8x8.c ****       break;
+ 1562              		.loc 1 448 5 is_stmt 1 view .LVU464
+ 448:u8g2_lib/u8x8_8x8.c ****       break;
+ 1563              		.loc 1 448 8 is_stmt 0 view .LVU465
+ 1564 0036 4FF6FF73 		movw	r3, #65535
+ 1565 003a 9842     		cmp	r0, r3
+ 1566 003c 05D0     		beq	.L77
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s 			page 41
+
+
+ 450:u8g2_lib/u8x8_8x8.c ****     if ( e != 0x0fffe )
+ 1567              		.loc 1 450 5 is_stmt 1 view .LVU466
+ 450:u8g2_lib/u8x8_8x8.c ****     if ( e != 0x0fffe )
+ 1568              		.loc 1 450 6 is_stmt 0 view .LVU467
+ 1569 003e 0134     		adds	r4, r4, #1
+ 1570              	.LVL215:
+ 451:u8g2_lib/u8x8_8x8.c ****     {
+ 1571              		.loc 1 451 5 is_stmt 1 view .LVU468
+ 451:u8g2_lib/u8x8_8x8.c ****     {
+ 1572              		.loc 1 451 8 is_stmt 0 view .LVU469
+ 1573 0040 4FF6FE73 		movw	r3, #65534
+ 1574 0044 9842     		cmp	r0, r3
+ 1575 0046 F2D0     		beq	.L76
+ 1576 0048 E7E7     		b	.L80
+ 1577              	.L77:
+ 456:u8g2_lib/u8x8_8x8.c ****     }
+ 457:u8g2_lib/u8x8_8x8.c ****   }
+ 458:u8g2_lib/u8x8_8x8.c ****   return cnt;
+ 1578              		.loc 1 458 3 is_stmt 1 view .LVU470
+ 459:u8g2_lib/u8x8_8x8.c **** }
+ 1579              		.loc 1 459 1 is_stmt 0 view .LVU471
+ 1580 004a 3846     		mov	r0, r7
+ 1581              	.LVL216:
+ 1582              		.loc 1 459 1 view .LVU472
+ 1583 004c BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+ 1584              		.loc 1 459 1 view .LVU473
+ 1585              		.cfi_endproc
+ 1586              	.LFE18:
+ 1588              		.section	.text.u8x8_DrawString,"ax",%progbits
+ 1589              		.align	1
+ 1590              		.global	u8x8_DrawString
+ 1591              		.syntax unified
+ 1592              		.thumb
+ 1593              		.thumb_func
+ 1594              		.fpu softvfp
+ 1596              	u8x8_DrawString:
+ 1597              	.LVL217:
+ 1598              	.LFB13:
+ 384:u8g2_lib/u8x8_8x8.c ****   u8x8->next_cb = u8x8_ascii_next;
+ 1599              		.loc 1 384 1 is_stmt 1 view -0
+ 1600              		.cfi_startproc
+ 1601              		@ args = 0, pretend = 0, frame = 0
+ 1602              		@ frame_needed = 0, uses_anonymous_args = 0
+ 384:u8g2_lib/u8x8_8x8.c ****   u8x8->next_cb = u8x8_ascii_next;
+ 1603              		.loc 1 384 1 is_stmt 0 view .LVU475
+ 1604 0000 10B5     		push	{r4, lr}
+ 1605              	.LCFI22:
+ 1606              		.cfi_def_cfa_offset 8
+ 1607              		.cfi_offset 4, -8
+ 1608              		.cfi_offset 14, -4
+ 385:u8g2_lib/u8x8_8x8.c ****   return u8x8_draw_string(u8x8, x, y, s);
+ 1609              		.loc 1 385 3 is_stmt 1 view .LVU476
+ 385:u8g2_lib/u8x8_8x8.c ****   return u8x8_draw_string(u8x8, x, y, s);
+ 1610              		.loc 1 385 17 is_stmt 0 view .LVU477
+ 1611 0002 024C     		ldr	r4, .L83
+ 1612 0004 4460     		str	r4, [r0, #4]
+ 386:u8g2_lib/u8x8_8x8.c **** }
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s 			page 42
+
+
+ 1613              		.loc 1 386 3 is_stmt 1 view .LVU478
+ 386:u8g2_lib/u8x8_8x8.c **** }
+ 1614              		.loc 1 386 10 is_stmt 0 view .LVU479
+ 1615 0006 FFF7FEFF 		bl	u8x8_draw_string
+ 1616              	.LVL218:
+ 387:u8g2_lib/u8x8_8x8.c **** 
+ 1617              		.loc 1 387 1 view .LVU480
+ 1618 000a 10BD     		pop	{r4, pc}
+ 1619              	.L84:
+ 1620              		.align	2
+ 1621              	.L83:
+ 1622 000c 00000000 		.word	u8x8_ascii_next
+ 1623              		.cfi_endproc
+ 1624              	.LFE13:
+ 1626              		.section	.text.u8x8_DrawUTF8,"ax",%progbits
+ 1627              		.align	1
+ 1628              		.global	u8x8_DrawUTF8
+ 1629              		.syntax unified
+ 1630              		.thumb
+ 1631              		.thumb_func
+ 1632              		.fpu softvfp
+ 1634              	u8x8_DrawUTF8:
+ 1635              	.LVL219:
+ 1636              	.LFB14:
+ 390:u8g2_lib/u8x8_8x8.c ****   u8x8->next_cb = u8x8_utf8_next;
+ 1637              		.loc 1 390 1 is_stmt 1 view -0
+ 1638              		.cfi_startproc
+ 1639              		@ args = 0, pretend = 0, frame = 0
+ 1640              		@ frame_needed = 0, uses_anonymous_args = 0
+ 390:u8g2_lib/u8x8_8x8.c ****   u8x8->next_cb = u8x8_utf8_next;
+ 1641              		.loc 1 390 1 is_stmt 0 view .LVU482
+ 1642 0000 10B5     		push	{r4, lr}
+ 1643              	.LCFI23:
+ 1644              		.cfi_def_cfa_offset 8
+ 1645              		.cfi_offset 4, -8
+ 1646              		.cfi_offset 14, -4
+ 391:u8g2_lib/u8x8_8x8.c ****   return u8x8_draw_string(u8x8, x, y, s);
+ 1647              		.loc 1 391 3 is_stmt 1 view .LVU483
+ 391:u8g2_lib/u8x8_8x8.c ****   return u8x8_draw_string(u8x8, x, y, s);
+ 1648              		.loc 1 391 17 is_stmt 0 view .LVU484
+ 1649 0002 024C     		ldr	r4, .L87
+ 1650 0004 4460     		str	r4, [r0, #4]
+ 392:u8g2_lib/u8x8_8x8.c **** }
+ 1651              		.loc 1 392 3 is_stmt 1 view .LVU485
+ 392:u8g2_lib/u8x8_8x8.c **** }
+ 1652              		.loc 1 392 10 is_stmt 0 view .LVU486
+ 1653 0006 FFF7FEFF 		bl	u8x8_draw_string
+ 1654              	.LVL220:
+ 393:u8g2_lib/u8x8_8x8.c **** 
+ 1655              		.loc 1 393 1 view .LVU487
+ 1656 000a 10BD     		pop	{r4, pc}
+ 1657              	.L88:
+ 1658              		.align	2
+ 1659              	.L87:
+ 1660 000c 00000000 		.word	u8x8_utf8_next
+ 1661              		.cfi_endproc
+ 1662              	.LFE14:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s 			page 43
+
+
+ 1664              		.section	.text.u8x8_Draw2x2String,"ax",%progbits
+ 1665              		.align	1
+ 1666              		.global	u8x8_Draw2x2String
+ 1667              		.syntax unified
+ 1668              		.thumb
+ 1669              		.thumb_func
+ 1670              		.fpu softvfp
+ 1672              	u8x8_Draw2x2String:
+ 1673              	.LVL221:
+ 1674              	.LFB16:
+ 425:u8g2_lib/u8x8_8x8.c ****   u8x8->next_cb = u8x8_ascii_next;
+ 1675              		.loc 1 425 1 is_stmt 1 view -0
+ 1676              		.cfi_startproc
+ 1677              		@ args = 0, pretend = 0, frame = 0
+ 1678              		@ frame_needed = 0, uses_anonymous_args = 0
+ 425:u8g2_lib/u8x8_8x8.c ****   u8x8->next_cb = u8x8_ascii_next;
+ 1679              		.loc 1 425 1 is_stmt 0 view .LVU489
+ 1680 0000 10B5     		push	{r4, lr}
+ 1681              	.LCFI24:
+ 1682              		.cfi_def_cfa_offset 8
+ 1683              		.cfi_offset 4, -8
+ 1684              		.cfi_offset 14, -4
+ 426:u8g2_lib/u8x8_8x8.c ****   return u8x8_draw_2x2_string(u8x8, x, y, s);
+ 1685              		.loc 1 426 3 is_stmt 1 view .LVU490
+ 426:u8g2_lib/u8x8_8x8.c ****   return u8x8_draw_2x2_string(u8x8, x, y, s);
+ 1686              		.loc 1 426 17 is_stmt 0 view .LVU491
+ 1687 0002 024C     		ldr	r4, .L91
+ 1688 0004 4460     		str	r4, [r0, #4]
+ 427:u8g2_lib/u8x8_8x8.c **** }
+ 1689              		.loc 1 427 3 is_stmt 1 view .LVU492
+ 427:u8g2_lib/u8x8_8x8.c **** }
+ 1690              		.loc 1 427 10 is_stmt 0 view .LVU493
+ 1691 0006 FFF7FEFF 		bl	u8x8_draw_2x2_string
+ 1692              	.LVL222:
+ 428:u8g2_lib/u8x8_8x8.c **** 
+ 1693              		.loc 1 428 1 view .LVU494
+ 1694 000a 10BD     		pop	{r4, pc}
+ 1695              	.L92:
+ 1696              		.align	2
+ 1697              	.L91:
+ 1698 000c 00000000 		.word	u8x8_ascii_next
+ 1699              		.cfi_endproc
+ 1700              	.LFE16:
+ 1702              		.section	.text.u8x8_Draw2x2UTF8,"ax",%progbits
+ 1703              		.align	1
+ 1704              		.global	u8x8_Draw2x2UTF8
+ 1705              		.syntax unified
+ 1706              		.thumb
+ 1707              		.thumb_func
+ 1708              		.fpu softvfp
+ 1710              	u8x8_Draw2x2UTF8:
+ 1711              	.LVL223:
+ 1712              	.LFB17:
+ 431:u8g2_lib/u8x8_8x8.c ****   u8x8->next_cb = u8x8_utf8_next;
+ 1713              		.loc 1 431 1 is_stmt 1 view -0
+ 1714              		.cfi_startproc
+ 1715              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s 			page 44
+
+
+ 1716              		@ frame_needed = 0, uses_anonymous_args = 0
+ 431:u8g2_lib/u8x8_8x8.c ****   u8x8->next_cb = u8x8_utf8_next;
+ 1717              		.loc 1 431 1 is_stmt 0 view .LVU496
+ 1718 0000 10B5     		push	{r4, lr}
+ 1719              	.LCFI25:
+ 1720              		.cfi_def_cfa_offset 8
+ 1721              		.cfi_offset 4, -8
+ 1722              		.cfi_offset 14, -4
+ 432:u8g2_lib/u8x8_8x8.c ****   return u8x8_draw_2x2_string(u8x8, x, y, s);
+ 1723              		.loc 1 432 3 is_stmt 1 view .LVU497
+ 432:u8g2_lib/u8x8_8x8.c ****   return u8x8_draw_2x2_string(u8x8, x, y, s);
+ 1724              		.loc 1 432 17 is_stmt 0 view .LVU498
+ 1725 0002 024C     		ldr	r4, .L95
+ 1726 0004 4460     		str	r4, [r0, #4]
+ 433:u8g2_lib/u8x8_8x8.c **** }
+ 1727              		.loc 1 433 3 is_stmt 1 view .LVU499
+ 433:u8g2_lib/u8x8_8x8.c **** }
+ 1728              		.loc 1 433 10 is_stmt 0 view .LVU500
+ 1729 0006 FFF7FEFF 		bl	u8x8_draw_2x2_string
+ 1730              	.LVL224:
+ 434:u8g2_lib/u8x8_8x8.c **** 
+ 1731              		.loc 1 434 1 view .LVU501
+ 1732 000a 10BD     		pop	{r4, pc}
+ 1733              	.L96:
+ 1734              		.align	2
+ 1735              	.L95:
+ 1736 000c 00000000 		.word	u8x8_utf8_next
+ 1737              		.cfi_endproc
+ 1738              	.LFE17:
+ 1740              		.section	.text.u8x8_Draw1x2String,"ax",%progbits
+ 1741              		.align	1
+ 1742              		.global	u8x8_Draw1x2String
+ 1743              		.syntax unified
+ 1744              		.thumb
+ 1745              		.thumb_func
+ 1746              		.fpu softvfp
+ 1748              	u8x8_Draw1x2String:
+ 1749              	.LVL225:
+ 1750              	.LFB19:
+ 460:u8g2_lib/u8x8_8x8.c **** 
+ 461:u8g2_lib/u8x8_8x8.c **** 
+ 462:u8g2_lib/u8x8_8x8.c **** uint8_t u8x8_Draw1x2String(u8x8_t *u8x8, uint8_t x, uint8_t y, const char *s)
+ 463:u8g2_lib/u8x8_8x8.c **** {
+ 1751              		.loc 1 463 1 is_stmt 1 view -0
+ 1752              		.cfi_startproc
+ 1753              		@ args = 0, pretend = 0, frame = 0
+ 1754              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1755              		.loc 1 463 1 is_stmt 0 view .LVU503
+ 1756 0000 10B5     		push	{r4, lr}
+ 1757              	.LCFI26:
+ 1758              		.cfi_def_cfa_offset 8
+ 1759              		.cfi_offset 4, -8
+ 1760              		.cfi_offset 14, -4
+ 464:u8g2_lib/u8x8_8x8.c ****   u8x8->next_cb = u8x8_ascii_next;
+ 1761              		.loc 1 464 3 is_stmt 1 view .LVU504
+ 1762              		.loc 1 464 17 is_stmt 0 view .LVU505
+ 1763 0002 024C     		ldr	r4, .L99
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s 			page 45
+
+
+ 1764 0004 4460     		str	r4, [r0, #4]
+ 465:u8g2_lib/u8x8_8x8.c ****   return u8x8_draw_1x2_string(u8x8, x, y, s);
+ 1765              		.loc 1 465 3 is_stmt 1 view .LVU506
+ 1766              		.loc 1 465 10 is_stmt 0 view .LVU507
+ 1767 0006 FFF7FEFF 		bl	u8x8_draw_1x2_string
+ 1768              	.LVL226:
+ 466:u8g2_lib/u8x8_8x8.c **** }
+ 1769              		.loc 1 466 1 view .LVU508
+ 1770 000a 10BD     		pop	{r4, pc}
+ 1771              	.L100:
+ 1772              		.align	2
+ 1773              	.L99:
+ 1774 000c 00000000 		.word	u8x8_ascii_next
+ 1775              		.cfi_endproc
+ 1776              	.LFE19:
+ 1778              		.section	.text.u8x8_Draw1x2UTF8,"ax",%progbits
+ 1779              		.align	1
+ 1780              		.global	u8x8_Draw1x2UTF8
+ 1781              		.syntax unified
+ 1782              		.thumb
+ 1783              		.thumb_func
+ 1784              		.fpu softvfp
+ 1786              	u8x8_Draw1x2UTF8:
+ 1787              	.LVL227:
+ 1788              	.LFB20:
+ 467:u8g2_lib/u8x8_8x8.c **** 
+ 468:u8g2_lib/u8x8_8x8.c **** uint8_t u8x8_Draw1x2UTF8(u8x8_t *u8x8, uint8_t x, uint8_t y, const char *s)
+ 469:u8g2_lib/u8x8_8x8.c **** {
+ 1789              		.loc 1 469 1 is_stmt 1 view -0
+ 1790              		.cfi_startproc
+ 1791              		@ args = 0, pretend = 0, frame = 0
+ 1792              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1793              		.loc 1 469 1 is_stmt 0 view .LVU510
+ 1794 0000 10B5     		push	{r4, lr}
+ 1795              	.LCFI27:
+ 1796              		.cfi_def_cfa_offset 8
+ 1797              		.cfi_offset 4, -8
+ 1798              		.cfi_offset 14, -4
+ 470:u8g2_lib/u8x8_8x8.c ****   u8x8->next_cb = u8x8_utf8_next;
+ 1799              		.loc 1 470 3 is_stmt 1 view .LVU511
+ 1800              		.loc 1 470 17 is_stmt 0 view .LVU512
+ 1801 0002 024C     		ldr	r4, .L103
+ 1802 0004 4460     		str	r4, [r0, #4]
+ 471:u8g2_lib/u8x8_8x8.c ****   return u8x8_draw_1x2_string(u8x8, x, y, s);
+ 1803              		.loc 1 471 3 is_stmt 1 view .LVU513
+ 1804              		.loc 1 471 10 is_stmt 0 view .LVU514
+ 1805 0006 FFF7FEFF 		bl	u8x8_draw_1x2_string
+ 1806              	.LVL228:
+ 472:u8g2_lib/u8x8_8x8.c **** }
+ 1807              		.loc 1 472 1 view .LVU515
+ 1808 000a 10BD     		pop	{r4, pc}
+ 1809              	.L104:
+ 1810              		.align	2
+ 1811              	.L103:
+ 1812 000c 00000000 		.word	u8x8_utf8_next
+ 1813              		.cfi_endproc
+ 1814              	.LFE20:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s 			page 46
+
+
+ 1816              		.section	.text.u8x8_GetUTF8Len,"ax",%progbits
+ 1817              		.align	1
+ 1818              		.global	u8x8_GetUTF8Len
+ 1819              		.syntax unified
+ 1820              		.thumb
+ 1821              		.thumb_func
+ 1822              		.fpu softvfp
+ 1824              	u8x8_GetUTF8Len:
+ 1825              	.LVL229:
+ 1826              	.LFB21:
+ 473:u8g2_lib/u8x8_8x8.c **** 
+ 474:u8g2_lib/u8x8_8x8.c **** 
+ 475:u8g2_lib/u8x8_8x8.c **** 
+ 476:u8g2_lib/u8x8_8x8.c **** uint8_t u8x8_GetUTF8Len(u8x8_t *u8x8, const char *s)
+ 477:u8g2_lib/u8x8_8x8.c **** {
+ 1827              		.loc 1 477 1 is_stmt 1 view -0
+ 1828              		.cfi_startproc
+ 1829              		@ args = 0, pretend = 0, frame = 0
+ 1830              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1831              		.loc 1 477 1 is_stmt 0 view .LVU517
+ 1832 0000 70B5     		push	{r4, r5, r6, lr}
+ 1833              	.LCFI28:
+ 1834              		.cfi_def_cfa_offset 16
+ 1835              		.cfi_offset 4, -16
+ 1836              		.cfi_offset 5, -12
+ 1837              		.cfi_offset 6, -8
+ 1838              		.cfi_offset 14, -4
+ 1839 0002 0646     		mov	r6, r0
+ 1840 0004 0C46     		mov	r4, r1
+ 478:u8g2_lib/u8x8_8x8.c ****   uint16_t e;
+ 1841              		.loc 1 478 3 is_stmt 1 view .LVU518
+ 479:u8g2_lib/u8x8_8x8.c ****   uint8_t cnt = 0;
+ 1842              		.loc 1 479 3 view .LVU519
+ 1843              	.LVL230:
+ 480:u8g2_lib/u8x8_8x8.c ****   u8x8_utf8_init(u8x8);
+ 1844              		.loc 1 480 3 view .LVU520
+ 1845 0006 FFF7FEFF 		bl	u8x8_utf8_init
+ 1846              	.LVL231:
+ 479:u8g2_lib/u8x8_8x8.c ****   uint8_t cnt = 0;
+ 1847              		.loc 1 479 11 is_stmt 0 view .LVU521
+ 1848 000a 0025     		movs	r5, #0
+ 1849 000c 01E0     		b	.L106
+ 1850              	.LVL232:
+ 1851              	.L110:
+ 481:u8g2_lib/u8x8_8x8.c ****   for(;;)
+ 482:u8g2_lib/u8x8_8x8.c ****   {
+ 483:u8g2_lib/u8x8_8x8.c ****     e = u8x8_utf8_next(u8x8, *s);
+ 484:u8g2_lib/u8x8_8x8.c ****     if ( e == 0x0ffff )
+ 485:u8g2_lib/u8x8_8x8.c ****       break;
+ 486:u8g2_lib/u8x8_8x8.c ****     s++;
+ 487:u8g2_lib/u8x8_8x8.c ****     if ( e != 0x0fffe )
+ 488:u8g2_lib/u8x8_8x8.c ****       cnt++;
+ 1852              		.loc 1 488 7 is_stmt 1 view .LVU522
+ 1853              		.loc 1 488 10 is_stmt 0 view .LVU523
+ 1854 000e 0135     		adds	r5, r5, #1
+ 1855              	.LVL233:
+ 1856              		.loc 1 488 10 view .LVU524
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s 			page 47
+
+
+ 1857 0010 EDB2     		uxtb	r5, r5
+ 1858              	.LVL234:
+ 1859              	.L106:
+ 481:u8g2_lib/u8x8_8x8.c ****   for(;;)
+ 1860              		.loc 1 481 3 is_stmt 1 view .LVU525
+ 483:u8g2_lib/u8x8_8x8.c ****     if ( e == 0x0ffff )
+ 1861              		.loc 1 483 5 view .LVU526
+ 483:u8g2_lib/u8x8_8x8.c ****     if ( e == 0x0ffff )
+ 1862              		.loc 1 483 9 is_stmt 0 view .LVU527
+ 1863 0012 2178     		ldrb	r1, [r4]	@ zero_extendqisi2
+ 1864 0014 3046     		mov	r0, r6
+ 1865 0016 FFF7FEFF 		bl	u8x8_utf8_next
+ 1866              	.LVL235:
+ 484:u8g2_lib/u8x8_8x8.c ****       break;
+ 1867              		.loc 1 484 5 is_stmt 1 view .LVU528
+ 484:u8g2_lib/u8x8_8x8.c ****       break;
+ 1868              		.loc 1 484 8 is_stmt 0 view .LVU529
+ 1869 001a 4FF6FF73 		movw	r3, #65535
+ 1870 001e 9842     		cmp	r0, r3
+ 1871 0020 05D0     		beq	.L107
+ 486:u8g2_lib/u8x8_8x8.c ****     if ( e != 0x0fffe )
+ 1872              		.loc 1 486 5 is_stmt 1 view .LVU530
+ 486:u8g2_lib/u8x8_8x8.c ****     if ( e != 0x0fffe )
+ 1873              		.loc 1 486 6 is_stmt 0 view .LVU531
+ 1874 0022 0134     		adds	r4, r4, #1
+ 1875              	.LVL236:
+ 487:u8g2_lib/u8x8_8x8.c ****       cnt++;
+ 1876              		.loc 1 487 5 is_stmt 1 view .LVU532
+ 487:u8g2_lib/u8x8_8x8.c ****       cnt++;
+ 1877              		.loc 1 487 8 is_stmt 0 view .LVU533
+ 1878 0024 4FF6FE73 		movw	r3, #65534
+ 1879 0028 9842     		cmp	r0, r3
+ 1880 002a F0D1     		bne	.L110
+ 1881 002c F1E7     		b	.L106
+ 1882              	.L107:
+ 489:u8g2_lib/u8x8_8x8.c ****   }
+ 490:u8g2_lib/u8x8_8x8.c ****   return cnt;
+ 1883              		.loc 1 490 3 is_stmt 1 view .LVU534
+ 491:u8g2_lib/u8x8_8x8.c **** }
+ 1884              		.loc 1 491 1 is_stmt 0 view .LVU535
+ 1885 002e 2846     		mov	r0, r5
+ 1886              	.LVL237:
+ 1887              		.loc 1 491 1 view .LVU536
+ 1888 0030 70BD     		pop	{r4, r5, r6, pc}
+ 1889              		.loc 1 491 1 view .LVU537
+ 1890              		.cfi_endproc
+ 1891              	.LFE21:
+ 1893              		.text
+ 1894              	.Letext0:
+ 1895              		.file 2 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 1896              		.file 3 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 1897              		.file 4 "u8g2_lib/u8x8.h"
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s 			page 48
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 u8x8_8x8.c
+C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s:16     .text.u8x8_get_glyph_data:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s:23     .text.u8x8_get_glyph_data:00000000 u8x8_get_glyph_data
+C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s:219    .text.u8x8_upscale_buf:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s:225    .text.u8x8_upscale_buf:00000000 u8x8_upscale_buf
+C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s:280    .text.u8x8_ascii_next:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s:287    .text.u8x8_ascii_next:00000000 u8x8_ascii_next
+C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s:325    .text.u8x8_utf8_next:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s:332    .text.u8x8_utf8_next:00000000 u8x8_utf8_next
+C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s:501    .text.u8x8_SetFont:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s:508    .text.u8x8_SetFont:00000000 u8x8_SetFont
+C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s:525    .text.u8x8_DrawGlyph:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s:532    .text.u8x8_DrawGlyph:00000000 u8x8_DrawGlyph
+C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s:654    .text.u8x8_upscale_byte:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s:661    .text.u8x8_upscale_byte:00000000 u8x8_upscale_byte
+C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s:719    .text.u8x8_draw_2x2_subglyph:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s:725    .text.u8x8_draw_2x2_subglyph:00000000 u8x8_draw_2x2_subglyph
+C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s:867    .text.u8x8_draw_1x2_subglyph:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s:873    .text.u8x8_draw_1x2_subglyph:00000000 u8x8_draw_1x2_subglyph
+C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s:975    .text.u8x8_Draw2x2Glyph:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s:982    .text.u8x8_Draw2x2Glyph:00000000 u8x8_Draw2x2Glyph
+C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s:1109   .text.u8x8_Draw1x2Glyph:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s:1116   .text.u8x8_Draw1x2Glyph:00000000 u8x8_Draw1x2Glyph
+C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s:1236   .text.u8x8_utf8_init:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s:1243   .text.u8x8_utf8_init:00000000 u8x8_utf8_init
+C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s:1261   .text.u8x8_draw_string:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s:1267   .text.u8x8_draw_string:00000000 u8x8_draw_string
+C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s:1368   .text.u8x8_draw_2x2_string:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s:1374   .text.u8x8_draw_2x2_string:00000000 u8x8_draw_2x2_string
+C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s:1482   .text.u8x8_draw_1x2_string:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s:1488   .text.u8x8_draw_1x2_string:00000000 u8x8_draw_1x2_string
+C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s:1589   .text.u8x8_DrawString:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s:1596   .text.u8x8_DrawString:00000000 u8x8_DrawString
+C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s:1622   .text.u8x8_DrawString:0000000c $d
+C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s:1627   .text.u8x8_DrawUTF8:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s:1634   .text.u8x8_DrawUTF8:00000000 u8x8_DrawUTF8
+C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s:1660   .text.u8x8_DrawUTF8:0000000c $d
+C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s:1665   .text.u8x8_Draw2x2String:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s:1672   .text.u8x8_Draw2x2String:00000000 u8x8_Draw2x2String
+C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s:1698   .text.u8x8_Draw2x2String:0000000c $d
+C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s:1703   .text.u8x8_Draw2x2UTF8:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s:1710   .text.u8x8_Draw2x2UTF8:00000000 u8x8_Draw2x2UTF8
+C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s:1736   .text.u8x8_Draw2x2UTF8:0000000c $d
+C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s:1741   .text.u8x8_Draw1x2String:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s:1748   .text.u8x8_Draw1x2String:00000000 u8x8_Draw1x2String
+C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s:1774   .text.u8x8_Draw1x2String:0000000c $d
+C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s:1779   .text.u8x8_Draw1x2UTF8:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s:1786   .text.u8x8_Draw1x2UTF8:00000000 u8x8_Draw1x2UTF8
+C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s:1812   .text.u8x8_Draw1x2UTF8:0000000c $d
+C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s:1817   .text.u8x8_GetUTF8Len:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccJ8NU2C.s:1824   .text.u8x8_GetUTF8Len:00000000 u8x8_GetUTF8Len
+
+UNDEFINED SYMBOLS
+u8x8_DrawTile

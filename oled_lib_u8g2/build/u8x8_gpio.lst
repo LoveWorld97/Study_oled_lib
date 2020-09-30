@@ -1,0 +1,110 @@
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc7KYHO4.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"u8x8_gpio.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.u8x8_gpio_call,"ax",%progbits
+  16              		.align	1
+  17              		.global	u8x8_gpio_call
+  18              		.arch armv7-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu softvfp
+  24              	u8x8_gpio_call:
+  25              	.LVL0:
+  26              	.LFB0:
+  27              		.file 1 "u8g2_lib/u8x8_gpio.c"
+   1:u8g2_lib/u8x8_gpio.c **** /*
+   2:u8g2_lib/u8x8_gpio.c **** 
+   3:u8g2_lib/u8x8_gpio.c ****   u8x8_gpio.c
+   4:u8g2_lib/u8x8_gpio.c ****   
+   5:u8g2_lib/u8x8_gpio.c ****   Universal 8bit Graphics Library (https://github.com/olikraus/u8g2/)
+   6:u8g2_lib/u8x8_gpio.c **** 
+   7:u8g2_lib/u8x8_gpio.c ****   Copyright (c) 2016, olikraus@gmail.com
+   8:u8g2_lib/u8x8_gpio.c ****   All rights reserved.
+   9:u8g2_lib/u8x8_gpio.c **** 
+  10:u8g2_lib/u8x8_gpio.c ****   Redistribution and use in source and binary forms, with or without modification, 
+  11:u8g2_lib/u8x8_gpio.c ****   are permitted provided that the following conditions are met:
+  12:u8g2_lib/u8x8_gpio.c **** 
+  13:u8g2_lib/u8x8_gpio.c ****   * Redistributions of source code must retain the above copyright notice, this list 
+  14:u8g2_lib/u8x8_gpio.c ****     of conditions and the following disclaimer.
+  15:u8g2_lib/u8x8_gpio.c ****     
+  16:u8g2_lib/u8x8_gpio.c ****   * Redistributions in binary form must reproduce the above copyright notice, this 
+  17:u8g2_lib/u8x8_gpio.c ****     list of conditions and the following disclaimer in the documentation and/or other 
+  18:u8g2_lib/u8x8_gpio.c ****     materials provided with the distribution.
+  19:u8g2_lib/u8x8_gpio.c **** 
+  20:u8g2_lib/u8x8_gpio.c ****   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND 
+  21:u8g2_lib/u8x8_gpio.c ****   CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, 
+  22:u8g2_lib/u8x8_gpio.c ****   INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF 
+  23:u8g2_lib/u8x8_gpio.c ****   MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE 
+  24:u8g2_lib/u8x8_gpio.c ****   DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR 
+  25:u8g2_lib/u8x8_gpio.c ****   CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
+  26:u8g2_lib/u8x8_gpio.c ****   SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
+  27:u8g2_lib/u8x8_gpio.c ****   NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; 
+  28:u8g2_lib/u8x8_gpio.c ****   LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER 
+  29:u8g2_lib/u8x8_gpio.c ****   CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, 
+  30:u8g2_lib/u8x8_gpio.c ****   STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+  31:u8g2_lib/u8x8_gpio.c ****   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF 
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc7KYHO4.s 			page 2
+
+
+  32:u8g2_lib/u8x8_gpio.c ****   ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.  
+  33:u8g2_lib/u8x8_gpio.c **** 
+  34:u8g2_lib/u8x8_gpio.c **** */
+  35:u8g2_lib/u8x8_gpio.c **** 
+  36:u8g2_lib/u8x8_gpio.c **** 
+  37:u8g2_lib/u8x8_gpio.c **** #include "u8x8.h"
+  38:u8g2_lib/u8x8_gpio.c **** 
+  39:u8g2_lib/u8x8_gpio.c **** 
+  40:u8g2_lib/u8x8_gpio.c **** void u8x8_gpio_call(u8x8_t *u8x8, uint8_t msg, uint8_t arg)
+  41:u8g2_lib/u8x8_gpio.c **** {
+  28              		.loc 1 41 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		.loc 1 41 1 is_stmt 0 view .LVU1
+  33 0000 10B5     		push	{r4, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 8
+  36              		.cfi_offset 4, -8
+  37              		.cfi_offset 14, -4
+  42:u8g2_lib/u8x8_gpio.c ****   u8x8->gpio_and_delay_cb(u8x8, msg, arg, NULL);
+  38              		.loc 1 42 3 is_stmt 1 view .LVU2
+  39              		.loc 1 42 7 is_stmt 0 view .LVU3
+  40 0002 4469     		ldr	r4, [r0, #20]
+  41              		.loc 1 42 3 view .LVU4
+  42 0004 0023     		movs	r3, #0
+  43 0006 A047     		blx	r4
+  44              	.LVL1:
+  43:u8g2_lib/u8x8_gpio.c **** }
+  45              		.loc 1 43 1 view .LVU5
+  46 0008 10BD     		pop	{r4, pc}
+  47              		.cfi_endproc
+  48              	.LFE0:
+  50              		.text
+  51              	.Letext0:
+  52              		.file 2 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\machine\\_default_types.h"
+  53              		.file 3 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\sys\\_stdint.h"
+  54              		.file 4 "u8g2_lib/u8x8.h"
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc7KYHO4.s 			page 3
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 u8x8_gpio.c
+C:\Users\GKQ\AppData\Local\Temp\cc7KYHO4.s:16     .text.u8x8_gpio_call:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\cc7KYHO4.s:24     .text.u8x8_gpio_call:00000000 u8x8_gpio_call
+
+NO UNDEFINED SYMBOLS

@@ -1,0 +1,594 @@
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc3kc5Lj.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"u8g2_input_value.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.rodata.u8g2_UserInterfaceInputValue.str1.4,"aMS",%progbits,1
+  16              		.align	2
+  17              	.LC0:
+  18 0000 3000     		.ascii	"0\000"
+  19              		.section	.text.u8g2_UserInterfaceInputValue,"ax",%progbits
+  20              		.align	1
+  21              		.global	u8g2_UserInterfaceInputValue
+  22              		.arch armv7-m
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  26              		.fpu softvfp
+  28              	u8g2_UserInterfaceInputValue:
+  29              	.LVL0:
+  30              	.LFB0:
+  31              		.file 1 "u8g2_lib/u8g2_input_value.c"
+   1:u8g2_lib/u8g2_input_value.c **** /*
+   2:u8g2_lib/u8g2_input_value.c **** 
+   3:u8g2_lib/u8g2_input_value.c ****   u8g2_input_value.c
+   4:u8g2_lib/u8g2_input_value.c ****   
+   5:u8g2_lib/u8g2_input_value.c ****   Universal 8bit Graphics Library (https://github.com/olikraus/u8g2/)
+   6:u8g2_lib/u8g2_input_value.c **** 
+   7:u8g2_lib/u8g2_input_value.c ****   Copyright (c) 2016, olikraus@gmail.com
+   8:u8g2_lib/u8g2_input_value.c ****   All rights reserved.
+   9:u8g2_lib/u8g2_input_value.c **** 
+  10:u8g2_lib/u8g2_input_value.c ****   Redistribution and use in source and binary forms, with or without modification, 
+  11:u8g2_lib/u8g2_input_value.c ****   are permitted provided that the following conditions are met:
+  12:u8g2_lib/u8g2_input_value.c **** 
+  13:u8g2_lib/u8g2_input_value.c ****   * Redistributions of source code must retain the above copyright notice, this list 
+  14:u8g2_lib/u8g2_input_value.c ****     of conditions and the following disclaimer.
+  15:u8g2_lib/u8g2_input_value.c ****     
+  16:u8g2_lib/u8g2_input_value.c ****   * Redistributions in binary form must reproduce the above copyright notice, this 
+  17:u8g2_lib/u8g2_input_value.c ****     list of conditions and the following disclaimer in the documentation and/or other 
+  18:u8g2_lib/u8g2_input_value.c ****     materials provided with the distribution.
+  19:u8g2_lib/u8g2_input_value.c **** 
+  20:u8g2_lib/u8g2_input_value.c ****   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND 
+  21:u8g2_lib/u8g2_input_value.c ****   CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, 
+  22:u8g2_lib/u8g2_input_value.c ****   INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF 
+  23:u8g2_lib/u8g2_input_value.c ****   MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE 
+  24:u8g2_lib/u8g2_input_value.c ****   DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR 
+  25:u8g2_lib/u8g2_input_value.c ****   CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
+  26:u8g2_lib/u8g2_input_value.c ****   SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
+  27:u8g2_lib/u8g2_input_value.c ****   NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; 
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc3kc5Lj.s 			page 2
+
+
+  28:u8g2_lib/u8g2_input_value.c ****   LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER 
+  29:u8g2_lib/u8g2_input_value.c ****   CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, 
+  30:u8g2_lib/u8g2_input_value.c ****   STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+  31:u8g2_lib/u8g2_input_value.c ****   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF 
+  32:u8g2_lib/u8g2_input_value.c ****   ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.  
+  33:u8g2_lib/u8g2_input_value.c ****   
+  34:u8g2_lib/u8g2_input_value.c **** */
+  35:u8g2_lib/u8g2_input_value.c **** 
+  36:u8g2_lib/u8g2_input_value.c **** #include "u8g2.h"
+  37:u8g2_lib/u8g2_input_value.c **** 
+  38:u8g2_lib/u8g2_input_value.c **** /*
+  39:u8g2_lib/u8g2_input_value.c ****   return:
+  40:u8g2_lib/u8g2_input_value.c ****     0: value is not changed (HOME/Break Button pressed)
+  41:u8g2_lib/u8g2_input_value.c ****     1: value has been updated
+  42:u8g2_lib/u8g2_input_value.c **** */
+  43:u8g2_lib/u8g2_input_value.c **** 
+  44:u8g2_lib/u8g2_input_value.c **** uint8_t u8g2_UserInterfaceInputValue(u8g2_t *u8g2, const char *title, const char *pre, uint8_t *val
+  45:u8g2_lib/u8g2_input_value.c **** {
+  32              		.loc 1 45 1 view -0
+  33              		.cfi_startproc
+  34              		@ args = 16, pretend = 0, frame = 24
+  35              		@ frame_needed = 0, uses_anonymous_args = 0
+  36              		.loc 1 45 1 is_stmt 0 view .LVU1
+  37 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+  38              	.LCFI0:
+  39              		.cfi_def_cfa_offset 36
+  40              		.cfi_offset 4, -36
+  41              		.cfi_offset 5, -32
+  42              		.cfi_offset 6, -28
+  43              		.cfi_offset 7, -24
+  44              		.cfi_offset 8, -20
+  45              		.cfi_offset 9, -16
+  46              		.cfi_offset 10, -12
+  47              		.cfi_offset 11, -8
+  48              		.cfi_offset 14, -4
+  49 0004 89B0     		sub	sp, sp, #36
+  50              	.LCFI1:
+  51              		.cfi_def_cfa_offset 72
+  52 0006 0646     		mov	r6, r0
+  53 0008 0C46     		mov	r4, r1
+  54 000a 0491     		str	r1, [sp, #16]
+  55 000c 0392     		str	r2, [sp, #12]
+  56 000e 0793     		str	r3, [sp, #28]
+  57 0010 9DF84820 		ldrb	r2, [sp, #72]	@ zero_extendqisi2
+  58              	.LVL1:
+  59              		.loc 1 45 1 view .LVU2
+  60 0014 0592     		str	r2, [sp, #20]
+  61 0016 9DF84C20 		ldrb	r2, [sp, #76]	@ zero_extendqisi2
+  62 001a 0692     		str	r2, [sp, #24]
+  63 001c 9DF850B0 		ldrb	fp, [sp, #80]	@ zero_extendqisi2
+  46:u8g2_lib/u8g2_input_value.c ****   uint8_t line_height;
+  64              		.loc 1 46 3 is_stmt 1 view .LVU3
+  47:u8g2_lib/u8g2_input_value.c ****   uint8_t height;
+  65              		.loc 1 47 3 view .LVU4
+  48:u8g2_lib/u8g2_input_value.c ****   u8g2_uint_t pixel_height;
+  66              		.loc 1 48 3 view .LVU5
+  49:u8g2_lib/u8g2_input_value.c ****   u8g2_uint_t  y, yy;
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc3kc5Lj.s 			page 3
+
+
+  67              		.loc 1 49 3 view .LVU6
+  50:u8g2_lib/u8g2_input_value.c ****   u8g2_uint_t  pixel_width;
+  68              		.loc 1 50 3 view .LVU7
+  51:u8g2_lib/u8g2_input_value.c ****   u8g2_uint_t  x, xx;
+  69              		.loc 1 51 3 view .LVU8
+  52:u8g2_lib/u8g2_input_value.c ****   
+  53:u8g2_lib/u8g2_input_value.c ****   uint8_t local_value = *value;
+  70              		.loc 1 53 3 view .LVU9
+  71              		.loc 1 53 11 is_stmt 0 view .LVU10
+  72 0020 93F800A0 		ldrb	r10, [r3]	@ zero_extendqisi2
+  73              	.LVL2:
+  54:u8g2_lib/u8g2_input_value.c ****   //uint8_t r; /* not used ??? */
+  55:u8g2_lib/u8g2_input_value.c ****   uint8_t event;
+  74              		.loc 1 55 3 is_stmt 1 view .LVU11
+  56:u8g2_lib/u8g2_input_value.c **** 
+  57:u8g2_lib/u8g2_input_value.c ****   /* only horizontal strings are supported, so force this here */
+  58:u8g2_lib/u8g2_input_value.c ****   u8g2_SetFontDirection(u8g2, 0);
+  75              		.loc 1 58 3 view .LVU12
+  76 0024 0021     		movs	r1, #0
+  77              	.LVL3:
+  78              		.loc 1 58 3 is_stmt 0 view .LVU13
+  79 0026 FFF7FEFF 		bl	u8g2_SetFontDirection
+  80              	.LVL4:
+  59:u8g2_lib/u8g2_input_value.c **** 
+  60:u8g2_lib/u8g2_input_value.c ****   /* force baseline position */
+  61:u8g2_lib/u8g2_input_value.c ****   u8g2_SetFontPosBaseline(u8g2);
+  81              		.loc 1 61 3 is_stmt 1 view .LVU14
+  82 002a 3046     		mov	r0, r6
+  83 002c FFF7FEFF 		bl	u8g2_SetFontPosBaseline
+  84              	.LVL5:
+  62:u8g2_lib/u8g2_input_value.c ****   
+  63:u8g2_lib/u8g2_input_value.c ****   /* calculate line height */
+  64:u8g2_lib/u8g2_input_value.c ****   line_height = u8g2_GetAscent(u8g2);
+  85              		.loc 1 64 3 view .LVU15
+  86              		.loc 1 64 17 is_stmt 0 view .LVU16
+  87 0030 96F97E90 		ldrsb	r9, [r6, #126]
+  88              		.loc 1 64 15 view .LVU17
+  89 0034 5FFA89F9 		uxtb	r9, r9
+  90              	.LVL6:
+  65:u8g2_lib/u8g2_input_value.c ****   line_height -= u8g2_GetDescent(u8g2);
+  91              		.loc 1 65 3 is_stmt 1 view .LVU18
+  92              		.loc 1 65 18 is_stmt 0 view .LVU19
+  93 0038 96F87F30 		ldrb	r3, [r6, #127]	@ zero_extendqisi2
+  94              		.loc 1 65 15 view .LVU20
+  95 003c A9EB0309 		sub	r9, r9, r3
+  96              	.LVL7:
+  97              		.loc 1 65 15 view .LVU21
+  98 0040 5FFA89F9 		uxtb	r9, r9
+  99              	.LVL8:
+  66:u8g2_lib/u8g2_input_value.c ****   
+  67:u8g2_lib/u8g2_input_value.c ****   
+  68:u8g2_lib/u8g2_input_value.c ****   /* calculate overall height of the input value box */
+  69:u8g2_lib/u8g2_input_value.c ****   height = 1;	/* value input line */
+ 100              		.loc 1 69 3 is_stmt 1 view .LVU22
+  70:u8g2_lib/u8g2_input_value.c ****   height += u8x8_GetStringLineCnt(title);
+ 101              		.loc 1 70 3 view .LVU23
+ 102              		.loc 1 70 13 is_stmt 0 view .LVU24
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc3kc5Lj.s 			page 4
+
+
+ 103 0044 2046     		mov	r0, r4
+ 104 0046 FFF7FEFF 		bl	u8x8_GetStringLineCnt
+ 105              	.LVL9:
+ 106              		.loc 1 70 10 view .LVU25
+ 107 004a 431C     		adds	r3, r0, #1
+ 108 004c DBB2     		uxtb	r3, r3
+ 109              	.LVL10:
+  71:u8g2_lib/u8g2_input_value.c **** 
+  72:u8g2_lib/u8g2_input_value.c ****   /* calculate the height in pixel */
+  73:u8g2_lib/u8g2_input_value.c ****   pixel_height = height;
+ 110              		.loc 1 73 3 is_stmt 1 view .LVU26
+  74:u8g2_lib/u8g2_input_value.c ****   pixel_height *= line_height;
+ 111              		.loc 1 74 3 view .LVU27
+ 112              		.loc 1 74 16 is_stmt 0 view .LVU28
+ 113 004e 03FB09F3 		mul	r3, r3, r9
+ 114              	.LVL11:
+ 115              		.loc 1 74 16 view .LVU29
+ 116 0052 DBB2     		uxtb	r3, r3
+ 117              	.LVL12:
+  75:u8g2_lib/u8g2_input_value.c **** 
+  76:u8g2_lib/u8g2_input_value.c **** 
+  77:u8g2_lib/u8g2_input_value.c ****   /* calculate offset from top */
+  78:u8g2_lib/u8g2_input_value.c ****   y = 0;
+ 118              		.loc 1 78 3 is_stmt 1 view .LVU30
+  79:u8g2_lib/u8g2_input_value.c ****   if ( pixel_height < u8g2_GetDisplayHeight(u8g2)  )
+ 119              		.loc 1 79 3 view .LVU31
+ 120              		.loc 1 79 23 is_stmt 0 view .LVU32
+ 121 0054 96F84080 		ldrb	r8, [r6, #64]	@ zero_extendqisi2
+ 122              		.loc 1 79 6 view .LVU33
+ 123 0058 9845     		cmp	r8, r3
+ 124 005a 04D9     		bls	.L13
+  80:u8g2_lib/u8g2_input_value.c ****   {
+  81:u8g2_lib/u8g2_input_value.c ****     y = u8g2_GetDisplayHeight(u8g2);
+ 125              		.loc 1 81 5 is_stmt 1 view .LVU34
+ 126              	.LVL13:
+  82:u8g2_lib/u8g2_input_value.c ****     y -= pixel_height;
+ 127              		.loc 1 82 5 view .LVU35
+ 128              		.loc 1 82 7 is_stmt 0 view .LVU36
+ 129 005c A8EB0308 		sub	r8, r8, r3
+ 130              	.LVL14:
+  83:u8g2_lib/u8g2_input_value.c ****     y /= 2;
+ 131              		.loc 1 83 5 is_stmt 1 view .LVU37
+ 132              		.loc 1 83 7 is_stmt 0 view .LVU38
+ 133 0060 C8F34608 		ubfx	r8, r8, #1, #7
+ 134              	.LVL15:
+ 135              		.loc 1 83 7 view .LVU39
+ 136 0064 01E0     		b	.L2
+ 137              	.LVL16:
+ 138              	.L13:
+  78:u8g2_lib/u8g2_input_value.c ****   if ( pixel_height < u8g2_GetDisplayHeight(u8g2)  )
+ 139              		.loc 1 78 5 view .LVU40
+ 140 0066 4FF00008 		mov	r8, #0
+ 141              	.LVL17:
+ 142              	.L2:
+  84:u8g2_lib/u8g2_input_value.c ****   }
+  85:u8g2_lib/u8g2_input_value.c ****   
+  86:u8g2_lib/u8g2_input_value.c ****   /* calculate offset from left for the label */
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc3kc5Lj.s 			page 5
+
+
+  87:u8g2_lib/u8g2_input_value.c ****   x = 0;
+ 143              		.loc 1 87 3 is_stmt 1 view .LVU41
+  88:u8g2_lib/u8g2_input_value.c ****   pixel_width = u8g2_GetUTF8Width(u8g2, pre);
+ 144              		.loc 1 88 3 view .LVU42
+ 145              		.loc 1 88 17 is_stmt 0 view .LVU43
+ 146 006a 0399     		ldr	r1, [sp, #12]
+ 147 006c 3046     		mov	r0, r6
+ 148              	.LVL18:
+ 149              		.loc 1 88 17 view .LVU44
+ 150 006e FFF7FEFF 		bl	u8g2_GetUTF8Width
+ 151              	.LVL19:
+ 152              		.loc 1 88 17 view .LVU45
+ 153 0072 0446     		mov	r4, r0
+ 154              	.LVL20:
+  89:u8g2_lib/u8g2_input_value.c ****   pixel_width += u8g2_GetUTF8Width(u8g2, "0") * digits;
+ 155              		.loc 1 89 3 is_stmt 1 view .LVU46
+ 156              		.loc 1 89 18 is_stmt 0 view .LVU47
+ 157 0074 3949     		ldr	r1, .L20
+ 158 0076 3046     		mov	r0, r6
+ 159 0078 FFF7FEFF 		bl	u8g2_GetUTF8Width
+ 160              	.LVL21:
+ 161              		.loc 1 89 15 view .LVU48
+ 162 007c 00FB0B44 		mla	r4, r0, fp, r4
+ 163              	.LVL22:
+ 164              		.loc 1 89 15 view .LVU49
+ 165 0080 E4B2     		uxtb	r4, r4
+ 166              	.LVL23:
+  90:u8g2_lib/u8g2_input_value.c ****   pixel_width += u8g2_GetUTF8Width(u8g2, post);
+ 167              		.loc 1 90 3 is_stmt 1 view .LVU50
+ 168              		.loc 1 90 18 is_stmt 0 view .LVU51
+ 169 0082 1599     		ldr	r1, [sp, #84]
+ 170 0084 3046     		mov	r0, r6
+ 171 0086 FFF7FEFF 		bl	u8g2_GetUTF8Width
+ 172              	.LVL24:
+ 173              		.loc 1 90 15 view .LVU52
+ 174 008a 0444     		add	r4, r4, r0
+ 175              	.LVL25:
+ 176              		.loc 1 90 15 view .LVU53
+ 177 008c E4B2     		uxtb	r4, r4
+ 178              	.LVL26:
+  91:u8g2_lib/u8g2_input_value.c ****   if ( pixel_width < u8g2_GetDisplayWidth(u8g2) )
+ 179              		.loc 1 91 3 is_stmt 1 view .LVU54
+ 180              		.loc 1 91 22 is_stmt 0 view .LVU55
+ 181 008e 96F83F70 		ldrb	r7, [r6, #63]	@ zero_extendqisi2
+ 182              		.loc 1 91 6 view .LVU56
+ 183 0092 A742     		cmp	r7, r4
+ 184 0094 03D9     		bls	.L14
+  92:u8g2_lib/u8g2_input_value.c ****   {
+  93:u8g2_lib/u8g2_input_value.c ****     x = u8g2_GetDisplayWidth(u8g2);
+ 185              		.loc 1 93 5 is_stmt 1 view .LVU57
+ 186              	.LVL27:
+  94:u8g2_lib/u8g2_input_value.c ****     x -= pixel_width;
+ 187              		.loc 1 94 5 view .LVU58
+ 188              		.loc 1 94 7 is_stmt 0 view .LVU59
+ 189 0096 3F1B     		subs	r7, r7, r4
+ 190              	.LVL28:
+  95:u8g2_lib/u8g2_input_value.c ****     x /= 2;
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc3kc5Lj.s 			page 6
+
+
+ 191              		.loc 1 95 5 is_stmt 1 view .LVU60
+ 192              		.loc 1 95 7 is_stmt 0 view .LVU61
+ 193 0098 C7F34607 		ubfx	r7, r7, #1, #7
+ 194              	.LVL29:
+ 195              		.loc 1 95 7 view .LVU62
+ 196 009c 00E0     		b	.L4
+ 197              	.LVL30:
+ 198              	.L14:
+  87:u8g2_lib/u8g2_input_value.c ****   pixel_width = u8g2_GetUTF8Width(u8g2, pre);
+ 199              		.loc 1 87 5 view .LVU63
+ 200 009e 0027     		movs	r7, #0
+ 201              	.LVL31:
+ 202              	.L4:
+  96:u8g2_lib/u8g2_input_value.c ****   }
+  97:u8g2_lib/u8g2_input_value.c ****   
+  98:u8g2_lib/u8g2_input_value.c ****   /* event loop */
+  99:u8g2_lib/u8g2_input_value.c ****   for(;;)
+ 203              		.loc 1 99 3 is_stmt 1 view .LVU64
+ 100:u8g2_lib/u8g2_input_value.c ****   {
+ 101:u8g2_lib/u8g2_input_value.c ****     u8g2_FirstPage(u8g2);
+ 204              		.loc 1 101 5 view .LVU65
+ 205 00a0 3046     		mov	r0, r6
+ 206 00a2 FFF7FEFF 		bl	u8g2_FirstPage
+ 207              	.LVL32:
+ 208              	.L5:
+ 102:u8g2_lib/u8g2_input_value.c ****     do
+ 209              		.loc 1 102 5 discriminator 1 view .LVU66
+ 103:u8g2_lib/u8g2_input_value.c ****     {
+ 104:u8g2_lib/u8g2_input_value.c ****       /* render */
+ 105:u8g2_lib/u8g2_input_value.c ****       yy = y;
+ 210              		.loc 1 105 7 discriminator 1 view .LVU67
+ 106:u8g2_lib/u8g2_input_value.c ****       yy += u8g2_DrawUTF8Lines(u8g2, 0, yy, u8g2_GetDisplayWidth(u8g2), line_height, title);
+ 211              		.loc 1 106 7 discriminator 1 view .LVU68
+ 212              		.loc 1 106 13 is_stmt 0 discriminator 1 view .LVU69
+ 213 00a6 049B     		ldr	r3, [sp, #16]
+ 214 00a8 0193     		str	r3, [sp, #4]
+ 215 00aa CDF80090 		str	r9, [sp]
+ 216 00ae 96F83F30 		ldrb	r3, [r6, #63]	@ zero_extendqisi2
+ 217 00b2 4246     		mov	r2, r8
+ 218 00b4 0021     		movs	r1, #0
+ 219 00b6 3046     		mov	r0, r6
+ 220 00b8 FFF7FEFF 		bl	u8g2_DrawUTF8Lines
+ 221              	.LVL33:
+ 222              		.loc 1 106 10 discriminator 1 view .LVU70
+ 223 00bc 08EB0005 		add	r5, r8, r0
+ 224 00c0 EDB2     		uxtb	r5, r5
+ 225              	.LVL34:
+ 107:u8g2_lib/u8g2_input_value.c ****       xx = x;
+ 226              		.loc 1 107 7 is_stmt 1 discriminator 1 view .LVU71
+ 108:u8g2_lib/u8g2_input_value.c ****       xx += u8g2_DrawUTF8(u8g2, xx, yy, pre);
+ 227              		.loc 1 108 7 discriminator 1 view .LVU72
+ 228              		.loc 1 108 13 is_stmt 0 discriminator 1 view .LVU73
+ 229 00c2 039B     		ldr	r3, [sp, #12]
+ 230 00c4 2A46     		mov	r2, r5
+ 231 00c6 3946     		mov	r1, r7
+ 232 00c8 3046     		mov	r0, r6
+ 233 00ca FFF7FEFF 		bl	u8g2_DrawUTF8
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc3kc5Lj.s 			page 7
+
+
+ 234              	.LVL35:
+ 235              		.loc 1 108 10 discriminator 1 view .LVU74
+ 236 00ce 3C18     		adds	r4, r7, r0
+ 237 00d0 E4B2     		uxtb	r4, r4
+ 238              	.LVL36:
+ 109:u8g2_lib/u8g2_input_value.c ****       xx += u8g2_DrawUTF8(u8g2, xx, yy, u8x8_u8toa(local_value, digits));
+ 239              		.loc 1 109 7 is_stmt 1 discriminator 1 view .LVU75
+ 240              		.loc 1 109 13 is_stmt 0 discriminator 1 view .LVU76
+ 241 00d2 5946     		mov	r1, fp
+ 242 00d4 5046     		mov	r0, r10
+ 243 00d6 FFF7FEFF 		bl	u8x8_u8toa
+ 244              	.LVL37:
+ 245 00da 0346     		mov	r3, r0
+ 246 00dc 2A46     		mov	r2, r5
+ 247 00de 2146     		mov	r1, r4
+ 248 00e0 3046     		mov	r0, r6
+ 249 00e2 FFF7FEFF 		bl	u8g2_DrawUTF8
+ 250              	.LVL38:
+ 251              		.loc 1 109 10 discriminator 1 view .LVU77
+ 252 00e6 2118     		adds	r1, r4, r0
+ 253              	.LVL39:
+ 110:u8g2_lib/u8g2_input_value.c ****       u8g2_DrawUTF8(u8g2, xx, yy, post);
+ 254              		.loc 1 110 7 is_stmt 1 discriminator 1 view .LVU78
+ 255 00e8 159B     		ldr	r3, [sp, #84]
+ 256 00ea 2A46     		mov	r2, r5
+ 257 00ec C9B2     		uxtb	r1, r1
+ 258              		.loc 1 110 7 is_stmt 0 discriminator 1 view .LVU79
+ 259 00ee 3046     		mov	r0, r6
+ 260 00f0 FFF7FEFF 		bl	u8g2_DrawUTF8
+ 261              	.LVL40:
+ 111:u8g2_lib/u8g2_input_value.c ****     } while( u8g2_NextPage(u8g2) );
+ 262              		.loc 1 111 12 is_stmt 1 discriminator 1 view .LVU80
+ 263              		.loc 1 111 14 is_stmt 0 discriminator 1 view .LVU81
+ 264 00f4 3046     		mov	r0, r6
+ 265 00f6 FFF7FEFF 		bl	u8g2_NextPage
+ 266              	.LVL41:
+ 267              		.loc 1 111 5 discriminator 1 view .LVU82
+ 268 00fa 0446     		mov	r4, r0
+ 269              		.loc 1 111 5 discriminator 1 view .LVU83
+ 270 00fc 0028     		cmp	r0, #0
+ 271 00fe D2D1     		bne	.L5
+ 272              	.L12:
+ 112:u8g2_lib/u8g2_input_value.c ****     
+ 113:u8g2_lib/u8g2_input_value.c **** #ifdef U8G2_REF_MAN_PIC
+ 114:u8g2_lib/u8g2_input_value.c ****       return 0;
+ 115:u8g2_lib/u8g2_input_value.c **** #endif
+ 116:u8g2_lib/u8g2_input_value.c ****     
+ 117:u8g2_lib/u8g2_input_value.c ****     for(;;)
+ 273              		.loc 1 117 5 is_stmt 1 view .LVU84
+ 118:u8g2_lib/u8g2_input_value.c ****     {
+ 119:u8g2_lib/u8g2_input_value.c ****       event = u8x8_GetMenuEvent(u8g2_GetU8x8(u8g2));
+ 274              		.loc 1 119 7 view .LVU85
+ 275              		.loc 1 119 15 is_stmt 0 view .LVU86
+ 276 0100 3046     		mov	r0, r6
+ 277 0102 FFF7FEFF 		bl	u8x8_GetMenuEvent
+ 278              	.LVL42:
+ 120:u8g2_lib/u8g2_input_value.c ****       if ( event == U8X8_MSG_GPIO_MENU_SELECT )
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc3kc5Lj.s 			page 8
+
+
+ 279              		.loc 1 120 7 is_stmt 1 view .LVU87
+ 280              		.loc 1 120 10 is_stmt 0 view .LVU88
+ 281 0106 5028     		cmp	r0, #80
+ 282 0108 17D0     		beq	.L19
+ 121:u8g2_lib/u8g2_input_value.c ****       {
+ 122:u8g2_lib/u8g2_input_value.c **** 	*value = local_value;
+ 123:u8g2_lib/u8g2_input_value.c **** 	return 1;
+ 124:u8g2_lib/u8g2_input_value.c ****       }
+ 125:u8g2_lib/u8g2_input_value.c ****       else if ( event == U8X8_MSG_GPIO_MENU_HOME )
+ 283              		.loc 1 125 12 is_stmt 1 view .LVU89
+ 284              		.loc 1 125 15 is_stmt 0 view .LVU90
+ 285 010a 5328     		cmp	r0, #83
+ 286 010c 19D0     		beq	.L7
+ 126:u8g2_lib/u8g2_input_value.c ****       {
+ 127:u8g2_lib/u8g2_input_value.c **** 	return 0;
+ 128:u8g2_lib/u8g2_input_value.c ****       }
+ 129:u8g2_lib/u8g2_input_value.c ****       else if ( event == U8X8_MSG_GPIO_MENU_NEXT || event == U8X8_MSG_GPIO_MENU_UP )
+ 287              		.loc 1 129 12 is_stmt 1 view .LVU91
+ 288              		.loc 1 129 15 is_stmt 0 view .LVU92
+ 289 010e 5128     		cmp	r0, #81
+ 290 0110 1BD0     		beq	.L8
+ 291              		.loc 1 129 50 discriminator 1 view .LVU93
+ 292 0112 5428     		cmp	r0, #84
+ 293 0114 19D0     		beq	.L8
+ 130:u8g2_lib/u8g2_input_value.c ****       {
+ 131:u8g2_lib/u8g2_input_value.c **** 	if ( local_value >= hi )
+ 132:u8g2_lib/u8g2_input_value.c **** 	  local_value = lo;
+ 133:u8g2_lib/u8g2_input_value.c **** 	else
+ 134:u8g2_lib/u8g2_input_value.c **** 	  local_value++;
+ 135:u8g2_lib/u8g2_input_value.c **** 	break;
+ 136:u8g2_lib/u8g2_input_value.c ****       }
+ 137:u8g2_lib/u8g2_input_value.c ****       else if ( event == U8X8_MSG_GPIO_MENU_PREV || event == U8X8_MSG_GPIO_MENU_DOWN )
+ 294              		.loc 1 137 12 is_stmt 1 view .LVU94
+ 295              		.loc 1 137 15 is_stmt 0 view .LVU95
+ 296 0116 5228     		cmp	r0, #82
+ 297 0118 01D0     		beq	.L11
+ 298              		.loc 1 137 50 discriminator 1 view .LVU96
+ 299 011a 5528     		cmp	r0, #85
+ 300 011c F0D1     		bne	.L12
+ 301              	.L11:
+ 138:u8g2_lib/u8g2_input_value.c ****       {
+ 139:u8g2_lib/u8g2_input_value.c **** 	if ( local_value <= lo )
+ 302              		.loc 1 139 2 is_stmt 1 view .LVU97
+ 303              		.loc 1 139 5 is_stmt 0 view .LVU98
+ 304 011e 059B     		ldr	r3, [sp, #20]
+ 305 0120 9A45     		cmp	r10, r3
+ 306 0122 07D9     		bls	.L16
+ 140:u8g2_lib/u8g2_input_value.c **** 	  local_value = hi;
+ 141:u8g2_lib/u8g2_input_value.c **** 	else
+ 142:u8g2_lib/u8g2_input_value.c **** 	  local_value--;
+ 307              		.loc 1 142 4 is_stmt 1 view .LVU99
+ 308              		.loc 1 142 15 is_stmt 0 view .LVU100
+ 309 0124 0AF1FF3A 		add	r10, r10, #-1
+ 310              	.LVL43:
+ 311              		.loc 1 142 15 view .LVU101
+ 312 0128 5FFA8AFA 		uxtb	r10, r10
+ 313              	.LVL44:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc3kc5Lj.s 			page 9
+
+
+ 314              		.loc 1 142 15 view .LVU102
+ 315 012c B8E7     		b	.L4
+ 316              	.L15:
+ 132:u8g2_lib/u8g2_input_value.c **** 	else
+ 317              		.loc 1 132 16 view .LVU103
+ 318 012e DDF814A0 		ldr	r10, [sp, #20]
+ 319              	.LVL45:
+ 132:u8g2_lib/u8g2_input_value.c **** 	else
+ 320              		.loc 1 132 16 view .LVU104
+ 321 0132 B5E7     		b	.L4
+ 322              	.LVL46:
+ 323              	.L16:
+ 140:u8g2_lib/u8g2_input_value.c **** 	  local_value = hi;
+ 324              		.loc 1 140 16 view .LVU105
+ 325 0134 DDF818A0 		ldr	r10, [sp, #24]
+ 326              	.LVL47:
+ 140:u8g2_lib/u8g2_input_value.c **** 	  local_value = hi;
+ 327              		.loc 1 140 16 view .LVU106
+ 328 0138 B2E7     		b	.L4
+ 329              	.LVL48:
+ 330              	.L19:
+ 122:u8g2_lib/u8g2_input_value.c **** 	return 1;
+ 331              		.loc 1 122 2 is_stmt 1 view .LVU107
+ 122:u8g2_lib/u8g2_input_value.c **** 	return 1;
+ 332              		.loc 1 122 9 is_stmt 0 view .LVU108
+ 333 013a 079B     		ldr	r3, [sp, #28]
+ 334 013c 83F800A0 		strb	r10, [r3]
+ 123:u8g2_lib/u8g2_input_value.c ****       }
+ 335              		.loc 1 123 2 is_stmt 1 view .LVU109
+ 123:u8g2_lib/u8g2_input_value.c ****       }
+ 336              		.loc 1 123 9 is_stmt 0 view .LVU110
+ 337 0140 0124     		movs	r4, #1
+ 338              	.L7:
+ 143:u8g2_lib/u8g2_input_value.c **** 	break;
+ 144:u8g2_lib/u8g2_input_value.c ****       }        
+ 145:u8g2_lib/u8g2_input_value.c ****     }
+ 146:u8g2_lib/u8g2_input_value.c ****   }
+ 147:u8g2_lib/u8g2_input_value.c ****   
+ 148:u8g2_lib/u8g2_input_value.c ****   /* never reached */
+ 149:u8g2_lib/u8g2_input_value.c ****   //return r;  
+ 150:u8g2_lib/u8g2_input_value.c **** }
+ 339              		.loc 1 150 1 view .LVU111
+ 340 0142 2046     		mov	r0, r4
+ 341              	.LVL49:
+ 342              		.loc 1 150 1 view .LVU112
+ 343 0144 09B0     		add	sp, sp, #36
+ 344              	.LCFI2:
+ 345              		.cfi_remember_state
+ 346              		.cfi_def_cfa_offset 36
+ 347              		@ sp needed
+ 348 0146 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 349              	.LVL50:
+ 350              	.L8:
+ 351              	.LCFI3:
+ 352              		.cfi_restore_state
+ 131:u8g2_lib/u8g2_input_value.c **** 	  local_value = lo;
+ 353              		.loc 1 131 2 is_stmt 1 view .LVU113
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc3kc5Lj.s 			page 10
+
+
+ 131:u8g2_lib/u8g2_input_value.c **** 	  local_value = lo;
+ 354              		.loc 1 131 5 is_stmt 0 view .LVU114
+ 355 014a 069B     		ldr	r3, [sp, #24]
+ 356 014c 9A45     		cmp	r10, r3
+ 357 014e EED2     		bcs	.L15
+ 134:u8g2_lib/u8g2_input_value.c **** 	break;
+ 358              		.loc 1 134 4 is_stmt 1 view .LVU115
+ 134:u8g2_lib/u8g2_input_value.c **** 	break;
+ 359              		.loc 1 134 15 is_stmt 0 view .LVU116
+ 360 0150 0AF1010A 		add	r10, r10, #1
+ 361              	.LVL51:
+ 134:u8g2_lib/u8g2_input_value.c **** 	break;
+ 362              		.loc 1 134 15 view .LVU117
+ 363 0154 5FFA8AFA 		uxtb	r10, r10
+ 364              	.LVL52:
+ 134:u8g2_lib/u8g2_input_value.c **** 	break;
+ 365              		.loc 1 134 15 view .LVU118
+ 366 0158 A2E7     		b	.L4
+ 367              	.L21:
+ 368 015a 00BF     		.align	2
+ 369              	.L20:
+ 370 015c 00000000 		.word	.LC0
+ 371              		.cfi_endproc
+ 372              	.LFE0:
+ 374              		.text
+ 375              	.Letext0:
+ 376              		.file 2 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 377              		.file 3 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 378              		.file 4 "u8g2_lib/u8x8.h"
+ 379              		.file 5 "u8g2_lib/u8g2.h"
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc3kc5Lj.s 			page 11
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 u8g2_input_value.c
+C:\Users\GKQ\AppData\Local\Temp\cc3kc5Lj.s:16     .rodata.u8g2_UserInterfaceInputValue.str1.4:00000000 $d
+C:\Users\GKQ\AppData\Local\Temp\cc3kc5Lj.s:20     .text.u8g2_UserInterfaceInputValue:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\cc3kc5Lj.s:28     .text.u8g2_UserInterfaceInputValue:00000000 u8g2_UserInterfaceInputValue
+C:\Users\GKQ\AppData\Local\Temp\cc3kc5Lj.s:370    .text.u8g2_UserInterfaceInputValue:0000015c $d
+
+UNDEFINED SYMBOLS
+u8g2_SetFontDirection
+u8g2_SetFontPosBaseline
+u8x8_GetStringLineCnt
+u8g2_GetUTF8Width
+u8g2_FirstPage
+u8g2_DrawUTF8Lines
+u8g2_DrawUTF8
+u8x8_u8toa
+u8g2_NextPage
+u8x8_GetMenuEvent

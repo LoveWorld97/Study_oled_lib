@@ -1,0 +1,819 @@
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccbrdYZv.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"oled_driver.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.I2C_Configuration,"ax",%progbits
+  16              		.align	1
+  17              		.global	I2C_Configuration
+  18              		.arch armv7-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu softvfp
+  24              	I2C_Configuration:
+  25              	.LFB65:
+  26              		.file 1 "oledlib/oled_driver.c"
+   1:oledlib/oled_driver.c **** #include "oled_driver.h"
+   2:oledlib/oled_driver.c **** #include "i2c.h"
+   3:oledlib/oled_driver.c **** #if (TRANSFER_METHOD == HW_IIC)
+   4:oledlib/oled_driver.c **** //I2C_Configuration，初始化硬件IIC引脚
+   5:oledlib/oled_driver.c **** void I2C_Configuration(void)
+   6:oledlib/oled_driver.c **** {
+  27              		.loc 1 6 1 view -0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31 0000 08B5     		push	{r3, lr}
+  32              	.LCFI0:
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 3, -8
+  35              		.cfi_offset 14, -4
+   7:oledlib/oled_driver.c ****     MX_I2C1_Init();
+  36              		.loc 1 7 5 view .LVU1
+  37 0002 FFF7FEFF 		bl	MX_I2C1_Init
+  38              	.LVL0:
+   8:oledlib/oled_driver.c **** }
+  39              		.loc 1 8 1 is_stmt 0 view .LVU2
+  40 0006 08BD     		pop	{r3, pc}
+  41              		.cfi_endproc
+  42              	.LFE65:
+  44              		.section	.text.I2C_WriteByte,"ax",%progbits
+  45              		.align	1
+  46              		.global	I2C_WriteByte
+  47              		.syntax unified
+  48              		.thumb
+  49              		.thumb_func
+  50              		.fpu softvfp
+  52              	I2C_WriteByte:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccbrdYZv.s 			page 2
+
+
+  53              	.LVL1:
+  54              	.LFB66:
+   9:oledlib/oled_driver.c **** 
+  10:oledlib/oled_driver.c **** /**
+  11:oledlib/oled_driver.c ****   * @brief  I2C_WriteByte，向OLED寄存器地址写一个byte的数据
+  12:oledlib/oled_driver.c ****   * @param  addr：寄存器地址
+  13:oledlib/oled_driver.c **** 	*					data：要写入的数据
+  14:oledlib/oled_driver.c ****   * @retval 无
+  15:oledlib/oled_driver.c ****   */
+  16:oledlib/oled_driver.c **** void I2C_WriteByte(uint8_t addr, uint8_t data)
+  17:oledlib/oled_driver.c **** {
+  55              		.loc 1 17 1 is_stmt 1 view -0
+  56              		.cfi_startproc
+  57              		@ args = 0, pretend = 0, frame = 8
+  58              		@ frame_needed = 0, uses_anonymous_args = 0
+  59              		.loc 1 17 1 is_stmt 0 view .LVU4
+  60 0000 00B5     		push	{lr}
+  61              	.LCFI1:
+  62              		.cfi_def_cfa_offset 4
+  63              		.cfi_offset 14, -4
+  64 0002 87B0     		sub	sp, sp, #28
+  65              	.LCFI2:
+  66              		.cfi_def_cfa_offset 32
+  67 0004 0246     		mov	r2, r0
+  68 0006 8DF81710 		strb	r1, [sp, #23]
+  18:oledlib/oled_driver.c ****     uint8_t *pdata;
+  69              		.loc 1 18 5 is_stmt 1 view .LVU5
+  19:oledlib/oled_driver.c ****     pdata = &data;
+  70              		.loc 1 19 5 view .LVU6
+  71              	.LVL2:
+  20:oledlib/oled_driver.c ****     HAL_I2C_Mem_Write(&hi2c1, OLED_ADDRESS, addr, I2C_MEMADD_SIZE_8BIT, pdata, 1, 100);
+  72              		.loc 1 20 5 view .LVU7
+  73 000a 6423     		movs	r3, #100
+  74 000c 0293     		str	r3, [sp, #8]
+  75 000e 0123     		movs	r3, #1
+  76 0010 0193     		str	r3, [sp, #4]
+  77 0012 0DF11701 		add	r1, sp, #23
+  78              	.LVL3:
+  79              		.loc 1 20 5 is_stmt 0 view .LVU8
+  80 0016 0091     		str	r1, [sp]
+  81 0018 7821     		movs	r1, #120
+  82              	.LVL4:
+  83              		.loc 1 20 5 view .LVU9
+  84 001a 0348     		ldr	r0, .L5
+  85              	.LVL5:
+  86              		.loc 1 20 5 view .LVU10
+  87 001c FFF7FEFF 		bl	HAL_I2C_Mem_Write
+  88              	.LVL6:
+  21:oledlib/oled_driver.c **** }
+  89              		.loc 1 21 1 view .LVU11
+  90 0020 07B0     		add	sp, sp, #28
+  91              	.LCFI3:
+  92              		.cfi_def_cfa_offset 4
+  93              		@ sp needed
+  94 0022 5DF804FB 		ldr	pc, [sp], #4
+  95              	.LVL7:
+  96              	.L6:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccbrdYZv.s 			page 3
+
+
+  97              		.loc 1 21 1 view .LVU12
+  98 0026 00BF     		.align	2
+  99              	.L5:
+ 100 0028 00000000 		.word	hi2c1
+ 101              		.cfi_endproc
+ 102              	.LFE66:
+ 104              		.section	.text.WriteCmd,"ax",%progbits
+ 105              		.align	1
+ 106              		.global	WriteCmd
+ 107              		.syntax unified
+ 108              		.thumb
+ 109              		.thumb_func
+ 110              		.fpu softvfp
+ 112              	WriteCmd:
+ 113              	.LVL8:
+ 114              	.LFB67:
+  22:oledlib/oled_driver.c **** 
+  23:oledlib/oled_driver.c **** void WriteCmd(unsigned char cmd) //写命令
+  24:oledlib/oled_driver.c **** {
+ 115              		.loc 1 24 1 is_stmt 1 view -0
+ 116              		.cfi_startproc
+ 117              		@ args = 0, pretend = 0, frame = 0
+ 118              		@ frame_needed = 0, uses_anonymous_args = 0
+ 119              		.loc 1 24 1 is_stmt 0 view .LVU14
+ 120 0000 08B5     		push	{r3, lr}
+ 121              	.LCFI4:
+ 122              		.cfi_def_cfa_offset 8
+ 123              		.cfi_offset 3, -8
+ 124              		.cfi_offset 14, -4
+ 125 0002 0146     		mov	r1, r0
+  25:oledlib/oled_driver.c ****     I2C_WriteByte(0x00, cmd);
+ 126              		.loc 1 25 5 is_stmt 1 view .LVU15
+ 127 0004 0020     		movs	r0, #0
+ 128              	.LVL9:
+ 129              		.loc 1 25 5 is_stmt 0 view .LVU16
+ 130 0006 FFF7FEFF 		bl	I2C_WriteByte
+ 131              	.LVL10:
+  26:oledlib/oled_driver.c **** }
+ 132              		.loc 1 26 1 view .LVU17
+ 133 000a 08BD     		pop	{r3, pc}
+ 134              		.cfi_endproc
+ 135              	.LFE67:
+ 137              		.section	.text.WriteDat,"ax",%progbits
+ 138              		.align	1
+ 139              		.global	WriteDat
+ 140              		.syntax unified
+ 141              		.thumb
+ 142              		.thumb_func
+ 143              		.fpu softvfp
+ 145              	WriteDat:
+ 146              	.LVL11:
+ 147              	.LFB68:
+  27:oledlib/oled_driver.c **** 
+  28:oledlib/oled_driver.c **** void WriteDat(unsigned char dat) //写数据
+  29:oledlib/oled_driver.c **** {
+ 148              		.loc 1 29 1 is_stmt 1 view -0
+ 149              		.cfi_startproc
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccbrdYZv.s 			page 4
+
+
+ 150              		@ args = 0, pretend = 0, frame = 0
+ 151              		@ frame_needed = 0, uses_anonymous_args = 0
+ 152              		.loc 1 29 1 is_stmt 0 view .LVU19
+ 153 0000 08B5     		push	{r3, lr}
+ 154              	.LCFI5:
+ 155              		.cfi_def_cfa_offset 8
+ 156              		.cfi_offset 3, -8
+ 157              		.cfi_offset 14, -4
+ 158 0002 0146     		mov	r1, r0
+  30:oledlib/oled_driver.c ****     I2C_WriteByte(0x40, dat);
+ 159              		.loc 1 30 5 is_stmt 1 view .LVU20
+ 160 0004 4020     		movs	r0, #64
+ 161              	.LVL12:
+ 162              		.loc 1 30 5 is_stmt 0 view .LVU21
+ 163 0006 FFF7FEFF 		bl	I2C_WriteByte
+ 164              	.LVL13:
+  31:oledlib/oled_driver.c **** }
+ 165              		.loc 1 31 1 view .LVU22
+ 166 000a 08BD     		pop	{r3, pc}
+ 167              		.cfi_endproc
+ 168              	.LFE68:
+ 170              		.section	.text.OLED_FILL,"ax",%progbits
+ 171              		.align	1
+ 172              		.global	OLED_FILL
+ 173              		.syntax unified
+ 174              		.thumb
+ 175              		.thumb_func
+ 176              		.fpu softvfp
+ 178              	OLED_FILL:
+ 179              	.LVL14:
+ 180              	.LFB70:
+  32:oledlib/oled_driver.c **** 
+  33:oledlib/oled_driver.c **** #elif (TRANSFER_METHOD == SW_IIC)
+  34:oledlib/oled_driver.c **** 
+  35:oledlib/oled_driver.c **** #elif (TRANSFER_METHOD == HW_SPI)
+  36:oledlib/oled_driver.c **** 
+  37:oledlib/oled_driver.c **** #define OLED_RESET_LOW() GPIO_ResetBits(SPI_RES_GPIOX, SPI_RES_PIN) //低电平复位
+  38:oledlib/oled_driver.c **** #define OLED_RESET_HIGH() GPIO_SetBits(SPI_RES_GPIOX, SPI_RES_PIN)
+  39:oledlib/oled_driver.c **** 
+  40:oledlib/oled_driver.c **** #define OLED_CMD_MODE() GPIO_ResetBits(SPI_DC_GPIOX, SPI_DC_PIN) //命令模式
+  41:oledlib/oled_driver.c **** #define OLED_DATA_MODE() GPIO_SetBits(SPI_DC_GPIOX, SPI_DC_PIN)  //数据模式
+  42:oledlib/oled_driver.c **** 
+  43:oledlib/oled_driver.c **** #define OLED_CS_HIGH() GPIO_SetBits(SPI_CS_GPIOX, SPI_CS_Pin_X)
+  44:oledlib/oled_driver.c **** #define OLED_CS_LOW() GPIO_ResetBits(SPI_CS_GPIOX, SPI_CS_Pin_X)
+  45:oledlib/oled_driver.c **** 
+  46:oledlib/oled_driver.c **** void SPI_Configuration(void)
+  47:oledlib/oled_driver.c **** {
+  48:oledlib/oled_driver.c ****     SPI_InitTypeDef SPI_InitStructure;
+  49:oledlib/oled_driver.c ****     GPIO_InitTypeDef GPIO_InitStructure;
+  50:oledlib/oled_driver.c **** #if (USE_HW_SPI == SPI_2)
+  51:oledlib/oled_driver.c ****     RCC_APB1PeriphClockCmd(SPI_RCC_APB1Periph_SPIX, ENABLE);
+  52:oledlib/oled_driver.c **** #elif (USE_HW_SPI == SPI_1)
+  53:oledlib/oled_driver.c ****     RCC_APB2PeriphClockCmd(SPI_RCC_APB2Periph_SPIX, ENABLE);
+  54:oledlib/oled_driver.c **** #endif
+  55:oledlib/oled_driver.c ****     RCC_APB2PeriphClockCmd(SPI_RCC_APB2Periph_GPIOX | RCC_APB2Periph_AFIO, ENABLE);
+  56:oledlib/oled_driver.c **** 
+  57:oledlib/oled_driver.c ****     GPIO_InitStructure.GPIO_Pin = SPI_CS_Pin_X;
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccbrdYZv.s 			page 5
+
+
+  58:oledlib/oled_driver.c ****     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  59:oledlib/oled_driver.c ****     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+  60:oledlib/oled_driver.c ****     GPIO_Init(SPI_CS_GPIOX, &GPIO_InitStructure);
+  61:oledlib/oled_driver.c ****     OLED_CS_HIGH();
+  62:oledlib/oled_driver.c **** 
+  63:oledlib/oled_driver.c ****     GPIO_InitStructure.GPIO_Pin = SPI_HW_ALL_PINS;
+  64:oledlib/oled_driver.c ****     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  65:oledlib/oled_driver.c ****     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
+  66:oledlib/oled_driver.c ****     GPIO_Init(SPI_HW_ALL_GPIOX, &GPIO_InitStructure);
+  67:oledlib/oled_driver.c **** 
+  68:oledlib/oled_driver.c ****     SPI_InitStructure.SPI_Direction = SPI_Direction_2Lines_FullDuplex; //SPI_Direction_1Line_Tx;
+  69:oledlib/oled_driver.c ****     SPI_InitStructure.SPI_Mode = SPI_Mode_Master;
+  70:oledlib/oled_driver.c ****     SPI_InitStructure.SPI_DataSize = SPI_DataSize_8b;
+  71:oledlib/oled_driver.c ****     SPI_InitStructure.SPI_CPOL = SPI_CPOL_Low;
+  72:oledlib/oled_driver.c ****     SPI_InitStructure.SPI_CPHA = SPI_CPHA_1Edge;
+  73:oledlib/oled_driver.c ****     SPI_InitStructure.SPI_NSS = SPI_NSS_Soft;
+  74:oledlib/oled_driver.c ****     SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_2;
+  75:oledlib/oled_driver.c ****     SPI_InitStructure.SPI_FirstBit = SPI_FirstBit_MSB;
+  76:oledlib/oled_driver.c ****     SPI_InitStructure.SPI_CRCPolynomial = 7;
+  77:oledlib/oled_driver.c **** 
+  78:oledlib/oled_driver.c ****     SPI_Init(SPIX, &SPI_InitStructure);
+  79:oledlib/oled_driver.c ****     SPI_Cmd(SPIX, ENABLE);
+  80:oledlib/oled_driver.c **** 
+  81:oledlib/oled_driver.c ****     GPIO_InitStructure.GPIO_Pin = SPI_RES_PIN;
+  82:oledlib/oled_driver.c ****     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  83:oledlib/oled_driver.c ****     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+  84:oledlib/oled_driver.c ****     GPIO_Init(SPI_RES_GPIOX, &GPIO_InitStructure);
+  85:oledlib/oled_driver.c ****     GPIO_InitStructure.GPIO_Pin = SPI_DC_PIN;
+  86:oledlib/oled_driver.c ****     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  87:oledlib/oled_driver.c ****     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+  88:oledlib/oled_driver.c ****     GPIO_Init(SPI_DC_GPIOX, &GPIO_InitStructure);
+  89:oledlib/oled_driver.c ****     OLED_DATA_MODE();
+  90:oledlib/oled_driver.c **** 
+  91:oledlib/oled_driver.c ****     OLED_RESET_HIGH();
+  92:oledlib/oled_driver.c ****     WaitTimeMs(100);
+  93:oledlib/oled_driver.c ****     OLED_RESET_LOW();
+  94:oledlib/oled_driver.c ****     WaitTimeMs(100);
+  95:oledlib/oled_driver.c ****     OLED_RESET_HIGH();
+  96:oledlib/oled_driver.c **** }
+  97:oledlib/oled_driver.c **** 
+  98:oledlib/oled_driver.c **** void SPI_WriterByte(unsigned char dat)
+  99:oledlib/oled_driver.c **** {
+ 100:oledlib/oled_driver.c **** 
+ 101:oledlib/oled_driver.c ****     while (SPI_I2S_GetFlagStatus(SPIX, SPI_I2S_FLAG_TXE) == RESET)
+ 102:oledlib/oled_driver.c ****     {
+ 103:oledlib/oled_driver.c ****     };                           //检查指定的SPI标志位设置与否:发送缓存空标志位
+ 104:oledlib/oled_driver.c ****     SPI_I2S_SendData(SPIX, dat); //通过外设SPIx发送一个数据
+ 105:oledlib/oled_driver.c ****     while (SPI_I2S_GetFlagStatus(SPIX, SPI_I2S_FLAG_RXNE) == RESET)
+ 106:oledlib/oled_driver.c ****     {
+ 107:oledlib/oled_driver.c ****     };                         //检查指定的SPI标志位设置与否:接受缓存非空标志位
+ 108:oledlib/oled_driver.c ****     SPI_I2S_ReceiveData(SPIX); //返回通过SPIx最近接收的数据
+ 109:oledlib/oled_driver.c **** }
+ 110:oledlib/oled_driver.c **** 
+ 111:oledlib/oled_driver.c **** void WriteCmd(unsigned char cmd)
+ 112:oledlib/oled_driver.c **** {
+ 113:oledlib/oled_driver.c ****     OLED_CMD_MODE();
+ 114:oledlib/oled_driver.c ****     OLED_CS_LOW();
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccbrdYZv.s 			page 6
+
+
+ 115:oledlib/oled_driver.c ****     SPI_WriterByte(cmd);
+ 116:oledlib/oled_driver.c ****     OLED_CS_HIGH();
+ 117:oledlib/oled_driver.c ****     OLED_DATA_MODE();
+ 118:oledlib/oled_driver.c **** }
+ 119:oledlib/oled_driver.c **** 
+ 120:oledlib/oled_driver.c **** void WriteDat(unsigned char dat)
+ 121:oledlib/oled_driver.c **** {
+ 122:oledlib/oled_driver.c ****     OLED_DATA_MODE();
+ 123:oledlib/oled_driver.c ****     OLED_CS_LOW();
+ 124:oledlib/oled_driver.c ****     SPI_WriterByte(dat);
+ 125:oledlib/oled_driver.c ****     OLED_CS_HIGH();
+ 126:oledlib/oled_driver.c ****     OLED_DATA_MODE();
+ 127:oledlib/oled_driver.c **** }
+ 128:oledlib/oled_driver.c **** 
+ 129:oledlib/oled_driver.c **** void OLED_FILL(unsigned char BMP[])
+ 130:oledlib/oled_driver.c **** {
+ 131:oledlib/oled_driver.c ****     u8 i, j;
+ 132:oledlib/oled_driver.c ****     unsigned char *p;
+ 133:oledlib/oled_driver.c ****     p = BMP;
+ 134:oledlib/oled_driver.c **** 
+ 135:oledlib/oled_driver.c ****     for (i = 0; i < 8; i++)
+ 136:oledlib/oled_driver.c ****     {
+ 137:oledlib/oled_driver.c ****         WriteCmd(0xb0 + i); //page0-page1
+ 138:oledlib/oled_driver.c ****         WriteCmd(0x00);     //low column start address
+ 139:oledlib/oled_driver.c ****         WriteCmd(0x10);
+ 140:oledlib/oled_driver.c **** 
+ 141:oledlib/oled_driver.c ****         for (j = 0; j < 128; j++)
+ 142:oledlib/oled_driver.c ****         {
+ 143:oledlib/oled_driver.c ****             WriteDat(*p++);
+ 144:oledlib/oled_driver.c ****         }
+ 145:oledlib/oled_driver.c ****     }
+ 146:oledlib/oled_driver.c **** }
+ 147:oledlib/oled_driver.c **** 
+ 148:oledlib/oled_driver.c **** #endif //(TRANSFER_METHOD ==HW_IIC)
+ 149:oledlib/oled_driver.c **** 
+ 150:oledlib/oled_driver.c **** void OLED_Init(void)
+ 151:oledlib/oled_driver.c **** {
+ 152:oledlib/oled_driver.c ****     WriteCmd(0xAE); //display off
+ 153:oledlib/oled_driver.c ****     WriteCmd(0x20); //Set Memory Addressing Mode
+ 154:oledlib/oled_driver.c ****     WriteCmd(0x10); //00,Horizontal Addressing Mode;01,Vertical Addressing Mode;10,Page Addressing 
+ 155:oledlib/oled_driver.c ****     WriteCmd(0xb0); //Set Page Start Address for Page Addressing Mode,0-7
+ 156:oledlib/oled_driver.c ****     WriteCmd(0xc8); //Set COM Output Scan Direction
+ 157:oledlib/oled_driver.c ****     WriteCmd(0x00); //---set low column address
+ 158:oledlib/oled_driver.c ****     WriteCmd(0x10); //---set high column address
+ 159:oledlib/oled_driver.c ****     WriteCmd(0x40); //--set start line address
+ 160:oledlib/oled_driver.c ****     WriteCmd(0x81); //--set contrast control register
+ 161:oledlib/oled_driver.c ****     WriteCmd(0xff); //亮度调节 0x00~0xff
+ 162:oledlib/oled_driver.c ****     WriteCmd(0xa1); //--set segment re-map 0 to 127
+ 163:oledlib/oled_driver.c ****     WriteCmd(0xa6); //--set normal display
+ 164:oledlib/oled_driver.c ****     WriteCmd(0xa8); //--set multiplex ratio(1 to 64)
+ 165:oledlib/oled_driver.c ****     WriteCmd(0x3F); //
+ 166:oledlib/oled_driver.c ****     WriteCmd(0xa4); //0xa4,Output follows RAM content;0xa5,Output ignores RAM content
+ 167:oledlib/oled_driver.c ****     WriteCmd(0xd3); //-set display offset
+ 168:oledlib/oled_driver.c ****     WriteCmd(0x00); //-not offset
+ 169:oledlib/oled_driver.c ****     WriteCmd(0xd5); //--set display clock divide ratio/oscillator frequency
+ 170:oledlib/oled_driver.c ****     WriteCmd(0xf0); //--set divide ratio
+ 171:oledlib/oled_driver.c ****     WriteCmd(0xd9); //--set pre-charge period
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccbrdYZv.s 			page 7
+
+
+ 172:oledlib/oled_driver.c ****     WriteCmd(0x22); //
+ 173:oledlib/oled_driver.c ****     WriteCmd(0xda); //--set com pins hardware configuration
+ 174:oledlib/oled_driver.c ****     WriteCmd(0x12);
+ 175:oledlib/oled_driver.c ****     WriteCmd(0xdb); //--set vcomh
+ 176:oledlib/oled_driver.c ****     WriteCmd(0x20); //0x20,0.77xVcc
+ 177:oledlib/oled_driver.c ****     WriteCmd(0x8d); //--set DC-DC enable
+ 178:oledlib/oled_driver.c ****     WriteCmd(0x14); //
+ 179:oledlib/oled_driver.c ****     WriteCmd(0xaf); //--turn on oled panel
+ 180:oledlib/oled_driver.c ****     OLED_CLS();
+ 181:oledlib/oled_driver.c **** }
+ 182:oledlib/oled_driver.c **** void OLED_FILL(unsigned char BMP[])
+ 183:oledlib/oled_driver.c **** {
+ 181              		.loc 1 183 1 is_stmt 1 view -0
+ 182              		.cfi_startproc
+ 183              		@ args = 0, pretend = 0, frame = 0
+ 184              		@ frame_needed = 0, uses_anonymous_args = 0
+ 185              		.loc 1 183 1 is_stmt 0 view .LVU24
+ 186 0000 70B5     		push	{r4, r5, r6, lr}
+ 187              	.LCFI6:
+ 188              		.cfi_def_cfa_offset 16
+ 189              		.cfi_offset 4, -16
+ 190              		.cfi_offset 5, -12
+ 191              		.cfi_offset 6, -8
+ 192              		.cfi_offset 14, -4
+ 193 0002 0446     		mov	r4, r0
+ 184:oledlib/oled_driver.c ****     uint8_t i, j;
+ 194              		.loc 1 184 5 is_stmt 1 view .LVU25
+ 185:oledlib/oled_driver.c ****     unsigned char *p;
+ 195              		.loc 1 185 5 view .LVU26
+ 186:oledlib/oled_driver.c ****     p = BMP;
+ 196              		.loc 1 186 5 view .LVU27
+ 197              	.LVL15:
+ 187:oledlib/oled_driver.c **** 
+ 188:oledlib/oled_driver.c ****     for (i = 0; i < 8; i++)
+ 198              		.loc 1 188 5 view .LVU28
+ 199              		.loc 1 188 12 is_stmt 0 view .LVU29
+ 200 0004 0026     		movs	r6, #0
+ 201              		.loc 1 188 5 view .LVU30
+ 202 0006 01E0     		b	.L12
+ 203              	.LVL16:
+ 204              	.L18:
+ 205              		.loc 1 188 24 is_stmt 1 discriminator 2 view .LVU31
+ 206              		.loc 1 188 25 is_stmt 0 discriminator 2 view .LVU32
+ 207 0008 0136     		adds	r6, r6, #1
+ 208              	.LVL17:
+ 209              		.loc 1 188 25 discriminator 2 view .LVU33
+ 210 000a F6B2     		uxtb	r6, r6
+ 211              	.LVL18:
+ 212              	.L12:
+ 213              		.loc 1 188 17 is_stmt 1 discriminator 1 view .LVU34
+ 214              		.loc 1 188 5 is_stmt 0 discriminator 1 view .LVU35
+ 215 000c 072E     		cmp	r6, #7
+ 216 000e 15D8     		bhi	.L17
+ 189:oledlib/oled_driver.c ****     {
+ 190:oledlib/oled_driver.c ****         WriteCmd(0xb0 + i); //page0-page1
+ 217              		.loc 1 190 9 is_stmt 1 view .LVU36
+ 218 0010 A6F15000 		sub	r0, r6, #80
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccbrdYZv.s 			page 8
+
+
+ 219 0014 C0B2     		uxtb	r0, r0
+ 220 0016 FFF7FEFF 		bl	WriteCmd
+ 221              	.LVL19:
+ 191:oledlib/oled_driver.c ****         WriteCmd(0x00);     //low column start address
+ 222              		.loc 1 191 9 view .LVU37
+ 223 001a 0020     		movs	r0, #0
+ 224 001c FFF7FEFF 		bl	WriteCmd
+ 225              	.LVL20:
+ 192:oledlib/oled_driver.c ****         WriteCmd(0x10);
+ 226              		.loc 1 192 9 view .LVU38
+ 227 0020 1020     		movs	r0, #16
+ 228 0022 FFF7FEFF 		bl	WriteCmd
+ 229              	.LVL21:
+ 193:oledlib/oled_driver.c ****         for (j = 0; j < 128; j++)
+ 230              		.loc 1 193 9 view .LVU39
+ 231              		.loc 1 193 16 is_stmt 0 view .LVU40
+ 232 0026 0025     		movs	r5, #0
+ 233              	.LVL22:
+ 234              	.L13:
+ 235              		.loc 1 193 21 is_stmt 1 discriminator 1 view .LVU41
+ 236              		.loc 1 193 9 is_stmt 0 discriminator 1 view .LVU42
+ 237 0028 15F0800F 		tst	r5, #128
+ 238 002c ECD1     		bne	.L18
+ 194:oledlib/oled_driver.c ****         {
+ 195:oledlib/oled_driver.c ****             WriteDat(*p++);
+ 239              		.loc 1 195 13 is_stmt 1 discriminator 3 view .LVU43
+ 240              	.LVL23:
+ 241              		.loc 1 195 13 is_stmt 0 discriminator 3 view .LVU44
+ 242 002e 14F8010B 		ldrb	r0, [r4], #1	@ zero_extendqisi2
+ 243              	.LVL24:
+ 244              		.loc 1 195 13 discriminator 3 view .LVU45
+ 245 0032 FFF7FEFF 		bl	WriteDat
+ 246              	.LVL25:
+ 193:oledlib/oled_driver.c ****         for (j = 0; j < 128; j++)
+ 247              		.loc 1 193 30 is_stmt 1 discriminator 3 view .LVU46
+ 193:oledlib/oled_driver.c ****         for (j = 0; j < 128; j++)
+ 248              		.loc 1 193 31 is_stmt 0 discriminator 3 view .LVU47
+ 249 0036 0135     		adds	r5, r5, #1
+ 250              	.LVL26:
+ 193:oledlib/oled_driver.c ****         for (j = 0; j < 128; j++)
+ 251              		.loc 1 193 31 discriminator 3 view .LVU48
+ 252 0038 EDB2     		uxtb	r5, r5
+ 253              	.LVL27:
+ 193:oledlib/oled_driver.c ****         for (j = 0; j < 128; j++)
+ 254              		.loc 1 193 31 discriminator 3 view .LVU49
+ 255 003a F5E7     		b	.L13
+ 256              	.LVL28:
+ 257              	.L17:
+ 196:oledlib/oled_driver.c ****         }
+ 197:oledlib/oled_driver.c ****     }
+ 198:oledlib/oled_driver.c **** }
+ 258              		.loc 1 198 1 view .LVU50
+ 259 003c 70BD     		pop	{r4, r5, r6, pc}
+ 260              		.loc 1 198 1 view .LVU51
+ 261              		.cfi_endproc
+ 262              	.LFE70:
+ 264              		.section	.text.OLED_CLS,"ax",%progbits
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccbrdYZv.s 			page 9
+
+
+ 265              		.align	1
+ 266              		.global	OLED_CLS
+ 267              		.syntax unified
+ 268              		.thumb
+ 269              		.thumb_func
+ 270              		.fpu softvfp
+ 272              	OLED_CLS:
+ 273              	.LFB71:
+ 199:oledlib/oled_driver.c **** 
+ 200:oledlib/oled_driver.c **** void OLED_CLS(void) //清屏
+ 201:oledlib/oled_driver.c **** {
+ 274              		.loc 1 201 1 is_stmt 1 view -0
+ 275              		.cfi_startproc
+ 276              		@ args = 0, pretend = 0, frame = 0
+ 277              		@ frame_needed = 0, uses_anonymous_args = 0
+ 278 0000 08B5     		push	{r3, lr}
+ 279              	.LCFI7:
+ 280              		.cfi_def_cfa_offset 8
+ 281              		.cfi_offset 3, -8
+ 282              		.cfi_offset 14, -4
+ 202:oledlib/oled_driver.c ****     OLED_FILL(0x00);
+ 283              		.loc 1 202 5 view .LVU53
+ 284 0002 0020     		movs	r0, #0
+ 285 0004 FFF7FEFF 		bl	OLED_FILL
+ 286              	.LVL29:
+ 203:oledlib/oled_driver.c **** }
+ 287              		.loc 1 203 1 is_stmt 0 view .LVU54
+ 288 0008 08BD     		pop	{r3, pc}
+ 289              		.cfi_endproc
+ 290              	.LFE71:
+ 292              		.section	.text.OLED_Init,"ax",%progbits
+ 293              		.align	1
+ 294              		.global	OLED_Init
+ 295              		.syntax unified
+ 296              		.thumb
+ 297              		.thumb_func
+ 298              		.fpu softvfp
+ 300              	OLED_Init:
+ 301              	.LFB69:
+ 151:oledlib/oled_driver.c ****     WriteCmd(0xAE); //display off
+ 302              		.loc 1 151 1 is_stmt 1 view -0
+ 303              		.cfi_startproc
+ 304              		@ args = 0, pretend = 0, frame = 0
+ 305              		@ frame_needed = 0, uses_anonymous_args = 0
+ 306 0000 08B5     		push	{r3, lr}
+ 307              	.LCFI8:
+ 308              		.cfi_def_cfa_offset 8
+ 309              		.cfi_offset 3, -8
+ 310              		.cfi_offset 14, -4
+ 152:oledlib/oled_driver.c ****     WriteCmd(0x20); //Set Memory Addressing Mode
+ 311              		.loc 1 152 5 view .LVU56
+ 312 0002 AE20     		movs	r0, #174
+ 313 0004 FFF7FEFF 		bl	WriteCmd
+ 314              	.LVL30:
+ 153:oledlib/oled_driver.c ****     WriteCmd(0x10); //00,Horizontal Addressing Mode;01,Vertical Addressing Mode;10,Page Addressing 
+ 315              		.loc 1 153 5 view .LVU57
+ 316 0008 2020     		movs	r0, #32
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccbrdYZv.s 			page 10
+
+
+ 317 000a FFF7FEFF 		bl	WriteCmd
+ 318              	.LVL31:
+ 154:oledlib/oled_driver.c ****     WriteCmd(0xb0); //Set Page Start Address for Page Addressing Mode,0-7
+ 319              		.loc 1 154 5 view .LVU58
+ 320 000e 1020     		movs	r0, #16
+ 321 0010 FFF7FEFF 		bl	WriteCmd
+ 322              	.LVL32:
+ 155:oledlib/oled_driver.c ****     WriteCmd(0xc8); //Set COM Output Scan Direction
+ 323              		.loc 1 155 5 view .LVU59
+ 324 0014 B020     		movs	r0, #176
+ 325 0016 FFF7FEFF 		bl	WriteCmd
+ 326              	.LVL33:
+ 156:oledlib/oled_driver.c ****     WriteCmd(0x00); //---set low column address
+ 327              		.loc 1 156 5 view .LVU60
+ 328 001a C820     		movs	r0, #200
+ 329 001c FFF7FEFF 		bl	WriteCmd
+ 330              	.LVL34:
+ 157:oledlib/oled_driver.c ****     WriteCmd(0x10); //---set high column address
+ 331              		.loc 1 157 5 view .LVU61
+ 332 0020 0020     		movs	r0, #0
+ 333 0022 FFF7FEFF 		bl	WriteCmd
+ 334              	.LVL35:
+ 158:oledlib/oled_driver.c ****     WriteCmd(0x40); //--set start line address
+ 335              		.loc 1 158 5 view .LVU62
+ 336 0026 1020     		movs	r0, #16
+ 337 0028 FFF7FEFF 		bl	WriteCmd
+ 338              	.LVL36:
+ 159:oledlib/oled_driver.c ****     WriteCmd(0x81); //--set contrast control register
+ 339              		.loc 1 159 5 view .LVU63
+ 340 002c 4020     		movs	r0, #64
+ 341 002e FFF7FEFF 		bl	WriteCmd
+ 342              	.LVL37:
+ 160:oledlib/oled_driver.c ****     WriteCmd(0xff); //亮度调节 0x00~0xff
+ 343              		.loc 1 160 5 view .LVU64
+ 344 0032 8120     		movs	r0, #129
+ 345 0034 FFF7FEFF 		bl	WriteCmd
+ 346              	.LVL38:
+ 161:oledlib/oled_driver.c ****     WriteCmd(0xa1); //--set segment re-map 0 to 127
+ 347              		.loc 1 161 5 view .LVU65
+ 348 0038 FF20     		movs	r0, #255
+ 349 003a FFF7FEFF 		bl	WriteCmd
+ 350              	.LVL39:
+ 162:oledlib/oled_driver.c ****     WriteCmd(0xa6); //--set normal display
+ 351              		.loc 1 162 5 view .LVU66
+ 352 003e A120     		movs	r0, #161
+ 353 0040 FFF7FEFF 		bl	WriteCmd
+ 354              	.LVL40:
+ 163:oledlib/oled_driver.c ****     WriteCmd(0xa8); //--set multiplex ratio(1 to 64)
+ 355              		.loc 1 163 5 view .LVU67
+ 356 0044 A620     		movs	r0, #166
+ 357 0046 FFF7FEFF 		bl	WriteCmd
+ 358              	.LVL41:
+ 164:oledlib/oled_driver.c ****     WriteCmd(0x3F); //
+ 359              		.loc 1 164 5 view .LVU68
+ 360 004a A820     		movs	r0, #168
+ 361 004c FFF7FEFF 		bl	WriteCmd
+ 362              	.LVL42:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccbrdYZv.s 			page 11
+
+
+ 165:oledlib/oled_driver.c ****     WriteCmd(0xa4); //0xa4,Output follows RAM content;0xa5,Output ignores RAM content
+ 363              		.loc 1 165 5 view .LVU69
+ 364 0050 3F20     		movs	r0, #63
+ 365 0052 FFF7FEFF 		bl	WriteCmd
+ 366              	.LVL43:
+ 166:oledlib/oled_driver.c ****     WriteCmd(0xd3); //-set display offset
+ 367              		.loc 1 166 5 view .LVU70
+ 368 0056 A420     		movs	r0, #164
+ 369 0058 FFF7FEFF 		bl	WriteCmd
+ 370              	.LVL44:
+ 167:oledlib/oled_driver.c ****     WriteCmd(0x00); //-not offset
+ 371              		.loc 1 167 5 view .LVU71
+ 372 005c D320     		movs	r0, #211
+ 373 005e FFF7FEFF 		bl	WriteCmd
+ 374              	.LVL45:
+ 168:oledlib/oled_driver.c ****     WriteCmd(0xd5); //--set display clock divide ratio/oscillator frequency
+ 375              		.loc 1 168 5 view .LVU72
+ 376 0062 0020     		movs	r0, #0
+ 377 0064 FFF7FEFF 		bl	WriteCmd
+ 378              	.LVL46:
+ 169:oledlib/oled_driver.c ****     WriteCmd(0xf0); //--set divide ratio
+ 379              		.loc 1 169 5 view .LVU73
+ 380 0068 D520     		movs	r0, #213
+ 381 006a FFF7FEFF 		bl	WriteCmd
+ 382              	.LVL47:
+ 170:oledlib/oled_driver.c ****     WriteCmd(0xd9); //--set pre-charge period
+ 383              		.loc 1 170 5 view .LVU74
+ 384 006e F020     		movs	r0, #240
+ 385 0070 FFF7FEFF 		bl	WriteCmd
+ 386              	.LVL48:
+ 171:oledlib/oled_driver.c ****     WriteCmd(0x22); //
+ 387              		.loc 1 171 5 view .LVU75
+ 388 0074 D920     		movs	r0, #217
+ 389 0076 FFF7FEFF 		bl	WriteCmd
+ 390              	.LVL49:
+ 172:oledlib/oled_driver.c ****     WriteCmd(0xda); //--set com pins hardware configuration
+ 391              		.loc 1 172 5 view .LVU76
+ 392 007a 2220     		movs	r0, #34
+ 393 007c FFF7FEFF 		bl	WriteCmd
+ 394              	.LVL50:
+ 173:oledlib/oled_driver.c ****     WriteCmd(0x12);
+ 395              		.loc 1 173 5 view .LVU77
+ 396 0080 DA20     		movs	r0, #218
+ 397 0082 FFF7FEFF 		bl	WriteCmd
+ 398              	.LVL51:
+ 174:oledlib/oled_driver.c ****     WriteCmd(0xdb); //--set vcomh
+ 399              		.loc 1 174 5 view .LVU78
+ 400 0086 1220     		movs	r0, #18
+ 401 0088 FFF7FEFF 		bl	WriteCmd
+ 402              	.LVL52:
+ 175:oledlib/oled_driver.c ****     WriteCmd(0x20); //0x20,0.77xVcc
+ 403              		.loc 1 175 5 view .LVU79
+ 404 008c DB20     		movs	r0, #219
+ 405 008e FFF7FEFF 		bl	WriteCmd
+ 406              	.LVL53:
+ 176:oledlib/oled_driver.c ****     WriteCmd(0x8d); //--set DC-DC enable
+ 407              		.loc 1 176 5 view .LVU80
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccbrdYZv.s 			page 12
+
+
+ 408 0092 2020     		movs	r0, #32
+ 409 0094 FFF7FEFF 		bl	WriteCmd
+ 410              	.LVL54:
+ 177:oledlib/oled_driver.c ****     WriteCmd(0x14); //
+ 411              		.loc 1 177 5 view .LVU81
+ 412 0098 8D20     		movs	r0, #141
+ 413 009a FFF7FEFF 		bl	WriteCmd
+ 414              	.LVL55:
+ 178:oledlib/oled_driver.c ****     WriteCmd(0xaf); //--turn on oled panel
+ 415              		.loc 1 178 5 view .LVU82
+ 416 009e 1420     		movs	r0, #20
+ 417 00a0 FFF7FEFF 		bl	WriteCmd
+ 418              	.LVL56:
+ 179:oledlib/oled_driver.c ****     OLED_CLS();
+ 419              		.loc 1 179 5 view .LVU83
+ 420 00a4 AF20     		movs	r0, #175
+ 421 00a6 FFF7FEFF 		bl	WriteCmd
+ 422              	.LVL57:
+ 180:oledlib/oled_driver.c **** }
+ 423              		.loc 1 180 5 view .LVU84
+ 424 00aa FFF7FEFF 		bl	OLED_CLS
+ 425              	.LVL58:
+ 181:oledlib/oled_driver.c **** void OLED_FILL(unsigned char BMP[])
+ 426              		.loc 1 181 1 is_stmt 0 view .LVU85
+ 427 00ae 08BD     		pop	{r3, pc}
+ 428              		.cfi_endproc
+ 429              	.LFE69:
+ 431              		.section	.text.OLED_ON,"ax",%progbits
+ 432              		.align	1
+ 433              		.global	OLED_ON
+ 434              		.syntax unified
+ 435              		.thumb
+ 436              		.thumb_func
+ 437              		.fpu softvfp
+ 439              	OLED_ON:
+ 440              	.LFB72:
+ 204:oledlib/oled_driver.c **** 
+ 205:oledlib/oled_driver.c **** void OLED_ON(void)
+ 206:oledlib/oled_driver.c **** {
+ 441              		.loc 1 206 1 is_stmt 1 view -0
+ 442              		.cfi_startproc
+ 443              		@ args = 0, pretend = 0, frame = 0
+ 444              		@ frame_needed = 0, uses_anonymous_args = 0
+ 445 0000 08B5     		push	{r3, lr}
+ 446              	.LCFI9:
+ 447              		.cfi_def_cfa_offset 8
+ 448              		.cfi_offset 3, -8
+ 449              		.cfi_offset 14, -4
+ 207:oledlib/oled_driver.c ****     WriteCmd(0X8D); //设置电荷泵
+ 450              		.loc 1 207 5 view .LVU87
+ 451 0002 8D20     		movs	r0, #141
+ 452 0004 FFF7FEFF 		bl	WriteCmd
+ 453              	.LVL59:
+ 208:oledlib/oled_driver.c ****     WriteCmd(0X14); //开启电荷泵
+ 454              		.loc 1 208 5 view .LVU88
+ 455 0008 1420     		movs	r0, #20
+ 456 000a FFF7FEFF 		bl	WriteCmd
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccbrdYZv.s 			page 13
+
+
+ 457              	.LVL60:
+ 209:oledlib/oled_driver.c ****     WriteCmd(0XAF); //OLED唤醒
+ 458              		.loc 1 209 5 view .LVU89
+ 459 000e AF20     		movs	r0, #175
+ 460 0010 FFF7FEFF 		bl	WriteCmd
+ 461              	.LVL61:
+ 210:oledlib/oled_driver.c **** }
+ 462              		.loc 1 210 1 is_stmt 0 view .LVU90
+ 463 0014 08BD     		pop	{r3, pc}
+ 464              		.cfi_endproc
+ 465              	.LFE72:
+ 467              		.section	.text.OLED_OFF,"ax",%progbits
+ 468              		.align	1
+ 469              		.global	OLED_OFF
+ 470              		.syntax unified
+ 471              		.thumb
+ 472              		.thumb_func
+ 473              		.fpu softvfp
+ 475              	OLED_OFF:
+ 476              	.LFB73:
+ 211:oledlib/oled_driver.c **** 
+ 212:oledlib/oled_driver.c **** void OLED_OFF(void)
+ 213:oledlib/oled_driver.c **** {
+ 477              		.loc 1 213 1 is_stmt 1 view -0
+ 478              		.cfi_startproc
+ 479              		@ args = 0, pretend = 0, frame = 0
+ 480              		@ frame_needed = 0, uses_anonymous_args = 0
+ 481 0000 08B5     		push	{r3, lr}
+ 482              	.LCFI10:
+ 483              		.cfi_def_cfa_offset 8
+ 484              		.cfi_offset 3, -8
+ 485              		.cfi_offset 14, -4
+ 214:oledlib/oled_driver.c ****     WriteCmd(0X8D); //设置电荷泵
+ 486              		.loc 1 214 5 view .LVU92
+ 487 0002 8D20     		movs	r0, #141
+ 488 0004 FFF7FEFF 		bl	WriteCmd
+ 489              	.LVL62:
+ 215:oledlib/oled_driver.c ****     WriteCmd(0X10); //关闭电荷泵
+ 490              		.loc 1 215 5 view .LVU93
+ 491 0008 1020     		movs	r0, #16
+ 492 000a FFF7FEFF 		bl	WriteCmd
+ 493              	.LVL63:
+ 216:oledlib/oled_driver.c ****     WriteCmd(0XAE); //OLED休眠
+ 494              		.loc 1 216 5 view .LVU94
+ 495 000e AE20     		movs	r0, #174
+ 496 0010 FFF7FEFF 		bl	WriteCmd
+ 497              	.LVL64:
+ 217:oledlib/oled_driver.c **** }
+ 498              		.loc 1 217 1 is_stmt 0 view .LVU95
+ 499 0014 08BD     		pop	{r3, pc}
+ 500              		.cfi_endproc
+ 501              	.LFE73:
+ 503              		.text
+ 504              	.Letext0:
+ 505              		.file 2 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 506              		.file 3 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 507              		.file 4 "Drivers/CMSIS/Include/core_cm3.h"
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccbrdYZv.s 			page 14
+
+
+ 508              		.file 5 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/system_stm32f1xx.h"
+ 509              		.file 6 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xe.h"
+ 510              		.file 7 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h"
+ 511              		.file 8 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma.h"
+ 512              		.file 9 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_i2c.h"
+ 513              		.file 10 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
+ 514              		.file 11 "Core/Inc/i2c.h"
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccbrdYZv.s 			page 15
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 oled_driver.c
+C:\Users\GKQ\AppData\Local\Temp\ccbrdYZv.s:16     .text.I2C_Configuration:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccbrdYZv.s:24     .text.I2C_Configuration:00000000 I2C_Configuration
+C:\Users\GKQ\AppData\Local\Temp\ccbrdYZv.s:45     .text.I2C_WriteByte:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccbrdYZv.s:52     .text.I2C_WriteByte:00000000 I2C_WriteByte
+C:\Users\GKQ\AppData\Local\Temp\ccbrdYZv.s:100    .text.I2C_WriteByte:00000028 $d
+C:\Users\GKQ\AppData\Local\Temp\ccbrdYZv.s:105    .text.WriteCmd:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccbrdYZv.s:112    .text.WriteCmd:00000000 WriteCmd
+C:\Users\GKQ\AppData\Local\Temp\ccbrdYZv.s:138    .text.WriteDat:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccbrdYZv.s:145    .text.WriteDat:00000000 WriteDat
+C:\Users\GKQ\AppData\Local\Temp\ccbrdYZv.s:171    .text.OLED_FILL:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccbrdYZv.s:178    .text.OLED_FILL:00000000 OLED_FILL
+C:\Users\GKQ\AppData\Local\Temp\ccbrdYZv.s:265    .text.OLED_CLS:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccbrdYZv.s:272    .text.OLED_CLS:00000000 OLED_CLS
+C:\Users\GKQ\AppData\Local\Temp\ccbrdYZv.s:293    .text.OLED_Init:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccbrdYZv.s:300    .text.OLED_Init:00000000 OLED_Init
+C:\Users\GKQ\AppData\Local\Temp\ccbrdYZv.s:432    .text.OLED_ON:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccbrdYZv.s:439    .text.OLED_ON:00000000 OLED_ON
+C:\Users\GKQ\AppData\Local\Temp\ccbrdYZv.s:468    .text.OLED_OFF:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccbrdYZv.s:475    .text.OLED_OFF:00000000 OLED_OFF
+
+UNDEFINED SYMBOLS
+MX_I2C1_Init
+HAL_I2C_Mem_Write
+hi2c1

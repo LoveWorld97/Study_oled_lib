@@ -1,0 +1,1019 @@
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccrKUJ0q.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"oled_debug.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.m_pow,"ax",%progbits
+  16              		.align	1
+  17              		.arch armv7-m
+  18              		.syntax unified
+  19              		.thumb
+  20              		.thumb_func
+  21              		.fpu softvfp
+  23              	m_pow:
+  24              	.LVL0:
+  25              	.LFB2:
+  26              		.file 1 "oledlib/oled_debug.c"
+   1:oledlib/oled_debug.c **** #include "oled_debug.h"
+   2:oledlib/oled_debug.c **** #include "oled_font.h"
+   3:oledlib/oled_debug.c **** #include "oled_config.h"
+   4:oledlib/oled_debug.c **** #include "oled_draw.h"
+   5:oledlib/oled_debug.c **** #include "stdlib.h"
+   6:oledlib/oled_debug.c **** #include "string.h"
+   7:oledlib/oled_debug.c **** #include "stdarg.h"
+   8:oledlib/oled_debug.c **** 
+   9:oledlib/oled_debug.c **** static int _cursor_x = 0;
+  10:oledlib/oled_debug.c **** static int _cursor_y = 0;
+  11:oledlib/oled_debug.c **** static unsigned char wrap = 1;
+  12:oledlib/oled_debug.c **** void SetTextWrap(unsigned char w)
+  13:oledlib/oled_debug.c **** {
+  14:oledlib/oled_debug.c ****     wrap = w;
+  15:oledlib/oled_debug.c **** }
+  16:oledlib/oled_debug.c **** 
+  17:oledlib/oled_debug.c **** void SetCursor(int x, int y)
+  18:oledlib/oled_debug.c **** {
+  19:oledlib/oled_debug.c ****     _cursor_x = x;
+  20:oledlib/oled_debug.c ****     _cursor_y = y;
+  21:oledlib/oled_debug.c **** }
+  22:oledlib/oled_debug.c **** 
+  23:oledlib/oled_debug.c **** static unsigned long m_pow(int x, int y)
+  24:oledlib/oled_debug.c **** {
+  27              		.loc 1 24 1 view -0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              		@ link register save eliminated.
+  32              		.loc 1 24 1 is_stmt 0 view .LVU1
+  33 0000 0246     		mov	r2, r0
+  25:oledlib/oled_debug.c ****     unsigned long sum = 1;
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccrKUJ0q.s 			page 2
+
+
+  34              		.loc 1 25 5 is_stmt 1 view .LVU2
+  35              	.LVL1:
+  26:oledlib/oled_debug.c ****     while (y--)
+  36              		.loc 1 26 5 view .LVU3
+  25:oledlib/oled_debug.c ****     unsigned long sum = 1;
+  37              		.loc 1 25 19 is_stmt 0 view .LVU4
+  38 0002 0120     		movs	r0, #1
+  39              	.LVL2:
+  40              	.L2:
+  41              		.loc 1 26 11 is_stmt 1 view .LVU5
+  42              		.loc 1 26 13 is_stmt 0 view .LVU6
+  43 0004 4B1E     		subs	r3, r1, #1
+  44              	.LVL3:
+  45              		.loc 1 26 11 view .LVU7
+  46 0006 19B1     		cbz	r1, .L4
+  27:oledlib/oled_debug.c ****     {
+  28:oledlib/oled_debug.c ****         sum *= x;
+  47              		.loc 1 28 9 is_stmt 1 view .LVU8
+  48              		.loc 1 28 13 is_stmt 0 view .LVU9
+  49 0008 02FB00F0 		mul	r0, r2, r0
+  50              	.LVL4:
+  26:oledlib/oled_debug.c ****     while (y--)
+  51              		.loc 1 26 13 view .LVU10
+  52 000c 1946     		mov	r1, r3
+  53 000e F9E7     		b	.L2
+  54              	.L4:
+  29:oledlib/oled_debug.c ****     }
+  30:oledlib/oled_debug.c ****     return sum;
+  31:oledlib/oled_debug.c **** }
+  55              		.loc 1 31 1 view .LVU11
+  56 0010 7047     		bx	lr
+  57              		.cfi_endproc
+  58              	.LFE2:
+  60              		.section	.text.SetTextWrap,"ax",%progbits
+  61              		.align	1
+  62              		.global	SetTextWrap
+  63              		.syntax unified
+  64              		.thumb
+  65              		.thumb_func
+  66              		.fpu softvfp
+  68              	SetTextWrap:
+  69              	.LVL5:
+  70              	.LFB0:
+  13:oledlib/oled_debug.c ****     wrap = w;
+  71              		.loc 1 13 1 is_stmt 1 view -0
+  72              		.cfi_startproc
+  73              		@ args = 0, pretend = 0, frame = 0
+  74              		@ frame_needed = 0, uses_anonymous_args = 0
+  75              		@ link register save eliminated.
+  14:oledlib/oled_debug.c **** }
+  76              		.loc 1 14 5 view .LVU13
+  14:oledlib/oled_debug.c **** }
+  77              		.loc 1 14 10 is_stmt 0 view .LVU14
+  78 0000 014B     		ldr	r3, .L6
+  79 0002 1870     		strb	r0, [r3]
+  15:oledlib/oled_debug.c **** 
+  80              		.loc 1 15 1 view .LVU15
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccrKUJ0q.s 			page 3
+
+
+  81 0004 7047     		bx	lr
+  82              	.L7:
+  83 0006 00BF     		.align	2
+  84              	.L6:
+  85 0008 00000000 		.word	.LANCHOR0
+  86              		.cfi_endproc
+  87              	.LFE0:
+  89              		.section	.text.SetCursor,"ax",%progbits
+  90              		.align	1
+  91              		.global	SetCursor
+  92              		.syntax unified
+  93              		.thumb
+  94              		.thumb_func
+  95              		.fpu softvfp
+  97              	SetCursor:
+  98              	.LVL6:
+  99              	.LFB1:
+  18:oledlib/oled_debug.c ****     _cursor_x = x;
+ 100              		.loc 1 18 1 is_stmt 1 view -0
+ 101              		.cfi_startproc
+ 102              		@ args = 0, pretend = 0, frame = 0
+ 103              		@ frame_needed = 0, uses_anonymous_args = 0
+ 104              		@ link register save eliminated.
+  19:oledlib/oled_debug.c ****     _cursor_y = y;
+ 105              		.loc 1 19 5 view .LVU17
+  19:oledlib/oled_debug.c ****     _cursor_y = y;
+ 106              		.loc 1 19 15 is_stmt 0 view .LVU18
+ 107 0000 024B     		ldr	r3, .L9
+ 108 0002 1860     		str	r0, [r3]
+  20:oledlib/oled_debug.c **** }
+ 109              		.loc 1 20 5 is_stmt 1 view .LVU19
+  20:oledlib/oled_debug.c **** }
+ 110              		.loc 1 20 15 is_stmt 0 view .LVU20
+ 111 0004 024B     		ldr	r3, .L9+4
+ 112 0006 1960     		str	r1, [r3]
+  21:oledlib/oled_debug.c **** 
+ 113              		.loc 1 21 1 view .LVU21
+ 114 0008 7047     		bx	lr
+ 115              	.L10:
+ 116 000a 00BF     		.align	2
+ 117              	.L9:
+ 118 000c 00000000 		.word	.LANCHOR1
+ 119 0010 00000000 		.word	.LANCHOR2
+ 120              		.cfi_endproc
+ 121              	.LFE1:
+ 123              		.section	.text.m_putchar,"ax",%progbits
+ 124              		.align	1
+ 125              		.global	m_putchar
+ 126              		.syntax unified
+ 127              		.thumb
+ 128              		.thumb_func
+ 129              		.fpu softvfp
+ 131              	m_putchar:
+ 132              	.LVL7:
+ 133              	.LFB3:
+  32:oledlib/oled_debug.c **** 
+  33:oledlib/oled_debug.c **** //打印字符
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccrKUJ0q.s 			page 4
+
+
+  34:oledlib/oled_debug.c **** void m_putchar(const char c)
+  35:oledlib/oled_debug.c **** {
+ 134              		.loc 1 35 1 is_stmt 1 view -0
+ 135              		.cfi_startproc
+ 136              		@ args = 0, pretend = 0, frame = 0
+ 137              		@ frame_needed = 0, uses_anonymous_args = 0
+ 138              		.loc 1 35 1 is_stmt 0 view .LVU23
+ 139 0000 70B5     		push	{r4, r5, r6, lr}
+ 140              	.LCFI0:
+ 141              		.cfi_def_cfa_offset 16
+ 142              		.cfi_offset 4, -16
+ 143              		.cfi_offset 5, -12
+ 144              		.cfi_offset 6, -8
+ 145              		.cfi_offset 14, -4
+ 146 0002 0446     		mov	r4, r0
+  36:oledlib/oled_debug.c ****     unsigned char tmp = GetFontSize();
+ 147              		.loc 1 36 5 is_stmt 1 view .LVU24
+ 148              		.loc 1 36 25 is_stmt 0 view .LVU25
+ 149 0004 FFF7FEFF 		bl	GetFontSize
+ 150              	.LVL8:
+  37:oledlib/oled_debug.c ****     if (c == '\n')
+ 151              		.loc 1 37 5 is_stmt 1 view .LVU26
+ 152              		.loc 1 37 8 is_stmt 0 view .LVU27
+ 153 0008 0A2C     		cmp	r4, #10
+ 154 000a 1BD0     		beq	.L15
+ 155 000c 0546     		mov	r5, r0
+  38:oledlib/oled_debug.c ****     {
+  39:oledlib/oled_debug.c ****         _cursor_y += 8;
+  40:oledlib/oled_debug.c ****         _cursor_x = 0;
+  41:oledlib/oled_debug.c ****     }
+  42:oledlib/oled_debug.c ****     else if (c == '\r')
+ 156              		.loc 1 42 10 is_stmt 1 view .LVU28
+ 157              		.loc 1 42 13 is_stmt 0 view .LVU29
+ 158 000e 0D2C     		cmp	r4, #13
+ 159 0010 1FD0     		beq	.L11
+  43:oledlib/oled_debug.c ****     {
+  44:oledlib/oled_debug.c ****         // skip em
+  45:oledlib/oled_debug.c ****     }
+  46:oledlib/oled_debug.c ****     else
+  47:oledlib/oled_debug.c ****     {
+  48:oledlib/oled_debug.c ****         SetFontSize(1);
+ 160              		.loc 1 48 9 is_stmt 1 view .LVU30
+ 161 0012 0120     		movs	r0, #1
+ 162              	.LVL9:
+ 163              		.loc 1 48 9 is_stmt 0 view .LVU31
+ 164 0014 FFF7FEFF 		bl	SetFontSize
+ 165              	.LVL10:
+  49:oledlib/oled_debug.c ****         DrawChar(_cursor_x, _cursor_y, c);
+ 166              		.loc 1 49 9 is_stmt 1 view .LVU32
+ 167 0018 0E4E     		ldr	r6, .L16
+ 168 001a 2246     		mov	r2, r4
+ 169 001c 0E4B     		ldr	r3, .L16+4
+ 170 001e 1968     		ldr	r1, [r3]
+ 171 0020 3068     		ldr	r0, [r6]
+ 172 0022 FFF7FEFF 		bl	DrawChar
+ 173              	.LVL11:
+  50:oledlib/oled_debug.c ****         SetFontSize(tmp);
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccrKUJ0q.s 			page 5
+
+
+ 174              		.loc 1 50 9 view .LVU33
+ 175 0026 2846     		mov	r0, r5
+ 176 0028 FFF7FEFF 		bl	SetFontSize
+ 177              	.LVL12:
+  51:oledlib/oled_debug.c ****         _cursor_x += 6;
+ 178              		.loc 1 51 9 view .LVU34
+ 179              		.loc 1 51 19 is_stmt 0 view .LVU35
+ 180 002c 3368     		ldr	r3, [r6]
+ 181 002e 0633     		adds	r3, r3, #6
+ 182 0030 3360     		str	r3, [r6]
+  52:oledlib/oled_debug.c ****         if (wrap && (_cursor_x > (SCREEN_COLUMN - 6)))
+ 183              		.loc 1 52 9 is_stmt 1 view .LVU36
+ 184              		.loc 1 52 13 is_stmt 0 view .LVU37
+ 185 0032 0A4A     		ldr	r2, .L16+8
+ 186 0034 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 187              		.loc 1 52 12 view .LVU38
+ 188 0036 62B1     		cbz	r2, .L11
+ 189              		.loc 1 52 18 discriminator 1 view .LVU39
+ 190 0038 7A2B     		cmp	r3, #122
+ 191 003a 0ADD     		ble	.L11
+  53:oledlib/oled_debug.c ****         {
+  54:oledlib/oled_debug.c ****             m_putchar('\n');
+ 192              		.loc 1 54 13 is_stmt 1 view .LVU40
+ 193 003c 0A20     		movs	r0, #10
+ 194 003e FFF7FEFF 		bl	m_putchar
+ 195              	.LVL13:
+  55:oledlib/oled_debug.c ****         }
+  56:oledlib/oled_debug.c ****     }
+  57:oledlib/oled_debug.c **** }
+ 196              		.loc 1 57 1 is_stmt 0 view .LVU41
+ 197 0042 06E0     		b	.L11
+ 198              	.LVL14:
+ 199              	.L15:
+  39:oledlib/oled_debug.c ****         _cursor_x = 0;
+ 200              		.loc 1 39 9 is_stmt 1 view .LVU42
+  39:oledlib/oled_debug.c ****         _cursor_x = 0;
+ 201              		.loc 1 39 19 is_stmt 0 view .LVU43
+ 202 0044 044A     		ldr	r2, .L16+4
+ 203 0046 1368     		ldr	r3, [r2]
+ 204 0048 0833     		adds	r3, r3, #8
+ 205 004a 1360     		str	r3, [r2]
+  40:oledlib/oled_debug.c ****     }
+ 206              		.loc 1 40 9 is_stmt 1 view .LVU44
+  40:oledlib/oled_debug.c ****     }
+ 207              		.loc 1 40 19 is_stmt 0 view .LVU45
+ 208 004c 014B     		ldr	r3, .L16
+ 209 004e 0022     		movs	r2, #0
+ 210 0050 1A60     		str	r2, [r3]
+ 211              	.LVL15:
+ 212              	.L11:
+ 213              		.loc 1 57 1 view .LVU46
+ 214 0052 70BD     		pop	{r4, r5, r6, pc}
+ 215              	.L17:
+ 216              		.align	2
+ 217              	.L16:
+ 218 0054 00000000 		.word	.LANCHOR1
+ 219 0058 00000000 		.word	.LANCHOR2
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccrKUJ0q.s 			page 6
+
+
+ 220 005c 00000000 		.word	.LANCHOR0
+ 221              		.cfi_endproc
+ 222              	.LFE3:
+ 224              		.section	.text.m_putstr,"ax",%progbits
+ 225              		.align	1
+ 226              		.global	m_putstr
+ 227              		.syntax unified
+ 228              		.thumb
+ 229              		.thumb_func
+ 230              		.fpu softvfp
+ 232              	m_putstr:
+ 233              	.LVL16:
+ 234              	.LFB4:
+  58:oledlib/oled_debug.c **** 
+  59:oledlib/oled_debug.c **** //打印字符串
+  60:oledlib/oled_debug.c **** void m_putstr(const char *str)
+  61:oledlib/oled_debug.c **** {
+ 235              		.loc 1 61 1 is_stmt 1 view -0
+ 236              		.cfi_startproc
+ 237              		@ args = 0, pretend = 0, frame = 0
+ 238              		@ frame_needed = 0, uses_anonymous_args = 0
+ 239              		.loc 1 61 1 is_stmt 0 view .LVU48
+ 240 0000 10B5     		push	{r4, lr}
+ 241              	.LCFI1:
+ 242              		.cfi_def_cfa_offset 8
+ 243              		.cfi_offset 4, -8
+ 244              		.cfi_offset 14, -4
+ 245 0002 0446     		mov	r4, r0
+  62:oledlib/oled_debug.c ****     while (*str)
+ 246              		.loc 1 62 5 is_stmt 1 view .LVU49
+ 247              	.LVL17:
+ 248              	.L19:
+ 249              		.loc 1 62 11 view .LVU50
+ 250              		.loc 1 62 12 is_stmt 0 view .LVU51
+ 251 0004 2078     		ldrb	r0, [r4]	@ zero_extendqisi2
+ 252              		.loc 1 62 11 view .LVU52
+ 253 0006 18B1     		cbz	r0, .L22
+  63:oledlib/oled_debug.c ****     {
+  64:oledlib/oled_debug.c ****         m_putchar(*str++);
+ 254              		.loc 1 64 9 is_stmt 1 view .LVU53
+ 255              		.loc 1 64 23 is_stmt 0 view .LVU54
+ 256 0008 0134     		adds	r4, r4, #1
+ 257              	.LVL18:
+ 258              		.loc 1 64 9 view .LVU55
+ 259 000a FFF7FEFF 		bl	m_putchar
+ 260              	.LVL19:
+ 261 000e F9E7     		b	.L19
+ 262              	.L22:
+  65:oledlib/oled_debug.c ****     }
+  66:oledlib/oled_debug.c **** }
+ 263              		.loc 1 66 1 view .LVU56
+ 264 0010 10BD     		pop	{r4, pc}
+ 265              		.loc 1 66 1 view .LVU57
+ 266              		.cfi_endproc
+ 267              	.LFE4:
+ 269              		.section	.text.OledPrintf,"ax",%progbits
+ 270              		.align	1
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccrKUJ0q.s 			page 7
+
+
+ 271              		.global	OledPrintf
+ 272              		.syntax unified
+ 273              		.thumb
+ 274              		.thumb_func
+ 275              		.fpu softvfp
+ 277              	OledPrintf:
+ 278              	.LVL20:
+ 279              	.LFB5:
+  67:oledlib/oled_debug.c **** 
+  68:oledlib/oled_debug.c **** int OledPrintf(const char *str, ...)
+  69:oledlib/oled_debug.c **** {
+ 280              		.loc 1 69 1 is_stmt 1 view -0
+ 281              		.cfi_startproc
+ 282              		@ args = 4, pretend = 16, frame = 8
+ 283              		@ frame_needed = 0, uses_anonymous_args = 1
+ 284              		.loc 1 69 1 is_stmt 0 view .LVU59
+ 285 0000 0FB4     		push	{r0, r1, r2, r3}
+ 286              	.LCFI2:
+ 287              		.cfi_def_cfa_offset 16
+ 288              		.cfi_offset 0, -16
+ 289              		.cfi_offset 1, -12
+ 290              		.cfi_offset 2, -8
+ 291              		.cfi_offset 3, -4
+ 292 0002 F0B5     		push	{r4, r5, r6, r7, lr}
+ 293              	.LCFI3:
+ 294              		.cfi_def_cfa_offset 36
+ 295              		.cfi_offset 4, -36
+ 296              		.cfi_offset 5, -32
+ 297              		.cfi_offset 6, -28
+ 298              		.cfi_offset 7, -24
+ 299              		.cfi_offset 14, -20
+ 300 0004 83B0     		sub	sp, sp, #12
+ 301              	.LCFI4:
+ 302              		.cfi_def_cfa_offset 48
+ 303 0006 08AB     		add	r3, sp, #32
+ 304 0008 53F8044B 		ldr	r4, [r3], #4
+  70:oledlib/oled_debug.c ****     va_list ap; //定义一个可变 参数的（字符指针）
+ 305              		.loc 1 70 5 is_stmt 1 view .LVU60
+  71:oledlib/oled_debug.c ****     int val, r_val;
+ 306              		.loc 1 71 5 view .LVU61
+  72:oledlib/oled_debug.c ****     char count, ch;
+ 307              		.loc 1 72 5 view .LVU62
+  73:oledlib/oled_debug.c ****     char *s = NULL;
+ 308              		.loc 1 73 5 view .LVU63
+ 309              	.LVL21:
+  74:oledlib/oled_debug.c ****     int res = 0; //返回值
+ 310              		.loc 1 74 5 view .LVU64
+  75:oledlib/oled_debug.c **** 
+  76:oledlib/oled_debug.c ****     va_start(ap, str);   //初始化ap
+ 311              		.loc 1 76 5 view .LVU65
+ 312 000c 0193     		str	r3, [sp, #4]
+  77:oledlib/oled_debug.c ****     while ('\0' != *str) //str为字符串,它的最后一个字符肯定是'\0'（字符串的结束符）
+ 313              		.loc 1 77 5 view .LVU66
+  74:oledlib/oled_debug.c ****     int res = 0; //返回值
+ 314              		.loc 1 74 9 is_stmt 0 view .LVU67
+ 315 000e 0025     		movs	r5, #0
+ 316              		.loc 1 77 11 view .LVU68
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccrKUJ0q.s 			page 8
+
+
+ 317 0010 82E0     		b	.L24
+ 318              	.LVL22:
+ 319              	.L26:
+  78:oledlib/oled_debug.c ****     {
+  79:oledlib/oled_debug.c ****         switch (*str)
+  80:oledlib/oled_debug.c ****         {
+  81:oledlib/oled_debug.c ****         case '%': //发送参数
+  82:oledlib/oled_debug.c ****             str++;
+ 320              		.loc 1 82 13 is_stmt 1 view .LVU69
+ 321              		.loc 1 82 16 is_stmt 0 view .LVU70
+ 322 0012 661C     		adds	r6, r4, #1
+ 323              	.LVL23:
+  83:oledlib/oled_debug.c ****             switch (*str)
+ 324              		.loc 1 83 13 is_stmt 1 view .LVU71
+ 325              		.loc 1 83 21 is_stmt 0 view .LVU72
+ 326 0014 6378     		ldrb	r3, [r4, #1]	@ zero_extendqisi2
+ 327 0016 633B     		subs	r3, r3, #99
+ 328 0018 152B     		cmp	r3, #21
+ 329 001a 00F28F80 		bhi	.L48
+ 330 001e DFE803F0 		tbb	[pc, r3]
+ 331              	.L31:
+ 332 0022 6D       		.byte	(.L34-.L31)/2
+ 333 0023 0B       		.byte	(.L33-.L31)/2
+ 334 0024 8D       		.byte	(.L48-.L31)/2
+ 335 0025 8D       		.byte	(.L48-.L31)/2
+ 336 0026 8D       		.byte	(.L48-.L31)/2
+ 337 0027 8D       		.byte	(.L48-.L31)/2
+ 338 0028 8D       		.byte	(.L48-.L31)/2
+ 339 0029 8D       		.byte	(.L48-.L31)/2
+ 340 002a 8D       		.byte	(.L48-.L31)/2
+ 341 002b 8D       		.byte	(.L48-.L31)/2
+ 342 002c 8D       		.byte	(.L48-.L31)/2
+ 343 002d 8D       		.byte	(.L48-.L31)/2
+ 344 002e 8D       		.byte	(.L48-.L31)/2
+ 345 002f 8D       		.byte	(.L48-.L31)/2
+ 346 0030 8D       		.byte	(.L48-.L31)/2
+ 347 0031 8D       		.byte	(.L48-.L31)/2
+ 348 0032 60       		.byte	(.L32-.L31)/2
+ 349 0033 8D       		.byte	(.L48-.L31)/2
+ 350 0034 8D       		.byte	(.L48-.L31)/2
+ 351 0035 8D       		.byte	(.L48-.L31)/2
+ 352 0036 8D       		.byte	(.L48-.L31)/2
+ 353 0037 32       		.byte	(.L30-.L31)/2
+ 354              		.p2align 1
+ 355              	.L33:
+  84:oledlib/oled_debug.c ****             {
+  85:oledlib/oled_debug.c ****             case 'd': //10进制输出
+  86:oledlib/oled_debug.c ****                 val = va_arg(ap, int);
+ 356              		.loc 1 86 17 is_stmt 1 view .LVU73
+ 357              		.loc 1 86 21 is_stmt 0 view .LVU74
+ 358 0038 019B     		ldr	r3, [sp, #4]
+ 359 003a 1A1D     		adds	r2, r3, #4
+ 360 003c 0192     		str	r2, [sp, #4]
+ 361 003e 1F68     		ldr	r7, [r3]
+  87:oledlib/oled_debug.c ****                 r_val = val;
+ 362              		.loc 1 87 17 is_stmt 1 view .LVU75
+  88:oledlib/oled_debug.c ****                 count = 0;
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccrKUJ0q.s 			page 9
+
+
+ 363              		.loc 1 88 17 view .LVU76
+ 364              	.LVL24:
+  89:oledlib/oled_debug.c ****                 while (r_val)
+ 365              		.loc 1 89 17 view .LVU77
+  87:oledlib/oled_debug.c ****                 r_val = val;
+ 366              		.loc 1 87 23 is_stmt 0 view .LVU78
+ 367 0040 3B46     		mov	r3, r7
+  88:oledlib/oled_debug.c ****                 count = 0;
+ 368              		.loc 1 88 23 view .LVU79
+ 369 0042 0021     		movs	r1, #0
+ 370              		.loc 1 89 23 view .LVU80
+ 371 0044 07E0     		b	.L35
+ 372              	.LVL25:
+ 373              	.L36:
+  90:oledlib/oled_debug.c ****                 {
+  91:oledlib/oled_debug.c ****                     count++; //整数的长度
+ 374              		.loc 1 91 21 is_stmt 1 view .LVU81
+ 375              		.loc 1 91 26 is_stmt 0 view .LVU82
+ 376 0046 0131     		adds	r1, r1, #1
+ 377              	.LVL26:
+ 378              		.loc 1 91 26 view .LVU83
+ 379 0048 C9B2     		uxtb	r1, r1
+ 380              	.LVL27:
+  92:oledlib/oled_debug.c ****                     r_val /= 10;
+ 381              		.loc 1 92 21 is_stmt 1 view .LVU84
+ 382              		.loc 1 92 27 is_stmt 0 view .LVU85
+ 383 004a 464A     		ldr	r2, .L56
+ 384 004c 82FB0302 		smull	r0, r2, r2, r3
+ 385 0050 DB17     		asrs	r3, r3, #31
+ 386              	.LVL28:
+ 387              		.loc 1 92 27 view .LVU86
+ 388 0052 C3EBA203 		rsb	r3, r3, r2, asr #2
+ 389              	.LVL29:
+ 390              	.L35:
+  89:oledlib/oled_debug.c ****                 while (r_val)
+ 391              		.loc 1 89 23 is_stmt 1 view .LVU87
+ 392 0056 002B     		cmp	r3, #0
+ 393 0058 F5D1     		bne	.L36
+  93:oledlib/oled_debug.c ****                 }
+  94:oledlib/oled_debug.c ****                 res += count; //返回值长度增加?
+ 394              		.loc 1 94 17 view .LVU88
+ 395              		.loc 1 94 21 is_stmt 0 view .LVU89
+ 396 005a 0D44     		add	r5, r5, r1
+ 397              	.LVL30:
+  95:oledlib/oled_debug.c ****                 r_val = val;
+ 398              		.loc 1 95 17 is_stmt 1 view .LVU90
+  96:oledlib/oled_debug.c ****                 while (count)
+ 399              		.loc 1 96 17 view .LVU91
+ 400              		.loc 1 96 23 is_stmt 0 view .LVU92
+ 401 005c 0FE0     		b	.L37
+ 402              	.LVL31:
+ 403              	.L38:
+  97:oledlib/oled_debug.c ****                 {
+  98:oledlib/oled_debug.c ****                     ch = r_val / m_pow(10, count - 1);
+ 404              		.loc 1 98 21 is_stmt 1 view .LVU93
+ 405              		.loc 1 98 34 is_stmt 0 view .LVU94
+ 406 005e 4C1E     		subs	r4, r1, #1
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccrKUJ0q.s 			page 10
+
+
+ 407 0060 2146     		mov	r1, r4
+ 408              	.LVL32:
+ 409              		.loc 1 98 34 view .LVU95
+ 410 0062 0A20     		movs	r0, #10
+ 411 0064 FFF7FEFF 		bl	m_pow
+ 412              	.LVL33:
+ 413              		.loc 1 98 32 view .LVU96
+ 414 0068 B7FBF0F2 		udiv	r2, r7, r0
+ 415              		.loc 1 98 24 view .LVU97
+ 416 006c D3B2     		uxtb	r3, r2
+ 417              	.LVL34:
+  99:oledlib/oled_debug.c ****                     r_val %= m_pow(10, count - 1);
+ 418              		.loc 1 99 21 is_stmt 1 view .LVU98
+ 419              		.loc 1 99 27 is_stmt 0 view .LVU99
+ 420 006e 00FB1277 		mls	r7, r0, r2, r7
+ 421              	.LVL35:
+ 100:oledlib/oled_debug.c ****                     m_putchar(ch + '0'); //数字到字符的转换
+ 422              		.loc 1 100 21 is_stmt 1 view .LVU100
+ 423 0072 03F13000 		add	r0, r3, #48
+ 424 0076 C0B2     		uxtb	r0, r0
+ 425 0078 FFF7FEFF 		bl	m_putchar
+ 426              	.LVL36:
+ 101:oledlib/oled_debug.c ****                     count--;
+ 427              		.loc 1 101 21 view .LVU101
+ 428              		.loc 1 101 26 is_stmt 0 view .LVU102
+ 429 007c E1B2     		uxtb	r1, r4
+ 430              	.LVL37:
+ 431              	.L37:
+  96:oledlib/oled_debug.c ****                 {
+ 432              		.loc 1 96 23 is_stmt 1 view .LVU103
+ 433 007e 0029     		cmp	r1, #0
+ 434 0080 EDD1     		bne	.L38
+  82:oledlib/oled_debug.c ****             switch (*str)
+ 435              		.loc 1 82 16 is_stmt 0 view .LVU104
+ 436 0082 3446     		mov	r4, r6
+ 437 0084 47E0     		b	.L29
+ 438              	.LVL38:
+ 439              	.L30:
+ 102:oledlib/oled_debug.c ****                 }
+ 103:oledlib/oled_debug.c ****                 break;
+ 104:oledlib/oled_debug.c ****             case 'x': //16进制输出
+ 105:oledlib/oled_debug.c ****                 val = va_arg(ap, int);
+ 440              		.loc 1 105 17 is_stmt 1 view .LVU105
+ 441              		.loc 1 105 21 is_stmt 0 view .LVU106
+ 442 0086 019B     		ldr	r3, [sp, #4]
+ 443 0088 1A1D     		adds	r2, r3, #4
+ 444 008a 0192     		str	r2, [sp, #4]
+ 445 008c 1F68     		ldr	r7, [r3]
+ 106:oledlib/oled_debug.c ****                 r_val = val;
+ 446              		.loc 1 106 17 is_stmt 1 view .LVU107
+ 107:oledlib/oled_debug.c ****                 count = 0;
+ 447              		.loc 1 107 17 view .LVU108
+ 448              	.LVL39:
+ 108:oledlib/oled_debug.c ****                 while (r_val)
+ 449              		.loc 1 108 17 view .LVU109
+ 106:oledlib/oled_debug.c ****                 r_val = val;
+ 450              		.loc 1 106 23 is_stmt 0 view .LVU110
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccrKUJ0q.s 			page 11
+
+
+ 451 008e 3B46     		mov	r3, r7
+ 107:oledlib/oled_debug.c ****                 count = 0;
+ 452              		.loc 1 107 23 view .LVU111
+ 453 0090 0024     		movs	r4, #0
+ 454              		.loc 1 108 23 view .LVU112
+ 455 0092 00E0     		b	.L39
+ 456              	.LVL40:
+ 457              	.L40:
+ 109:oledlib/oled_debug.c ****                 {
+ 110:oledlib/oled_debug.c ****                     count++; //整数的长度
+ 111:oledlib/oled_debug.c ****                     r_val /= 16;
+ 458              		.loc 1 111 27 view .LVU113
+ 459 0094 1311     		asrs	r3, r2, #4
+ 460              	.LVL41:
+ 461              	.L39:
+ 108:oledlib/oled_debug.c ****                 while (r_val)
+ 462              		.loc 1 108 23 is_stmt 1 view .LVU114
+ 463 0096 3BB1     		cbz	r3, .L51
+ 110:oledlib/oled_debug.c ****                     r_val /= 16;
+ 464              		.loc 1 110 21 view .LVU115
+ 110:oledlib/oled_debug.c ****                     r_val /= 16;
+ 465              		.loc 1 110 26 is_stmt 0 view .LVU116
+ 466 0098 0134     		adds	r4, r4, #1
+ 467              	.LVL42:
+ 110:oledlib/oled_debug.c ****                     r_val /= 16;
+ 468              		.loc 1 110 26 view .LVU117
+ 469 009a E4B2     		uxtb	r4, r4
+ 470              	.LVL43:
+ 471              		.loc 1 111 21 is_stmt 1 view .LVU118
+ 472              		.loc 1 111 27 is_stmt 0 view .LVU119
+ 473 009c 1A46     		mov	r2, r3
+ 474 009e 002B     		cmp	r3, #0
+ 475 00a0 F8DA     		bge	.L40
+ 476 00a2 03F10F02 		add	r2, r3, #15
+ 477 00a6 F5E7     		b	.L40
+ 478              	.L51:
+ 112:oledlib/oled_debug.c ****                 }
+ 113:oledlib/oled_debug.c ****                 res += count; //返回值长度增加?
+ 479              		.loc 1 113 17 is_stmt 1 view .LVU120
+ 480              		.loc 1 113 21 is_stmt 0 view .LVU121
+ 481 00a8 2544     		add	r5, r5, r4
+ 482              	.LVL44:
+ 114:oledlib/oled_debug.c ****                 r_val = val;
+ 483              		.loc 1 114 17 is_stmt 1 view .LVU122
+ 115:oledlib/oled_debug.c ****                 while (count)
+ 484              		.loc 1 115 17 view .LVU123
+ 485              		.loc 1 115 23 is_stmt 0 view .LVU124
+ 486 00aa 06E0     		b	.L42
+ 487              	.LVL45:
+ 488              	.L43:
+ 116:oledlib/oled_debug.c ****                 {
+ 117:oledlib/oled_debug.c ****                     ch = r_val / m_pow(16, count - 1);
+ 118:oledlib/oled_debug.c ****                     r_val %= m_pow(16, count - 1);
+ 119:oledlib/oled_debug.c ****                     if (ch <= 9)
+ 120:oledlib/oled_debug.c ****                         m_putchar(ch + '0'); //数字到字符的转换
+ 121:oledlib/oled_debug.c ****                     else
+ 122:oledlib/oled_debug.c ****                         m_putchar(ch - 10 + 'a');
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccrKUJ0q.s 			page 12
+
+
+ 489              		.loc 1 122 25 is_stmt 1 view .LVU125
+ 490 00ac 03F15700 		add	r0, r3, #87
+ 491 00b0 C0B2     		uxtb	r0, r0
+ 492 00b2 FFF7FEFF 		bl	m_putchar
+ 493              	.LVL46:
+ 494              	.L44:
+ 123:oledlib/oled_debug.c ****                     count--;
+ 495              		.loc 1 123 21 view .LVU126
+ 496              		.loc 1 123 26 is_stmt 0 view .LVU127
+ 497 00b6 013C     		subs	r4, r4, #1
+ 498              	.LVL47:
+ 499              		.loc 1 123 26 view .LVU128
+ 500 00b8 E4B2     		uxtb	r4, r4
+ 501              	.LVL48:
+ 502              	.L42:
+ 115:oledlib/oled_debug.c ****                 while (count)
+ 503              		.loc 1 115 23 is_stmt 1 view .LVU129
+ 504 00ba 84B1     		cbz	r4, .L52
+ 117:oledlib/oled_debug.c ****                     r_val %= m_pow(16, count - 1);
+ 505              		.loc 1 117 21 view .LVU130
+ 117:oledlib/oled_debug.c ****                     r_val %= m_pow(16, count - 1);
+ 506              		.loc 1 117 34 is_stmt 0 view .LVU131
+ 507 00bc 611E     		subs	r1, r4, #1
+ 508 00be 1020     		movs	r0, #16
+ 509 00c0 FFF7FEFF 		bl	m_pow
+ 510              	.LVL49:
+ 117:oledlib/oled_debug.c ****                     r_val %= m_pow(16, count - 1);
+ 511              		.loc 1 117 32 view .LVU132
+ 512 00c4 B7FBF0F2 		udiv	r2, r7, r0
+ 117:oledlib/oled_debug.c ****                     r_val %= m_pow(16, count - 1);
+ 513              		.loc 1 117 24 view .LVU133
+ 514 00c8 D3B2     		uxtb	r3, r2
+ 515              	.LVL50:
+ 118:oledlib/oled_debug.c ****                     if (ch <= 9)
+ 516              		.loc 1 118 21 is_stmt 1 view .LVU134
+ 118:oledlib/oled_debug.c ****                     if (ch <= 9)
+ 517              		.loc 1 118 27 is_stmt 0 view .LVU135
+ 518 00ca 00FB1277 		mls	r7, r0, r2, r7
+ 519              	.LVL51:
+ 119:oledlib/oled_debug.c ****                         m_putchar(ch + '0'); //数字到字符的转换
+ 520              		.loc 1 119 21 is_stmt 1 view .LVU136
+ 119:oledlib/oled_debug.c ****                         m_putchar(ch + '0'); //数字到字符的转换
+ 521              		.loc 1 119 24 is_stmt 0 view .LVU137
+ 522 00ce 092B     		cmp	r3, #9
+ 523 00d0 ECD8     		bhi	.L43
+ 120:oledlib/oled_debug.c ****                     else
+ 524              		.loc 1 120 25 is_stmt 1 view .LVU138
+ 525 00d2 03F13000 		add	r0, r3, #48
+ 526 00d6 C0B2     		uxtb	r0, r0
+ 527 00d8 FFF7FEFF 		bl	m_putchar
+ 528              	.LVL52:
+ 120:oledlib/oled_debug.c ****                     else
+ 529              		.loc 1 120 25 is_stmt 0 view .LVU139
+ 530 00dc EBE7     		b	.L44
+ 531              	.L52:
+  82:oledlib/oled_debug.c ****             switch (*str)
+ 532              		.loc 1 82 16 view .LVU140
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccrKUJ0q.s 			page 13
+
+
+ 533 00de 3446     		mov	r4, r6
+ 534              	.LVL53:
+  82:oledlib/oled_debug.c ****             switch (*str)
+ 535              		.loc 1 82 16 view .LVU141
+ 536 00e0 19E0     		b	.L29
+ 537              	.LVL54:
+ 538              	.L32:
+ 124:oledlib/oled_debug.c ****                 }
+ 125:oledlib/oled_debug.c ****                 break;
+ 126:oledlib/oled_debug.c ****             case 's': //发送字符串
+ 127:oledlib/oled_debug.c ****                 s = va_arg(ap, char *);
+ 539              		.loc 1 127 17 is_stmt 1 view .LVU142
+ 540              		.loc 1 127 19 is_stmt 0 view .LVU143
+ 541 00e2 019B     		ldr	r3, [sp, #4]
+ 542 00e4 1A1D     		adds	r2, r3, #4
+ 543 00e6 0192     		str	r2, [sp, #4]
+ 544 00e8 1C68     		ldr	r4, [r3]
+ 128:oledlib/oled_debug.c ****                 m_putstr(s);      //字符串,返回值为字符指针
+ 545              		.loc 1 128 17 is_stmt 1 view .LVU144
+ 546 00ea 2046     		mov	r0, r4
+ 547 00ec FFF7FEFF 		bl	m_putstr
+ 548              	.LVL55:
+ 129:oledlib/oled_debug.c ****                 res += strlen(s); //返回值长度增加 ?
+ 549              		.loc 1 129 17 view .LVU145
+ 550              		.loc 1 129 24 is_stmt 0 view .LVU146
+ 551 00f0 2046     		mov	r0, r4
+ 552 00f2 FFF7FEFF 		bl	strlen
+ 553              	.LVL56:
+ 554              		.loc 1 129 21 view .LVU147
+ 555 00f6 0544     		add	r5, r5, r0
+ 556              	.LVL57:
+ 130:oledlib/oled_debug.c ****                 break;
+ 557              		.loc 1 130 17 is_stmt 1 view .LVU148
+  82:oledlib/oled_debug.c ****             switch (*str)
+ 558              		.loc 1 82 16 is_stmt 0 view .LVU149
+ 559 00f8 3446     		mov	r4, r6
+ 560              		.loc 1 130 17 view .LVU150
+ 561 00fa 0CE0     		b	.L29
+ 562              	.L34:
+ 131:oledlib/oled_debug.c ****             case 'c':
+ 132:oledlib/oled_debug.c ****                 m_putchar((char)va_arg(ap, int)); //大家猜为什么不写char，而要写int
+ 563              		.loc 1 132 17 is_stmt 1 view .LVU151
+ 564              		.loc 1 132 33 is_stmt 0 view .LVU152
+ 565 00fc 019B     		ldr	r3, [sp, #4]
+ 566 00fe 1A1D     		adds	r2, r3, #4
+ 567 0100 0192     		str	r2, [sp, #4]
+ 568              		.loc 1 132 17 view .LVU153
+ 569 0102 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 570 0104 FFF7FEFF 		bl	m_putchar
+ 571              	.LVL58:
+ 133:oledlib/oled_debug.c ****                 res += 1;
+ 572              		.loc 1 133 17 is_stmt 1 view .LVU154
+ 573              		.loc 1 133 21 is_stmt 0 view .LVU155
+ 574 0108 0135     		adds	r5, r5, #1
+ 575              	.LVL59:
+ 134:oledlib/oled_debug.c ****                 break;
+ 576              		.loc 1 134 17 is_stmt 1 view .LVU156
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccrKUJ0q.s 			page 14
+
+
+  82:oledlib/oled_debug.c ****             switch (*str)
+ 577              		.loc 1 82 16 is_stmt 0 view .LVU157
+ 578 010a 3446     		mov	r4, r6
+ 579              		.loc 1 134 17 view .LVU158
+ 580 010c 03E0     		b	.L29
+ 581              	.LVL60:
+ 582              	.L54:
+ 135:oledlib/oled_debug.c ****             default:;
+ 136:oledlib/oled_debug.c ****             }
+ 137:oledlib/oled_debug.c ****             break;
+ 138:oledlib/oled_debug.c ****         case '\n':
+ 139:oledlib/oled_debug.c ****             m_putchar('\n');
+ 583              		.loc 1 139 13 is_stmt 1 view .LVU159
+ 584 010e 0A20     		movs	r0, #10
+ 585 0110 FFF7FEFF 		bl	m_putchar
+ 586              	.LVL61:
+ 140:oledlib/oled_debug.c ****             res += 1;
+ 587              		.loc 1 140 13 view .LVU160
+ 588              		.loc 1 140 17 is_stmt 0 view .LVU161
+ 589 0114 0135     		adds	r5, r5, #1
+ 590              	.LVL62:
+ 141:oledlib/oled_debug.c ****             break;
+ 591              		.loc 1 141 13 is_stmt 1 view .LVU162
+ 592              	.L29:
+ 142:oledlib/oled_debug.c ****         case '\r':
+ 143:oledlib/oled_debug.c ****             m_putchar('\r');
+ 144:oledlib/oled_debug.c ****             res += 1;
+ 145:oledlib/oled_debug.c ****             break;
+ 146:oledlib/oled_debug.c ****         default: //显示原来的第一个参数的字符串(不是..里的参数o)
+ 147:oledlib/oled_debug.c ****             m_putchar(*str);
+ 148:oledlib/oled_debug.c ****             res += 1;
+ 149:oledlib/oled_debug.c ****         }
+ 150:oledlib/oled_debug.c ****         str++;
+ 593              		.loc 1 150 9 view .LVU163
+ 594              		.loc 1 150 12 is_stmt 0 view .LVU164
+ 595 0116 0134     		adds	r4, r4, #1
+ 596              	.LVL63:
+ 597              	.L24:
+  77:oledlib/oled_debug.c ****     {
+ 598              		.loc 1 77 11 is_stmt 1 view .LVU165
+  77:oledlib/oled_debug.c ****     {
+ 599              		.loc 1 77 20 is_stmt 0 view .LVU166
+ 600 0118 2078     		ldrb	r0, [r4]	@ zero_extendqisi2
+  77:oledlib/oled_debug.c ****     {
+ 601              		.loc 1 77 11 view .LVU167
+ 602 011a 88B1     		cbz	r0, .L53
+  79:oledlib/oled_debug.c ****         {
+ 603              		.loc 1 79 9 is_stmt 1 view .LVU168
+ 604 011c 0D28     		cmp	r0, #13
+ 605 011e 08D0     		beq	.L25
+ 606 0120 2528     		cmp	r0, #37
+ 607 0122 3FF476AF 		beq	.L26
+ 608 0126 0A28     		cmp	r0, #10
+ 609 0128 F1D0     		beq	.L54
+ 147:oledlib/oled_debug.c ****             res += 1;
+ 610              		.loc 1 147 13 view .LVU169
+ 611 012a FFF7FEFF 		bl	m_putchar
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccrKUJ0q.s 			page 15
+
+
+ 612              	.LVL64:
+ 148:oledlib/oled_debug.c ****         }
+ 613              		.loc 1 148 13 view .LVU170
+ 148:oledlib/oled_debug.c ****         }
+ 614              		.loc 1 148 17 is_stmt 0 view .LVU171
+ 615 012e 0135     		adds	r5, r5, #1
+ 616              	.LVL65:
+ 148:oledlib/oled_debug.c ****         }
+ 617              		.loc 1 148 17 view .LVU172
+ 618 0130 F1E7     		b	.L29
+ 619              	.L25:
+ 143:oledlib/oled_debug.c ****             res += 1;
+ 620              		.loc 1 143 13 is_stmt 1 view .LVU173
+ 621 0132 0D20     		movs	r0, #13
+ 622 0134 FFF7FEFF 		bl	m_putchar
+ 623              	.LVL66:
+ 144:oledlib/oled_debug.c ****             break;
+ 624              		.loc 1 144 13 view .LVU174
+ 144:oledlib/oled_debug.c ****             break;
+ 625              		.loc 1 144 17 is_stmt 0 view .LVU175
+ 626 0138 0135     		adds	r5, r5, #1
+ 627              	.LVL67:
+ 145:oledlib/oled_debug.c ****         default: //显示原来的第一个参数的字符串(不是..里的参数o)
+ 628              		.loc 1 145 13 is_stmt 1 view .LVU176
+ 629 013a ECE7     		b	.L29
+ 630              	.LVL68:
+ 631              	.L48:
+  83:oledlib/oled_debug.c ****             {
+ 632              		.loc 1 83 21 is_stmt 0 view .LVU177
+ 633 013c 3446     		mov	r4, r6
+ 634 013e EAE7     		b	.L29
+ 635              	.LVL69:
+ 636              	.L53:
+ 151:oledlib/oled_debug.c ****     }
+ 152:oledlib/oled_debug.c ****     va_end(ap);
+ 637              		.loc 1 152 5 is_stmt 1 view .LVU178
+ 153:oledlib/oled_debug.c ****     UpdateScreen();
+ 638              		.loc 1 153 5 view .LVU179
+ 639 0140 FFF7FEFF 		bl	UpdateScreen
+ 640              	.LVL70:
+ 154:oledlib/oled_debug.c ****     if (_cursor_y + 8 >= 63)
+ 641              		.loc 1 154 5 view .LVU180
+ 642              		.loc 1 154 23 is_stmt 0 view .LVU181
+ 643 0144 084B     		ldr	r3, .L56+4
+ 644 0146 1B68     		ldr	r3, [r3]
+ 645              		.loc 1 154 8 view .LVU182
+ 646 0148 362B     		cmp	r3, #54
+ 647 014a 05DC     		bgt	.L55
+ 648              	.L23:
+ 155:oledlib/oled_debug.c ****     {
+ 156:oledlib/oled_debug.c ****         _cursor_y = 0;
+ 157:oledlib/oled_debug.c ****         ClearScreen();
+ 158:oledlib/oled_debug.c ****     }
+ 159:oledlib/oled_debug.c ****     return res;
+ 160:oledlib/oled_debug.c **** }
+ 649              		.loc 1 160 1 view .LVU183
+ 650 014c 2846     		mov	r0, r5
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccrKUJ0q.s 			page 16
+
+
+ 651 014e 03B0     		add	sp, sp, #12
+ 652              	.LCFI5:
+ 653              		.cfi_remember_state
+ 654              		.cfi_def_cfa_offset 36
+ 655              		@ sp needed
+ 656 0150 BDE8F040 		pop	{r4, r5, r6, r7, lr}
+ 657              	.LCFI6:
+ 658              		.cfi_restore 14
+ 659              		.cfi_restore 7
+ 660              		.cfi_restore 6
+ 661              		.cfi_restore 5
+ 662              		.cfi_restore 4
+ 663              		.cfi_def_cfa_offset 16
+ 664              	.LVL71:
+ 665              		.loc 1 160 1 view .LVU184
+ 666 0154 04B0     		add	sp, sp, #16
+ 667              	.LCFI7:
+ 668              		.cfi_restore 3
+ 669              		.cfi_restore 2
+ 670              		.cfi_restore 1
+ 671              		.cfi_restore 0
+ 672              		.cfi_def_cfa_offset 0
+ 673 0156 7047     		bx	lr
+ 674              	.LVL72:
+ 675              	.L55:
+ 676              	.LCFI8:
+ 677              		.cfi_restore_state
+ 156:oledlib/oled_debug.c ****         ClearScreen();
+ 678              		.loc 1 156 9 is_stmt 1 view .LVU185
+ 156:oledlib/oled_debug.c ****         ClearScreen();
+ 679              		.loc 1 156 19 is_stmt 0 view .LVU186
+ 680 0158 034B     		ldr	r3, .L56+4
+ 681 015a 0022     		movs	r2, #0
+ 682 015c 1A60     		str	r2, [r3]
+ 157:oledlib/oled_debug.c ****     }
+ 683              		.loc 1 157 9 is_stmt 1 view .LVU187
+ 684 015e FFF7FEFF 		bl	ClearScreen
+ 685              	.LVL73:
+ 159:oledlib/oled_debug.c **** }
+ 686              		.loc 1 159 5 view .LVU188
+ 159:oledlib/oled_debug.c **** }
+ 687              		.loc 1 159 12 is_stmt 0 view .LVU189
+ 688 0162 F3E7     		b	.L23
+ 689              	.L57:
+ 690              		.align	2
+ 691              	.L56:
+ 692 0164 67666666 		.word	1717986919
+ 693 0168 00000000 		.word	.LANCHOR2
+ 694              		.cfi_endproc
+ 695              	.LFE5:
+ 697              		.section	.bss._cursor_x,"aw",%nobits
+ 698              		.align	2
+ 699              		.set	.LANCHOR1,. + 0
+ 702              	_cursor_x:
+ 703 0000 00000000 		.space	4
+ 704              		.section	.bss._cursor_y,"aw",%nobits
+ 705              		.align	2
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccrKUJ0q.s 			page 17
+
+
+ 706              		.set	.LANCHOR2,. + 0
+ 709              	_cursor_y:
+ 710 0000 00000000 		.space	4
+ 711              		.section	.data.wrap,"aw"
+ 712              		.set	.LANCHOR0,. + 0
+ 715              	wrap:
+ 716 0000 01       		.byte	1
+ 717              		.text
+ 718              	.Letext0:
+ 719              		.file 2 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\sys\\lock.h"
+ 720              		.file 3 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\sys\\_types.h"
+ 721              		.file 4 "d:\\work_project\\9 2019-q4-major\\lib\\gcc\\arm-none-eabi\\9.2.1\\include\\stddef.h"
+ 722              		.file 5 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\sys\\reent.h"
+ 723              		.file 6 "oledlib/oled_font.h"
+ 724              		.file 7 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\stdlib.h"
+ 725              		.file 8 "d:\\work_project\\9 2019-q4-major\\lib\\gcc\\arm-none-eabi\\9.2.1\\include\\stdarg.h"
+ 726              		.file 9 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\string.h"
+ 727              		.file 10 "oledlib/oled_basic.h"
+ 728              		.file 11 "oledlib/oled_draw.h"
+ 729              		.file 12 "<built-in>"
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccrKUJ0q.s 			page 18
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 oled_debug.c
+C:\Users\GKQ\AppData\Local\Temp\ccrKUJ0q.s:16     .text.m_pow:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccrKUJ0q.s:23     .text.m_pow:00000000 m_pow
+C:\Users\GKQ\AppData\Local\Temp\ccrKUJ0q.s:61     .text.SetTextWrap:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccrKUJ0q.s:68     .text.SetTextWrap:00000000 SetTextWrap
+C:\Users\GKQ\AppData\Local\Temp\ccrKUJ0q.s:85     .text.SetTextWrap:00000008 $d
+C:\Users\GKQ\AppData\Local\Temp\ccrKUJ0q.s:90     .text.SetCursor:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccrKUJ0q.s:97     .text.SetCursor:00000000 SetCursor
+C:\Users\GKQ\AppData\Local\Temp\ccrKUJ0q.s:118    .text.SetCursor:0000000c $d
+C:\Users\GKQ\AppData\Local\Temp\ccrKUJ0q.s:124    .text.m_putchar:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccrKUJ0q.s:131    .text.m_putchar:00000000 m_putchar
+C:\Users\GKQ\AppData\Local\Temp\ccrKUJ0q.s:218    .text.m_putchar:00000054 $d
+C:\Users\GKQ\AppData\Local\Temp\ccrKUJ0q.s:225    .text.m_putstr:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccrKUJ0q.s:232    .text.m_putstr:00000000 m_putstr
+C:\Users\GKQ\AppData\Local\Temp\ccrKUJ0q.s:270    .text.OledPrintf:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccrKUJ0q.s:277    .text.OledPrintf:00000000 OledPrintf
+C:\Users\GKQ\AppData\Local\Temp\ccrKUJ0q.s:332    .text.OledPrintf:00000022 $d
+C:\Users\GKQ\AppData\Local\Temp\ccrKUJ0q.s:354    .text.OledPrintf:00000038 $t
+C:\Users\GKQ\AppData\Local\Temp\ccrKUJ0q.s:692    .text.OledPrintf:00000164 $d
+C:\Users\GKQ\AppData\Local\Temp\ccrKUJ0q.s:698    .bss._cursor_x:00000000 $d
+C:\Users\GKQ\AppData\Local\Temp\ccrKUJ0q.s:702    .bss._cursor_x:00000000 _cursor_x
+C:\Users\GKQ\AppData\Local\Temp\ccrKUJ0q.s:705    .bss._cursor_y:00000000 $d
+C:\Users\GKQ\AppData\Local\Temp\ccrKUJ0q.s:709    .bss._cursor_y:00000000 _cursor_y
+C:\Users\GKQ\AppData\Local\Temp\ccrKUJ0q.s:715    .data.wrap:00000000 wrap
+
+UNDEFINED SYMBOLS
+GetFontSize
+SetFontSize
+DrawChar
+strlen
+UpdateScreen
+ClearScreen

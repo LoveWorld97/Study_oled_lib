@@ -1,0 +1,359 @@
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccpUhTTb.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"u8g2_intersection.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.u8g2_is_intersection_decision_tree,"ax",%progbits
+  16              		.align	1
+  17              		.global	u8g2_is_intersection_decision_tree
+  18              		.arch armv7-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu softvfp
+  24              	u8g2_is_intersection_decision_tree:
+  25              	.LVL0:
+  26              	.LFB0:
+  27              		.file 1 "u8g2_lib/u8g2_intersection.c"
+   1:u8g2_lib/u8g2_intersection.c **** /*
+   2:u8g2_lib/u8g2_intersection.c **** 
+   3:u8g2_lib/u8g2_intersection.c ****   u8g2_intersection.c 
+   4:u8g2_lib/u8g2_intersection.c ****   
+   5:u8g2_lib/u8g2_intersection.c ****   Intersection calculation, code taken from u8g_clip.c
+   6:u8g2_lib/u8g2_intersection.c **** 
+   7:u8g2_lib/u8g2_intersection.c ****   Universal 8bit Graphics Library (https://github.com/olikraus/u8g2/)
+   8:u8g2_lib/u8g2_intersection.c **** 
+   9:u8g2_lib/u8g2_intersection.c ****   Copyright (c) 2016, olikraus@gmail.com
+  10:u8g2_lib/u8g2_intersection.c ****   All rights reserved.
+  11:u8g2_lib/u8g2_intersection.c **** 
+  12:u8g2_lib/u8g2_intersection.c ****   Redistribution and use in source and binary forms, with or without modification, 
+  13:u8g2_lib/u8g2_intersection.c ****   are permitted provided that the following conditions are met:
+  14:u8g2_lib/u8g2_intersection.c **** 
+  15:u8g2_lib/u8g2_intersection.c ****   * Redistributions of source code must retain the above copyright notice, this list 
+  16:u8g2_lib/u8g2_intersection.c ****     of conditions and the following disclaimer.
+  17:u8g2_lib/u8g2_intersection.c ****     
+  18:u8g2_lib/u8g2_intersection.c ****   * Redistributions in binary form must reproduce the above copyright notice, this 
+  19:u8g2_lib/u8g2_intersection.c ****     list of conditions and the following disclaimer in the documentation and/or other 
+  20:u8g2_lib/u8g2_intersection.c ****     materials provided with the distribution.
+  21:u8g2_lib/u8g2_intersection.c **** 
+  22:u8g2_lib/u8g2_intersection.c ****   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND 
+  23:u8g2_lib/u8g2_intersection.c ****   CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, 
+  24:u8g2_lib/u8g2_intersection.c ****   INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF 
+  25:u8g2_lib/u8g2_intersection.c ****   MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE 
+  26:u8g2_lib/u8g2_intersection.c ****   DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR 
+  27:u8g2_lib/u8g2_intersection.c ****   CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
+  28:u8g2_lib/u8g2_intersection.c ****   SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
+  29:u8g2_lib/u8g2_intersection.c ****   NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; 
+  30:u8g2_lib/u8g2_intersection.c ****   LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER 
+  31:u8g2_lib/u8g2_intersection.c ****   CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, 
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccpUhTTb.s 			page 2
+
+
+  32:u8g2_lib/u8g2_intersection.c ****   STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+  33:u8g2_lib/u8g2_intersection.c ****   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF 
+  34:u8g2_lib/u8g2_intersection.c ****   ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.  
+  35:u8g2_lib/u8g2_intersection.c **** 
+  36:u8g2_lib/u8g2_intersection.c **** */
+  37:u8g2_lib/u8g2_intersection.c **** 
+  38:u8g2_lib/u8g2_intersection.c **** #include "u8g2.h"
+  39:u8g2_lib/u8g2_intersection.c **** 
+  40:u8g2_lib/u8g2_intersection.c **** #ifdef __GNUC__
+  41:u8g2_lib/u8g2_intersection.c **** #define U8G2_ALWAYS_INLINE __inline__ __attribute__((always_inline))
+  42:u8g2_lib/u8g2_intersection.c **** #else
+  43:u8g2_lib/u8g2_intersection.c **** #define U8G2_ALWAYS_INLINE
+  44:u8g2_lib/u8g2_intersection.c **** #endif 
+  45:u8g2_lib/u8g2_intersection.c **** 
+  46:u8g2_lib/u8g2_intersection.c **** 
+  47:u8g2_lib/u8g2_intersection.c **** #if defined(U8G2_WITH_INTERSECTION) || defined(U8G2_WITH_CLIP_WINDOW_SUPPORT)
+  48:u8g2_lib/u8g2_intersection.c **** 
+  49:u8g2_lib/u8g2_intersection.c **** #ifdef OLD_VERSION_WITH_SYMETRIC_BOUNDARIES
+  50:u8g2_lib/u8g2_intersection.c **** 
+  51:u8g2_lib/u8g2_intersection.c **** /*
+  52:u8g2_lib/u8g2_intersection.c ****   intersection assumptions:
+  53:u8g2_lib/u8g2_intersection.c ****     a1 <= a2 is always true    
+  54:u8g2_lib/u8g2_intersection.c ****     
+  55:u8g2_lib/u8g2_intersection.c ****     minimized version
+  56:u8g2_lib/u8g2_intersection.c ****     ---1----0 1             b1 <= a2 && b1 > b2
+  57:u8g2_lib/u8g2_intersection.c ****     -----1--0 1             b2 >= a1 && b1 > b2
+  58:u8g2_lib/u8g2_intersection.c ****     ---1-1--- 1             b1 <= a2 && b2 >= a1
+  59:u8g2_lib/u8g2_intersection.c ****   */
+  60:u8g2_lib/u8g2_intersection.c **** 
+  61:u8g2_lib/u8g2_intersection.c **** 
+  62:u8g2_lib/u8g2_intersection.c **** /*
+  63:u8g2_lib/u8g2_intersection.c ****   calculate the intersection between a0/a1 and v0/v1
+  64:u8g2_lib/u8g2_intersection.c ****   The intersection check returns one if the range of a0/a1 has an intersection with v0/v1.
+  65:u8g2_lib/u8g2_intersection.c ****   The intersection check includes the boundary values v1 and a1.
+  66:u8g2_lib/u8g2_intersection.c **** 
+  67:u8g2_lib/u8g2_intersection.c ****   The following asserts will succeed:
+  68:u8g2_lib/u8g2_intersection.c ****     assert( u8g2_is_intersection_decision_tree(4, 6, 7, 9) == 0 );
+  69:u8g2_lib/u8g2_intersection.c ****     assert( u8g2_is_intersection_decision_tree(4, 6, 6, 9) != 0 );
+  70:u8g2_lib/u8g2_intersection.c ****     assert( u8g2_is_intersection_decision_tree(6, 9, 4, 6) != 0 );
+  71:u8g2_lib/u8g2_intersection.c ****     assert( u8g2_is_intersection_decision_tree(7, 9, 4, 6) == 0 );  
+  72:u8g2_lib/u8g2_intersection.c **** */
+  73:u8g2_lib/u8g2_intersection.c **** 
+  74:u8g2_lib/u8g2_intersection.c **** //static uint8_t U8G2_ALWAYS_INLINE u8g2_is_intersection_decision_tree(u8g_uint_t a0, u8g_uint_t a1
+  75:u8g2_lib/u8g2_intersection.c **** static uint8_t u8g2_is_intersection_decision_tree(u8g2_uint_t a0, u8g2_uint_t a1, u8g2_uint_t v0, u
+  76:u8g2_lib/u8g2_intersection.c **** {
+  77:u8g2_lib/u8g2_intersection.c ****   if ( v0 <= a1 )
+  78:u8g2_lib/u8g2_intersection.c ****   {
+  79:u8g2_lib/u8g2_intersection.c ****     if ( v1 >= a0 )
+  80:u8g2_lib/u8g2_intersection.c ****     {
+  81:u8g2_lib/u8g2_intersection.c ****       return 1;
+  82:u8g2_lib/u8g2_intersection.c ****     }
+  83:u8g2_lib/u8g2_intersection.c ****     else
+  84:u8g2_lib/u8g2_intersection.c ****     {
+  85:u8g2_lib/u8g2_intersection.c ****       if ( v0 > v1 )
+  86:u8g2_lib/u8g2_intersection.c ****       {
+  87:u8g2_lib/u8g2_intersection.c **** 	return 1;
+  88:u8g2_lib/u8g2_intersection.c ****       }
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccpUhTTb.s 			page 3
+
+
+  89:u8g2_lib/u8g2_intersection.c ****       else
+  90:u8g2_lib/u8g2_intersection.c ****       {
+  91:u8g2_lib/u8g2_intersection.c **** 	return 0;
+  92:u8g2_lib/u8g2_intersection.c ****       }
+  93:u8g2_lib/u8g2_intersection.c ****     }
+  94:u8g2_lib/u8g2_intersection.c ****   }
+  95:u8g2_lib/u8g2_intersection.c ****   else
+  96:u8g2_lib/u8g2_intersection.c ****   {
+  97:u8g2_lib/u8g2_intersection.c ****     if ( v1 >= a0 )
+  98:u8g2_lib/u8g2_intersection.c ****     {
+  99:u8g2_lib/u8g2_intersection.c ****       if ( v0 > v1 )
+ 100:u8g2_lib/u8g2_intersection.c ****       {
+ 101:u8g2_lib/u8g2_intersection.c **** 	return 1;
+ 102:u8g2_lib/u8g2_intersection.c ****       }
+ 103:u8g2_lib/u8g2_intersection.c ****       else
+ 104:u8g2_lib/u8g2_intersection.c ****       {
+ 105:u8g2_lib/u8g2_intersection.c **** 	return 0;
+ 106:u8g2_lib/u8g2_intersection.c ****       }
+ 107:u8g2_lib/u8g2_intersection.c ****     }
+ 108:u8g2_lib/u8g2_intersection.c ****     else
+ 109:u8g2_lib/u8g2_intersection.c ****     {
+ 110:u8g2_lib/u8g2_intersection.c ****       return 0;
+ 111:u8g2_lib/u8g2_intersection.c ****     }
+ 112:u8g2_lib/u8g2_intersection.c ****   }
+ 113:u8g2_lib/u8g2_intersection.c **** }
+ 114:u8g2_lib/u8g2_intersection.c **** 
+ 115:u8g2_lib/u8g2_intersection.c **** #endif	/* OLD_VERSION_WITH_SYMETRIC_BOUNDARIES */
+ 116:u8g2_lib/u8g2_intersection.c **** 
+ 117:u8g2_lib/u8g2_intersection.c **** 
+ 118:u8g2_lib/u8g2_intersection.c **** /*
+ 119:u8g2_lib/u8g2_intersection.c ****   version with asymetric boundaries.
+ 120:u8g2_lib/u8g2_intersection.c ****   a1 and v1 are excluded
+ 121:u8g2_lib/u8g2_intersection.c ****   v0 == v1 is not support end return 1
+ 122:u8g2_lib/u8g2_intersection.c **** */
+ 123:u8g2_lib/u8g2_intersection.c **** uint8_t u8g2_is_intersection_decision_tree(u8g2_uint_t a0, u8g2_uint_t a1, u8g2_uint_t v0, u8g2_uin
+ 124:u8g2_lib/u8g2_intersection.c **** {
+  28              		.loc 1 124 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+ 125:u8g2_lib/u8g2_intersection.c ****   if ( v0 < a1 )		// v0 <= a1
+  33              		.loc 1 125 3 view .LVU1
+  34              		.loc 1 125 6 is_stmt 0 view .LVU2
+  35 0000 8A42     		cmp	r2, r1
+  36 0002 05D2     		bcs	.L2
+ 126:u8g2_lib/u8g2_intersection.c ****   {
+ 127:u8g2_lib/u8g2_intersection.c ****     if ( v1 > a0 )	// v1 >= a0
+  37              		.loc 1 127 5 is_stmt 1 view .LVU3
+  38              		.loc 1 127 8 is_stmt 0 view .LVU4
+  39 0004 8342     		cmp	r3, r0
+  40 0006 09D8     		bhi	.L4
+ 128:u8g2_lib/u8g2_intersection.c ****     {
+ 129:u8g2_lib/u8g2_intersection.c ****       return 1;
+ 130:u8g2_lib/u8g2_intersection.c ****     }
+ 131:u8g2_lib/u8g2_intersection.c ****     else
+ 132:u8g2_lib/u8g2_intersection.c ****     {
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccpUhTTb.s 			page 4
+
+
+ 133:u8g2_lib/u8g2_intersection.c ****       if ( v0 > v1 )	// v0 > v1
+  41              		.loc 1 133 7 is_stmt 1 view .LVU5
+  42              		.loc 1 133 10 is_stmt 0 view .LVU6
+  43 0008 9A42     		cmp	r2, r3
+  44 000a 09D9     		bls	.L5
+ 134:u8g2_lib/u8g2_intersection.c ****       {
+ 135:u8g2_lib/u8g2_intersection.c **** 	return 1;
+  45              		.loc 1 135 9 view .LVU7
+  46 000c 0120     		movs	r0, #1
+  47              	.LVL1:
+  48              		.loc 1 135 9 view .LVU8
+  49 000e 7047     		bx	lr
+  50              	.LVL2:
+  51              	.L2:
+ 136:u8g2_lib/u8g2_intersection.c ****       }
+ 137:u8g2_lib/u8g2_intersection.c ****       else
+ 138:u8g2_lib/u8g2_intersection.c ****       {
+ 139:u8g2_lib/u8g2_intersection.c **** 	return 0;
+ 140:u8g2_lib/u8g2_intersection.c ****       }
+ 141:u8g2_lib/u8g2_intersection.c ****     }
+ 142:u8g2_lib/u8g2_intersection.c ****   }
+ 143:u8g2_lib/u8g2_intersection.c ****   else
+ 144:u8g2_lib/u8g2_intersection.c ****   {
+ 145:u8g2_lib/u8g2_intersection.c ****     if ( v1 > a0 )	// v1 >= a0
+  52              		.loc 1 145 5 is_stmt 1 view .LVU9
+  53              		.loc 1 145 8 is_stmt 0 view .LVU10
+  54 0010 8342     		cmp	r3, r0
+  55 0012 07D9     		bls	.L6
+ 146:u8g2_lib/u8g2_intersection.c ****     {
+ 147:u8g2_lib/u8g2_intersection.c ****       if ( v0 > v1 )	// v0 > v1
+  56              		.loc 1 147 7 is_stmt 1 view .LVU11
+  57              		.loc 1 147 10 is_stmt 0 view .LVU12
+  58 0014 9A42     		cmp	r2, r3
+  59 0016 07D9     		bls	.L7
+ 148:u8g2_lib/u8g2_intersection.c ****       {
+ 149:u8g2_lib/u8g2_intersection.c **** 	return 1;
+  60              		.loc 1 149 9 view .LVU13
+  61 0018 0120     		movs	r0, #1
+  62              	.LVL3:
+  63              		.loc 1 149 9 view .LVU14
+  64 001a 7047     		bx	lr
+  65              	.LVL4:
+  66              	.L4:
+ 129:u8g2_lib/u8g2_intersection.c ****     }
+  67              		.loc 1 129 14 view .LVU15
+  68 001c 0120     		movs	r0, #1
+  69              	.LVL5:
+ 129:u8g2_lib/u8g2_intersection.c ****     }
+  70              		.loc 1 129 14 view .LVU16
+  71 001e 7047     		bx	lr
+  72              	.LVL6:
+  73              	.L5:
+ 139:u8g2_lib/u8g2_intersection.c ****       }
+  74              		.loc 1 139 9 view .LVU17
+  75 0020 0020     		movs	r0, #0
+  76              	.LVL7:
+ 139:u8g2_lib/u8g2_intersection.c ****       }
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccpUhTTb.s 			page 5
+
+
+  77              		.loc 1 139 9 view .LVU18
+  78 0022 7047     		bx	lr
+  79              	.LVL8:
+  80              	.L6:
+ 150:u8g2_lib/u8g2_intersection.c ****       }
+ 151:u8g2_lib/u8g2_intersection.c ****       else
+ 152:u8g2_lib/u8g2_intersection.c ****       {
+ 153:u8g2_lib/u8g2_intersection.c **** 	return 0;
+ 154:u8g2_lib/u8g2_intersection.c ****       }
+ 155:u8g2_lib/u8g2_intersection.c ****     }
+ 156:u8g2_lib/u8g2_intersection.c ****     else
+ 157:u8g2_lib/u8g2_intersection.c ****     {
+ 158:u8g2_lib/u8g2_intersection.c ****       return 0;
+  81              		.loc 1 158 14 view .LVU19
+  82 0024 0020     		movs	r0, #0
+  83              	.LVL9:
+  84              		.loc 1 158 14 view .LVU20
+  85 0026 7047     		bx	lr
+  86              	.LVL10:
+  87              	.L7:
+ 153:u8g2_lib/u8g2_intersection.c ****       }
+  88              		.loc 1 153 9 view .LVU21
+  89 0028 0020     		movs	r0, #0
+  90              	.LVL11:
+ 159:u8g2_lib/u8g2_intersection.c ****     }
+ 160:u8g2_lib/u8g2_intersection.c ****   }
+ 161:u8g2_lib/u8g2_intersection.c **** }
+  91              		.loc 1 161 1 view .LVU22
+  92 002a 7047     		bx	lr
+  93              		.cfi_endproc
+  94              	.LFE0:
+  96              		.section	.text.u8g2_IsIntersection,"ax",%progbits
+  97              		.align	1
+  98              		.global	u8g2_IsIntersection
+  99              		.syntax unified
+ 100              		.thumb
+ 101              		.thumb_func
+ 102              		.fpu softvfp
+ 104              	u8g2_IsIntersection:
+ 105              	.LVL12:
+ 106              	.LFB1:
+ 162:u8g2_lib/u8g2_intersection.c **** 
+ 163:u8g2_lib/u8g2_intersection.c **** 
+ 164:u8g2_lib/u8g2_intersection.c **** 
+ 165:u8g2_lib/u8g2_intersection.c **** /* upper limits are not included (asymetric boundaries) */
+ 166:u8g2_lib/u8g2_intersection.c **** uint8_t u8g2_IsIntersection(u8g2_t *u8g2, u8g2_uint_t x0, u8g2_uint_t y0, u8g2_uint_t x1, u8g2_uint
+ 167:u8g2_lib/u8g2_intersection.c **** {
+ 107              		.loc 1 167 1 is_stmt 1 view -0
+ 108              		.cfi_startproc
+ 109              		@ args = 4, pretend = 0, frame = 0
+ 110              		@ frame_needed = 0, uses_anonymous_args = 0
+ 111              		.loc 1 167 1 is_stmt 0 view .LVU24
+ 112 0000 70B5     		push	{r4, r5, r6, lr}
+ 113              	.LCFI0:
+ 114              		.cfi_def_cfa_offset 16
+ 115              		.cfi_offset 4, -16
+ 116              		.cfi_offset 5, -12
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccpUhTTb.s 			page 6
+
+
+ 117              		.cfi_offset 6, -8
+ 118              		.cfi_offset 14, -4
+ 119 0002 0446     		mov	r4, r0
+ 120 0004 0D46     		mov	r5, r1
+ 121 0006 1E46     		mov	r6, r3
+ 168:u8g2_lib/u8g2_intersection.c ****   if ( u8g2_is_intersection_decision_tree(u8g2->user_y0, u8g2->user_y1, y0, y1) == 0 )
+ 122              		.loc 1 168 3 is_stmt 1 view .LVU25
+ 123              		.loc 1 168 8 is_stmt 0 view .LVU26
+ 124 0008 9DF81030 		ldrb	r3, [sp, #16]	@ zero_extendqisi2
+ 125              	.LVL13:
+ 126              		.loc 1 168 8 view .LVU27
+ 127 000c 90F84410 		ldrb	r1, [r0, #68]	@ zero_extendqisi2
+ 128              	.LVL14:
+ 129              		.loc 1 168 8 view .LVU28
+ 130 0010 90F84300 		ldrb	r0, [r0, #67]	@ zero_extendqisi2
+ 131              	.LVL15:
+ 132              		.loc 1 168 8 view .LVU29
+ 133 0014 FFF7FEFF 		bl	u8g2_is_intersection_decision_tree
+ 134              	.LVL16:
+ 135              		.loc 1 168 6 view .LVU30
+ 136 0018 38B1     		cbz	r0, .L9
+ 169:u8g2_lib/u8g2_intersection.c ****     return 0; 
+ 170:u8g2_lib/u8g2_intersection.c ****   
+ 171:u8g2_lib/u8g2_intersection.c ****   return u8g2_is_intersection_decision_tree(u8g2->user_x0, u8g2->user_x1, x0, x1);
+ 137              		.loc 1 171 3 is_stmt 1 view .LVU31
+ 138              		.loc 1 171 10 is_stmt 0 view .LVU32
+ 139 001a 3346     		mov	r3, r6
+ 140 001c 2A46     		mov	r2, r5
+ 141 001e 94F84210 		ldrb	r1, [r4, #66]	@ zero_extendqisi2
+ 142 0022 94F84100 		ldrb	r0, [r4, #65]	@ zero_extendqisi2
+ 143 0026 FFF7FEFF 		bl	u8g2_is_intersection_decision_tree
+ 144              	.LVL17:
+ 145              	.L9:
+ 172:u8g2_lib/u8g2_intersection.c **** }
+ 146              		.loc 1 172 1 view .LVU33
+ 147 002a 70BD     		pop	{r4, r5, r6, pc}
+ 148              		.loc 1 172 1 view .LVU34
+ 149              		.cfi_endproc
+ 150              	.LFE1:
+ 152              		.text
+ 153              	.Letext0:
+ 154              		.file 2 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 155              		.file 3 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 156              		.file 4 "u8g2_lib/u8x8.h"
+ 157              		.file 5 "u8g2_lib/u8g2.h"
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccpUhTTb.s 			page 7
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 u8g2_intersection.c
+C:\Users\GKQ\AppData\Local\Temp\ccpUhTTb.s:16     .text.u8g2_is_intersection_decision_tree:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccpUhTTb.s:24     .text.u8g2_is_intersection_decision_tree:00000000 u8g2_is_intersection_decision_tree
+C:\Users\GKQ\AppData\Local\Temp\ccpUhTTb.s:97     .text.u8g2_IsIntersection:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccpUhTTb.s:104    .text.u8g2_IsIntersection:00000000 u8g2_IsIntersection
+
+NO UNDEFINED SYMBOLS

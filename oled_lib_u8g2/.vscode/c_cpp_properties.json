@@ -1,0 +1,32 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "D:/Work_Project/9 2019-q4-major/arm-none-eabi/include",
+                "D:/Work_Project/9 2019-q4-major/arm-none-eabi/include/c++/9.2.1",
+                "D:/Work_Project/9 2019-q4-major/arm-none-eabi/include/c++/9.2.1/backward",
+                "D:/Work_Project/9 2019-q4-major/lib/gcc/arm-none-eabi/9.2.1/include",
+                "D:/Work_Project/9 2019-q4-major/lib/gcc/arm-none-eabi/9.2.1/include-fixed",
+                "Drivers/CMSIS/Include",
+                "Drivers/CMSIS/Device/ST/STM32F1xx/Include",
+                "Drivers/STM32F1xx_HAL_Driver/Inc",
+                "Drivers/STM32F1xx_HAL_Driver/Inc/Legacy",
+                "Drivers/STM32F1xx_HAL_Driver/Src",
+                "Core/Inc",
+                "Core/Src",
+                "u8g2_lib"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE",
+                "STM32F103xE",
+                "__CC_ARM"
+            ],
+            "intelliSenseMode": "msvc-x64"
+        }
+    ],
+    "version": 4
+}

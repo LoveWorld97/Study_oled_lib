@@ -1,0 +1,192 @@
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cchQVclf.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"oled_color.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.SetDrawColor,"ax",%progbits
+  16              		.align	1
+  17              		.global	SetDrawColor
+  18              		.arch armv7-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu softvfp
+  24              	SetDrawColor:
+  25              	.LVL0:
+  26              	.LFB0:
+  27              		.file 1 "oledlib/oled_color.c"
+   1:oledlib/oled_color.c **** #include "oled_color.h"
+   2:oledlib/oled_color.c **** 
+   3:oledlib/oled_color.c **** 
+   4:oledlib/oled_color.c **** 
+   5:oledlib/oled_color.c **** static Type_color _Draw=pix_white;
+   6:oledlib/oled_color.c **** static Type_color _fill=pix_white;
+   7:oledlib/oled_color.c **** //static Type_color _line=pix_white;
+   8:oledlib/oled_color.c **** //static Type_color _text=pix_white;
+   9:oledlib/oled_color.c **** //static Type_color _textbk=pix_black;
+  10:oledlib/oled_color.c **** 
+  11:oledlib/oled_color.c **** void SetDrawColor(Type_color value)
+  12:oledlib/oled_color.c **** {
+  28              		.loc 1 12 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  13:oledlib/oled_color.c **** 	_Draw=value;
+  33              		.loc 1 13 2 view .LVU1
+  34              		.loc 1 13 7 is_stmt 0 view .LVU2
+  35 0000 014B     		ldr	r3, .L2
+  36 0002 1870     		strb	r0, [r3]
+  14:oledlib/oled_color.c **** }
+  37              		.loc 1 14 1 view .LVU3
+  38 0004 7047     		bx	lr
+  39              	.L3:
+  40 0006 00BF     		.align	2
+  41              	.L2:
+  42 0008 00000000 		.word	.LANCHOR0
+  43              		.cfi_endproc
+  44              	.LFE0:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cchQVclf.s 			page 2
+
+
+  46              		.section	.text.GetDrawColor,"ax",%progbits
+  47              		.align	1
+  48              		.global	GetDrawColor
+  49              		.syntax unified
+  50              		.thumb
+  51              		.thumb_func
+  52              		.fpu softvfp
+  54              	GetDrawColor:
+  55              	.LFB1:
+  15:oledlib/oled_color.c **** 
+  16:oledlib/oled_color.c **** Type_color GetDrawColor(void)
+  17:oledlib/oled_color.c **** {
+  56              		.loc 1 17 1 is_stmt 1 view -0
+  57              		.cfi_startproc
+  58              		@ args = 0, pretend = 0, frame = 0
+  59              		@ frame_needed = 0, uses_anonymous_args = 0
+  60              		@ link register save eliminated.
+  18:oledlib/oled_color.c **** 	return _Draw;
+  61              		.loc 1 18 2 view .LVU5
+  19:oledlib/oled_color.c **** }
+  62              		.loc 1 19 1 is_stmt 0 view .LVU6
+  63 0000 014B     		ldr	r3, .L5
+  64 0002 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+  65 0004 7047     		bx	lr
+  66              	.L6:
+  67 0006 00BF     		.align	2
+  68              	.L5:
+  69 0008 00000000 		.word	.LANCHOR0
+  70              		.cfi_endproc
+  71              	.LFE1:
+  73              		.section	.text.SetFillcolor,"ax",%progbits
+  74              		.align	1
+  75              		.global	SetFillcolor
+  76              		.syntax unified
+  77              		.thumb
+  78              		.thumb_func
+  79              		.fpu softvfp
+  81              	SetFillcolor:
+  82              	.LVL1:
+  83              	.LFB2:
+  20:oledlib/oled_color.c **** 
+  21:oledlib/oled_color.c **** void SetFillcolor(Type_color value)
+  22:oledlib/oled_color.c **** {
+  84              		.loc 1 22 1 is_stmt 1 view -0
+  85              		.cfi_startproc
+  86              		@ args = 0, pretend = 0, frame = 0
+  87              		@ frame_needed = 0, uses_anonymous_args = 0
+  88              		@ link register save eliminated.
+  23:oledlib/oled_color.c **** 	_fill=value;
+  89              		.loc 1 23 2 view .LVU8
+  90              		.loc 1 23 7 is_stmt 0 view .LVU9
+  91 0000 014B     		ldr	r3, .L8
+  92 0002 1870     		strb	r0, [r3]
+  24:oledlib/oled_color.c **** 
+  25:oledlib/oled_color.c **** }
+  93              		.loc 1 25 1 view .LVU10
+  94 0004 7047     		bx	lr
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cchQVclf.s 			page 3
+
+
+  95              	.L9:
+  96 0006 00BF     		.align	2
+  97              	.L8:
+  98 0008 00000000 		.word	.LANCHOR1
+  99              		.cfi_endproc
+ 100              	.LFE2:
+ 102              		.section	.text.GetFillColor,"ax",%progbits
+ 103              		.align	1
+ 104              		.global	GetFillColor
+ 105              		.syntax unified
+ 106              		.thumb
+ 107              		.thumb_func
+ 108              		.fpu softvfp
+ 110              	GetFillColor:
+ 111              	.LFB3:
+  26:oledlib/oled_color.c **** 
+  27:oledlib/oled_color.c **** Type_color GetFillColor(void)
+  28:oledlib/oled_color.c **** {
+ 112              		.loc 1 28 1 is_stmt 1 view -0
+ 113              		.cfi_startproc
+ 114              		@ args = 0, pretend = 0, frame = 0
+ 115              		@ frame_needed = 0, uses_anonymous_args = 0
+ 116              		@ link register save eliminated.
+  29:oledlib/oled_color.c **** 
+  30:oledlib/oled_color.c **** 	return _fill;
+ 117              		.loc 1 30 2 view .LVU12
+  31:oledlib/oled_color.c **** }
+ 118              		.loc 1 31 1 is_stmt 0 view .LVU13
+ 119 0000 014B     		ldr	r3, .L11
+ 120 0002 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 121 0004 7047     		bx	lr
+ 122              	.L12:
+ 123 0006 00BF     		.align	2
+ 124              	.L11:
+ 125 0008 00000000 		.word	.LANCHOR1
+ 126              		.cfi_endproc
+ 127              	.LFE3:
+ 129              		.section	.data._Draw,"aw"
+ 130              		.set	.LANCHOR0,. + 0
+ 133              	_Draw:
+ 134 0000 01       		.byte	1
+ 135              		.section	.data._fill,"aw"
+ 136              		.set	.LANCHOR1,. + 0
+ 139              	_fill:
+ 140 0000 01       		.byte	1
+ 141              		.text
+ 142              	.Letext0:
+ 143              		.file 2 "oledlib/oled_color.h"
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cchQVclf.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 oled_color.c
+C:\Users\GKQ\AppData\Local\Temp\cchQVclf.s:16     .text.SetDrawColor:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\cchQVclf.s:24     .text.SetDrawColor:00000000 SetDrawColor
+C:\Users\GKQ\AppData\Local\Temp\cchQVclf.s:42     .text.SetDrawColor:00000008 $d
+C:\Users\GKQ\AppData\Local\Temp\cchQVclf.s:47     .text.GetDrawColor:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\cchQVclf.s:54     .text.GetDrawColor:00000000 GetDrawColor
+C:\Users\GKQ\AppData\Local\Temp\cchQVclf.s:69     .text.GetDrawColor:00000008 $d
+C:\Users\GKQ\AppData\Local\Temp\cchQVclf.s:74     .text.SetFillcolor:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\cchQVclf.s:81     .text.SetFillcolor:00000000 SetFillcolor
+C:\Users\GKQ\AppData\Local\Temp\cchQVclf.s:98     .text.SetFillcolor:00000008 $d
+C:\Users\GKQ\AppData\Local\Temp\cchQVclf.s:103    .text.GetFillColor:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\cchQVclf.s:110    .text.GetFillColor:00000000 GetFillColor
+C:\Users\GKQ\AppData\Local\Temp\cchQVclf.s:125    .text.GetFillColor:00000008 $d
+C:\Users\GKQ\AppData\Local\Temp\cchQVclf.s:133    .data._Draw:00000000 _Draw
+C:\Users\GKQ\AppData\Local\Temp\cchQVclf.s:139    .data._fill:00000000 _fill
+
+NO UNDEFINED SYMBOLS

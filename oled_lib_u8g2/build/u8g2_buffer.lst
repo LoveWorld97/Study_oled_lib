@@ -1,0 +1,1151 @@
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccDtrAPT.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"u8g2_buffer.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.u8g2_send_tile_row,"ax",%progbits
+  16              		.align	1
+  17              		.arch armv7-m
+  18              		.syntax unified
+  19              		.thumb
+  20              		.thumb_func
+  21              		.fpu softvfp
+  23              	u8g2_send_tile_row:
+  24              	.LVL0:
+  25              	.LFB1:
+  26              		.file 1 "u8g2_lib/u8g2_buffer.c"
+   1:u8g2_lib/u8g2_buffer.c **** /* 
+   2:u8g2_lib/u8g2_buffer.c **** 
+   3:u8g2_lib/u8g2_buffer.c ****   u8g2_buffer.c 
+   4:u8g2_lib/u8g2_buffer.c **** 
+   5:u8g2_lib/u8g2_buffer.c ****   Universal 8bit Graphics Library (https://github.com/olikraus/u8g2/)
+   6:u8g2_lib/u8g2_buffer.c **** 
+   7:u8g2_lib/u8g2_buffer.c ****   Copyright (c) 2016, olikraus@gmail.com
+   8:u8g2_lib/u8g2_buffer.c ****   All rights reserved.
+   9:u8g2_lib/u8g2_buffer.c **** 
+  10:u8g2_lib/u8g2_buffer.c ****   Redistribution and use in source and binary forms, with or without modification, 
+  11:u8g2_lib/u8g2_buffer.c ****   are permitted provided that the following conditions are met:
+  12:u8g2_lib/u8g2_buffer.c **** 
+  13:u8g2_lib/u8g2_buffer.c ****   * Redistributions of source code must retain the above copyright notice, this list 
+  14:u8g2_lib/u8g2_buffer.c ****     of conditions and the following disclaimer.
+  15:u8g2_lib/u8g2_buffer.c ****     
+  16:u8g2_lib/u8g2_buffer.c ****   * Redistributions in binary form must reproduce the above copyright notice, this 
+  17:u8g2_lib/u8g2_buffer.c ****     list of conditions and the following disclaimer in the documentation and/or other 
+  18:u8g2_lib/u8g2_buffer.c ****     materials provided with the distribution.
+  19:u8g2_lib/u8g2_buffer.c **** 
+  20:u8g2_lib/u8g2_buffer.c ****   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND 
+  21:u8g2_lib/u8g2_buffer.c ****   CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, 
+  22:u8g2_lib/u8g2_buffer.c ****   INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF 
+  23:u8g2_lib/u8g2_buffer.c ****   MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE 
+  24:u8g2_lib/u8g2_buffer.c ****   DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR 
+  25:u8g2_lib/u8g2_buffer.c ****   CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
+  26:u8g2_lib/u8g2_buffer.c ****   SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
+  27:u8g2_lib/u8g2_buffer.c ****   NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; 
+  28:u8g2_lib/u8g2_buffer.c ****   LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER 
+  29:u8g2_lib/u8g2_buffer.c ****   CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, 
+  30:u8g2_lib/u8g2_buffer.c ****   STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+  31:u8g2_lib/u8g2_buffer.c ****   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF 
+  32:u8g2_lib/u8g2_buffer.c ****   ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.  
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccDtrAPT.s 			page 2
+
+
+  33:u8g2_lib/u8g2_buffer.c **** 
+  34:u8g2_lib/u8g2_buffer.c **** */
+  35:u8g2_lib/u8g2_buffer.c **** 
+  36:u8g2_lib/u8g2_buffer.c **** #include "u8g2.h"
+  37:u8g2_lib/u8g2_buffer.c **** #include <string.h>
+  38:u8g2_lib/u8g2_buffer.c **** 
+  39:u8g2_lib/u8g2_buffer.c **** /*============================================*/
+  40:u8g2_lib/u8g2_buffer.c **** void u8g2_ClearBuffer(u8g2_t *u8g2)
+  41:u8g2_lib/u8g2_buffer.c **** {
+  42:u8g2_lib/u8g2_buffer.c ****   size_t cnt;
+  43:u8g2_lib/u8g2_buffer.c ****   cnt = u8g2_GetU8x8(u8g2)->display_info->tile_width;
+  44:u8g2_lib/u8g2_buffer.c ****   cnt *= u8g2->tile_buf_height;
+  45:u8g2_lib/u8g2_buffer.c ****   cnt *= 8;
+  46:u8g2_lib/u8g2_buffer.c ****   memset(u8g2->tile_buf_ptr, 0, cnt);
+  47:u8g2_lib/u8g2_buffer.c **** }
+  48:u8g2_lib/u8g2_buffer.c **** 
+  49:u8g2_lib/u8g2_buffer.c **** /*============================================*/
+  50:u8g2_lib/u8g2_buffer.c **** 
+  51:u8g2_lib/u8g2_buffer.c **** static void u8g2_send_tile_row(u8g2_t *u8g2, uint8_t src_tile_row, uint8_t dest_tile_row)
+  52:u8g2_lib/u8g2_buffer.c **** {
+  27              		.loc 1 52 1 view -0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              		.loc 1 52 1 is_stmt 0 view .LVU1
+  32 0000 10B5     		push	{r4, lr}
+  33              	.LCFI0:
+  34              		.cfi_def_cfa_offset 8
+  35              		.cfi_offset 4, -8
+  36              		.cfi_offset 14, -4
+  37 0002 82B0     		sub	sp, sp, #8
+  38              	.LCFI1:
+  39              		.cfi_def_cfa_offset 16
+  53:u8g2_lib/u8g2_buffer.c ****   uint8_t *ptr;
+  40              		.loc 1 53 3 is_stmt 1 view .LVU2
+  54:u8g2_lib/u8g2_buffer.c ****   uint16_t offset;
+  41              		.loc 1 54 3 view .LVU3
+  55:u8g2_lib/u8g2_buffer.c ****   uint8_t w;
+  42              		.loc 1 55 3 view .LVU4
+  56:u8g2_lib/u8g2_buffer.c ****   
+  57:u8g2_lib/u8g2_buffer.c ****   w = u8g2_GetU8x8(u8g2)->display_info->tile_width;
+  43              		.loc 1 57 3 view .LVU5
+  44              		.loc 1 57 25 is_stmt 0 view .LVU6
+  45 0004 0368     		ldr	r3, [r0]
+  46              		.loc 1 57 5 view .LVU7
+  47 0006 1B7C     		ldrb	r3, [r3, #16]	@ zero_extendqisi2
+  48              	.LVL1:
+  58:u8g2_lib/u8g2_buffer.c ****   offset = src_tile_row;
+  49              		.loc 1 58 3 is_stmt 1 view .LVU8
+  59:u8g2_lib/u8g2_buffer.c ****   ptr = u8g2->tile_buf_ptr;
+  50              		.loc 1 59 3 view .LVU9
+  51              		.loc 1 59 7 is_stmt 0 view .LVU10
+  52 0008 446B     		ldr	r4, [r0, #52]
+  53              	.LVL2:
+  60:u8g2_lib/u8g2_buffer.c ****   offset *= w;
+  54              		.loc 1 60 3 is_stmt 1 view .LVU11
+  55              		.loc 1 60 10 is_stmt 0 view .LVU12
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccDtrAPT.s 			page 3
+
+
+  56 000a 03FB01F1 		mul	r1, r3, r1
+  57              	.LVL3:
+  61:u8g2_lib/u8g2_buffer.c ****   offset *= 8;
+  58              		.loc 1 61 3 is_stmt 1 view .LVU13
+  59              		.loc 1 61 10 is_stmt 0 view .LVU14
+  60 000e C900     		lsls	r1, r1, #3
+  61              	.LVL4:
+  62              		.loc 1 61 10 view .LVU15
+  63 0010 89B2     		uxth	r1, r1
+  64              	.LVL5:
+  62:u8g2_lib/u8g2_buffer.c ****   ptr += offset;
+  65              		.loc 1 62 3 is_stmt 1 view .LVU16
+  66              		.loc 1 62 7 is_stmt 0 view .LVU17
+  67 0012 2144     		add	r1, r1, r4
+  68              	.LVL6:
+  63:u8g2_lib/u8g2_buffer.c ****   u8x8_DrawTile(u8g2_GetU8x8(u8g2), 0, dest_tile_row, w, ptr);
+  69              		.loc 1 63 3 is_stmt 1 view .LVU18
+  70 0014 0091     		str	r1, [sp]
+  71 0016 0021     		movs	r1, #0
+  72              	.LVL7:
+  73              		.loc 1 63 3 is_stmt 0 view .LVU19
+  74 0018 FFF7FEFF 		bl	u8x8_DrawTile
+  75              	.LVL8:
+  64:u8g2_lib/u8g2_buffer.c **** }
+  76              		.loc 1 64 1 view .LVU20
+  77 001c 02B0     		add	sp, sp, #8
+  78              	.LCFI2:
+  79              		.cfi_def_cfa_offset 8
+  80              		@ sp needed
+  81 001e 10BD     		pop	{r4, pc}
+  82              		.cfi_endproc
+  83              	.LFE1:
+  85              		.section	.text.u8g2_send_buffer,"ax",%progbits
+  86              		.align	1
+  87              		.syntax unified
+  88              		.thumb
+  89              		.thumb_func
+  90              		.fpu softvfp
+  92              	u8g2_send_buffer:
+  93              	.LVL9:
+  94              	.LFB2:
+  65:u8g2_lib/u8g2_buffer.c **** 
+  66:u8g2_lib/u8g2_buffer.c **** /* 
+  67:u8g2_lib/u8g2_buffer.c ****   write the buffer to the display RAM. 
+  68:u8g2_lib/u8g2_buffer.c ****   For most displays, this will make the content visible to the user.
+  69:u8g2_lib/u8g2_buffer.c ****   Some displays (like the SSD1606) require a u8x8_RefreshDisplay()
+  70:u8g2_lib/u8g2_buffer.c **** */
+  71:u8g2_lib/u8g2_buffer.c **** static void u8g2_send_buffer(u8g2_t *u8g2) U8X8_NOINLINE;
+  72:u8g2_lib/u8g2_buffer.c **** static void u8g2_send_buffer(u8g2_t *u8g2)
+  73:u8g2_lib/u8g2_buffer.c **** {
+  95              		.loc 1 73 1 is_stmt 1 view -0
+  96              		.cfi_startproc
+  97              		@ args = 0, pretend = 0, frame = 0
+  98              		@ frame_needed = 0, uses_anonymous_args = 0
+  99              		.loc 1 73 1 is_stmt 0 view .LVU22
+ 100 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 101              	.LCFI3:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccDtrAPT.s 			page 4
+
+
+ 102              		.cfi_def_cfa_offset 24
+ 103              		.cfi_offset 4, -24
+ 104              		.cfi_offset 5, -20
+ 105              		.cfi_offset 6, -16
+ 106              		.cfi_offset 7, -12
+ 107              		.cfi_offset 8, -8
+ 108              		.cfi_offset 14, -4
+ 109 0004 0646     		mov	r6, r0
+  74:u8g2_lib/u8g2_buffer.c ****   uint8_t src_row;
+ 110              		.loc 1 74 3 is_stmt 1 view .LVU23
+  75:u8g2_lib/u8g2_buffer.c ****   uint8_t src_max;
+ 111              		.loc 1 75 3 view .LVU24
+  76:u8g2_lib/u8g2_buffer.c ****   uint8_t dest_row;
+ 112              		.loc 1 76 3 view .LVU25
+  77:u8g2_lib/u8g2_buffer.c ****   uint8_t dest_max;
+ 113              		.loc 1 77 3 view .LVU26
+  78:u8g2_lib/u8g2_buffer.c **** 
+  79:u8g2_lib/u8g2_buffer.c ****   src_row = 0;
+ 114              		.loc 1 79 3 view .LVU27
+ 115              	.LVL10:
+  80:u8g2_lib/u8g2_buffer.c ****   src_max = u8g2->tile_buf_height;
+ 116              		.loc 1 80 3 view .LVU28
+ 117              		.loc 1 80 11 is_stmt 0 view .LVU29
+ 118 0006 90F83870 		ldrb	r7, [r0, #56]	@ zero_extendqisi2
+ 119              	.LVL11:
+  81:u8g2_lib/u8g2_buffer.c ****   dest_row = u8g2->tile_curr_row;
+ 120              		.loc 1 81 3 is_stmt 1 view .LVU30
+ 121              		.loc 1 81 12 is_stmt 0 view .LVU31
+ 122 000a 90F83950 		ldrb	r5, [r0, #57]	@ zero_extendqisi2
+ 123              	.LVL12:
+  82:u8g2_lib/u8g2_buffer.c ****   dest_max = u8g2_GetU8x8(u8g2)->display_info->tile_height;
+ 124              		.loc 1 82 3 is_stmt 1 view .LVU32
+ 125              		.loc 1 82 32 is_stmt 0 view .LVU33
+ 126 000e 0368     		ldr	r3, [r0]
+ 127              		.loc 1 82 12 view .LVU34
+ 128 0010 93F81180 		ldrb	r8, [r3, #17]	@ zero_extendqisi2
+ 129              	.LVL13:
+  79:u8g2_lib/u8g2_buffer.c ****   src_max = u8g2->tile_buf_height;
+ 130              		.loc 1 79 11 view .LVU35
+ 131 0014 0024     		movs	r4, #0
+ 132              	.LVL14:
+ 133              	.L5:
+  83:u8g2_lib/u8g2_buffer.c ****   
+  84:u8g2_lib/u8g2_buffer.c ****   do
+ 134              		.loc 1 84 3 is_stmt 1 discriminator 2 view .LVU36
+  85:u8g2_lib/u8g2_buffer.c ****   {
+  86:u8g2_lib/u8g2_buffer.c ****     u8g2_send_tile_row(u8g2, src_row, dest_row);
+ 135              		.loc 1 86 5 discriminator 2 view .LVU37
+ 136 0016 2A46     		mov	r2, r5
+ 137 0018 2146     		mov	r1, r4
+ 138 001a 3046     		mov	r0, r6
+ 139 001c FFF7FEFF 		bl	u8g2_send_tile_row
+ 140              	.LVL15:
+  87:u8g2_lib/u8g2_buffer.c ****     src_row++;
+ 141              		.loc 1 87 5 discriminator 2 view .LVU38
+ 142              		.loc 1 87 12 is_stmt 0 discriminator 2 view .LVU39
+ 143 0020 0134     		adds	r4, r4, #1
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccDtrAPT.s 			page 5
+
+
+ 144              	.LVL16:
+ 145              		.loc 1 87 12 discriminator 2 view .LVU40
+ 146 0022 E4B2     		uxtb	r4, r4
+ 147              	.LVL17:
+  88:u8g2_lib/u8g2_buffer.c ****     dest_row++;
+ 148              		.loc 1 88 5 is_stmt 1 discriminator 2 view .LVU41
+ 149              		.loc 1 88 13 is_stmt 0 discriminator 2 view .LVU42
+ 150 0024 0135     		adds	r5, r5, #1
+ 151              	.LVL18:
+ 152              		.loc 1 88 13 discriminator 2 view .LVU43
+ 153 0026 EDB2     		uxtb	r5, r5
+ 154              	.LVL19:
+  89:u8g2_lib/u8g2_buffer.c ****   } while( src_row < src_max && dest_row < dest_max );
+ 155              		.loc 1 89 10 is_stmt 1 discriminator 2 view .LVU44
+ 156              		.loc 1 89 3 is_stmt 0 discriminator 2 view .LVU45
+ 157 0028 A742     		cmp	r7, r4
+ 158 002a 01D9     		bls	.L3
+ 159              		.loc 1 89 30 discriminator 1 view .LVU46
+ 160 002c A845     		cmp	r8, r5
+ 161 002e F2D8     		bhi	.L5
+ 162              	.L3:
+  90:u8g2_lib/u8g2_buffer.c **** }
+ 163              		.loc 1 90 1 view .LVU47
+ 164 0030 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 165              		.loc 1 90 1 view .LVU48
+ 166              		.cfi_endproc
+ 167              	.LFE2:
+ 169              		.section	.text.u8g2_ClearBuffer,"ax",%progbits
+ 170              		.align	1
+ 171              		.global	u8g2_ClearBuffer
+ 172              		.syntax unified
+ 173              		.thumb
+ 174              		.thumb_func
+ 175              		.fpu softvfp
+ 177              	u8g2_ClearBuffer:
+ 178              	.LVL20:
+ 179              	.LFB0:
+  41:u8g2_lib/u8g2_buffer.c ****   size_t cnt;
+ 180              		.loc 1 41 1 is_stmt 1 view -0
+ 181              		.cfi_startproc
+ 182              		@ args = 0, pretend = 0, frame = 0
+ 183              		@ frame_needed = 0, uses_anonymous_args = 0
+  41:u8g2_lib/u8g2_buffer.c ****   size_t cnt;
+ 184              		.loc 1 41 1 is_stmt 0 view .LVU50
+ 185 0000 08B5     		push	{r3, lr}
+ 186              	.LCFI4:
+ 187              		.cfi_def_cfa_offset 8
+ 188              		.cfi_offset 3, -8
+ 189              		.cfi_offset 14, -4
+  42:u8g2_lib/u8g2_buffer.c ****   cnt = u8g2_GetU8x8(u8g2)->display_info->tile_width;
+ 190              		.loc 1 42 3 is_stmt 1 view .LVU51
+  43:u8g2_lib/u8g2_buffer.c ****   cnt *= u8g2->tile_buf_height;
+ 191              		.loc 1 43 3 view .LVU52
+  43:u8g2_lib/u8g2_buffer.c ****   cnt *= u8g2->tile_buf_height;
+ 192              		.loc 1 43 27 is_stmt 0 view .LVU53
+ 193 0002 0368     		ldr	r3, [r0]
+  43:u8g2_lib/u8g2_buffer.c ****   cnt *= u8g2->tile_buf_height;
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccDtrAPT.s 			page 6
+
+
+ 194              		.loc 1 43 41 view .LVU54
+ 195 0004 1A7C     		ldrb	r2, [r3, #16]	@ zero_extendqisi2
+ 196              	.LVL21:
+  44:u8g2_lib/u8g2_buffer.c ****   cnt *= 8;
+ 197              		.loc 1 44 3 is_stmt 1 view .LVU55
+  44:u8g2_lib/u8g2_buffer.c ****   cnt *= 8;
+ 198              		.loc 1 44 14 is_stmt 0 view .LVU56
+ 199 0006 90F83830 		ldrb	r3, [r0, #56]	@ zero_extendqisi2
+  44:u8g2_lib/u8g2_buffer.c ****   cnt *= 8;
+ 200              		.loc 1 44 7 view .LVU57
+ 201 000a 02FB03F2 		mul	r2, r2, r3
+ 202              	.LVL22:
+  45:u8g2_lib/u8g2_buffer.c ****   memset(u8g2->tile_buf_ptr, 0, cnt);
+ 203              		.loc 1 45 3 is_stmt 1 view .LVU58
+  46:u8g2_lib/u8g2_buffer.c **** }
+ 204              		.loc 1 46 3 view .LVU59
+ 205 000e D200     		lsls	r2, r2, #3
+ 206              	.LVL23:
+  46:u8g2_lib/u8g2_buffer.c **** }
+ 207              		.loc 1 46 3 is_stmt 0 view .LVU60
+ 208 0010 0021     		movs	r1, #0
+ 209 0012 406B     		ldr	r0, [r0, #52]
+ 210              	.LVL24:
+  46:u8g2_lib/u8g2_buffer.c **** }
+ 211              		.loc 1 46 3 view .LVU61
+ 212 0014 FFF7FEFF 		bl	memset
+ 213              	.LVL25:
+  47:u8g2_lib/u8g2_buffer.c **** 
+ 214              		.loc 1 47 1 view .LVU62
+ 215 0018 08BD     		pop	{r3, pc}
+ 216              		.cfi_endproc
+ 217              	.LFE0:
+ 219              		.section	.text.u8g2_SendBuffer,"ax",%progbits
+ 220              		.align	1
+ 221              		.global	u8g2_SendBuffer
+ 222              		.syntax unified
+ 223              		.thumb
+ 224              		.thumb_func
+ 225              		.fpu softvfp
+ 227              	u8g2_SendBuffer:
+ 228              	.LVL26:
+ 229              	.LFB3:
+  91:u8g2_lib/u8g2_buffer.c **** 
+  92:u8g2_lib/u8g2_buffer.c **** /* same as u8g2_send_buffer but also send the DISPLAY_REFRESH message (used by SSD1606) */
+  93:u8g2_lib/u8g2_buffer.c **** void u8g2_SendBuffer(u8g2_t *u8g2)
+  94:u8g2_lib/u8g2_buffer.c **** {
+ 230              		.loc 1 94 1 is_stmt 1 view -0
+ 231              		.cfi_startproc
+ 232              		@ args = 0, pretend = 0, frame = 0
+ 233              		@ frame_needed = 0, uses_anonymous_args = 0
+ 234              		.loc 1 94 1 is_stmt 0 view .LVU64
+ 235 0000 10B5     		push	{r4, lr}
+ 236              	.LCFI5:
+ 237              		.cfi_def_cfa_offset 8
+ 238              		.cfi_offset 4, -8
+ 239              		.cfi_offset 14, -4
+ 240 0002 0446     		mov	r4, r0
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccDtrAPT.s 			page 7
+
+
+  95:u8g2_lib/u8g2_buffer.c ****   u8g2_send_buffer(u8g2);
+ 241              		.loc 1 95 3 is_stmt 1 view .LVU65
+ 242 0004 FFF7FEFF 		bl	u8g2_send_buffer
+ 243              	.LVL27:
+  96:u8g2_lib/u8g2_buffer.c ****   u8x8_RefreshDisplay( u8g2_GetU8x8(u8g2) );  
+ 244              		.loc 1 96 3 view .LVU66
+ 245 0008 2046     		mov	r0, r4
+ 246 000a FFF7FEFF 		bl	u8x8_RefreshDisplay
+ 247              	.LVL28:
+  97:u8g2_lib/u8g2_buffer.c **** }
+ 248              		.loc 1 97 1 is_stmt 0 view .LVU67
+ 249 000e 10BD     		pop	{r4, pc}
+ 250              		.loc 1 97 1 view .LVU68
+ 251              		.cfi_endproc
+ 252              	.LFE3:
+ 254              		.section	.text.u8g2_SetBufferCurrTileRow,"ax",%progbits
+ 255              		.align	1
+ 256              		.global	u8g2_SetBufferCurrTileRow
+ 257              		.syntax unified
+ 258              		.thumb
+ 259              		.thumb_func
+ 260              		.fpu softvfp
+ 262              	u8g2_SetBufferCurrTileRow:
+ 263              	.LVL29:
+ 264              	.LFB4:
+  98:u8g2_lib/u8g2_buffer.c **** 
+  99:u8g2_lib/u8g2_buffer.c **** /*============================================*/
+ 100:u8g2_lib/u8g2_buffer.c **** void u8g2_SetBufferCurrTileRow(u8g2_t *u8g2, uint8_t row)
+ 101:u8g2_lib/u8g2_buffer.c **** {
+ 265              		.loc 1 101 1 is_stmt 1 view -0
+ 266              		.cfi_startproc
+ 267              		@ args = 0, pretend = 0, frame = 0
+ 268              		@ frame_needed = 0, uses_anonymous_args = 0
+ 269              		.loc 1 101 1 is_stmt 0 view .LVU70
+ 270 0000 10B5     		push	{r4, lr}
+ 271              	.LCFI6:
+ 272              		.cfi_def_cfa_offset 8
+ 273              		.cfi_offset 4, -8
+ 274              		.cfi_offset 14, -4
+ 275 0002 0446     		mov	r4, r0
+ 102:u8g2_lib/u8g2_buffer.c ****   u8g2->tile_curr_row = row;
+ 276              		.loc 1 102 3 is_stmt 1 view .LVU71
+ 277              		.loc 1 102 23 is_stmt 0 view .LVU72
+ 278 0004 80F83910 		strb	r1, [r0, #57]
+ 103:u8g2_lib/u8g2_buffer.c ****   u8g2->cb->update_dimension(u8g2);
+ 279              		.loc 1 103 3 is_stmt 1 view .LVU73
+ 280              		.loc 1 103 7 is_stmt 0 view .LVU74
+ 281 0008 036B     		ldr	r3, [r0, #48]
+ 282              		.loc 1 103 11 view .LVU75
+ 283 000a 1B68     		ldr	r3, [r3]
+ 284              		.loc 1 103 3 view .LVU76
+ 285 000c 9847     		blx	r3
+ 286              	.LVL30:
+ 104:u8g2_lib/u8g2_buffer.c ****   u8g2->cb->update_page_win(u8g2);
+ 287              		.loc 1 104 3 is_stmt 1 view .LVU77
+ 288              		.loc 1 104 7 is_stmt 0 view .LVU78
+ 289 000e 236B     		ldr	r3, [r4, #48]
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccDtrAPT.s 			page 8
+
+
+ 290              		.loc 1 104 11 view .LVU79
+ 291 0010 5B68     		ldr	r3, [r3, #4]
+ 292              		.loc 1 104 3 view .LVU80
+ 293 0012 2046     		mov	r0, r4
+ 294 0014 9847     		blx	r3
+ 295              	.LVL31:
+ 105:u8g2_lib/u8g2_buffer.c **** }
+ 296              		.loc 1 105 1 view .LVU81
+ 297 0016 10BD     		pop	{r4, pc}
+ 298              		.loc 1 105 1 view .LVU82
+ 299              		.cfi_endproc
+ 300              	.LFE4:
+ 302              		.section	.text.u8g2_FirstPage,"ax",%progbits
+ 303              		.align	1
+ 304              		.global	u8g2_FirstPage
+ 305              		.syntax unified
+ 306              		.thumb
+ 307              		.thumb_func
+ 308              		.fpu softvfp
+ 310              	u8g2_FirstPage:
+ 311              	.LVL32:
+ 312              	.LFB5:
+ 106:u8g2_lib/u8g2_buffer.c **** 
+ 107:u8g2_lib/u8g2_buffer.c **** void u8g2_FirstPage(u8g2_t *u8g2)
+ 108:u8g2_lib/u8g2_buffer.c **** {
+ 313              		.loc 1 108 1 is_stmt 1 view -0
+ 314              		.cfi_startproc
+ 315              		@ args = 0, pretend = 0, frame = 0
+ 316              		@ frame_needed = 0, uses_anonymous_args = 0
+ 317              		.loc 1 108 1 is_stmt 0 view .LVU84
+ 318 0000 10B5     		push	{r4, lr}
+ 319              	.LCFI7:
+ 320              		.cfi_def_cfa_offset 8
+ 321              		.cfi_offset 4, -8
+ 322              		.cfi_offset 14, -4
+ 323 0002 0446     		mov	r4, r0
+ 109:u8g2_lib/u8g2_buffer.c ****   if ( u8g2->is_auto_page_clear )
+ 324              		.loc 1 109 3 is_stmt 1 view .LVU85
+ 325              		.loc 1 109 12 is_stmt 0 view .LVU86
+ 326 0004 90F88330 		ldrb	r3, [r0, #131]	@ zero_extendqisi2
+ 327              		.loc 1 109 6 view .LVU87
+ 328 0008 23B9     		cbnz	r3, .L16
+ 329              	.LVL33:
+ 330              	.L14:
+ 110:u8g2_lib/u8g2_buffer.c ****   {
+ 111:u8g2_lib/u8g2_buffer.c ****     u8g2_ClearBuffer(u8g2);
+ 112:u8g2_lib/u8g2_buffer.c ****   }
+ 113:u8g2_lib/u8g2_buffer.c ****   u8g2_SetBufferCurrTileRow(u8g2, 0);
+ 331              		.loc 1 113 3 is_stmt 1 view .LVU88
+ 332 000a 0021     		movs	r1, #0
+ 333 000c 2046     		mov	r0, r4
+ 334 000e FFF7FEFF 		bl	u8g2_SetBufferCurrTileRow
+ 335              	.LVL34:
+ 114:u8g2_lib/u8g2_buffer.c **** }
+ 336              		.loc 1 114 1 is_stmt 0 view .LVU89
+ 337 0012 10BD     		pop	{r4, pc}
+ 338              	.LVL35:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccDtrAPT.s 			page 9
+
+
+ 339              	.L16:
+ 111:u8g2_lib/u8g2_buffer.c ****   }
+ 340              		.loc 1 111 5 is_stmt 1 view .LVU90
+ 341 0014 FFF7FEFF 		bl	u8g2_ClearBuffer
+ 342              	.LVL36:
+ 111:u8g2_lib/u8g2_buffer.c ****   }
+ 343              		.loc 1 111 5 is_stmt 0 view .LVU91
+ 344 0018 F7E7     		b	.L14
+ 345              		.cfi_endproc
+ 346              	.LFE5:
+ 348              		.section	.text.u8g2_NextPage,"ax",%progbits
+ 349              		.align	1
+ 350              		.global	u8g2_NextPage
+ 351              		.syntax unified
+ 352              		.thumb
+ 353              		.thumb_func
+ 354              		.fpu softvfp
+ 356              	u8g2_NextPage:
+ 357              	.LVL37:
+ 358              	.LFB6:
+ 115:u8g2_lib/u8g2_buffer.c **** 
+ 116:u8g2_lib/u8g2_buffer.c **** uint8_t u8g2_NextPage(u8g2_t *u8g2)
+ 117:u8g2_lib/u8g2_buffer.c **** {
+ 359              		.loc 1 117 1 is_stmt 1 view -0
+ 360              		.cfi_startproc
+ 361              		@ args = 0, pretend = 0, frame = 0
+ 362              		@ frame_needed = 0, uses_anonymous_args = 0
+ 363              		.loc 1 117 1 is_stmt 0 view .LVU93
+ 364 0000 38B5     		push	{r3, r4, r5, lr}
+ 365              	.LCFI8:
+ 366              		.cfi_def_cfa_offset 16
+ 367              		.cfi_offset 3, -16
+ 368              		.cfi_offset 4, -12
+ 369              		.cfi_offset 5, -8
+ 370              		.cfi_offset 14, -4
+ 371 0002 0446     		mov	r4, r0
+ 118:u8g2_lib/u8g2_buffer.c ****   uint8_t row;
+ 372              		.loc 1 118 3 is_stmt 1 view .LVU94
+ 119:u8g2_lib/u8g2_buffer.c ****   u8g2_send_buffer(u8g2);
+ 373              		.loc 1 119 3 view .LVU95
+ 374 0004 FFF7FEFF 		bl	u8g2_send_buffer
+ 375              	.LVL38:
+ 120:u8g2_lib/u8g2_buffer.c ****   row = u8g2->tile_curr_row;
+ 376              		.loc 1 120 3 view .LVU96
+ 377              		.loc 1 120 7 is_stmt 0 view .LVU97
+ 378 0008 94F83930 		ldrb	r3, [r4, #57]	@ zero_extendqisi2
+ 379              	.LVL39:
+ 121:u8g2_lib/u8g2_buffer.c ****   row += u8g2->tile_buf_height;
+ 380              		.loc 1 121 3 is_stmt 1 view .LVU98
+ 381              		.loc 1 121 14 is_stmt 0 view .LVU99
+ 382 000c 94F83850 		ldrb	r5, [r4, #56]	@ zero_extendqisi2
+ 383              		.loc 1 121 7 view .LVU100
+ 384 0010 1D44     		add	r5, r5, r3
+ 385 0012 EDB2     		uxtb	r5, r5
+ 386              	.LVL40:
+ 122:u8g2_lib/u8g2_buffer.c ****   if ( row >= u8g2_GetU8x8(u8g2)->display_info->tile_height )
+ 387              		.loc 1 122 3 is_stmt 1 view .LVU101
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccDtrAPT.s 			page 10
+
+
+ 388              		.loc 1 122 33 is_stmt 0 view .LVU102
+ 389 0014 2368     		ldr	r3, [r4]
+ 390              		.loc 1 122 47 view .LVU103
+ 391 0016 5B7C     		ldrb	r3, [r3, #17]	@ zero_extendqisi2
+ 392              		.loc 1 122 6 view .LVU104
+ 393 0018 AB42     		cmp	r3, r5
+ 394 001a 08D9     		bls	.L22
+ 123:u8g2_lib/u8g2_buffer.c ****   {
+ 124:u8g2_lib/u8g2_buffer.c ****     u8x8_RefreshDisplay( u8g2_GetU8x8(u8g2) );
+ 125:u8g2_lib/u8g2_buffer.c ****     return 0;
+ 126:u8g2_lib/u8g2_buffer.c ****   }
+ 127:u8g2_lib/u8g2_buffer.c ****   if ( u8g2->is_auto_page_clear )
+ 395              		.loc 1 127 3 is_stmt 1 view .LVU105
+ 396              		.loc 1 127 12 is_stmt 0 view .LVU106
+ 397 001c 94F88330 		ldrb	r3, [r4, #131]	@ zero_extendqisi2
+ 398              		.loc 1 127 6 view .LVU107
+ 399 0020 53B9     		cbnz	r3, .L23
+ 400              	.L20:
+ 128:u8g2_lib/u8g2_buffer.c ****   {
+ 129:u8g2_lib/u8g2_buffer.c ****     u8g2_ClearBuffer(u8g2);
+ 130:u8g2_lib/u8g2_buffer.c ****   }
+ 131:u8g2_lib/u8g2_buffer.c ****   u8g2_SetBufferCurrTileRow(u8g2, row);
+ 401              		.loc 1 131 3 is_stmt 1 view .LVU108
+ 402 0022 2946     		mov	r1, r5
+ 403 0024 2046     		mov	r0, r4
+ 404 0026 FFF7FEFF 		bl	u8g2_SetBufferCurrTileRow
+ 405              	.LVL41:
+ 132:u8g2_lib/u8g2_buffer.c ****   return 1;
+ 406              		.loc 1 132 3 view .LVU109
+ 407              		.loc 1 132 10 is_stmt 0 view .LVU110
+ 408 002a 0120     		movs	r0, #1
+ 409              	.L19:
+ 133:u8g2_lib/u8g2_buffer.c **** }
+ 410              		.loc 1 133 1 view .LVU111
+ 411 002c 38BD     		pop	{r3, r4, r5, pc}
+ 412              	.LVL42:
+ 413              	.L22:
+ 124:u8g2_lib/u8g2_buffer.c ****     return 0;
+ 414              		.loc 1 124 5 is_stmt 1 view .LVU112
+ 415 002e 2046     		mov	r0, r4
+ 416 0030 FFF7FEFF 		bl	u8x8_RefreshDisplay
+ 417              	.LVL43:
+ 125:u8g2_lib/u8g2_buffer.c ****   }
+ 418              		.loc 1 125 5 view .LVU113
+ 125:u8g2_lib/u8g2_buffer.c ****   }
+ 419              		.loc 1 125 12 is_stmt 0 view .LVU114
+ 420 0034 0020     		movs	r0, #0
+ 421 0036 F9E7     		b	.L19
+ 422              	.L23:
+ 129:u8g2_lib/u8g2_buffer.c ****   }
+ 423              		.loc 1 129 5 is_stmt 1 view .LVU115
+ 424 0038 2046     		mov	r0, r4
+ 425 003a FFF7FEFF 		bl	u8g2_ClearBuffer
+ 426              	.LVL44:
+ 427 003e F0E7     		b	.L20
+ 428              		.cfi_endproc
+ 429              	.LFE6:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccDtrAPT.s 			page 11
+
+
+ 431              		.section	.text.u8g2_UpdateDisplayArea,"ax",%progbits
+ 432              		.align	1
+ 433              		.global	u8g2_UpdateDisplayArea
+ 434              		.syntax unified
+ 435              		.thumb
+ 436              		.thumb_func
+ 437              		.fpu softvfp
+ 439              	u8g2_UpdateDisplayArea:
+ 440              	.LVL45:
+ 441              	.LFB7:
+ 134:u8g2_lib/u8g2_buffer.c **** 
+ 135:u8g2_lib/u8g2_buffer.c **** 
+ 136:u8g2_lib/u8g2_buffer.c **** 
+ 137:u8g2_lib/u8g2_buffer.c **** /*============================================*/
+ 138:u8g2_lib/u8g2_buffer.c **** /*
+ 139:u8g2_lib/u8g2_buffer.c ****   Description:
+ 140:u8g2_lib/u8g2_buffer.c ****     Update a sub area of the display, given by tile position, width and height.
+ 141:u8g2_lib/u8g2_buffer.c ****     The arguments are "tile" coordinates. Any u8g2 rotation is ignored.
+ 142:u8g2_lib/u8g2_buffer.c ****     This procedure only checks whether full buffer mode is active.
+ 143:u8g2_lib/u8g2_buffer.c ****     There is no error checking for the arguments: It is the responsibility of the
+ 144:u8g2_lib/u8g2_buffer.c ****     user to ensure, that the provided arguments are correct.
+ 145:u8g2_lib/u8g2_buffer.c **** 
+ 146:u8g2_lib/u8g2_buffer.c ****   Limitations:
+ 147:u8g2_lib/u8g2_buffer.c ****     - Only available in full buffer mode (will not do anything in page mode)
+ 148:u8g2_lib/u8g2_buffer.c ****     - Tile positions and sizes (pixel position divided by 8)
+ 149:u8g2_lib/u8g2_buffer.c ****     - Any display rotation/mirror is ignored
+ 150:u8g2_lib/u8g2_buffer.c ****     - Only works with displays, which support U8x8 API
+ 151:u8g2_lib/u8g2_buffer.c ****     - Will not send the e-paper refresh message (will probably not work with e-paper devices)
+ 152:u8g2_lib/u8g2_buffer.c **** */
+ 153:u8g2_lib/u8g2_buffer.c **** void u8g2_UpdateDisplayArea(u8g2_t *u8g2, uint8_t  tx, uint8_t ty, uint8_t tw, uint8_t th)
+ 154:u8g2_lib/u8g2_buffer.c **** {
+ 442              		.loc 1 154 1 view -0
+ 443              		.cfi_startproc
+ 444              		@ args = 4, pretend = 0, frame = 0
+ 445              		@ frame_needed = 0, uses_anonymous_args = 0
+ 446              		.loc 1 154 1 is_stmt 0 view .LVU117
+ 447 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, r10, lr}
+ 448              	.LCFI9:
+ 449              		.cfi_def_cfa_offset 32
+ 450              		.cfi_offset 4, -32
+ 451              		.cfi_offset 5, -28
+ 452              		.cfi_offset 6, -24
+ 453              		.cfi_offset 7, -20
+ 454              		.cfi_offset 8, -16
+ 455              		.cfi_offset 9, -12
+ 456              		.cfi_offset 10, -8
+ 457              		.cfi_offset 14, -4
+ 458 0004 82B0     		sub	sp, sp, #8
+ 459              	.LCFI10:
+ 460              		.cfi_def_cfa_offset 40
+ 461 0006 1446     		mov	r4, r2
+ 462 0008 9846     		mov	r8, r3
+ 463 000a 9DF828A0 		ldrb	r10, [sp, #40]	@ zero_extendqisi2
+ 155:u8g2_lib/u8g2_buffer.c ****   uint16_t page_size;
+ 464              		.loc 1 155 3 is_stmt 1 view .LVU118
+ 156:u8g2_lib/u8g2_buffer.c ****   uint8_t *ptr;
+ 465              		.loc 1 156 3 view .LVU119
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccDtrAPT.s 			page 12
+
+
+ 157:u8g2_lib/u8g2_buffer.c ****   
+ 158:u8g2_lib/u8g2_buffer.c ****   /* check, whether we are in full buffer mode */
+ 159:u8g2_lib/u8g2_buffer.c ****   if ( u8g2->tile_buf_height != u8g2_GetU8x8(u8g2)->display_info->tile_height )
+ 466              		.loc 1 159 3 view .LVU120
+ 467              		.loc 1 159 12 is_stmt 0 view .LVU121
+ 468 000e 90F83820 		ldrb	r2, [r0, #56]	@ zero_extendqisi2
+ 469              	.LVL46:
+ 470              		.loc 1 159 51 view .LVU122
+ 471 0012 0368     		ldr	r3, [r0]
+ 472              	.LVL47:
+ 473              		.loc 1 159 65 view .LVU123
+ 474 0014 5B7C     		ldrb	r3, [r3, #17]	@ zero_extendqisi2
+ 475              		.loc 1 159 6 view .LVU124
+ 476 0016 9A42     		cmp	r2, r3
+ 477 0018 1BD1     		bne	.L24
+ 478 001a 0646     		mov	r6, r0
+ 479 001c 0F46     		mov	r7, r1
+ 160:u8g2_lib/u8g2_buffer.c ****     return; /* not in full buffer mode, do nothing */
+ 161:u8g2_lib/u8g2_buffer.c **** 
+ 162:u8g2_lib/u8g2_buffer.c ****   page_size = u8g2->pixel_buf_width;  /* 8*u8g2->u8g2_GetU8x8(u8g2)->display_info->tile_width */
+ 480              		.loc 1 162 3 is_stmt 1 view .LVU125
+ 481              		.loc 1 162 19 is_stmt 0 view .LVU126
+ 482 001e 90F83A90 		ldrb	r9, [r0, #58]	@ zero_extendqisi2
+ 483              	.LVL48:
+ 163:u8g2_lib/u8g2_buffer.c ****     
+ 164:u8g2_lib/u8g2_buffer.c ****   ptr = u8g2_GetBufferPtr(u8g2);
+ 484              		.loc 1 164 3 is_stmt 1 view .LVU127
+ 485              		.loc 1 164 7 is_stmt 0 view .LVU128
+ 486 0022 456B     		ldr	r5, [r0, #52]
+ 487              	.LVL49:
+ 165:u8g2_lib/u8g2_buffer.c ****   ptr += tx*8;
+ 488              		.loc 1 165 3 is_stmt 1 view .LVU129
+ 166:u8g2_lib/u8g2_buffer.c ****   ptr += page_size*ty;
+ 489              		.loc 1 166 3 view .LVU130
+ 490              		.loc 1 166 19 is_stmt 0 view .LVU131
+ 491 0024 04FB09F3 		mul	r3, r4, r9
+ 492              		.loc 1 166 7 view .LVU132
+ 493 0028 03EBC103 		add	r3, r3, r1, lsl #3
+ 494 002c 1D44     		add	r5, r5, r3
+ 495              	.LVL50:
+ 167:u8g2_lib/u8g2_buffer.c ****   
+ 168:u8g2_lib/u8g2_buffer.c ****   while( th > 0 )
+ 496              		.loc 1 168 3 is_stmt 1 view .LVU133
+ 497              	.L26:
+ 498              		.loc 1 168 8 view .LVU134
+ 499 002e BAF1000F 		cmp	r10, #0
+ 500 0032 0ED0     		beq	.L24
+ 169:u8g2_lib/u8g2_buffer.c ****   {
+ 170:u8g2_lib/u8g2_buffer.c ****     u8x8_DrawTile( u8g2_GetU8x8(u8g2), tx, ty, tw, ptr );
+ 501              		.loc 1 170 5 view .LVU135
+ 502 0034 0095     		str	r5, [sp]
+ 503 0036 4346     		mov	r3, r8
+ 504 0038 2246     		mov	r2, r4
+ 505 003a 3946     		mov	r1, r7
+ 506 003c 3046     		mov	r0, r6
+ 507 003e FFF7FEFF 		bl	u8x8_DrawTile
+ 508              	.LVL51:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccDtrAPT.s 			page 13
+
+
+ 171:u8g2_lib/u8g2_buffer.c ****     ptr += page_size;
+ 509              		.loc 1 171 5 view .LVU136
+ 510              		.loc 1 171 9 is_stmt 0 view .LVU137
+ 511 0042 4D44     		add	r5, r5, r9
+ 512              	.LVL52:
+ 172:u8g2_lib/u8g2_buffer.c ****     ty++;
+ 513              		.loc 1 172 5 is_stmt 1 view .LVU138
+ 514              		.loc 1 172 7 is_stmt 0 view .LVU139
+ 515 0044 0134     		adds	r4, r4, #1
+ 516              	.LVL53:
+ 517              		.loc 1 172 7 view .LVU140
+ 518 0046 E4B2     		uxtb	r4, r4
+ 519              	.LVL54:
+ 173:u8g2_lib/u8g2_buffer.c ****     th--;
+ 520              		.loc 1 173 5 is_stmt 1 view .LVU141
+ 521              		.loc 1 173 7 is_stmt 0 view .LVU142
+ 522 0048 0AF1FF32 		add	r2, r10, #-1
+ 523 004c 5FFA82FA 		uxtb	r10, r2
+ 524              	.LVL55:
+ 525              		.loc 1 173 7 view .LVU143
+ 526 0050 EDE7     		b	.L26
+ 527              	.LVL56:
+ 528              	.L24:
+ 174:u8g2_lib/u8g2_buffer.c ****   }  
+ 175:u8g2_lib/u8g2_buffer.c **** }
+ 529              		.loc 1 175 1 view .LVU144
+ 530 0052 02B0     		add	sp, sp, #8
+ 531              	.LCFI11:
+ 532              		.cfi_def_cfa_offset 32
+ 533              		@ sp needed
+ 534 0054 BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+ 535              		.cfi_endproc
+ 536              	.LFE7:
+ 538              		.section	.text.u8g2_UpdateDisplay,"ax",%progbits
+ 539              		.align	1
+ 540              		.global	u8g2_UpdateDisplay
+ 541              		.syntax unified
+ 542              		.thumb
+ 543              		.thumb_func
+ 544              		.fpu softvfp
+ 546              	u8g2_UpdateDisplay:
+ 547              	.LVL57:
+ 548              	.LFB8:
+ 176:u8g2_lib/u8g2_buffer.c **** 
+ 177:u8g2_lib/u8g2_buffer.c **** /* same as sendBuffer, but does not send the ePaper refresh message */
+ 178:u8g2_lib/u8g2_buffer.c **** void u8g2_UpdateDisplay(u8g2_t *u8g2)
+ 179:u8g2_lib/u8g2_buffer.c **** {
+ 549              		.loc 1 179 1 is_stmt 1 view -0
+ 550              		.cfi_startproc
+ 551              		@ args = 0, pretend = 0, frame = 0
+ 552              		@ frame_needed = 0, uses_anonymous_args = 0
+ 553              		.loc 1 179 1 is_stmt 0 view .LVU146
+ 554 0000 08B5     		push	{r3, lr}
+ 555              	.LCFI12:
+ 556              		.cfi_def_cfa_offset 8
+ 557              		.cfi_offset 3, -8
+ 558              		.cfi_offset 14, -4
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccDtrAPT.s 			page 14
+
+
+ 180:u8g2_lib/u8g2_buffer.c ****   u8g2_send_buffer(u8g2);
+ 559              		.loc 1 180 3 is_stmt 1 view .LVU147
+ 560 0002 FFF7FEFF 		bl	u8g2_send_buffer
+ 561              	.LVL58:
+ 181:u8g2_lib/u8g2_buffer.c **** }
+ 562              		.loc 1 181 1 is_stmt 0 view .LVU148
+ 563 0006 08BD     		pop	{r3, pc}
+ 564              		.cfi_endproc
+ 565              	.LFE8:
+ 567              		.section	.text.u8g2_WriteBufferPBM,"ax",%progbits
+ 568              		.align	1
+ 569              		.global	u8g2_WriteBufferPBM
+ 570              		.syntax unified
+ 571              		.thumb
+ 572              		.thumb_func
+ 573              		.fpu softvfp
+ 575              	u8g2_WriteBufferPBM:
+ 576              	.LVL59:
+ 577              	.LFB9:
+ 182:u8g2_lib/u8g2_buffer.c **** 
+ 183:u8g2_lib/u8g2_buffer.c **** 
+ 184:u8g2_lib/u8g2_buffer.c **** /*============================================*/
+ 185:u8g2_lib/u8g2_buffer.c **** 
+ 186:u8g2_lib/u8g2_buffer.c **** /* vertical_top memory architecture */
+ 187:u8g2_lib/u8g2_buffer.c **** void u8g2_WriteBufferPBM(u8g2_t *u8g2, void (*out)(const char *s))
+ 188:u8g2_lib/u8g2_buffer.c **** {
+ 578              		.loc 1 188 1 is_stmt 1 view -0
+ 579              		.cfi_startproc
+ 580              		@ args = 0, pretend = 0, frame = 0
+ 581              		@ frame_needed = 0, uses_anonymous_args = 0
+ 582              		.loc 1 188 1 is_stmt 0 view .LVU150
+ 583 0000 30B5     		push	{r4, r5, lr}
+ 584              	.LCFI13:
+ 585              		.cfi_def_cfa_offset 12
+ 586              		.cfi_offset 4, -12
+ 587              		.cfi_offset 5, -8
+ 588              		.cfi_offset 14, -4
+ 589 0002 83B0     		sub	sp, sp, #12
+ 590              	.LCFI14:
+ 591              		.cfi_def_cfa_offset 24
+ 592 0004 0446     		mov	r4, r0
+ 593 0006 0D46     		mov	r5, r1
+ 189:u8g2_lib/u8g2_buffer.c ****   u8x8_capture_write_pbm_pre(u8g2_GetBufferTileWidth(u8g2), u8g2_GetBufferTileHeight(u8g2), out);
+ 594              		.loc 1 189 3 is_stmt 1 view .LVU151
+ 595              		.loc 1 189 30 is_stmt 0 view .LVU152
+ 596 0008 0368     		ldr	r3, [r0]
+ 597              		.loc 1 189 3 view .LVU153
+ 598 000a 0A46     		mov	r2, r1
+ 599 000c 90F83810 		ldrb	r1, [r0, #56]	@ zero_extendqisi2
+ 600              	.LVL60:
+ 601              		.loc 1 189 3 view .LVU154
+ 602 0010 187C     		ldrb	r0, [r3, #16]	@ zero_extendqisi2
+ 603              	.LVL61:
+ 604              		.loc 1 189 3 view .LVU155
+ 605 0012 FFF7FEFF 		bl	u8x8_capture_write_pbm_pre
+ 606              	.LVL62:
+ 190:u8g2_lib/u8g2_buffer.c ****   u8x8_capture_write_pbm_buffer(u8g2_GetBufferPtr(u8g2), u8g2_GetBufferTileWidth(u8g2), u8g2_GetBuf
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccDtrAPT.s 			page 15
+
+
+ 607              		.loc 1 190 3 is_stmt 1 view .LVU156
+ 608              		.loc 1 190 58 is_stmt 0 view .LVU157
+ 609 0016 2368     		ldr	r3, [r4]
+ 610              		.loc 1 190 3 view .LVU158
+ 611 0018 197C     		ldrb	r1, [r3, #16]	@ zero_extendqisi2
+ 612 001a 0095     		str	r5, [sp]
+ 613 001c 034B     		ldr	r3, .L33
+ 614 001e 94F83820 		ldrb	r2, [r4, #56]	@ zero_extendqisi2
+ 615 0022 606B     		ldr	r0, [r4, #52]
+ 616 0024 FFF7FEFF 		bl	u8x8_capture_write_pbm_buffer
+ 617              	.LVL63:
+ 191:u8g2_lib/u8g2_buffer.c **** }
+ 618              		.loc 1 191 1 view .LVU159
+ 619 0028 03B0     		add	sp, sp, #12
+ 620              	.LCFI15:
+ 621              		.cfi_def_cfa_offset 12
+ 622              		@ sp needed
+ 623 002a 30BD     		pop	{r4, r5, pc}
+ 624              	.LVL64:
+ 625              	.L34:
+ 626              		.loc 1 191 1 view .LVU160
+ 627              		.align	2
+ 628              	.L33:
+ 629 002c 00000000 		.word	u8x8_capture_get_pixel_1
+ 630              		.cfi_endproc
+ 631              	.LFE9:
+ 633              		.section	.text.u8g2_WriteBufferXBM,"ax",%progbits
+ 634              		.align	1
+ 635              		.global	u8g2_WriteBufferXBM
+ 636              		.syntax unified
+ 637              		.thumb
+ 638              		.thumb_func
+ 639              		.fpu softvfp
+ 641              	u8g2_WriteBufferXBM:
+ 642              	.LVL65:
+ 643              	.LFB10:
+ 192:u8g2_lib/u8g2_buffer.c **** 
+ 193:u8g2_lib/u8g2_buffer.c **** void u8g2_WriteBufferXBM(u8g2_t *u8g2, void (*out)(const char *s))
+ 194:u8g2_lib/u8g2_buffer.c **** {
+ 644              		.loc 1 194 1 is_stmt 1 view -0
+ 645              		.cfi_startproc
+ 646              		@ args = 0, pretend = 0, frame = 0
+ 647              		@ frame_needed = 0, uses_anonymous_args = 0
+ 648              		.loc 1 194 1 is_stmt 0 view .LVU162
+ 649 0000 30B5     		push	{r4, r5, lr}
+ 650              	.LCFI16:
+ 651              		.cfi_def_cfa_offset 12
+ 652              		.cfi_offset 4, -12
+ 653              		.cfi_offset 5, -8
+ 654              		.cfi_offset 14, -4
+ 655 0002 83B0     		sub	sp, sp, #12
+ 656              	.LCFI17:
+ 657              		.cfi_def_cfa_offset 24
+ 658 0004 0446     		mov	r4, r0
+ 659 0006 0D46     		mov	r5, r1
+ 195:u8g2_lib/u8g2_buffer.c ****   u8x8_capture_write_xbm_pre(u8g2_GetBufferTileWidth(u8g2), u8g2_GetBufferTileHeight(u8g2), out);
+ 660              		.loc 1 195 3 is_stmt 1 view .LVU163
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccDtrAPT.s 			page 16
+
+
+ 661              		.loc 1 195 30 is_stmt 0 view .LVU164
+ 662 0008 0368     		ldr	r3, [r0]
+ 663              		.loc 1 195 3 view .LVU165
+ 664 000a 0A46     		mov	r2, r1
+ 665 000c 90F83810 		ldrb	r1, [r0, #56]	@ zero_extendqisi2
+ 666              	.LVL66:
+ 667              		.loc 1 195 3 view .LVU166
+ 668 0010 187C     		ldrb	r0, [r3, #16]	@ zero_extendqisi2
+ 669              	.LVL67:
+ 670              		.loc 1 195 3 view .LVU167
+ 671 0012 FFF7FEFF 		bl	u8x8_capture_write_xbm_pre
+ 672              	.LVL68:
+ 196:u8g2_lib/u8g2_buffer.c ****   u8x8_capture_write_xbm_buffer(u8g2_GetBufferPtr(u8g2), u8g2_GetBufferTileWidth(u8g2), u8g2_GetBuf
+ 673              		.loc 1 196 3 is_stmt 1 view .LVU168
+ 674              		.loc 1 196 58 is_stmt 0 view .LVU169
+ 675 0016 2368     		ldr	r3, [r4]
+ 676              		.loc 1 196 3 view .LVU170
+ 677 0018 197C     		ldrb	r1, [r3, #16]	@ zero_extendqisi2
+ 678 001a 0095     		str	r5, [sp]
+ 679 001c 034B     		ldr	r3, .L37
+ 680 001e 94F83820 		ldrb	r2, [r4, #56]	@ zero_extendqisi2
+ 681 0022 606B     		ldr	r0, [r4, #52]
+ 682 0024 FFF7FEFF 		bl	u8x8_capture_write_xbm_buffer
+ 683              	.LVL69:
+ 197:u8g2_lib/u8g2_buffer.c **** }
+ 684              		.loc 1 197 1 view .LVU171
+ 685 0028 03B0     		add	sp, sp, #12
+ 686              	.LCFI18:
+ 687              		.cfi_def_cfa_offset 12
+ 688              		@ sp needed
+ 689 002a 30BD     		pop	{r4, r5, pc}
+ 690              	.LVL70:
+ 691              	.L38:
+ 692              		.loc 1 197 1 view .LVU172
+ 693              		.align	2
+ 694              	.L37:
+ 695 002c 00000000 		.word	u8x8_capture_get_pixel_1
+ 696              		.cfi_endproc
+ 697              	.LFE10:
+ 699              		.section	.text.u8g2_WriteBufferPBM2,"ax",%progbits
+ 700              		.align	1
+ 701              		.global	u8g2_WriteBufferPBM2
+ 702              		.syntax unified
+ 703              		.thumb
+ 704              		.thumb_func
+ 705              		.fpu softvfp
+ 707              	u8g2_WriteBufferPBM2:
+ 708              	.LVL71:
+ 709              	.LFB11:
+ 198:u8g2_lib/u8g2_buffer.c **** 
+ 199:u8g2_lib/u8g2_buffer.c **** 
+ 200:u8g2_lib/u8g2_buffer.c **** /* horizontal right memory architecture */
+ 201:u8g2_lib/u8g2_buffer.c **** /* SH1122, LD7032, ST7920, ST7986, LC7981, T6963, SED1330, RA8835, MAX7219, LS0 */ 
+ 202:u8g2_lib/u8g2_buffer.c **** void u8g2_WriteBufferPBM2(u8g2_t *u8g2, void (*out)(const char *s))
+ 203:u8g2_lib/u8g2_buffer.c **** {
+ 710              		.loc 1 203 1 is_stmt 1 view -0
+ 711              		.cfi_startproc
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccDtrAPT.s 			page 17
+
+
+ 712              		@ args = 0, pretend = 0, frame = 0
+ 713              		@ frame_needed = 0, uses_anonymous_args = 0
+ 714              		.loc 1 203 1 is_stmt 0 view .LVU174
+ 715 0000 30B5     		push	{r4, r5, lr}
+ 716              	.LCFI19:
+ 717              		.cfi_def_cfa_offset 12
+ 718              		.cfi_offset 4, -12
+ 719              		.cfi_offset 5, -8
+ 720              		.cfi_offset 14, -4
+ 721 0002 83B0     		sub	sp, sp, #12
+ 722              	.LCFI20:
+ 723              		.cfi_def_cfa_offset 24
+ 724 0004 0446     		mov	r4, r0
+ 725 0006 0D46     		mov	r5, r1
+ 204:u8g2_lib/u8g2_buffer.c ****   u8x8_capture_write_pbm_pre(u8g2_GetBufferTileWidth(u8g2), u8g2_GetBufferTileHeight(u8g2), out);
+ 726              		.loc 1 204 3 is_stmt 1 view .LVU175
+ 727              		.loc 1 204 30 is_stmt 0 view .LVU176
+ 728 0008 0368     		ldr	r3, [r0]
+ 729              		.loc 1 204 3 view .LVU177
+ 730 000a 0A46     		mov	r2, r1
+ 731 000c 90F83810 		ldrb	r1, [r0, #56]	@ zero_extendqisi2
+ 732              	.LVL72:
+ 733              		.loc 1 204 3 view .LVU178
+ 734 0010 187C     		ldrb	r0, [r3, #16]	@ zero_extendqisi2
+ 735              	.LVL73:
+ 736              		.loc 1 204 3 view .LVU179
+ 737 0012 FFF7FEFF 		bl	u8x8_capture_write_pbm_pre
+ 738              	.LVL74:
+ 205:u8g2_lib/u8g2_buffer.c ****   u8x8_capture_write_pbm_buffer(u8g2_GetBufferPtr(u8g2), u8g2_GetBufferTileWidth(u8g2), u8g2_GetBuf
+ 739              		.loc 1 205 3 is_stmt 1 view .LVU180
+ 740              		.loc 1 205 58 is_stmt 0 view .LVU181
+ 741 0016 2368     		ldr	r3, [r4]
+ 742              		.loc 1 205 3 view .LVU182
+ 743 0018 197C     		ldrb	r1, [r3, #16]	@ zero_extendqisi2
+ 744 001a 0095     		str	r5, [sp]
+ 745 001c 034B     		ldr	r3, .L41
+ 746 001e 94F83820 		ldrb	r2, [r4, #56]	@ zero_extendqisi2
+ 747 0022 606B     		ldr	r0, [r4, #52]
+ 748 0024 FFF7FEFF 		bl	u8x8_capture_write_pbm_buffer
+ 749              	.LVL75:
+ 206:u8g2_lib/u8g2_buffer.c **** }
+ 750              		.loc 1 206 1 view .LVU183
+ 751 0028 03B0     		add	sp, sp, #12
+ 752              	.LCFI21:
+ 753              		.cfi_def_cfa_offset 12
+ 754              		@ sp needed
+ 755 002a 30BD     		pop	{r4, r5, pc}
+ 756              	.LVL76:
+ 757              	.L42:
+ 758              		.loc 1 206 1 view .LVU184
+ 759              		.align	2
+ 760              	.L41:
+ 761 002c 00000000 		.word	u8x8_capture_get_pixel_2
+ 762              		.cfi_endproc
+ 763              	.LFE11:
+ 765              		.section	.text.u8g2_WriteBufferXBM2,"ax",%progbits
+ 766              		.align	1
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccDtrAPT.s 			page 18
+
+
+ 767              		.global	u8g2_WriteBufferXBM2
+ 768              		.syntax unified
+ 769              		.thumb
+ 770              		.thumb_func
+ 771              		.fpu softvfp
+ 773              	u8g2_WriteBufferXBM2:
+ 774              	.LVL77:
+ 775              	.LFB12:
+ 207:u8g2_lib/u8g2_buffer.c **** 
+ 208:u8g2_lib/u8g2_buffer.c **** void u8g2_WriteBufferXBM2(u8g2_t *u8g2, void (*out)(const char *s))
+ 209:u8g2_lib/u8g2_buffer.c **** {
+ 776              		.loc 1 209 1 is_stmt 1 view -0
+ 777              		.cfi_startproc
+ 778              		@ args = 0, pretend = 0, frame = 0
+ 779              		@ frame_needed = 0, uses_anonymous_args = 0
+ 780              		.loc 1 209 1 is_stmt 0 view .LVU186
+ 781 0000 30B5     		push	{r4, r5, lr}
+ 782              	.LCFI22:
+ 783              		.cfi_def_cfa_offset 12
+ 784              		.cfi_offset 4, -12
+ 785              		.cfi_offset 5, -8
+ 786              		.cfi_offset 14, -4
+ 787 0002 83B0     		sub	sp, sp, #12
+ 788              	.LCFI23:
+ 789              		.cfi_def_cfa_offset 24
+ 790 0004 0446     		mov	r4, r0
+ 791 0006 0D46     		mov	r5, r1
+ 210:u8g2_lib/u8g2_buffer.c ****   u8x8_capture_write_xbm_pre(u8g2_GetBufferTileWidth(u8g2), u8g2_GetBufferTileHeight(u8g2), out);
+ 792              		.loc 1 210 3 is_stmt 1 view .LVU187
+ 793              		.loc 1 210 30 is_stmt 0 view .LVU188
+ 794 0008 0368     		ldr	r3, [r0]
+ 795              		.loc 1 210 3 view .LVU189
+ 796 000a 0A46     		mov	r2, r1
+ 797 000c 90F83810 		ldrb	r1, [r0, #56]	@ zero_extendqisi2
+ 798              	.LVL78:
+ 799              		.loc 1 210 3 view .LVU190
+ 800 0010 187C     		ldrb	r0, [r3, #16]	@ zero_extendqisi2
+ 801              	.LVL79:
+ 802              		.loc 1 210 3 view .LVU191
+ 803 0012 FFF7FEFF 		bl	u8x8_capture_write_xbm_pre
+ 804              	.LVL80:
+ 211:u8g2_lib/u8g2_buffer.c ****   u8x8_capture_write_xbm_buffer(u8g2_GetBufferPtr(u8g2), u8g2_GetBufferTileWidth(u8g2), u8g2_GetBuf
+ 805              		.loc 1 211 3 is_stmt 1 view .LVU192
+ 806              		.loc 1 211 58 is_stmt 0 view .LVU193
+ 807 0016 2368     		ldr	r3, [r4]
+ 808              		.loc 1 211 3 view .LVU194
+ 809 0018 197C     		ldrb	r1, [r3, #16]	@ zero_extendqisi2
+ 810 001a 0095     		str	r5, [sp]
+ 811 001c 034B     		ldr	r3, .L45
+ 812 001e 94F83820 		ldrb	r2, [r4, #56]	@ zero_extendqisi2
+ 813 0022 606B     		ldr	r0, [r4, #52]
+ 814 0024 FFF7FEFF 		bl	u8x8_capture_write_xbm_buffer
+ 815              	.LVL81:
+ 212:u8g2_lib/u8g2_buffer.c **** }
+ 816              		.loc 1 212 1 view .LVU195
+ 817 0028 03B0     		add	sp, sp, #12
+ 818              	.LCFI24:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccDtrAPT.s 			page 19
+
+
+ 819              		.cfi_def_cfa_offset 12
+ 820              		@ sp needed
+ 821 002a 30BD     		pop	{r4, r5, pc}
+ 822              	.LVL82:
+ 823              	.L46:
+ 824              		.loc 1 212 1 view .LVU196
+ 825              		.align	2
+ 826              	.L45:
+ 827 002c 00000000 		.word	u8x8_capture_get_pixel_2
+ 828              		.cfi_endproc
+ 829              	.LFE12:
+ 831              		.text
+ 832              	.Letext0:
+ 833              		.file 2 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 834              		.file 3 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 835              		.file 4 "d:\\work_project\\9 2019-q4-major\\lib\\gcc\\arm-none-eabi\\9.2.1\\include\\stddef.h"
+ 836              		.file 5 "u8g2_lib/u8x8.h"
+ 837              		.file 6 "u8g2_lib/u8g2.h"
+ 838              		.file 7 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\sys\\lock.h"
+ 839              		.file 8 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\sys\\_types.h"
+ 840              		.file 9 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\sys\\reent.h"
+ 841              		.file 10 "<built-in>"
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccDtrAPT.s 			page 20
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 u8g2_buffer.c
+C:\Users\GKQ\AppData\Local\Temp\ccDtrAPT.s:16     .text.u8g2_send_tile_row:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccDtrAPT.s:23     .text.u8g2_send_tile_row:00000000 u8g2_send_tile_row
+C:\Users\GKQ\AppData\Local\Temp\ccDtrAPT.s:86     .text.u8g2_send_buffer:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccDtrAPT.s:92     .text.u8g2_send_buffer:00000000 u8g2_send_buffer
+C:\Users\GKQ\AppData\Local\Temp\ccDtrAPT.s:170    .text.u8g2_ClearBuffer:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccDtrAPT.s:177    .text.u8g2_ClearBuffer:00000000 u8g2_ClearBuffer
+C:\Users\GKQ\AppData\Local\Temp\ccDtrAPT.s:220    .text.u8g2_SendBuffer:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccDtrAPT.s:227    .text.u8g2_SendBuffer:00000000 u8g2_SendBuffer
+C:\Users\GKQ\AppData\Local\Temp\ccDtrAPT.s:255    .text.u8g2_SetBufferCurrTileRow:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccDtrAPT.s:262    .text.u8g2_SetBufferCurrTileRow:00000000 u8g2_SetBufferCurrTileRow
+C:\Users\GKQ\AppData\Local\Temp\ccDtrAPT.s:303    .text.u8g2_FirstPage:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccDtrAPT.s:310    .text.u8g2_FirstPage:00000000 u8g2_FirstPage
+C:\Users\GKQ\AppData\Local\Temp\ccDtrAPT.s:349    .text.u8g2_NextPage:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccDtrAPT.s:356    .text.u8g2_NextPage:00000000 u8g2_NextPage
+C:\Users\GKQ\AppData\Local\Temp\ccDtrAPT.s:432    .text.u8g2_UpdateDisplayArea:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccDtrAPT.s:439    .text.u8g2_UpdateDisplayArea:00000000 u8g2_UpdateDisplayArea
+C:\Users\GKQ\AppData\Local\Temp\ccDtrAPT.s:539    .text.u8g2_UpdateDisplay:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccDtrAPT.s:546    .text.u8g2_UpdateDisplay:00000000 u8g2_UpdateDisplay
+C:\Users\GKQ\AppData\Local\Temp\ccDtrAPT.s:568    .text.u8g2_WriteBufferPBM:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccDtrAPT.s:575    .text.u8g2_WriteBufferPBM:00000000 u8g2_WriteBufferPBM
+C:\Users\GKQ\AppData\Local\Temp\ccDtrAPT.s:629    .text.u8g2_WriteBufferPBM:0000002c $d
+C:\Users\GKQ\AppData\Local\Temp\ccDtrAPT.s:634    .text.u8g2_WriteBufferXBM:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccDtrAPT.s:641    .text.u8g2_WriteBufferXBM:00000000 u8g2_WriteBufferXBM
+C:\Users\GKQ\AppData\Local\Temp\ccDtrAPT.s:695    .text.u8g2_WriteBufferXBM:0000002c $d
+C:\Users\GKQ\AppData\Local\Temp\ccDtrAPT.s:700    .text.u8g2_WriteBufferPBM2:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccDtrAPT.s:707    .text.u8g2_WriteBufferPBM2:00000000 u8g2_WriteBufferPBM2
+C:\Users\GKQ\AppData\Local\Temp\ccDtrAPT.s:761    .text.u8g2_WriteBufferPBM2:0000002c $d
+C:\Users\GKQ\AppData\Local\Temp\ccDtrAPT.s:766    .text.u8g2_WriteBufferXBM2:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccDtrAPT.s:773    .text.u8g2_WriteBufferXBM2:00000000 u8g2_WriteBufferXBM2
+C:\Users\GKQ\AppData\Local\Temp\ccDtrAPT.s:827    .text.u8g2_WriteBufferXBM2:0000002c $d
+
+UNDEFINED SYMBOLS
+u8x8_DrawTile
+memset
+u8x8_RefreshDisplay
+u8x8_capture_write_pbm_pre
+u8x8_capture_write_pbm_buffer
+u8x8_capture_get_pixel_1
+u8x8_capture_write_xbm_pre
+u8x8_capture_write_xbm_buffer
+u8x8_capture_get_pixel_2

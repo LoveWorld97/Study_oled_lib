@@ -1,0 +1,345 @@
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccQdWk3e.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"u8x8_u16toa.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.u8x8_u16toap,"ax",%progbits
+  16              		.align	1
+  17              		.global	u8x8_u16toap
+  18              		.arch armv7-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu softvfp
+  24              	u8x8_u16toap:
+  25              	.LVL0:
+  26              	.LFB0:
+  27              		.file 1 "u8g2_lib/u8x8_u16toa.c"
+   1:u8g2_lib/u8x8_u16toa.c **** /*
+   2:u8g2_lib/u8x8_u16toa.c **** 
+   3:u8g2_lib/u8x8_u16toa.c ****   u8x8_u16toa.c
+   4:u8g2_lib/u8x8_u16toa.c **** 
+   5:u8g2_lib/u8x8_u16toa.c ****   Universal 8bit Graphics Library (https://github.com/olikraus/u8g2/)
+   6:u8g2_lib/u8x8_u16toa.c **** 
+   7:u8g2_lib/u8x8_u16toa.c ****   Copyright (c) 2016, olikraus@gmail.com
+   8:u8g2_lib/u8x8_u16toa.c ****   All rights reserved.
+   9:u8g2_lib/u8x8_u16toa.c **** 
+  10:u8g2_lib/u8x8_u16toa.c ****   Redistribution and use in source and binary forms, with or without modification, 
+  11:u8g2_lib/u8x8_u16toa.c ****   are permitted provided that the following conditions are met:
+  12:u8g2_lib/u8x8_u16toa.c **** 
+  13:u8g2_lib/u8x8_u16toa.c ****   * Redistributions of source code must retain the above copyright notice, this list 
+  14:u8g2_lib/u8x8_u16toa.c ****     of conditions and the following disclaimer.
+  15:u8g2_lib/u8x8_u16toa.c ****     
+  16:u8g2_lib/u8x8_u16toa.c ****   * Redistributions in binary form must reproduce the above copyright notice, this 
+  17:u8g2_lib/u8x8_u16toa.c ****     list of conditions and the following disclaimer in the documentation and/or other 
+  18:u8g2_lib/u8x8_u16toa.c ****     materials provided with the distribution.
+  19:u8g2_lib/u8x8_u16toa.c **** 
+  20:u8g2_lib/u8x8_u16toa.c ****   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND 
+  21:u8g2_lib/u8x8_u16toa.c ****   CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, 
+  22:u8g2_lib/u8x8_u16toa.c ****   INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF 
+  23:u8g2_lib/u8x8_u16toa.c ****   MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE 
+  24:u8g2_lib/u8x8_u16toa.c ****   DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR 
+  25:u8g2_lib/u8x8_u16toa.c ****   CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
+  26:u8g2_lib/u8x8_u16toa.c ****   SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
+  27:u8g2_lib/u8x8_u16toa.c ****   NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; 
+  28:u8g2_lib/u8x8_u16toa.c ****   LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER 
+  29:u8g2_lib/u8x8_u16toa.c ****   CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, 
+  30:u8g2_lib/u8x8_u16toa.c ****   STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+  31:u8g2_lib/u8x8_u16toa.c ****   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF 
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccQdWk3e.s 			page 2
+
+
+  32:u8g2_lib/u8x8_u16toa.c ****   ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.  
+  33:u8g2_lib/u8x8_u16toa.c **** 
+  34:u8g2_lib/u8x8_u16toa.c ****   
+  35:u8g2_lib/u8x8_u16toa.c **** */
+  36:u8g2_lib/u8x8_u16toa.c **** 
+  37:u8g2_lib/u8x8_u16toa.c **** 
+  38:u8g2_lib/u8x8_u16toa.c **** #include "u8x8.h"
+  39:u8g2_lib/u8x8_u16toa.c **** 
+  40:u8g2_lib/u8x8_u16toa.c **** const char *u8x8_u16toap(char * dest, uint16_t v)
+  41:u8g2_lib/u8x8_u16toa.c **** {
+  28              		.loc 1 41 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33              		.loc 1 41 1 is_stmt 0 view .LVU1
+  34 0000 10B4     		push	{r4}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 4
+  37              		.cfi_offset 4, -4
+  42:u8g2_lib/u8x8_u16toa.c ****   uint8_t pos;
+  38              		.loc 1 42 3 is_stmt 1 view .LVU2
+  43:u8g2_lib/u8x8_u16toa.c ****   uint8_t d;
+  39              		.loc 1 43 3 view .LVU3
+  44:u8g2_lib/u8x8_u16toa.c ****   uint16_t c;
+  40              		.loc 1 44 3 view .LVU4
+  45:u8g2_lib/u8x8_u16toa.c ****   c = 10000;
+  41              		.loc 1 45 3 view .LVU5
+  42              	.LVL1:
+  46:u8g2_lib/u8x8_u16toa.c ****   for( pos = 0; pos < 5; pos++ )
+  43              		.loc 1 46 3 view .LVU6
+  45:u8g2_lib/u8x8_u16toa.c ****   c = 10000;
+  44              		.loc 1 45 5 is_stmt 0 view .LVU7
+  45 0002 42F21072 		movw	r2, #10000
+  46              		.loc 1 46 12 view .LVU8
+  47 0006 0024     		movs	r4, #0
+  48              		.loc 1 46 3 view .LVU9
+  49 0008 0CE0     		b	.L2
+  50              	.LVL2:
+  51              	.L3:
+  47:u8g2_lib/u8x8_u16toa.c ****   {
+  48:u8g2_lib/u8x8_u16toa.c ****       d = '0';
+  49:u8g2_lib/u8x8_u16toa.c ****       while( v >= c )
+  50:u8g2_lib/u8x8_u16toa.c ****       {
+  51:u8g2_lib/u8x8_u16toa.c **** 	v -= c;
+  52              		.loc 1 51 2 is_stmt 1 view .LVU10
+  53              		.loc 1 51 4 is_stmt 0 view .LVU11
+  54 000a 891A     		subs	r1, r1, r2
+  55              	.LVL3:
+  56              		.loc 1 51 4 view .LVU12
+  57 000c 89B2     		uxth	r1, r1
+  58              	.LVL4:
+  52:u8g2_lib/u8x8_u16toa.c **** 	d++;
+  59              		.loc 1 52 2 is_stmt 1 view .LVU13
+  60              		.loc 1 52 3 is_stmt 0 view .LVU14
+  61 000e 0133     		adds	r3, r3, #1
+  62              	.LVL5:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccQdWk3e.s 			page 3
+
+
+  63              		.loc 1 52 3 view .LVU15
+  64 0010 DBB2     		uxtb	r3, r3
+  65              	.LVL6:
+  66              	.L4:
+  49:u8g2_lib/u8x8_u16toa.c ****       {
+  67              		.loc 1 49 12 is_stmt 1 view .LVU16
+  68 0012 9142     		cmp	r1, r2
+  69 0014 F9D2     		bcs	.L3
+  53:u8g2_lib/u8x8_u16toa.c ****       }
+  54:u8g2_lib/u8x8_u16toa.c ****       dest[pos] = d;
+  70              		.loc 1 54 7 discriminator 2 view .LVU17
+  71              		.loc 1 54 17 is_stmt 0 discriminator 2 view .LVU18
+  72 0016 0355     		strb	r3, [r0, r4]
+  55:u8g2_lib/u8x8_u16toa.c ****       c /= 10;
+  73              		.loc 1 55 7 is_stmt 1 discriminator 2 view .LVU19
+  74              		.loc 1 55 9 is_stmt 0 discriminator 2 view .LVU20
+  75 0018 064B     		ldr	r3, .L8
+  76              	.LVL7:
+  77              		.loc 1 55 9 discriminator 2 view .LVU21
+  78 001a A3FB0232 		umull	r3, r2, r3, r2
+  79              	.LVL8:
+  80              		.loc 1 55 9 discriminator 2 view .LVU22
+  81 001e D208     		lsrs	r2, r2, #3
+  82              	.LVL9:
+  46:u8g2_lib/u8x8_u16toa.c ****   {
+  83              		.loc 1 46 26 is_stmt 1 discriminator 2 view .LVU23
+  46:u8g2_lib/u8x8_u16toa.c ****   {
+  84              		.loc 1 46 29 is_stmt 0 discriminator 2 view .LVU24
+  85 0020 0134     		adds	r4, r4, #1
+  86              	.LVL10:
+  46:u8g2_lib/u8x8_u16toa.c ****   {
+  87              		.loc 1 46 29 discriminator 2 view .LVU25
+  88 0022 E4B2     		uxtb	r4, r4
+  89              	.LVL11:
+  90              	.L2:
+  46:u8g2_lib/u8x8_u16toa.c ****   {
+  91              		.loc 1 46 17 is_stmt 1 discriminator 1 view .LVU26
+  46:u8g2_lib/u8x8_u16toa.c ****   {
+  92              		.loc 1 46 3 is_stmt 0 discriminator 1 view .LVU27
+  93 0024 042C     		cmp	r4, #4
+  94 0026 01D8     		bhi	.L7
+  48:u8g2_lib/u8x8_u16toa.c ****       while( v >= c )
+  95              		.loc 1 48 9 view .LVU28
+  96 0028 3023     		movs	r3, #48
+  97 002a F2E7     		b	.L4
+  98              	.L7:
+  56:u8g2_lib/u8x8_u16toa.c ****   }  
+  57:u8g2_lib/u8x8_u16toa.c ****   dest[5] = '\0';
+  99              		.loc 1 57 3 is_stmt 1 view .LVU29
+ 100              		.loc 1 57 11 is_stmt 0 view .LVU30
+ 101 002c 0023     		movs	r3, #0
+ 102 002e 4371     		strb	r3, [r0, #5]
+  58:u8g2_lib/u8x8_u16toa.c ****   return dest;
+ 103              		.loc 1 58 3 is_stmt 1 view .LVU31
+  59:u8g2_lib/u8x8_u16toa.c **** }
+ 104              		.loc 1 59 1 is_stmt 0 view .LVU32
+ 105 0030 10BC     		pop	{r4}
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccQdWk3e.s 			page 4
+
+
+ 106              	.LCFI1:
+ 107              		.cfi_restore 4
+ 108              		.cfi_def_cfa_offset 0
+ 109              	.LVL12:
+ 110              		.loc 1 59 1 view .LVU33
+ 111 0032 7047     		bx	lr
+ 112              	.L9:
+ 113              		.align	2
+ 114              	.L8:
+ 115 0034 CDCCCCCC 		.word	-858993459
+ 116              		.cfi_endproc
+ 117              	.LFE0:
+ 119              		.section	.text.u8x8_u16toa,"ax",%progbits
+ 120              		.align	1
+ 121              		.global	u8x8_u16toa
+ 122              		.syntax unified
+ 123              		.thumb
+ 124              		.thumb_func
+ 125              		.fpu softvfp
+ 127              	u8x8_u16toa:
+ 128              	.LVL13:
+ 129              	.LFB1:
+  60:u8g2_lib/u8x8_u16toa.c **** 
+  61:u8g2_lib/u8x8_u16toa.c **** /* v = value, d = number of digits */
+  62:u8g2_lib/u8x8_u16toa.c **** const char *u8x8_u16toa(uint16_t v, uint8_t d)
+  63:u8g2_lib/u8x8_u16toa.c **** {
+ 130              		.loc 1 63 1 is_stmt 1 view -0
+ 131              		.cfi_startproc
+ 132              		@ args = 0, pretend = 0, frame = 0
+ 133              		@ frame_needed = 0, uses_anonymous_args = 0
+ 134              		.loc 1 63 1 is_stmt 0 view .LVU35
+ 135 0000 10B5     		push	{r4, lr}
+ 136              	.LCFI2:
+ 137              		.cfi_def_cfa_offset 8
+ 138              		.cfi_offset 4, -8
+ 139              		.cfi_offset 14, -4
+  64:u8g2_lib/u8x8_u16toa.c ****   static char buf[6];
+ 140              		.loc 1 64 3 is_stmt 1 view .LVU36
+  65:u8g2_lib/u8x8_u16toa.c ****   d = 5-d;
+ 141              		.loc 1 65 3 view .LVU37
+ 142              		.loc 1 65 5 is_stmt 0 view .LVU38
+ 143 0002 C1F10504 		rsb	r4, r1, #5
+ 144 0006 E4B2     		uxtb	r4, r4
+ 145              	.LVL14:
+  66:u8g2_lib/u8x8_u16toa.c ****   return u8x8_u16toap(buf, v) + d;
+ 146              		.loc 1 66 3 is_stmt 1 view .LVU39
+ 147              		.loc 1 66 10 is_stmt 0 view .LVU40
+ 148 0008 0146     		mov	r1, r0
+ 149 000a 0248     		ldr	r0, .L12
+ 150              	.LVL15:
+ 151              		.loc 1 66 10 view .LVU41
+ 152 000c FFF7FEFF 		bl	u8x8_u16toap
+ 153              	.LVL16:
+  67:u8g2_lib/u8x8_u16toa.c **** }
+ 154              		.loc 1 67 1 view .LVU42
+ 155 0010 2044     		add	r0, r0, r4
+ 156 0012 10BD     		pop	{r4, pc}
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccQdWk3e.s 			page 5
+
+
+ 157              	.LVL17:
+ 158              	.L13:
+ 159              		.loc 1 67 1 view .LVU43
+ 160              		.align	2
+ 161              	.L12:
+ 162 0014 00000000 		.word	.LANCHOR0
+ 163              		.cfi_endproc
+ 164              	.LFE1:
+ 166              		.section	.text.u8x8_utoa,"ax",%progbits
+ 167              		.align	1
+ 168              		.global	u8x8_utoa
+ 169              		.syntax unified
+ 170              		.thumb
+ 171              		.thumb_func
+ 172              		.fpu softvfp
+ 174              	u8x8_utoa:
+ 175              	.LVL18:
+ 176              	.LFB2:
+  68:u8g2_lib/u8x8_u16toa.c **** 
+  69:u8g2_lib/u8x8_u16toa.c **** const char *u8x8_utoa(uint16_t v)
+  70:u8g2_lib/u8x8_u16toa.c **** {
+ 177              		.loc 1 70 1 is_stmt 1 view -0
+ 178              		.cfi_startproc
+ 179              		@ args = 0, pretend = 0, frame = 0
+ 180              		@ frame_needed = 0, uses_anonymous_args = 0
+ 181              		.loc 1 70 1 is_stmt 0 view .LVU45
+ 182 0000 08B5     		push	{r3, lr}
+ 183              	.LCFI3:
+ 184              		.cfi_def_cfa_offset 8
+ 185              		.cfi_offset 3, -8
+ 186              		.cfi_offset 14, -4
+  71:u8g2_lib/u8x8_u16toa.c ****   const char *s = u8x8_u16toa(v, 5);
+ 187              		.loc 1 71 3 is_stmt 1 view .LVU46
+ 188              		.loc 1 71 19 is_stmt 0 view .LVU47
+ 189 0002 0521     		movs	r1, #5
+ 190 0004 FFF7FEFF 		bl	u8x8_u16toa
+ 191              	.LVL19:
+  72:u8g2_lib/u8x8_u16toa.c ****   while( *s == '0' )
+ 192              		.loc 1 72 3 is_stmt 1 view .LVU48
+ 193              	.L15:
+ 194              		.loc 1 72 8 view .LVU49
+ 195              		.loc 1 72 10 is_stmt 0 view .LVU50
+ 196 0008 0378     		ldrb	r3, [r0]	@ zero_extendqisi2
+ 197              		.loc 1 72 8 view .LVU51
+ 198 000a 302B     		cmp	r3, #48
+ 199 000c 01D1     		bne	.L19
+  73:u8g2_lib/u8x8_u16toa.c ****     s++;
+ 200              		.loc 1 73 5 is_stmt 1 view .LVU52
+ 201              		.loc 1 73 6 is_stmt 0 view .LVU53
+ 202 000e 0130     		adds	r0, r0, #1
+ 203              	.LVL20:
+ 204              		.loc 1 73 6 view .LVU54
+ 205 0010 FAE7     		b	.L15
+ 206              	.L19:
+  74:u8g2_lib/u8x8_u16toa.c ****   if ( *s == '\0' )
+ 207              		.loc 1 74 3 is_stmt 1 view .LVU55
+ 208              		.loc 1 74 6 is_stmt 0 view .LVU56
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccQdWk3e.s 			page 6
+
+
+ 209 0012 03B9     		cbnz	r3, .L14
+  75:u8g2_lib/u8x8_u16toa.c ****     s--;
+ 210              		.loc 1 75 5 is_stmt 1 view .LVU57
+ 211              		.loc 1 75 6 is_stmt 0 view .LVU58
+ 212 0014 0138     		subs	r0, r0, #1
+ 213              	.LVL21:
+  76:u8g2_lib/u8x8_u16toa.c ****   return s;
+ 214              		.loc 1 76 3 is_stmt 1 view .LVU59
+ 215              	.L14:
+  77:u8g2_lib/u8x8_u16toa.c **** }...
+ 216              		.loc 1 77 1 is_stmt 0 view .LVU60
+ 217 0016 08BD     		pop	{r3, pc}
+ 218              		.cfi_endproc
+ 219              	.LFE2:
+ 221              		.section	.bss.buf.5538,"aw",%nobits
+ 222              		.align	2
+ 223              		.set	.LANCHOR0,. + 0
+ 226              	buf.5538:
+ 227 0000 00000000 		.space	6
+ 227      0000
+ 228              		.text
+ 229              	.Letext0:
+ 230              		.file 2 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 231              		.file 3 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 232              		.file 4 "u8g2_lib/u8x8.h"
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccQdWk3e.s 			page 7
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 u8x8_u16toa.c
+C:\Users\GKQ\AppData\Local\Temp\ccQdWk3e.s:16     .text.u8x8_u16toap:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccQdWk3e.s:24     .text.u8x8_u16toap:00000000 u8x8_u16toap
+C:\Users\GKQ\AppData\Local\Temp\ccQdWk3e.s:115    .text.u8x8_u16toap:00000034 $d
+C:\Users\GKQ\AppData\Local\Temp\ccQdWk3e.s:120    .text.u8x8_u16toa:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccQdWk3e.s:127    .text.u8x8_u16toa:00000000 u8x8_u16toa
+C:\Users\GKQ\AppData\Local\Temp\ccQdWk3e.s:162    .text.u8x8_u16toa:00000014 $d
+C:\Users\GKQ\AppData\Local\Temp\ccQdWk3e.s:167    .text.u8x8_utoa:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccQdWk3e.s:174    .text.u8x8_utoa:00000000 u8x8_utoa
+C:\Users\GKQ\AppData\Local\Temp\ccQdWk3e.s:222    .bss.buf.5538:00000000 $d
+C:\Users\GKQ\AppData\Local\Temp\ccQdWk3e.s:226    .bss.buf.5538:00000000 buf.5538
+
+NO UNDEFINED SYMBOLS

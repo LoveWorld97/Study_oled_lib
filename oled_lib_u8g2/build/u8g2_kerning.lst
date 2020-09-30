@@ -1,0 +1,435 @@
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccf5fkje.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"u8g2_kerning.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.u8g2_GetKerning,"ax",%progbits
+  16              		.align	1
+  17              		.global	u8g2_GetKerning
+  18              		.arch armv7-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu softvfp
+  24              	u8g2_GetKerning:
+  25              	.LVL0:
+  26              	.LFB0:
+  27              		.file 1 "u8g2_lib/u8g2_kerning.c"
+   1:u8g2_lib/u8g2_kerning.c **** /*
+   2:u8g2_lib/u8g2_kerning.c **** 
+   3:u8g2_lib/u8g2_kerning.c ****   u8g2_kerning.c
+   4:u8g2_lib/u8g2_kerning.c **** 
+   5:u8g2_lib/u8g2_kerning.c ****   Universal 8bit Graphics Library (https://github.com/olikraus/u8g2/)
+   6:u8g2_lib/u8g2_kerning.c **** 
+   7:u8g2_lib/u8g2_kerning.c ****   Copyright (c) 2016, olikraus@gmail.com
+   8:u8g2_lib/u8g2_kerning.c ****   All rights reserved.
+   9:u8g2_lib/u8g2_kerning.c **** 
+  10:u8g2_lib/u8g2_kerning.c ****   Redistribution and use in source and binary forms, with or without modification, 
+  11:u8g2_lib/u8g2_kerning.c ****   are permitted provided that the following conditions are met:
+  12:u8g2_lib/u8g2_kerning.c **** 
+  13:u8g2_lib/u8g2_kerning.c ****   * Redistributions of source code must retain the above copyright notice, this list 
+  14:u8g2_lib/u8g2_kerning.c ****     of conditions and the following disclaimer.
+  15:u8g2_lib/u8g2_kerning.c ****     
+  16:u8g2_lib/u8g2_kerning.c ****   * Redistributions in binary form must reproduce the above copyright notice, this 
+  17:u8g2_lib/u8g2_kerning.c ****     list of conditions and the following disclaimer in the documentation and/or other 
+  18:u8g2_lib/u8g2_kerning.c ****     materials provided with the distribution.
+  19:u8g2_lib/u8g2_kerning.c **** 
+  20:u8g2_lib/u8g2_kerning.c ****   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND 
+  21:u8g2_lib/u8g2_kerning.c ****   CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, 
+  22:u8g2_lib/u8g2_kerning.c ****   INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF 
+  23:u8g2_lib/u8g2_kerning.c ****   MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE 
+  24:u8g2_lib/u8g2_kerning.c ****   DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR 
+  25:u8g2_lib/u8g2_kerning.c ****   CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
+  26:u8g2_lib/u8g2_kerning.c ****   SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
+  27:u8g2_lib/u8g2_kerning.c ****   NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; 
+  28:u8g2_lib/u8g2_kerning.c ****   LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER 
+  29:u8g2_lib/u8g2_kerning.c ****   CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, 
+  30:u8g2_lib/u8g2_kerning.c ****   STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+  31:u8g2_lib/u8g2_kerning.c ****   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF 
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccf5fkje.s 			page 2
+
+
+  32:u8g2_lib/u8g2_kerning.c ****   ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.  
+  33:u8g2_lib/u8g2_kerning.c **** 
+  34:u8g2_lib/u8g2_kerning.c **** */
+  35:u8g2_lib/u8g2_kerning.c **** 
+  36:u8g2_lib/u8g2_kerning.c **** #include "u8g2.h"
+  37:u8g2_lib/u8g2_kerning.c **** 
+  38:u8g2_lib/u8g2_kerning.c **** /* this function is used as "u8g2_get_kerning_cb" */
+  39:u8g2_lib/u8g2_kerning.c **** /*
+  40:u8g2_lib/u8g2_kerning.c **** uint8_t u8g2_GetNullKerning(u8g2_t *u8g2, uint16_t e1, uint16_t e2)
+  41:u8g2_lib/u8g2_kerning.c **** {
+  42:u8g2_lib/u8g2_kerning.c ****   return 0;
+  43:u8g2_lib/u8g2_kerning.c **** }
+  44:u8g2_lib/u8g2_kerning.c **** */
+  45:u8g2_lib/u8g2_kerning.c **** 
+  46:u8g2_lib/u8g2_kerning.c **** /* this function is used as "u8g2_get_kerning_cb" */
+  47:u8g2_lib/u8g2_kerning.c **** uint8_t u8g2_GetKerning(U8X8_UNUSED u8g2_t *u8g2, u8g2_kerning_t *kerning, uint16_t e1, uint16_t e2
+  48:u8g2_lib/u8g2_kerning.c **** {
+  28              		.loc 1 48 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  49:u8g2_lib/u8g2_kerning.c ****   uint16_t i1, i2, cnt, end;
+  33              		.loc 1 49 3 view .LVU1
+  50:u8g2_lib/u8g2_kerning.c ****   if ( kerning == NULL )
+  34              		.loc 1 50 3 view .LVU2
+  35              		.loc 1 50 6 is_stmt 0 view .LVU3
+  36 0000 39B3     		cbz	r1, .L9
+  48:u8g2_lib/u8g2_kerning.c ****   uint16_t i1, i2, cnt, end;
+  37              		.loc 1 48 1 view .LVU4
+  38 0002 30B4     		push	{r4, r5}
+  39              	.LCFI0:
+  40              		.cfi_def_cfa_offset 8
+  41              		.cfi_offset 4, -8
+  42              		.cfi_offset 5, -4
+  43 0004 0846     		mov	r0, r1
+  44              	.LVL1:
+  51:u8g2_lib/u8g2_kerning.c ****     return 0;
+  52:u8g2_lib/u8g2_kerning.c ****   
+  53:u8g2_lib/u8g2_kerning.c ****   /* search for the encoding in the first table */
+  54:u8g2_lib/u8g2_kerning.c ****   cnt = kerning->first_table_cnt;
+  45              		.loc 1 54 3 is_stmt 1 view .LVU5
+  46              		.loc 1 54 7 is_stmt 0 view .LVU6
+  47 0006 0D88     		ldrh	r5, [r1]
+  48              	.LVL2:
+  55:u8g2_lib/u8g2_kerning.c ****   cnt--;	/* ignore the last element of the table, which is 0x0ffff */
+  49              		.loc 1 55 3 is_stmt 1 view .LVU7
+  50              		.loc 1 55 6 is_stmt 0 view .LVU8
+  51 0008 013D     		subs	r5, r5, #1
+  52              	.LVL3:
+  53              		.loc 1 55 6 view .LVU9
+  54 000a ADB2     		uxth	r5, r5
+  55              	.LVL4:
+  56:u8g2_lib/u8g2_kerning.c ****   for( i1 = 0; i1 < cnt; i1++ )
+  56              		.loc 1 56 3 is_stmt 1 view .LVU10
+  57              		.loc 1 56 11 is_stmt 0 view .LVU11
+  58 000c 0021     		movs	r1, #0
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccf5fkje.s 			page 3
+
+
+  59              	.LVL5:
+  60              	.L3:
+  61              		.loc 1 56 16 is_stmt 1 discriminator 1 view .LVU12
+  62              		.loc 1 56 3 is_stmt 0 discriminator 1 view .LVU13
+  63 000e A942     		cmp	r1, r5
+  64 0010 07D2     		bcs	.L4
+  57:u8g2_lib/u8g2_kerning.c ****   {
+  58:u8g2_lib/u8g2_kerning.c ****     if ( kerning->first_encoding_table[i1] == e1 )
+  65              		.loc 1 58 5 is_stmt 1 view .LVU14
+  66              		.loc 1 58 17 is_stmt 0 view .LVU15
+  67 0012 4468     		ldr	r4, [r0, #4]
+  68              		.loc 1 58 39 view .LVU16
+  69 0014 34F81140 		ldrh	r4, [r4, r1, lsl #1]
+  70              		.loc 1 58 8 view .LVU17
+  71 0018 9442     		cmp	r4, r2
+  72 001a 02D0     		beq	.L4
+  56:u8g2_lib/u8g2_kerning.c ****   for( i1 = 0; i1 < cnt; i1++ )
+  73              		.loc 1 56 26 is_stmt 1 discriminator 2 view .LVU18
+  56:u8g2_lib/u8g2_kerning.c ****   for( i1 = 0; i1 < cnt; i1++ )
+  74              		.loc 1 56 28 is_stmt 0 discriminator 2 view .LVU19
+  75 001c 0131     		adds	r1, r1, #1
+  76              	.LVL6:
+  56:u8g2_lib/u8g2_kerning.c ****   for( i1 = 0; i1 < cnt; i1++ )
+  77              		.loc 1 56 28 discriminator 2 view .LVU20
+  78 001e 89B2     		uxth	r1, r1
+  79              	.LVL7:
+  56:u8g2_lib/u8g2_kerning.c ****   for( i1 = 0; i1 < cnt; i1++ )
+  80              		.loc 1 56 28 discriminator 2 view .LVU21
+  81 0020 F5E7     		b	.L3
+  82              	.L4:
+  59:u8g2_lib/u8g2_kerning.c ****       break;
+  60:u8g2_lib/u8g2_kerning.c ****   }
+  61:u8g2_lib/u8g2_kerning.c ****   if ( i1 >= cnt )
+  83              		.loc 1 61 3 is_stmt 1 view .LVU22
+  84              		.loc 1 61 6 is_stmt 0 view .LVU23
+  85 0022 A942     		cmp	r1, r5
+  86 0024 17D2     		bcs	.L10
+  62:u8g2_lib/u8g2_kerning.c ****     return 0;	/* e1 not part of the kerning table, return 0 */
+  63:u8g2_lib/u8g2_kerning.c **** 
+  64:u8g2_lib/u8g2_kerning.c ****   /* get the upper index for i2 */
+  65:u8g2_lib/u8g2_kerning.c ****   end = kerning->index_to_second_table[i1+1];
+  87              		.loc 1 65 3 is_stmt 1 view .LVU24
+  88              		.loc 1 65 16 is_stmt 0 view .LVU25
+  89 0026 8268     		ldr	r2, [r0, #8]
+  90              	.LVL8:
+  91              		.loc 1 65 39 view .LVU26
+  92 0028 4C1C     		adds	r4, r1, #1
+  93              		.loc 1 65 7 view .LVU27
+  94 002a 32F81440 		ldrh	r4, [r2, r4, lsl #1]
+  95              	.LVL9:
+  66:u8g2_lib/u8g2_kerning.c ****   for( i2 = kerning->index_to_second_table[i1]; i2 < end; i2++ )
+  96              		.loc 1 66 3 is_stmt 1 view .LVU28
+  97              		.loc 1 66 11 is_stmt 0 view .LVU29
+  98 002e 32F81120 		ldrh	r2, [r2, r1, lsl #1]
+  99              	.LVL10:
+ 100              	.L6:
+ 101              		.loc 1 66 49 is_stmt 1 discriminator 1 view .LVU30
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccf5fkje.s 			page 4
+
+
+ 102              		.loc 1 66 3 is_stmt 0 discriminator 1 view .LVU31
+ 103 0032 A242     		cmp	r2, r4
+ 104 0034 07D2     		bcs	.L7
+  67:u8g2_lib/u8g2_kerning.c ****   {
+  68:u8g2_lib/u8g2_kerning.c ****     if ( kerning->second_encoding_table[i2] == e2 )
+ 105              		.loc 1 68 5 is_stmt 1 view .LVU32
+ 106              		.loc 1 68 17 is_stmt 0 view .LVU33
+ 107 0036 C168     		ldr	r1, [r0, #12]
+ 108              		.loc 1 68 40 view .LVU34
+ 109 0038 31F81210 		ldrh	r1, [r1, r2, lsl #1]
+ 110              		.loc 1 68 8 view .LVU35
+ 111 003c 9942     		cmp	r1, r3
+ 112 003e 02D0     		beq	.L7
+  66:u8g2_lib/u8g2_kerning.c ****   for( i2 = kerning->index_to_second_table[i1]; i2 < end; i2++ )
+ 113              		.loc 1 66 59 is_stmt 1 discriminator 2 view .LVU36
+  66:u8g2_lib/u8g2_kerning.c ****   for( i2 = kerning->index_to_second_table[i1]; i2 < end; i2++ )
+ 114              		.loc 1 66 61 is_stmt 0 discriminator 2 view .LVU37
+ 115 0040 0132     		adds	r2, r2, #1
+ 116              	.LVL11:
+  66:u8g2_lib/u8g2_kerning.c ****   for( i2 = kerning->index_to_second_table[i1]; i2 < end; i2++ )
+ 117              		.loc 1 66 61 discriminator 2 view .LVU38
+ 118 0042 92B2     		uxth	r2, r2
+ 119              	.LVL12:
+  66:u8g2_lib/u8g2_kerning.c ****   for( i2 = kerning->index_to_second_table[i1]; i2 < end; i2++ )
+ 120              		.loc 1 66 61 discriminator 2 view .LVU39
+ 121 0044 F5E7     		b	.L6
+ 122              	.L7:
+  69:u8g2_lib/u8g2_kerning.c ****       break;
+  70:u8g2_lib/u8g2_kerning.c ****   }
+  71:u8g2_lib/u8g2_kerning.c ****   
+  72:u8g2_lib/u8g2_kerning.c ****   if ( i2 >= end )
+ 123              		.loc 1 72 3 is_stmt 1 view .LVU40
+ 124              		.loc 1 72 6 is_stmt 0 view .LVU41
+ 125 0046 A242     		cmp	r2, r4
+ 126 0048 07D2     		bcs	.L11
+  73:u8g2_lib/u8g2_kerning.c ****     return 0;	/* e2 not part of any pair with e1, return 0 */
+  74:u8g2_lib/u8g2_kerning.c ****   
+  75:u8g2_lib/u8g2_kerning.c ****   return kerning->kerning_values[i2];
+ 127              		.loc 1 75 3 is_stmt 1 view .LVU42
+ 128              		.loc 1 75 17 is_stmt 0 view .LVU43
+ 129 004a 0369     		ldr	r3, [r0, #16]
+ 130              	.LVL13:
+ 131              		.loc 1 75 33 view .LVU44
+ 132 004c 985C     		ldrb	r0, [r3, r2]	@ zero_extendqisi2
+ 133              	.LVL14:
+ 134              	.L2:
+  76:u8g2_lib/u8g2_kerning.c **** }
+ 135              		.loc 1 76 1 view .LVU45
+ 136 004e 30BC     		pop	{r4, r5}
+ 137              	.LCFI1:
+ 138              		.cfi_restore 5
+ 139              		.cfi_restore 4
+ 140              		.cfi_def_cfa_offset 0
+ 141              	.LVL15:
+ 142              		.loc 1 76 1 view .LVU46
+ 143 0050 7047     		bx	lr
+ 144              	.LVL16:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccf5fkje.s 			page 5
+
+
+ 145              	.L9:
+  51:u8g2_lib/u8g2_kerning.c ****   
+ 146              		.loc 1 51 12 view .LVU47
+ 147 0052 0020     		movs	r0, #0
+ 148              	.LVL17:
+ 149              		.loc 1 76 1 view .LVU48
+ 150 0054 7047     		bx	lr
+ 151              	.LVL18:
+ 152              	.L10:
+ 153              	.LCFI2:
+ 154              		.cfi_def_cfa_offset 8
+ 155              		.cfi_offset 4, -8
+ 156              		.cfi_offset 5, -4
+  62:u8g2_lib/u8g2_kerning.c **** 
+ 157              		.loc 1 62 12 view .LVU49
+ 158 0056 0020     		movs	r0, #0
+ 159              	.LVL19:
+  62:u8g2_lib/u8g2_kerning.c **** 
+ 160              		.loc 1 62 12 view .LVU50
+ 161 0058 F9E7     		b	.L2
+ 162              	.LVL20:
+ 163              	.L11:
+  73:u8g2_lib/u8g2_kerning.c ****   
+ 164              		.loc 1 73 12 view .LVU51
+ 165 005a 0020     		movs	r0, #0
+ 166              	.LVL21:
+  73:u8g2_lib/u8g2_kerning.c ****   
+ 167              		.loc 1 73 12 view .LVU52
+ 168 005c F7E7     		b	.L2
+ 169              		.cfi_endproc
+ 170              	.LFE0:
+ 172              		.section	.text.u8g2_GetKerningByTable,"ax",%progbits
+ 173              		.align	1
+ 174              		.global	u8g2_GetKerningByTable
+ 175              		.syntax unified
+ 176              		.thumb
+ 177              		.thumb_func
+ 178              		.fpu softvfp
+ 180              	u8g2_GetKerningByTable:
+ 181              	.LVL22:
+ 182              	.LFB1:
+  77:u8g2_lib/u8g2_kerning.c **** 
+  78:u8g2_lib/u8g2_kerning.c **** uint8_t u8g2_GetKerningByTable(U8X8_UNUSED u8g2_t *u8g2, const uint16_t *kt, uint16_t e1, uint16_t 
+  79:u8g2_lib/u8g2_kerning.c **** {
+ 183              		.loc 1 79 1 is_stmt 1 view -0
+ 184              		.cfi_startproc
+ 185              		@ args = 0, pretend = 0, frame = 0
+ 186              		@ frame_needed = 0, uses_anonymous_args = 0
+ 187              		@ link register save eliminated.
+  80:u8g2_lib/u8g2_kerning.c ****   uint16_t i;
+ 188              		.loc 1 80 3 view .LVU54
+  81:u8g2_lib/u8g2_kerning.c ****   i = 0;
+ 189              		.loc 1 81 3 view .LVU55
+  82:u8g2_lib/u8g2_kerning.c ****   if ( kt == NULL )
+ 190              		.loc 1 82 3 view .LVU56
+ 191              		.loc 1 82 6 is_stmt 0 view .LVU57
+ 192 0000 B9B1     		cbz	r1, .L20
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccf5fkje.s 			page 6
+
+
+  79:u8g2_lib/u8g2_kerning.c ****   uint16_t i;
+ 193              		.loc 1 79 1 view .LVU58
+ 194 0002 70B4     		push	{r4, r5, r6}
+ 195              	.LCFI3:
+ 196              		.cfi_def_cfa_offset 12
+ 197              		.cfi_offset 4, -12
+ 198              		.cfi_offset 5, -8
+ 199              		.cfi_offset 6, -4
+ 200 0004 0D46     		mov	r5, r1
+  81:u8g2_lib/u8g2_kerning.c ****   i = 0;
+ 201              		.loc 1 81 5 view .LVU59
+ 202 0006 0021     		movs	r1, #0
+ 203              	.LVL23:
+  81:u8g2_lib/u8g2_kerning.c ****   i = 0;
+ 204              		.loc 1 81 5 view .LVU60
+ 205 0008 01E0     		b	.L19
+ 206              	.LVL24:
+ 207              	.L18:
+  83:u8g2_lib/u8g2_kerning.c ****     return 0;
+  84:u8g2_lib/u8g2_kerning.c ****   for(;;)
+  85:u8g2_lib/u8g2_kerning.c ****   {
+  86:u8g2_lib/u8g2_kerning.c ****     if ( kt[i] == 0x0ffff )
+  87:u8g2_lib/u8g2_kerning.c ****       break;
+  88:u8g2_lib/u8g2_kerning.c ****     if ( kt[i] == e1 && kt[i+1] == e2 )
+  89:u8g2_lib/u8g2_kerning.c ****       return kt[i+2];
+  90:u8g2_lib/u8g2_kerning.c ****     i+=3;
+ 208              		.loc 1 90 5 is_stmt 1 view .LVU61
+ 209              		.loc 1 90 6 is_stmt 0 view .LVU62
+ 210 000a 0331     		adds	r1, r1, #3
+ 211              	.LVL25:
+ 212              		.loc 1 90 6 view .LVU63
+ 213 000c 89B2     		uxth	r1, r1
+ 214              	.LVL26:
+  84:u8g2_lib/u8g2_kerning.c ****   {
+ 215              		.loc 1 84 8 is_stmt 1 view .LVU64
+ 216              	.L19:
+  84:u8g2_lib/u8g2_kerning.c ****   {
+ 217              		.loc 1 84 3 view .LVU65
+  86:u8g2_lib/u8g2_kerning.c ****       break;
+ 218              		.loc 1 86 5 view .LVU66
+  86:u8g2_lib/u8g2_kerning.c ****       break;
+ 219              		.loc 1 86 12 is_stmt 0 view .LVU67
+ 220 000e 0E46     		mov	r6, r1
+ 221 0010 35F81100 		ldrh	r0, [r5, r1, lsl #1]
+  86:u8g2_lib/u8g2_kerning.c ****       break;
+ 222              		.loc 1 86 8 view .LVU68
+ 223 0014 4FF6FF74 		movw	r4, #65535
+ 224 0018 A042     		cmp	r0, r4
+ 225 001a 0CD0     		beq	.L21
+  88:u8g2_lib/u8g2_kerning.c ****       return kt[i+2];
+ 226              		.loc 1 88 5 is_stmt 1 view .LVU69
+  88:u8g2_lib/u8g2_kerning.c ****       return kt[i+2];
+ 227              		.loc 1 88 8 is_stmt 0 view .LVU70
+ 228 001c 9042     		cmp	r0, r2
+ 229 001e F4D1     		bne	.L18
+  88:u8g2_lib/u8g2_kerning.c ****       return kt[i+2];
+ 230              		.loc 1 88 27 discriminator 1 view .LVU71
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccf5fkje.s 			page 7
+
+
+ 231 0020 481C     		adds	r0, r1, #1
+ 232 0022 35F81000 		ldrh	r0, [r5, r0, lsl #1]
+  88:u8g2_lib/u8g2_kerning.c ****       return kt[i+2];
+ 233              		.loc 1 88 22 discriminator 1 view .LVU72
+ 234 0026 9842     		cmp	r0, r3
+ 235 0028 EFD1     		bne	.L18
+  89:u8g2_lib/u8g2_kerning.c ****     i+=3;
+ 236              		.loc 1 89 7 is_stmt 1 view .LVU73
+  89:u8g2_lib/u8g2_kerning.c ****     i+=3;
+ 237              		.loc 1 89 16 is_stmt 0 view .LVU74
+ 238 002a 0236     		adds	r6, r6, #2
+ 239 002c 15F81600 		ldrb	r0, [r5, r6, lsl #1]	@ zero_extendqisi2
+ 240 0030 02E0     		b	.L17
+ 241              	.LVL27:
+ 242              	.L20:
+ 243              	.LCFI4:
+ 244              		.cfi_def_cfa_offset 0
+ 245              		.cfi_restore 4
+ 246              		.cfi_restore 5
+ 247              		.cfi_restore 6
+  83:u8g2_lib/u8g2_kerning.c ****   for(;;)
+ 248              		.loc 1 83 12 view .LVU75
+ 249 0032 0020     		movs	r0, #0
+ 250              	.LVL28:
+  91:u8g2_lib/u8g2_kerning.c ****   }
+  92:u8g2_lib/u8g2_kerning.c ****   return 0;
+  93:u8g2_lib/u8g2_kerning.c **** }
+ 251              		.loc 1 93 1 view .LVU76
+ 252 0034 7047     		bx	lr
+ 253              	.LVL29:
+ 254              	.L21:
+ 255              	.LCFI5:
+ 256              		.cfi_def_cfa_offset 12
+ 257              		.cfi_offset 4, -12
+ 258              		.cfi_offset 5, -8
+ 259              		.cfi_offset 6, -4
+  92:u8g2_lib/u8g2_kerning.c **** }
+ 260              		.loc 1 92 10 view .LVU77
+ 261 0036 0020     		movs	r0, #0
+ 262              	.L17:
+ 263              		.loc 1 93 1 view .LVU78
+ 264 0038 70BC     		pop	{r4, r5, r6}
+ 265              	.LCFI6:
+ 266              		.cfi_restore 6
+ 267              		.cfi_restore 5
+ 268              		.cfi_restore 4
+ 269              		.cfi_def_cfa_offset 0
+ 270              	.LVL30:
+ 271              		.loc 1 93 1 view .LVU79
+ 272 003a 7047     		bx	lr
+ 273              		.cfi_endproc
+ 274              	.LFE1:
+ 276              		.text
+ 277              	.Letext0:
+ 278              		.file 2 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 279              		.file 3 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 280              		.file 4 "u8g2_lib/u8x8.h"
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccf5fkje.s 			page 8
+
+
+ 281              		.file 5 "u8g2_lib/u8g2.h"
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccf5fkje.s 			page 9
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 u8g2_kerning.c
+C:\Users\GKQ\AppData\Local\Temp\ccf5fkje.s:16     .text.u8g2_GetKerning:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccf5fkje.s:24     .text.u8g2_GetKerning:00000000 u8g2_GetKerning
+C:\Users\GKQ\AppData\Local\Temp\ccf5fkje.s:173    .text.u8g2_GetKerningByTable:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccf5fkje.s:180    .text.u8g2_GetKerningByTable:00000000 u8g2_GetKerningByTable
+
+NO UNDEFINED SYMBOLS

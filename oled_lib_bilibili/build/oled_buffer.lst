@@ -1,0 +1,1047 @@
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"oled_buffer.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.SetTempBuffer,"ax",%progbits
+  16              		.align	1
+  17              		.global	SetTempBuffer
+  18              		.arch armv7-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu softvfp
+  24              	SetTempBuffer:
+  25              	.LFB0:
+  26              		.file 1 "oledlib/oled_buffer.c"
+   1:oledlib/oled_buffer.c **** #include "oled_buffer.h"
+   2:oledlib/oled_buffer.c **** #include "oled_config.h"
+   3:oledlib/oled_buffer.c **** #include "oled_color.h"
+   4:oledlib/oled_buffer.c **** #include "string.h"
+   5:oledlib/oled_buffer.c **** 
+   6:oledlib/oled_buffer.c **** //¶¨Òå»º³å£¬
+   7:oledlib/oled_buffer.c **** unsigned char ScreenBuffer[SCREEN_PAGE_NUM][SCREEN_COLUMN]={0};
+   8:oledlib/oled_buffer.c **** unsigned char TempBuffer[SCREEN_PAGE_NUM][SCREEN_COLUMN]={0};
+   9:oledlib/oled_buffer.c **** static _Bool _SelectedBuffer=SCREEN_BUFFER;
+  10:oledlib/oled_buffer.c **** #define BUFFERSIZE  sizeof(ScreenBuffer)
+  11:oledlib/oled_buffer.c **** extern void UpdateTempBuffer(void);
+  12:oledlib/oled_buffer.c **** extern void UpdateScreenBuffer(void);
+  13:oledlib/oled_buffer.c **** 
+  14:oledlib/oled_buffer.c **** 
+  15:oledlib/oled_buffer.c **** void SetTempBuffer(void)
+  16:oledlib/oled_buffer.c **** {
+  27              		.loc 1 16 1 view -0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              		@ link register save eliminated.
+  17:oledlib/oled_buffer.c **** 
+  18:oledlib/oled_buffer.c **** 	_SelectedBuffer=TEMP_BUFFER;
+  32              		.loc 1 18 2 view .LVU1
+  33              		.loc 1 18 17 is_stmt 0 view .LVU2
+  34 0000 014B     		ldr	r3, .L2
+  35 0002 0022     		movs	r2, #0
+  36 0004 1A70     		strb	r2, [r3]
+  19:oledlib/oled_buffer.c **** }
+  37              		.loc 1 19 1 view .LVU3
+  38 0006 7047     		bx	lr
+  39              	.L3:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s 			page 2
+
+
+  40              		.align	2
+  41              	.L2:
+  42 0008 00000000 		.word	.LANCHOR0
+  43              		.cfi_endproc
+  44              	.LFE0:
+  46              		.section	.text.SetScreenBuffer,"ax",%progbits
+  47              		.align	1
+  48              		.global	SetScreenBuffer
+  49              		.syntax unified
+  50              		.thumb
+  51              		.thumb_func
+  52              		.fpu softvfp
+  54              	SetScreenBuffer:
+  55              	.LFB1:
+  20:oledlib/oled_buffer.c **** 
+  21:oledlib/oled_buffer.c **** void SetScreenBuffer(void)
+  22:oledlib/oled_buffer.c **** {
+  56              		.loc 1 22 1 is_stmt 1 view -0
+  57              		.cfi_startproc
+  58              		@ args = 0, pretend = 0, frame = 0
+  59              		@ frame_needed = 0, uses_anonymous_args = 0
+  60              		@ link register save eliminated.
+  23:oledlib/oled_buffer.c **** 	_SelectedBuffer=SCREEN_BUFFER;
+  61              		.loc 1 23 2 view .LVU5
+  62              		.loc 1 23 17 is_stmt 0 view .LVU6
+  63 0000 014B     		ldr	r3, .L5
+  64 0002 0122     		movs	r2, #1
+  65 0004 1A70     		strb	r2, [r3]
+  24:oledlib/oled_buffer.c **** }
+  66              		.loc 1 24 1 view .LVU7
+  67 0006 7047     		bx	lr
+  68              	.L6:
+  69              		.align	2
+  70              	.L5:
+  71 0008 00000000 		.word	.LANCHOR0
+  72              		.cfi_endproc
+  73              	.LFE1:
+  75              		.section	.text.GetSelectedBuffer,"ax",%progbits
+  76              		.align	1
+  77              		.global	GetSelectedBuffer
+  78              		.syntax unified
+  79              		.thumb
+  80              		.thumb_func
+  81              		.fpu softvfp
+  83              	GetSelectedBuffer:
+  84              	.LFB2:
+  25:oledlib/oled_buffer.c **** unsigned char GetSelectedBuffer(void)
+  26:oledlib/oled_buffer.c **** {
+  85              		.loc 1 26 1 is_stmt 1 view -0
+  86              		.cfi_startproc
+  87              		@ args = 0, pretend = 0, frame = 0
+  88              		@ frame_needed = 0, uses_anonymous_args = 0
+  89              		@ link register save eliminated.
+  27:oledlib/oled_buffer.c **** 	return _SelectedBuffer;
+  90              		.loc 1 27 2 view .LVU9
+  28:oledlib/oled_buffer.c **** }
+  91              		.loc 1 28 1 is_stmt 0 view .LVU10
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s 			page 3
+
+
+  92 0000 014B     		ldr	r3, .L8
+  93 0002 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+  94 0004 7047     		bx	lr
+  95              	.L9:
+  96 0006 00BF     		.align	2
+  97              	.L8:
+  98 0008 00000000 		.word	.LANCHOR0
+  99              		.cfi_endproc
+ 100              	.LFE2:
+ 102              		.section	.text.ReadByteBuffer,"ax",%progbits
+ 103              		.align	1
+ 104              		.global	ReadByteBuffer
+ 105              		.syntax unified
+ 106              		.thumb
+ 107              		.thumb_func
+ 108              		.fpu softvfp
+ 110              	ReadByteBuffer:
+ 111              	.LVL0:
+ 112              	.LFB3:
+  29:oledlib/oled_buffer.c **** 
+  30:oledlib/oled_buffer.c **** unsigned char ReadByteBuffer(int page,int x)
+  31:oledlib/oled_buffer.c **** {
+ 113              		.loc 1 31 1 is_stmt 1 view -0
+ 114              		.cfi_startproc
+ 115              		@ args = 0, pretend = 0, frame = 0
+ 116              		@ frame_needed = 0, uses_anonymous_args = 0
+ 117              		@ link register save eliminated.
+  32:oledlib/oled_buffer.c **** 	return _SelectedBuffer? ScreenBuffer[page][x] :TempBuffer[page][x];
+ 118              		.loc 1 32 2 view .LVU12
+ 119              		.loc 1 32 24 is_stmt 0 view .LVU13
+ 120 0000 064B     		ldr	r3, .L13
+ 121 0002 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 122              		.loc 1 32 48 view .LVU14
+ 123 0004 23B1     		cbz	r3, .L11
+ 124              		.loc 1 32 48 discriminator 1 view .LVU15
+ 125 0006 064B     		ldr	r3, .L13+4
+ 126 0008 03EBC010 		add	r0, r3, r0, lsl #7
+ 127              	.LVL1:
+ 128              		.loc 1 32 48 discriminator 1 view .LVU16
+ 129 000c 405C     		ldrb	r0, [r0, r1]	@ zero_extendqisi2
+ 130 000e 7047     		bx	lr
+ 131              	.LVL2:
+ 132              	.L11:
+ 133              		.loc 1 32 48 discriminator 2 view .LVU17
+ 134 0010 044B     		ldr	r3, .L13+8
+ 135 0012 03EBC010 		add	r0, r3, r0, lsl #7
+ 136              	.LVL3:
+ 137              		.loc 1 32 48 discriminator 2 view .LVU18
+ 138 0016 405C     		ldrb	r0, [r0, r1]	@ zero_extendqisi2
+  33:oledlib/oled_buffer.c **** }
+ 139              		.loc 1 33 1 discriminator 2 view .LVU19
+ 140 0018 7047     		bx	lr
+ 141              	.L14:
+ 142 001a 00BF     		.align	2
+ 143              	.L13:
+ 144 001c 00000000 		.word	.LANCHOR0
+ 145 0020 00000000 		.word	.LANCHOR1
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s 			page 4
+
+
+ 146 0024 00000000 		.word	.LANCHOR2
+ 147              		.cfi_endproc
+ 148              	.LFE3:
+ 150              		.section	.text.WriteByteBuffer,"ax",%progbits
+ 151              		.align	1
+ 152              		.global	WriteByteBuffer
+ 153              		.syntax unified
+ 154              		.thumb
+ 155              		.thumb_func
+ 156              		.fpu softvfp
+ 158              	WriteByteBuffer:
+ 159              	.LVL4:
+ 160              	.LFB4:
+  34:oledlib/oled_buffer.c **** 	
+  35:oledlib/oled_buffer.c **** 
+  36:oledlib/oled_buffer.c **** void WriteByteBuffer(int page,int x,unsigned char byte)
+  37:oledlib/oled_buffer.c **** {
+ 161              		.loc 1 37 1 is_stmt 1 view -0
+ 162              		.cfi_startproc
+ 163              		@ args = 0, pretend = 0, frame = 0
+ 164              		@ frame_needed = 0, uses_anonymous_args = 0
+ 165              		@ link register save eliminated.
+  38:oledlib/oled_buffer.c **** 	if(_SelectedBuffer)
+ 166              		.loc 1 38 2 view .LVU21
+ 167              		.loc 1 38 5 is_stmt 0 view .LVU22
+ 168 0000 064B     		ldr	r3, .L18
+ 169 0002 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 170              		.loc 1 38 4 view .LVU23
+ 171 0004 23B1     		cbz	r3, .L16
+  39:oledlib/oled_buffer.c **** 	{
+  40:oledlib/oled_buffer.c **** 			ScreenBuffer[page][x] =byte;
+ 172              		.loc 1 40 4 is_stmt 1 view .LVU24
+ 173              		.loc 1 40 26 is_stmt 0 view .LVU25
+ 174 0006 064B     		ldr	r3, .L18+4
+ 175 0008 03EBC010 		add	r0, r3, r0, lsl #7
+ 176              	.LVL5:
+ 177              		.loc 1 40 26 view .LVU26
+ 178 000c 4254     		strb	r2, [r0, r1]
+ 179 000e 7047     		bx	lr
+ 180              	.LVL6:
+ 181              	.L16:
+  41:oledlib/oled_buffer.c **** 	}
+  42:oledlib/oled_buffer.c **** 	else
+  43:oledlib/oled_buffer.c **** 	{
+  44:oledlib/oled_buffer.c **** 			TempBuffer[page][x] =byte;
+ 182              		.loc 1 44 4 is_stmt 1 view .LVU27
+ 183              		.loc 1 44 24 is_stmt 0 view .LVU28
+ 184 0010 044B     		ldr	r3, .L18+8
+ 185 0012 03EBC010 		add	r0, r3, r0, lsl #7
+ 186              	.LVL7:
+ 187              		.loc 1 44 24 view .LVU29
+ 188 0016 4254     		strb	r2, [r0, r1]
+  45:oledlib/oled_buffer.c **** 	}
+  46:oledlib/oled_buffer.c **** }
+ 189              		.loc 1 46 1 view .LVU30
+ 190 0018 7047     		bx	lr
+ 191              	.L19:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s 			page 5
+
+
+ 192 001a 00BF     		.align	2
+ 193              	.L18:
+ 194 001c 00000000 		.word	.LANCHOR0
+ 195 0020 00000000 		.word	.LANCHOR1
+ 196 0024 00000000 		.word	.LANCHOR2
+ 197              		.cfi_endproc
+ 198              	.LFE4:
+ 200              		.section	.text.SetPointBuffer,"ax",%progbits
+ 201              		.align	1
+ 202              		.global	SetPointBuffer
+ 203              		.syntax unified
+ 204              		.thumb
+ 205              		.thumb_func
+ 206              		.fpu softvfp
+ 208              	SetPointBuffer:
+ 209              	.LVL8:
+ 210              	.LFB5:
+  47:oledlib/oled_buffer.c **** 
+  48:oledlib/oled_buffer.c **** void SetPointBuffer(int x,int y,int value)
+  49:oledlib/oled_buffer.c **** {
+ 211              		.loc 1 49 1 is_stmt 1 view -0
+ 212              		.cfi_startproc
+ 213              		@ args = 0, pretend = 0, frame = 0
+ 214              		@ frame_needed = 0, uses_anonymous_args = 0
+ 215              		@ link register save eliminated.
+  50:oledlib/oled_buffer.c **** 	if(x>SCREEN_COLUMN-1 ||y>SCREEN_ROW-1)   //³¬³ö·¶Î§
+ 216              		.loc 1 50 2 view .LVU32
+ 217              		.loc 1 50 4 is_stmt 0 view .LVU33
+ 218 0000 7F28     		cmp	r0, #127
+ 219 0002 62DC     		bgt	.L30
+ 220              		.loc 1 50 23 discriminator 1 view .LVU34
+ 221 0004 3F29     		cmp	r1, #63
+ 222 0006 60DC     		bgt	.L30
+  49:oledlib/oled_buffer.c **** 	if(x>SCREEN_COLUMN-1 ||y>SCREEN_ROW-1)   //³¬³ö·¶Î§
+ 223              		.loc 1 49 1 view .LVU35
+ 224 0008 10B4     		push	{r4}
+ 225              	.LCFI0:
+ 226              		.cfi_def_cfa_offset 4
+ 227              		.cfi_offset 4, -4
+  51:oledlib/oled_buffer.c **** 		return;
+  52:oledlib/oled_buffer.c **** 	if(_SelectedBuffer)
+ 228              		.loc 1 52 2 is_stmt 1 view .LVU36
+ 229              		.loc 1 52 5 is_stmt 0 view .LVU37
+ 230 000a 304B     		ldr	r3, .L37
+ 231 000c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 232              		.loc 1 52 4 view .LVU38
+ 233 000e 73B3     		cbz	r3, .L22
+  53:oledlib/oled_buffer.c **** 	{
+  54:oledlib/oled_buffer.c **** 		if(value)
+ 234              		.loc 1 54 3 is_stmt 1 view .LVU39
+ 235              		.loc 1 54 5 is_stmt 0 view .LVU40
+ 236 0010 B2B1     		cbz	r2, .L23
+  55:oledlib/oled_buffer.c **** 			ScreenBuffer[y/SCREEN_PAGE_NUM][x] |= 1<<(y%SCREEN_PAGE_NUM);
+ 237              		.loc 1 55 4 is_stmt 1 view .LVU41
+ 238              		.loc 1 55 18 is_stmt 0 view .LVU42
+ 239 0012 0B46     		mov	r3, r1
+ 240 0014 0029     		cmp	r1, #0
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s 			page 6
+
+
+ 241 0016 11DB     		blt	.L33
+ 242              	.L24:
+ 243              		.loc 1 55 18 view .LVU43
+ 244 0018 DA10     		asrs	r2, r3, #3
+ 245              	.LVL9:
+ 246              		.loc 1 55 47 view .LVU44
+ 247 001a 4B42     		rsbs	r3, r1, #0
+ 248 001c 01F00701 		and	r1, r1, #7
+ 249              	.LVL10:
+ 250              		.loc 1 55 47 view .LVU45
+ 251 0020 03F00703 		and	r3, r3, #7
+ 252 0024 58BF     		it	pl
+ 253 0026 5942     		rsbpl	r1, r3, #0
+ 254              		.loc 1 55 43 view .LVU46
+ 255 0028 0124     		movs	r4, #1
+ 256 002a 8C40     		lsls	r4, r4, r1
+ 257              		.loc 1 55 39 view .LVU47
+ 258 002c 284B     		ldr	r3, .L37+4
+ 259 002e 03EBC213 		add	r3, r3, r2, lsl #7
+ 260 0032 195C     		ldrb	r1, [r3, r0]	@ zero_extendqisi2
+ 261 0034 2143     		orrs	r1, r1, r4
+ 262 0036 1954     		strb	r1, [r3, r0]
+ 263              	.L20:
+  56:oledlib/oled_buffer.c **** 		else
+  57:oledlib/oled_buffer.c **** 			ScreenBuffer[y/SCREEN_PAGE_NUM][x] &= ~(1<<(y%SCREEN_PAGE_NUM));	
+  58:oledlib/oled_buffer.c **** 	}
+  59:oledlib/oled_buffer.c **** 	else
+  60:oledlib/oled_buffer.c **** 	{
+  61:oledlib/oled_buffer.c **** 		if(value)
+  62:oledlib/oled_buffer.c **** 			TempBuffer[y/SCREEN_PAGE_NUM][x] |= 1<<(y%SCREEN_PAGE_NUM);
+  63:oledlib/oled_buffer.c **** 		else
+  64:oledlib/oled_buffer.c **** 			TempBuffer[y/SCREEN_PAGE_NUM][x] &= ~(1<<(y%SCREEN_PAGE_NUM));	
+  65:oledlib/oled_buffer.c **** 	
+  66:oledlib/oled_buffer.c **** 	}
+  67:oledlib/oled_buffer.c **** }
+ 264              		.loc 1 67 1 view .LVU48
+ 265 0038 10BC     		pop	{r4}
+ 266              	.LCFI1:
+ 267              		.cfi_remember_state
+ 268              		.cfi_restore 4
+ 269              		.cfi_def_cfa_offset 0
+ 270 003a 7047     		bx	lr
+ 271              	.LVL11:
+ 272              	.L33:
+ 273              	.LCFI2:
+ 274              		.cfi_restore_state
+  55:oledlib/oled_buffer.c **** 			ScreenBuffer[y/SCREEN_PAGE_NUM][x] |= 1<<(y%SCREEN_PAGE_NUM);
+ 275              		.loc 1 55 18 view .LVU49
+ 276 003c CB1D     		adds	r3, r1, #7
+ 277 003e EBE7     		b	.L24
+ 278              	.L23:
+  57:oledlib/oled_buffer.c **** 	}
+ 279              		.loc 1 57 4 is_stmt 1 view .LVU50
+  57:oledlib/oled_buffer.c **** 	}
+ 280              		.loc 1 57 18 is_stmt 0 view .LVU51
+ 281 0040 0B46     		mov	r3, r1
+ 282 0042 0029     		cmp	r1, #0
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s 			page 7
+
+
+ 283 0044 11DB     		blt	.L34
+ 284              	.L25:
+ 285 0046 DA10     		asrs	r2, r3, #3
+ 286              	.LVL12:
+  57:oledlib/oled_buffer.c **** 	}
+ 287              		.loc 1 57 49 view .LVU52
+ 288 0048 4B42     		rsbs	r3, r1, #0
+ 289 004a 01F00701 		and	r1, r1, #7
+ 290              	.LVL13:
+  57:oledlib/oled_buffer.c **** 	}
+ 291              		.loc 1 57 49 view .LVU53
+ 292 004e 03F00703 		and	r3, r3, #7
+ 293 0052 58BF     		it	pl
+ 294 0054 5942     		rsbpl	r1, r3, #0
+  57:oledlib/oled_buffer.c **** 	}
+ 295              		.loc 1 57 45 view .LVU54
+ 296 0056 0124     		movs	r4, #1
+ 297 0058 8C40     		lsls	r4, r4, r1
+  57:oledlib/oled_buffer.c **** 	}
+ 298              		.loc 1 57 39 view .LVU55
+ 299 005a 1D4B     		ldr	r3, .L37+4
+ 300 005c 03EBC213 		add	r3, r3, r2, lsl #7
+ 301 0060 195C     		ldrb	r1, [r3, r0]	@ zero_extendqisi2
+ 302 0062 21EA0401 		bic	r1, r1, r4
+ 303 0066 1954     		strb	r1, [r3, r0]
+ 304 0068 E6E7     		b	.L20
+ 305              	.LVL14:
+ 306              	.L34:
+  57:oledlib/oled_buffer.c **** 	}
+ 307              		.loc 1 57 18 view .LVU56
+ 308 006a CB1D     		adds	r3, r1, #7
+ 309 006c EBE7     		b	.L25
+ 310              	.L22:
+  61:oledlib/oled_buffer.c **** 			TempBuffer[y/SCREEN_PAGE_NUM][x] |= 1<<(y%SCREEN_PAGE_NUM);
+ 311              		.loc 1 61 3 is_stmt 1 view .LVU57
+  61:oledlib/oled_buffer.c **** 			TempBuffer[y/SCREEN_PAGE_NUM][x] |= 1<<(y%SCREEN_PAGE_NUM);
+ 312              		.loc 1 61 5 is_stmt 0 view .LVU58
+ 313 006e AAB1     		cbz	r2, .L26
+  62:oledlib/oled_buffer.c **** 		else
+ 314              		.loc 1 62 4 is_stmt 1 view .LVU59
+  62:oledlib/oled_buffer.c **** 		else
+ 315              		.loc 1 62 16 is_stmt 0 view .LVU60
+ 316 0070 0B46     		mov	r3, r1
+ 317 0072 0029     		cmp	r1, #0
+ 318 0074 10DB     		blt	.L35
+ 319              	.L27:
+ 320 0076 DA10     		asrs	r2, r3, #3
+ 321              	.LVL15:
+  62:oledlib/oled_buffer.c **** 		else
+ 322              		.loc 1 62 45 view .LVU61
+ 323 0078 4B42     		rsbs	r3, r1, #0
+ 324 007a 01F00701 		and	r1, r1, #7
+ 325              	.LVL16:
+  62:oledlib/oled_buffer.c **** 		else
+ 326              		.loc 1 62 45 view .LVU62
+ 327 007e 03F00703 		and	r3, r3, #7
+ 328 0082 58BF     		it	pl
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s 			page 8
+
+
+ 329 0084 5942     		rsbpl	r1, r3, #0
+  62:oledlib/oled_buffer.c **** 		else
+ 330              		.loc 1 62 41 view .LVU63
+ 331 0086 0124     		movs	r4, #1
+ 332 0088 8C40     		lsls	r4, r4, r1
+  62:oledlib/oled_buffer.c **** 		else
+ 333              		.loc 1 62 37 view .LVU64
+ 334 008a 124B     		ldr	r3, .L37+8
+ 335 008c 03EBC213 		add	r3, r3, r2, lsl #7
+ 336 0090 195C     		ldrb	r1, [r3, r0]	@ zero_extendqisi2
+ 337 0092 2143     		orrs	r1, r1, r4
+ 338 0094 1954     		strb	r1, [r3, r0]
+ 339 0096 CFE7     		b	.L20
+ 340              	.LVL17:
+ 341              	.L35:
+  62:oledlib/oled_buffer.c **** 		else
+ 342              		.loc 1 62 16 view .LVU65
+ 343 0098 CB1D     		adds	r3, r1, #7
+ 344 009a ECE7     		b	.L27
+ 345              	.L26:
+  64:oledlib/oled_buffer.c **** 	
+ 346              		.loc 1 64 4 is_stmt 1 view .LVU66
+  64:oledlib/oled_buffer.c **** 	
+ 347              		.loc 1 64 16 is_stmt 0 view .LVU67
+ 348 009c 0B46     		mov	r3, r1
+ 349 009e 0029     		cmp	r1, #0
+ 350 00a0 11DB     		blt	.L36
+ 351              	.L28:
+ 352 00a2 DA10     		asrs	r2, r3, #3
+ 353              	.LVL18:
+  64:oledlib/oled_buffer.c **** 	
+ 354              		.loc 1 64 47 view .LVU68
+ 355 00a4 4B42     		rsbs	r3, r1, #0
+ 356 00a6 01F00701 		and	r1, r1, #7
+ 357              	.LVL19:
+  64:oledlib/oled_buffer.c **** 	
+ 358              		.loc 1 64 47 view .LVU69
+ 359 00aa 03F00703 		and	r3, r3, #7
+ 360 00ae 58BF     		it	pl
+ 361 00b0 5942     		rsbpl	r1, r3, #0
+  64:oledlib/oled_buffer.c **** 	
+ 362              		.loc 1 64 43 view .LVU70
+ 363 00b2 0124     		movs	r4, #1
+ 364 00b4 8C40     		lsls	r4, r4, r1
+  64:oledlib/oled_buffer.c **** 	
+ 365              		.loc 1 64 37 view .LVU71
+ 366 00b6 074B     		ldr	r3, .L37+8
+ 367 00b8 03EBC213 		add	r3, r3, r2, lsl #7
+ 368 00bc 195C     		ldrb	r1, [r3, r0]	@ zero_extendqisi2
+ 369 00be 21EA0401 		bic	r1, r1, r4
+ 370 00c2 1954     		strb	r1, [r3, r0]
+ 371 00c4 B8E7     		b	.L20
+ 372              	.LVL20:
+ 373              	.L36:
+  64:oledlib/oled_buffer.c **** 	
+ 374              		.loc 1 64 16 view .LVU72
+ 375 00c6 CB1D     		adds	r3, r1, #7
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s 			page 9
+
+
+ 376 00c8 EBE7     		b	.L28
+ 377              	.L30:
+ 378              	.LCFI3:
+ 379              		.cfi_def_cfa_offset 0
+ 380              		.cfi_restore 4
+  64:oledlib/oled_buffer.c **** 	
+ 381              		.loc 1 64 16 view .LVU73
+ 382 00ca 7047     		bx	lr
+ 383              	.L38:
+ 384              		.align	2
+ 385              	.L37:
+ 386 00cc 00000000 		.word	.LANCHOR0
+ 387 00d0 00000000 		.word	.LANCHOR1
+ 388 00d4 00000000 		.word	.LANCHOR2
+ 389              		.cfi_endproc
+ 390              	.LFE5:
+ 392              		.section	.text.GetPointBuffer,"ax",%progbits
+ 393              		.align	1
+ 394              		.global	GetPointBuffer
+ 395              		.syntax unified
+ 396              		.thumb
+ 397              		.thumb_func
+ 398              		.fpu softvfp
+ 400              	GetPointBuffer:
+ 401              	.LVL21:
+ 402              	.LFB6:
+  68:oledlib/oled_buffer.c **** 
+  69:oledlib/oled_buffer.c **** 
+  70:oledlib/oled_buffer.c **** unsigned char GetPointBuffer(int x,int y)
+  71:oledlib/oled_buffer.c **** {
+ 403              		.loc 1 71 1 is_stmt 1 view -0
+ 404              		.cfi_startproc
+ 405              		@ args = 0, pretend = 0, frame = 0
+ 406              		@ frame_needed = 0, uses_anonymous_args = 0
+ 407              		@ link register save eliminated.
+  72:oledlib/oled_buffer.c **** 	if(x>SCREEN_COLUMN-1 ||y>SCREEN_ROW-1)   //³¬³ö·¶Î§
+ 408              		.loc 1 72 2 view .LVU75
+ 409              		.loc 1 72 4 is_stmt 0 view .LVU76
+ 410 0000 7F28     		cmp	r0, #127
+ 411 0002 2FDC     		bgt	.L44
+ 412              		.loc 1 72 23 discriminator 1 view .LVU77
+ 413 0004 3F29     		cmp	r1, #63
+ 414 0006 2FDC     		bgt	.L45
+  73:oledlib/oled_buffer.c **** 		return 0;
+  74:oledlib/oled_buffer.c **** 	if(_SelectedBuffer)
+ 415              		.loc 1 74 2 is_stmt 1 view .LVU78
+ 416              		.loc 1 74 5 is_stmt 0 view .LVU79
+ 417 0008 184B     		ldr	r3, .L48
+ 418 000a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 419              		.loc 1 74 4 view .LVU80
+ 420 000c A3B1     		cbz	r3, .L41
+  75:oledlib/oled_buffer.c **** 		return (ScreenBuffer[y/SCREEN_PAGE_NUM][x]>>(y%SCREEN_PAGE_NUM))&0x01;
+ 421              		.loc 1 75 3 is_stmt 1 view .LVU81
+ 422              		.loc 1 75 25 is_stmt 0 view .LVU82
+ 423 000e 0B46     		mov	r3, r1
+ 424 0010 0029     		cmp	r1, #0
+ 425 0012 0FDB     		blt	.L46
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s 			page 10
+
+
+ 426              	.L42:
+ 427              		.loc 1 75 25 view .LVU83
+ 428 0014 DB10     		asrs	r3, r3, #3
+ 429              		.loc 1 75 42 view .LVU84
+ 430 0016 164A     		ldr	r2, .L48+4
+ 431 0018 02EBC313 		add	r3, r2, r3, lsl #7
+ 432 001c 185C     		ldrb	r0, [r3, r0]	@ zero_extendqisi2
+ 433              	.LVL22:
+ 434              		.loc 1 75 49 view .LVU85
+ 435 001e 4B42     		rsbs	r3, r1, #0
+ 436 0020 01F00701 		and	r1, r1, #7
+ 437              	.LVL23:
+ 438              		.loc 1 75 49 view .LVU86
+ 439 0024 03F00703 		and	r3, r3, #7
+ 440 0028 58BF     		it	pl
+ 441 002a 5942     		rsbpl	r1, r3, #0
+ 442              		.loc 1 75 45 view .LVU87
+ 443 002c 0841     		asrs	r0, r0, r1
+ 444              		.loc 1 75 67 view .LVU88
+ 445 002e 00F00100 		and	r0, r0, #1
+ 446 0032 7047     		bx	lr
+ 447              	.LVL24:
+ 448              	.L46:
+ 449              		.loc 1 75 25 view .LVU89
+ 450 0034 CB1D     		adds	r3, r1, #7
+ 451 0036 EDE7     		b	.L42
+ 452              	.L41:
+  76:oledlib/oled_buffer.c **** 	else
+  77:oledlib/oled_buffer.c **** 		return (TempBuffer[y/SCREEN_PAGE_NUM][x]>>(y%SCREEN_PAGE_NUM))&0x01;
+ 453              		.loc 1 77 3 is_stmt 1 view .LVU90
+ 454              		.loc 1 77 23 is_stmt 0 view .LVU91
+ 455 0038 0B46     		mov	r3, r1
+ 456 003a 0029     		cmp	r1, #0
+ 457 003c 10DB     		blt	.L47
+ 458              	.L43:
+ 459 003e DB10     		asrs	r3, r3, #3
+ 460              		.loc 1 77 40 view .LVU92
+ 461 0040 0C4A     		ldr	r2, .L48+8
+ 462 0042 02EBC313 		add	r3, r2, r3, lsl #7
+ 463 0046 185C     		ldrb	r0, [r3, r0]	@ zero_extendqisi2
+ 464              	.LVL25:
+ 465              		.loc 1 77 47 view .LVU93
+ 466 0048 4B42     		rsbs	r3, r1, #0
+ 467 004a 01F00701 		and	r1, r1, #7
+ 468              	.LVL26:
+ 469              		.loc 1 77 47 view .LVU94
+ 470 004e 03F00703 		and	r3, r3, #7
+ 471 0052 58BF     		it	pl
+ 472 0054 5942     		rsbpl	r1, r3, #0
+ 473              		.loc 1 77 43 view .LVU95
+ 474 0056 40FA01F1 		asr	r1, r0, r1
+ 475              		.loc 1 77 65 view .LVU96
+ 476 005a 01F00100 		and	r0, r1, #1
+ 477 005e 7047     		bx	lr
+ 478              	.LVL27:
+ 479              	.L47:
+ 480              		.loc 1 77 23 view .LVU97
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s 			page 11
+
+
+ 481 0060 CB1D     		adds	r3, r1, #7
+ 482 0062 ECE7     		b	.L43
+ 483              	.L44:
+  73:oledlib/oled_buffer.c **** 	if(_SelectedBuffer)
+ 484              		.loc 1 73 10 view .LVU98
+ 485 0064 0020     		movs	r0, #0
+ 486              	.LVL28:
+  73:oledlib/oled_buffer.c **** 	if(_SelectedBuffer)
+ 487              		.loc 1 73 10 view .LVU99
+ 488 0066 7047     		bx	lr
+ 489              	.LVL29:
+ 490              	.L45:
+  73:oledlib/oled_buffer.c **** 	if(_SelectedBuffer)
+ 491              		.loc 1 73 10 view .LVU100
+ 492 0068 0020     		movs	r0, #0
+ 493              	.LVL30:
+  78:oledlib/oled_buffer.c **** }
+ 494              		.loc 1 78 1 view .LVU101
+ 495 006a 7047     		bx	lr
+ 496              	.L49:
+ 497              		.align	2
+ 498              	.L48:
+ 499 006c 00000000 		.word	.LANCHOR0
+ 500 0070 00000000 		.word	.LANCHOR1
+ 501 0074 00000000 		.word	.LANCHOR2
+ 502              		.cfi_endproc
+ 503              	.LFE6:
+ 505              		.section	.text.UpdateScreenDisplay,"ax",%progbits
+ 506              		.align	1
+ 507              		.global	UpdateScreenDisplay
+ 508              		.syntax unified
+ 509              		.thumb
+ 510              		.thumb_func
+ 511              		.fpu softvfp
+ 513              	UpdateScreenDisplay:
+ 514              	.LFB7:
+  79:oledlib/oled_buffer.c **** 
+  80:oledlib/oled_buffer.c **** void UpdateScreenDisplay(void)
+  81:oledlib/oled_buffer.c **** {
+ 515              		.loc 1 81 1 is_stmt 1 view -0
+ 516              		.cfi_startproc
+ 517              		@ args = 0, pretend = 0, frame = 0
+ 518              		@ frame_needed = 0, uses_anonymous_args = 0
+ 519 0000 08B5     		push	{r3, lr}
+ 520              	.LCFI4:
+ 521              		.cfi_def_cfa_offset 8
+ 522              		.cfi_offset 3, -8
+ 523              		.cfi_offset 14, -4
+  82:oledlib/oled_buffer.c **** 	UpdateScreenBuffer();
+ 524              		.loc 1 82 2 view .LVU103
+ 525 0002 FFF7FEFF 		bl	UpdateScreenBuffer
+ 526              	.LVL31:
+  83:oledlib/oled_buffer.c **** }
+ 527              		.loc 1 83 1 is_stmt 0 view .LVU104
+ 528 0006 08BD     		pop	{r3, pc}
+ 529              		.cfi_endproc
+ 530              	.LFE7:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s 			page 12
+
+
+ 532              		.section	.text.ClearScreenBuffer,"ax",%progbits
+ 533              		.align	1
+ 534              		.global	ClearScreenBuffer
+ 535              		.syntax unified
+ 536              		.thumb
+ 537              		.thumb_func
+ 538              		.fpu softvfp
+ 540              	ClearScreenBuffer:
+ 541              	.LVL32:
+ 542              	.LFB8:
+  84:oledlib/oled_buffer.c **** 
+  85:oledlib/oled_buffer.c **** 
+  86:oledlib/oled_buffer.c **** void ClearScreenBuffer(unsigned char val)
+  87:oledlib/oled_buffer.c **** {
+ 543              		.loc 1 87 1 is_stmt 1 view -0
+ 544              		.cfi_startproc
+ 545              		@ args = 0, pretend = 0, frame = 0
+ 546              		@ frame_needed = 0, uses_anonymous_args = 0
+ 547              		.loc 1 87 1 is_stmt 0 view .LVU106
+ 548 0000 08B5     		push	{r3, lr}
+ 549              	.LCFI5:
+ 550              		.cfi_def_cfa_offset 8
+ 551              		.cfi_offset 3, -8
+ 552              		.cfi_offset 14, -4
+ 553 0002 0146     		mov	r1, r0
+  88:oledlib/oled_buffer.c **** 	memset(ScreenBuffer,val,sizeof(ScreenBuffer));
+ 554              		.loc 1 88 2 is_stmt 1 view .LVU107
+ 555 0004 4FF48062 		mov	r2, #1024
+ 556 0008 0148     		ldr	r0, .L54
+ 557              	.LVL33:
+ 558              		.loc 1 88 2 is_stmt 0 view .LVU108
+ 559 000a FFF7FEFF 		bl	memset
+ 560              	.LVL34:
+  89:oledlib/oled_buffer.c **** }
+ 561              		.loc 1 89 1 view .LVU109
+ 562 000e 08BD     		pop	{r3, pc}
+ 563              	.L55:
+ 564              		.align	2
+ 565              	.L54:
+ 566 0010 00000000 		.word	.LANCHOR1
+ 567              		.cfi_endproc
+ 568              	.LFE8:
+ 570              		.section	.text.ClearTempBuffer,"ax",%progbits
+ 571              		.align	1
+ 572              		.global	ClearTempBuffer
+ 573              		.syntax unified
+ 574              		.thumb
+ 575              		.thumb_func
+ 576              		.fpu softvfp
+ 578              	ClearTempBuffer:
+ 579              	.LFB9:
+  90:oledlib/oled_buffer.c **** 
+  91:oledlib/oled_buffer.c **** void ClearTempBuffer(void)
+  92:oledlib/oled_buffer.c **** {
+ 580              		.loc 1 92 1 is_stmt 1 view -0
+ 581              		.cfi_startproc
+ 582              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s 			page 13
+
+
+ 583              		@ frame_needed = 0, uses_anonymous_args = 0
+ 584 0000 08B5     		push	{r3, lr}
+ 585              	.LCFI6:
+ 586              		.cfi_def_cfa_offset 8
+ 587              		.cfi_offset 3, -8
+ 588              		.cfi_offset 14, -4
+  93:oledlib/oled_buffer.c **** 	memset(TempBuffer,0,sizeof(TempBuffer));
+ 589              		.loc 1 93 2 view .LVU111
+ 590 0002 4FF48062 		mov	r2, #1024
+ 591 0006 0021     		movs	r1, #0
+ 592 0008 0148     		ldr	r0, .L58
+ 593 000a FFF7FEFF 		bl	memset
+ 594              	.LVL35:
+  94:oledlib/oled_buffer.c **** }
+ 595              		.loc 1 94 1 is_stmt 0 view .LVU112
+ 596 000e 08BD     		pop	{r3, pc}
+ 597              	.L59:
+ 598              		.align	2
+ 599              	.L58:
+ 600 0010 00000000 		.word	.LANCHOR2
+ 601              		.cfi_endproc
+ 602              	.LFE9:
+ 604              		.section	.text.TempBufferFunc,"ax",%progbits
+ 605              		.align	1
+ 606              		.global	TempBufferFunc
+ 607              		.syntax unified
+ 608              		.thumb
+ 609              		.thumb_func
+ 610              		.fpu softvfp
+ 612              	TempBufferFunc:
+ 613              	.LVL36:
+ 614              	.LFB10:
+  95:oledlib/oled_buffer.c **** //1.TEMPBUFF_COPY_TO_SCREEN
+  96:oledlib/oled_buffer.c **** //2.TEMPBUFF_CLEAN
+  97:oledlib/oled_buffer.c **** //3.TEMPBUFF_COVER_H
+  98:oledlib/oled_buffer.c **** //4.TEMPBUFF_COVER_L
+  99:oledlib/oled_buffer.c **** void TempBufferFunc(int func)
+ 100:oledlib/oled_buffer.c **** {
+ 615              		.loc 1 100 1 is_stmt 1 view -0
+ 616              		.cfi_startproc
+ 617              		@ args = 0, pretend = 0, frame = 0
+ 618              		@ frame_needed = 0, uses_anonymous_args = 0
+ 619              		.loc 1 100 1 is_stmt 0 view .LVU114
+ 620 0000 10B5     		push	{r4, lr}
+ 621              	.LCFI7:
+ 622              		.cfi_def_cfa_offset 8
+ 623              		.cfi_offset 4, -8
+ 624              		.cfi_offset 14, -4
+ 101:oledlib/oled_buffer.c **** 	int i,j;
+ 625              		.loc 1 101 2 is_stmt 1 view .LVU115
+ 102:oledlib/oled_buffer.c **** 	switch (func)
+ 626              		.loc 1 102 2 view .LVU116
+ 627 0002 0328     		cmp	r0, #3
+ 628 0004 09D8     		bhi	.L60
+ 629 0006 DFE800F0 		tbb	[pc, r0]
+ 630              	.L63:
+ 631 000a 02       		.byte	(.L66-.L63)/2
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s 			page 14
+
+
+ 632 000b 09       		.byte	(.L65-.L63)/2
+ 633 000c 33       		.byte	(.L71-.L63)/2
+ 634 000d 1E       		.byte	(.L72-.L63)/2
+ 635              		.p2align 1
+ 636              	.L66:
+ 103:oledlib/oled_buffer.c **** 	{
+ 104:oledlib/oled_buffer.c **** 		case TEMPBUFF_COPY_TO_SCREEN:
+ 105:oledlib/oled_buffer.c **** 			memcpy(ScreenBuffer,TempBuffer,BUFFERSIZE);
+ 637              		.loc 1 105 4 view .LVU117
+ 638 000e 4FF48062 		mov	r2, #1024
+ 639 0012 1849     		ldr	r1, .L78
+ 640 0014 1848     		ldr	r0, .L78+4
+ 641              	.LVL37:
+ 642              		.loc 1 105 4 is_stmt 0 view .LVU118
+ 643 0016 FFF7FEFF 		bl	memcpy
+ 644              	.LVL38:
+ 106:oledlib/oled_buffer.c **** 			break;
+ 645              		.loc 1 106 4 is_stmt 1 view .LVU119
+ 646              	.L60:
+ 107:oledlib/oled_buffer.c **** 		case TEMPBUFF_CLEAN:
+ 108:oledlib/oled_buffer.c **** 			ClearTempBuffer();
+ 109:oledlib/oled_buffer.c **** 			break;
+ 110:oledlib/oled_buffer.c **** 		case TEMPBUFF_COVER_H:
+ 111:oledlib/oled_buffer.c **** 				for(i=0;i<8;i++)
+ 112:oledlib/oled_buffer.c **** 					for(j=0;j<128;j++)
+ 113:oledlib/oled_buffer.c **** 						ScreenBuffer[i][j] |=TempBuffer[i][j];
+ 114:oledlib/oled_buffer.c **** 				break;
+ 115:oledlib/oled_buffer.c **** 		case TEMPBUFF_COVER_L:
+ 116:oledlib/oled_buffer.c **** 				for(i=0;i<8;i++)
+ 117:oledlib/oled_buffer.c **** 					for(j=0;j<128;j++)
+ 118:oledlib/oled_buffer.c **** 						ScreenBuffer[i][j] &=~TempBuffer[i][j];
+ 119:oledlib/oled_buffer.c **** 				break;
+ 120:oledlib/oled_buffer.c **** 		default:
+ 121:oledlib/oled_buffer.c **** 			break;
+ 122:oledlib/oled_buffer.c **** 	
+ 123:oledlib/oled_buffer.c **** 	
+ 124:oledlib/oled_buffer.c **** 	}
+ 125:oledlib/oled_buffer.c **** 	
+ 126:oledlib/oled_buffer.c **** }
+ 647              		.loc 1 126 1 is_stmt 0 view .LVU120
+ 648 001a 10BD     		pop	{r4, pc}
+ 649              	.LVL39:
+ 650              	.L65:
+ 108:oledlib/oled_buffer.c **** 			break;
+ 651              		.loc 1 108 4 is_stmt 1 view .LVU121
+ 652 001c FFF7FEFF 		bl	ClearTempBuffer
+ 653              	.LVL40:
+ 109:oledlib/oled_buffer.c **** 		case TEMPBUFF_COVER_H:
+ 654              		.loc 1 109 4 view .LVU122
+ 655 0020 FBE7     		b	.L60
+ 656              	.LVL41:
+ 657              	.L76:
+ 111:oledlib/oled_buffer.c **** 					for(j=0;j<128;j++)
+ 658              		.loc 1 111 17 discriminator 2 view .LVU123
+ 111:oledlib/oled_buffer.c **** 					for(j=0;j<128;j++)
+ 659              		.loc 1 111 18 is_stmt 0 discriminator 2 view .LVU124
+ 660 0022 0130     		adds	r0, r0, #1
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s 			page 15
+
+
+ 661              	.LVL42:
+ 662              	.L62:
+ 111:oledlib/oled_buffer.c **** 					for(j=0;j<128;j++)
+ 663              		.loc 1 111 13 is_stmt 1 discriminator 1 view .LVU125
+ 111:oledlib/oled_buffer.c **** 					for(j=0;j<128;j++)
+ 664              		.loc 1 111 5 is_stmt 0 discriminator 1 view .LVU126
+ 665 0024 0728     		cmp	r0, #7
+ 666 0026 F8DC     		bgt	.L60
+ 112:oledlib/oled_buffer.c **** 						ScreenBuffer[i][j] |=TempBuffer[i][j];
+ 667              		.loc 1 112 11 view .LVU127
+ 668 0028 0023     		movs	r3, #0
+ 669              	.L68:
+ 670              	.LVL43:
+ 112:oledlib/oled_buffer.c **** 						ScreenBuffer[i][j] |=TempBuffer[i][j];
+ 671              		.loc 1 112 14 is_stmt 1 discriminator 1 view .LVU128
+ 112:oledlib/oled_buffer.c **** 						ScreenBuffer[i][j] |=TempBuffer[i][j];
+ 672              		.loc 1 112 6 is_stmt 0 discriminator 1 view .LVU129
+ 673 002a 7F2B     		cmp	r3, #127
+ 674 002c F9DC     		bgt	.L76
+ 113:oledlib/oled_buffer.c **** 				break;
+ 675              		.loc 1 113 7 is_stmt 1 discriminator 3 view .LVU130
+ 113:oledlib/oled_buffer.c **** 				break;
+ 676              		.loc 1 113 41 is_stmt 0 discriminator 3 view .LVU131
+ 677 002e 114A     		ldr	r2, .L78
+ 678 0030 02EBC012 		add	r2, r2, r0, lsl #7
+ 679 0034 D15C     		ldrb	r1, [r2, r3]	@ zero_extendqisi2
+ 113:oledlib/oled_buffer.c **** 				break;
+ 680              		.loc 1 113 26 discriminator 3 view .LVU132
+ 681 0036 104A     		ldr	r2, .L78+4
+ 682 0038 02EBC012 		add	r2, r2, r0, lsl #7
+ 683 003c D45C     		ldrb	r4, [r2, r3]	@ zero_extendqisi2
+ 684 003e 2143     		orrs	r1, r1, r4
+ 685 0040 D154     		strb	r1, [r2, r3]
+ 112:oledlib/oled_buffer.c **** 						ScreenBuffer[i][j] |=TempBuffer[i][j];
+ 686              		.loc 1 112 20 is_stmt 1 discriminator 3 view .LVU133
+ 112:oledlib/oled_buffer.c **** 						ScreenBuffer[i][j] |=TempBuffer[i][j];
+ 687              		.loc 1 112 21 is_stmt 0 discriminator 3 view .LVU134
+ 688 0042 0133     		adds	r3, r3, #1
+ 689              	.LVL44:
+ 112:oledlib/oled_buffer.c **** 						ScreenBuffer[i][j] |=TempBuffer[i][j];
+ 690              		.loc 1 112 21 discriminator 3 view .LVU135
+ 691 0044 F1E7     		b	.L68
+ 692              	.LVL45:
+ 693              	.L72:
+ 112:oledlib/oled_buffer.c **** 						ScreenBuffer[i][j] |=TempBuffer[i][j];
+ 694              		.loc 1 112 11 view .LVU136
+ 695 0046 0020     		movs	r0, #0
+ 696              	.LVL46:
+ 112:oledlib/oled_buffer.c **** 						ScreenBuffer[i][j] |=TempBuffer[i][j];
+ 697              		.loc 1 112 11 view .LVU137
+ 698 0048 ECE7     		b	.L62
+ 699              	.LVL47:
+ 700              	.L77:
+ 116:oledlib/oled_buffer.c **** 					for(j=0;j<128;j++)
+ 701              		.loc 1 116 17 is_stmt 1 discriminator 2 view .LVU138
+ 116:oledlib/oled_buffer.c **** 					for(j=0;j<128;j++)
+ 702              		.loc 1 116 18 is_stmt 0 discriminator 2 view .LVU139
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s 			page 16
+
+
+ 703 004a 0130     		adds	r0, r0, #1
+ 704              	.LVL48:
+ 705              	.L64:
+ 116:oledlib/oled_buffer.c **** 					for(j=0;j<128;j++)
+ 706              		.loc 1 116 13 is_stmt 1 discriminator 1 view .LVU140
+ 116:oledlib/oled_buffer.c **** 					for(j=0;j<128;j++)
+ 707              		.loc 1 116 5 is_stmt 0 discriminator 1 view .LVU141
+ 708 004c 0728     		cmp	r0, #7
+ 709 004e E4DC     		bgt	.L60
+ 117:oledlib/oled_buffer.c **** 						ScreenBuffer[i][j] &=~TempBuffer[i][j];
+ 710              		.loc 1 117 11 view .LVU142
+ 711 0050 0023     		movs	r3, #0
+ 712              	.L70:
+ 713              	.LVL49:
+ 117:oledlib/oled_buffer.c **** 						ScreenBuffer[i][j] &=~TempBuffer[i][j];
+ 714              		.loc 1 117 14 is_stmt 1 discriminator 1 view .LVU143
+ 117:oledlib/oled_buffer.c **** 						ScreenBuffer[i][j] &=~TempBuffer[i][j];
+ 715              		.loc 1 117 6 is_stmt 0 discriminator 1 view .LVU144
+ 716 0052 7F2B     		cmp	r3, #127
+ 717 0054 F9DC     		bgt	.L77
+ 118:oledlib/oled_buffer.c **** 				break;
+ 718              		.loc 1 118 7 is_stmt 1 discriminator 3 view .LVU145
+ 118:oledlib/oled_buffer.c **** 				break;
+ 719              		.loc 1 118 42 is_stmt 0 discriminator 3 view .LVU146
+ 720 0056 074A     		ldr	r2, .L78
+ 721 0058 02EBC012 		add	r2, r2, r0, lsl #7
+ 722 005c D45C     		ldrb	r4, [r2, r3]	@ zero_extendqisi2
+ 118:oledlib/oled_buffer.c **** 				break;
+ 723              		.loc 1 118 26 discriminator 3 view .LVU147
+ 724 005e 064A     		ldr	r2, .L78+4
+ 725 0060 02EBC012 		add	r2, r2, r0, lsl #7
+ 726 0064 D15C     		ldrb	r1, [r2, r3]	@ zero_extendqisi2
+ 727 0066 21EA0401 		bic	r1, r1, r4
+ 728 006a D154     		strb	r1, [r2, r3]
+ 117:oledlib/oled_buffer.c **** 						ScreenBuffer[i][j] &=~TempBuffer[i][j];
+ 729              		.loc 1 117 20 is_stmt 1 discriminator 3 view .LVU148
+ 117:oledlib/oled_buffer.c **** 						ScreenBuffer[i][j] &=~TempBuffer[i][j];
+ 730              		.loc 1 117 21 is_stmt 0 discriminator 3 view .LVU149
+ 731 006c 0133     		adds	r3, r3, #1
+ 732              	.LVL50:
+ 117:oledlib/oled_buffer.c **** 						ScreenBuffer[i][j] &=~TempBuffer[i][j];
+ 733              		.loc 1 117 21 discriminator 3 view .LVU150
+ 734 006e F0E7     		b	.L70
+ 735              	.LVL51:
+ 736              	.L71:
+ 117:oledlib/oled_buffer.c **** 						ScreenBuffer[i][j] &=~TempBuffer[i][j];
+ 737              		.loc 1 117 11 view .LVU151
+ 738 0070 0020     		movs	r0, #0
+ 739              	.LVL52:
+ 117:oledlib/oled_buffer.c **** 						ScreenBuffer[i][j] &=~TempBuffer[i][j];
+ 740              		.loc 1 117 11 view .LVU152
+ 741 0072 EBE7     		b	.L64
+ 742              	.L79:
+ 743              		.align	2
+ 744              	.L78:
+ 745 0074 00000000 		.word	.LANCHOR2
+ 746 0078 00000000 		.word	.LANCHOR1
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s 			page 17
+
+
+ 747              		.cfi_endproc
+ 748              	.LFE10:
+ 750              		.global	TempBuffer
+ 751              		.global	ScreenBuffer
+ 752              		.section	.bss.ScreenBuffer,"aw",%nobits
+ 753              		.align	2
+ 754              		.set	.LANCHOR1,. + 0
+ 757              	ScreenBuffer:
+ 758 0000 00000000 		.space	1024
+ 758      00000000 
+ 758      00000000 
+ 758      00000000 
+ 758      00000000 
+ 759              		.section	.bss.TempBuffer,"aw",%nobits
+ 760              		.align	2
+ 761              		.set	.LANCHOR2,. + 0
+ 764              	TempBuffer:
+ 765 0000 00000000 		.space	1024
+ 765      00000000 
+ 765      00000000 
+ 765      00000000 
+ 765      00000000 
+ 766              		.section	.data._SelectedBuffer,"aw"
+ 767              		.set	.LANCHOR0,. + 0
+ 770              	_SelectedBuffer:
+ 771 0000 01       		.byte	1
+ 772              		.text
+ 773              	.Letext0:
+ 774              		.file 2 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\sys\\lock.h"
+ 775              		.file 3 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\sys\\_types.h"
+ 776              		.file 4 "d:\\work_project\\9 2019-q4-major\\lib\\gcc\\arm-none-eabi\\9.2.1\\include\\stddef.h"
+ 777              		.file 5 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\sys\\reent.h"
+ 778              		.file 6 "<built-in>"
+ 779              		.file 7 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\string.h"
+ 780              		.file 8 "oledlib/oled_buffer.h"
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s 			page 18
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 oled_buffer.c
+C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s:16     .text.SetTempBuffer:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s:24     .text.SetTempBuffer:00000000 SetTempBuffer
+C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s:42     .text.SetTempBuffer:00000008 $d
+C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s:47     .text.SetScreenBuffer:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s:54     .text.SetScreenBuffer:00000000 SetScreenBuffer
+C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s:71     .text.SetScreenBuffer:00000008 $d
+C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s:76     .text.GetSelectedBuffer:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s:83     .text.GetSelectedBuffer:00000000 GetSelectedBuffer
+C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s:98     .text.GetSelectedBuffer:00000008 $d
+C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s:103    .text.ReadByteBuffer:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s:110    .text.ReadByteBuffer:00000000 ReadByteBuffer
+C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s:144    .text.ReadByteBuffer:0000001c $d
+C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s:151    .text.WriteByteBuffer:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s:158    .text.WriteByteBuffer:00000000 WriteByteBuffer
+C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s:194    .text.WriteByteBuffer:0000001c $d
+C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s:201    .text.SetPointBuffer:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s:208    .text.SetPointBuffer:00000000 SetPointBuffer
+C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s:386    .text.SetPointBuffer:000000cc $d
+C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s:393    .text.GetPointBuffer:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s:400    .text.GetPointBuffer:00000000 GetPointBuffer
+C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s:499    .text.GetPointBuffer:0000006c $d
+C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s:506    .text.UpdateScreenDisplay:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s:513    .text.UpdateScreenDisplay:00000000 UpdateScreenDisplay
+C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s:533    .text.ClearScreenBuffer:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s:540    .text.ClearScreenBuffer:00000000 ClearScreenBuffer
+C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s:566    .text.ClearScreenBuffer:00000010 $d
+C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s:571    .text.ClearTempBuffer:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s:578    .text.ClearTempBuffer:00000000 ClearTempBuffer
+C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s:600    .text.ClearTempBuffer:00000010 $d
+C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s:605    .text.TempBufferFunc:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s:612    .text.TempBufferFunc:00000000 TempBufferFunc
+C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s:631    .text.TempBufferFunc:0000000a $d
+C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s:635    .text.TempBufferFunc:0000000e $t
+C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s:745    .text.TempBufferFunc:00000074 $d
+C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s:764    .bss.TempBuffer:00000000 TempBuffer
+C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s:757    .bss.ScreenBuffer:00000000 ScreenBuffer
+C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s:753    .bss.ScreenBuffer:00000000 $d
+C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s:760    .bss.TempBuffer:00000000 $d
+C:\Users\GKQ\AppData\Local\Temp\ccN0ndRa.s:770    .data._SelectedBuffer:00000000 _SelectedBuffer
+
+UNDEFINED SYMBOLS
+UpdateScreenBuffer
+memset
+memcpy

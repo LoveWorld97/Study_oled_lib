@@ -1,0 +1,687 @@
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccoaxDqj.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"oled_init.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.u8x8_byte_hw_i2c,"ax",%progbits
+  16              		.align	1
+  17              		.global	u8x8_byte_hw_i2c
+  18              		.arch armv7-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu softvfp
+  24              	u8x8_byte_hw_i2c:
+  25              	.LVL0:
+  26              	.LFB65:
+  27              		.file 1 "Core/Src/oled_init.c"
+   1:Core/Src/oled_init.c **** #include "oled_init.h"
+   2:Core/Src/oled_init.c **** 
+   3:Core/Src/oled_init.c **** uint8_t u8x8_byte_hw_i2c(u8x8_t *u8x8, uint8_t msg, uint8_t arg_int, void *arg_ptr)
+   4:Core/Src/oled_init.c **** {
+  28              		.loc 1 4 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		.loc 1 4 1 is_stmt 0 view .LVU1
+  33 0000 10B5     		push	{r4, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 8
+  36              		.cfi_offset 4, -8
+  37              		.cfi_offset 14, -4
+  38 0002 82B0     		sub	sp, sp, #8
+  39              	.LCFI1:
+  40              		.cfi_def_cfa_offset 16
+   5:Core/Src/oled_init.c ****     /* u8g2/u8x8 will never send more than 32 bytes between START_TRANSFER and END_TRANSFER */
+   6:Core/Src/oled_init.c ****     static uint8_t buffer[128];
+  41              		.loc 1 6 5 is_stmt 1 view .LVU2
+   7:Core/Src/oled_init.c ****     static uint8_t buf_idx;
+  42              		.loc 1 7 5 view .LVU3
+   8:Core/Src/oled_init.c ****     uint8_t *data;
+  43              		.loc 1 8 5 view .LVU4
+   9:Core/Src/oled_init.c **** 
+  10:Core/Src/oled_init.c ****     switch (msg)
+  44              		.loc 1 10 5 view .LVU5
+  45 0004 1439     		subs	r1, r1, #20
+  46              	.LVL1:
+  47              		.loc 1 10 5 is_stmt 0 view .LVU6
+  48 0006 0C29     		cmp	r1, #12
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccoaxDqj.s 			page 2
+
+
+  49 0008 08D8     		bhi	.L2
+  50 000a DFE801F0 		tbb	[pc, r1]
+  51              	.LVL2:
+  52              	.L4:
+  53 000e 0A       		.byte	(.L8-.L4)/2
+  54 000f 07       		.byte	(.L2-.L4)/2
+  55 0010 07       		.byte	(.L2-.L4)/2
+  56 0011 1D       		.byte	(.L7-.L4)/2
+  57 0012 0E       		.byte	(.L6-.L4)/2
+  58 0013 21       		.byte	(.L5-.L4)/2
+  59 0014 07       		.byte	(.L2-.L4)/2
+  60 0015 07       		.byte	(.L2-.L4)/2
+  61 0016 07       		.byte	(.L2-.L4)/2
+  62 0017 07       		.byte	(.L2-.L4)/2
+  63 0018 07       		.byte	(.L2-.L4)/2
+  64 0019 07       		.byte	(.L2-.L4)/2
+  65 001a 2E       		.byte	(.L10-.L4)/2
+  66 001b 00       		.p2align 1
+  67              	.L2:
+  11:Core/Src/oled_init.c ****     {
+  12:Core/Src/oled_init.c ****     case U8X8_MSG_BYTE_INIT:
+  13:Core/Src/oled_init.c ****     {
+  14:Core/Src/oled_init.c ****         /* add your custom code to init i2c subsystem */
+  15:Core/Src/oled_init.c ****         MX_I2C1_Init(); //I2C初始化
+  16:Core/Src/oled_init.c ****     }
+  17:Core/Src/oled_init.c ****     break;
+  18:Core/Src/oled_init.c **** 
+  19:Core/Src/oled_init.c ****     case U8X8_MSG_BYTE_START_TRANSFER:
+  20:Core/Src/oled_init.c ****     {
+  21:Core/Src/oled_init.c ****         buf_idx = 0;
+  22:Core/Src/oled_init.c ****     }
+  23:Core/Src/oled_init.c ****     break;
+  24:Core/Src/oled_init.c **** 
+  25:Core/Src/oled_init.c ****     case U8X8_MSG_BYTE_SEND:
+  26:Core/Src/oled_init.c ****     {
+  27:Core/Src/oled_init.c ****         data = (uint8_t *)arg_ptr;
+  28:Core/Src/oled_init.c **** 
+  29:Core/Src/oled_init.c ****         while (arg_int > 0)
+  30:Core/Src/oled_init.c ****         {
+  31:Core/Src/oled_init.c ****             buffer[buf_idx++] = *data;
+  32:Core/Src/oled_init.c ****             data++;
+  33:Core/Src/oled_init.c ****             arg_int--;
+  34:Core/Src/oled_init.c ****         }
+  35:Core/Src/oled_init.c ****     }
+  36:Core/Src/oled_init.c ****     break;
+  37:Core/Src/oled_init.c **** 
+  38:Core/Src/oled_init.c ****     case U8X8_MSG_BYTE_END_TRANSFER:
+  39:Core/Src/oled_init.c ****     {
+  40:Core/Src/oled_init.c ****         if (HAL_I2C_Master_Transmit(&hi2c1, (OLED_ADDRESS), buffer, buf_idx, 1000) != HAL_OK)
+  41:Core/Src/oled_init.c ****             return 0;
+  68              		.loc 1 41 20 view .LVU7
+  69 001c 0020     		movs	r0, #0
+  70              	.LVL3:
+  71              	.L3:
+  42:Core/Src/oled_init.c ****     }
+  43:Core/Src/oled_init.c ****     break;
+  44:Core/Src/oled_init.c **** 
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccoaxDqj.s 			page 3
+
+
+  45:Core/Src/oled_init.c ****     case U8X8_MSG_BYTE_SET_DC:
+  46:Core/Src/oled_init.c ****         break;
+  47:Core/Src/oled_init.c **** 
+  48:Core/Src/oled_init.c ****     default:
+  49:Core/Src/oled_init.c ****         return 0;
+  50:Core/Src/oled_init.c ****     }
+  51:Core/Src/oled_init.c **** 
+  52:Core/Src/oled_init.c ****     return 1;
+  53:Core/Src/oled_init.c **** }
+  72              		.loc 1 53 1 view .LVU8
+  73 001e 02B0     		add	sp, sp, #8
+  74              	.LCFI2:
+  75              		.cfi_remember_state
+  76              		.cfi_def_cfa_offset 8
+  77              		@ sp needed
+  78 0020 10BD     		pop	{r4, pc}
+  79              	.LVL4:
+  80              	.L8:
+  81              	.LCFI3:
+  82              		.cfi_restore_state
+  15:Core/Src/oled_init.c ****     }
+  83              		.loc 1 15 9 is_stmt 1 view .LVU9
+  84 0022 FFF7FEFF 		bl	MX_I2C1_Init
+  85              	.LVL5:
+  17:Core/Src/oled_init.c **** 
+  86              		.loc 1 17 5 view .LVU10
+  52:Core/Src/oled_init.c **** }
+  87              		.loc 1 52 12 is_stmt 0 view .LVU11
+  88 0026 0120     		movs	r0, #1
+  17:Core/Src/oled_init.c **** 
+  89              		.loc 1 17 5 view .LVU12
+  90 0028 F9E7     		b	.L3
+  91              	.LVL6:
+  92              	.L6:
+  21:Core/Src/oled_init.c ****     }
+  93              		.loc 1 21 9 is_stmt 1 view .LVU13
+  21:Core/Src/oled_init.c ****     }
+  94              		.loc 1 21 17 is_stmt 0 view .LVU14
+  95 002a 124B     		ldr	r3, .L13
+  96              	.LVL7:
+  21:Core/Src/oled_init.c ****     }
+  97              		.loc 1 21 17 view .LVU15
+  98 002c 0022     		movs	r2, #0
+  99              	.LVL8:
+  21:Core/Src/oled_init.c ****     }
+ 100              		.loc 1 21 17 view .LVU16
+ 101 002e 1A70     		strb	r2, [r3]
+  23:Core/Src/oled_init.c **** 
+ 102              		.loc 1 23 5 is_stmt 1 view .LVU17
+  52:Core/Src/oled_init.c **** }
+ 103              		.loc 1 52 12 is_stmt 0 view .LVU18
+ 104 0030 0120     		movs	r0, #1
+  23:Core/Src/oled_init.c **** 
+ 105              		.loc 1 23 5 view .LVU19
+ 106 0032 F4E7     		b	.L3
+ 107              	.LVL9:
+ 108              	.L9:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccoaxDqj.s 			page 4
+
+
+  31:Core/Src/oled_init.c ****             data++;
+ 109              		.loc 1 31 13 is_stmt 1 view .LVU20
+  31:Core/Src/oled_init.c ****             data++;
+ 110              		.loc 1 31 27 is_stmt 0 view .LVU21
+ 111 0034 0F48     		ldr	r0, .L13
+ 112 0036 0178     		ldrb	r1, [r0]	@ zero_extendqisi2
+ 113 0038 4C1C     		adds	r4, r1, #1
+ 114 003a 0470     		strb	r4, [r0]
+  31:Core/Src/oled_init.c ****             data++;
+ 115              		.loc 1 31 33 view .LVU22
+ 116 003c 13F8014B 		ldrb	r4, [r3], #1	@ zero_extendqisi2
+ 117              	.LVL10:
+  31:Core/Src/oled_init.c ****             data++;
+ 118              		.loc 1 31 31 view .LVU23
+ 119 0040 0D48     		ldr	r0, .L13+4
+ 120 0042 4454     		strb	r4, [r0, r1]
+  32:Core/Src/oled_init.c ****             arg_int--;
+ 121              		.loc 1 32 13 is_stmt 1 view .LVU24
+ 122              	.LVL11:
+  33:Core/Src/oled_init.c ****         }
+ 123              		.loc 1 33 13 view .LVU25
+  33:Core/Src/oled_init.c ****         }
+ 124              		.loc 1 33 20 is_stmt 0 view .LVU26
+ 125 0044 013A     		subs	r2, r2, #1
+ 126              	.LVL12:
+  33:Core/Src/oled_init.c ****         }
+ 127              		.loc 1 33 20 view .LVU27
+ 128 0046 D2B2     		uxtb	r2, r2
+ 129              	.LVL13:
+ 130              	.L7:
+  29:Core/Src/oled_init.c ****         {
+ 131              		.loc 1 29 15 is_stmt 1 view .LVU28
+ 132 0048 002A     		cmp	r2, #0
+ 133 004a F3D1     		bne	.L9
+  52:Core/Src/oled_init.c **** }
+ 134              		.loc 1 52 12 is_stmt 0 view .LVU29
+ 135 004c 0120     		movs	r0, #1
+ 136 004e E6E7     		b	.L3
+ 137              	.LVL14:
+ 138              	.L5:
+  40:Core/Src/oled_init.c ****             return 0;
+ 139              		.loc 1 40 9 is_stmt 1 view .LVU30
+  40:Core/Src/oled_init.c ****             return 0;
+ 140              		.loc 1 40 13 is_stmt 0 view .LVU31
+ 141 0050 4FF47A73 		mov	r3, #1000
+ 142              	.LVL15:
+  40:Core/Src/oled_init.c ****             return 0;
+ 143              		.loc 1 40 13 view .LVU32
+ 144 0054 0093     		str	r3, [sp]
+ 145 0056 074B     		ldr	r3, .L13
+ 146 0058 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 147 005a 074A     		ldr	r2, .L13+4
+ 148              	.LVL16:
+  40:Core/Src/oled_init.c ****             return 0;
+ 149              		.loc 1 40 13 view .LVU33
+ 150 005c 7821     		movs	r1, #120
+ 151 005e 0748     		ldr	r0, .L13+8
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccoaxDqj.s 			page 5
+
+
+ 152 0060 FFF7FEFF 		bl	HAL_I2C_Master_Transmit
+ 153              	.LVL17:
+  40:Core/Src/oled_init.c ****             return 0;
+ 154              		.loc 1 40 12 view .LVU34
+ 155 0064 18B9     		cbnz	r0, .L11
+  52:Core/Src/oled_init.c **** }
+ 156              		.loc 1 52 12 view .LVU35
+ 157 0066 0120     		movs	r0, #1
+ 158 0068 D9E7     		b	.L3
+ 159              	.LVL18:
+ 160              	.L10:
+  52:Core/Src/oled_init.c **** }
+ 161              		.loc 1 52 12 view .LVU36
+ 162 006a 0120     		movs	r0, #1
+ 163 006c D7E7     		b	.L3
+ 164              	.LVL19:
+ 165              	.L11:
+  41:Core/Src/oled_init.c ****     }
+ 166              		.loc 1 41 20 view .LVU37
+ 167 006e 0020     		movs	r0, #0
+ 168 0070 D5E7     		b	.L3
+ 169              	.L14:
+ 170 0072 00BF     		.align	2
+ 171              	.L13:
+ 172 0074 00000000 		.word	.LANCHOR0
+ 173 0078 00000000 		.word	.LANCHOR1
+ 174 007c 00000000 		.word	hi2c1
+ 175              		.cfi_endproc
+ 176              	.LFE65:
+ 178              		.section	.text.u8x8_gpio_and_delay,"ax",%progbits
+ 179              		.align	1
+ 180              		.global	u8x8_gpio_and_delay
+ 181              		.syntax unified
+ 182              		.thumb
+ 183              		.thumb_func
+ 184              		.fpu softvfp
+ 186              	u8x8_gpio_and_delay:
+ 187              	.LVL20:
+ 188              	.LFB67:
+  54:Core/Src/oled_init.c **** 
+  55:Core/Src/oled_init.c **** void delay_us(uint32_t time)
+  56:Core/Src/oled_init.c **** {
+  57:Core/Src/oled_init.c ****     uint32_t i = 8 * time;
+  58:Core/Src/oled_init.c ****     while (i--)
+  59:Core/Src/oled_init.c ****         ;
+  60:Core/Src/oled_init.c **** }
+  61:Core/Src/oled_init.c **** 
+  62:Core/Src/oled_init.c **** uint8_t u8x8_gpio_and_delay(u8x8_t *u8x8, uint8_t msg, uint8_t arg_int, void *arg_ptr)
+  63:Core/Src/oled_init.c **** {
+ 189              		.loc 1 63 1 is_stmt 1 view -0
+ 190              		.cfi_startproc
+ 191              		@ args = 0, pretend = 0, frame = 0
+ 192              		@ frame_needed = 0, uses_anonymous_args = 0
+ 193              		.loc 1 63 1 is_stmt 0 view .LVU39
+ 194 0000 08B5     		push	{r3, lr}
+ 195              	.LCFI4:
+ 196              		.cfi_def_cfa_offset 8
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccoaxDqj.s 			page 6
+
+
+ 197              		.cfi_offset 3, -8
+ 198              		.cfi_offset 14, -4
+  64:Core/Src/oled_init.c ****     switch (msg)
+ 199              		.loc 1 64 5 is_stmt 1 view .LVU40
+ 200 0002 2939     		subs	r1, r1, #41
+ 201              	.LVL21:
+ 202              		.loc 1 64 5 is_stmt 0 view .LVU41
+ 203 0004 2A29     		cmp	r1, #42
+ 204 0006 36D8     		bhi	.L16
+ 205 0008 DFE801F0 		tbb	[pc, r1]
+ 206              	.LVL22:
+ 207              	.L18:
+ 208 000c 21       		.byte	(.L25-.L18)/2
+ 209 000d 19       		.byte	(.L27-.L18)/2
+ 210 000e 16       		.byte	(.L23-.L18)/2
+ 211 000f 35       		.byte	(.L16-.L18)/2
+ 212 0010 17       		.byte	(.L22-.L18)/2
+ 213 0011 35       		.byte	(.L16-.L18)/2
+ 214 0012 35       		.byte	(.L16-.L18)/2
+ 215 0013 35       		.byte	(.L16-.L18)/2
+ 216 0014 35       		.byte	(.L16-.L18)/2
+ 217 0015 35       		.byte	(.L16-.L18)/2
+ 218 0016 35       		.byte	(.L16-.L18)/2
+ 219 0017 35       		.byte	(.L16-.L18)/2
+ 220 0018 35       		.byte	(.L16-.L18)/2
+ 221 0019 35       		.byte	(.L16-.L18)/2
+ 222 001a 35       		.byte	(.L16-.L18)/2
+ 223 001b 35       		.byte	(.L16-.L18)/2
+ 224 001c 35       		.byte	(.L16-.L18)/2
+ 225 001d 35       		.byte	(.L16-.L18)/2
+ 226 001e 35       		.byte	(.L16-.L18)/2
+ 227 001f 35       		.byte	(.L16-.L18)/2
+ 228 0020 35       		.byte	(.L16-.L18)/2
+ 229 0021 35       		.byte	(.L16-.L18)/2
+ 230 0022 35       		.byte	(.L16-.L18)/2
+ 231 0023 35       		.byte	(.L16-.L18)/2
+ 232 0024 35       		.byte	(.L16-.L18)/2
+ 233 0025 35       		.byte	(.L16-.L18)/2
+ 234 0026 35       		.byte	(.L16-.L18)/2
+ 235 0027 35       		.byte	(.L16-.L18)/2
+ 236 0028 35       		.byte	(.L16-.L18)/2
+ 237 0029 35       		.byte	(.L16-.L18)/2
+ 238 002a 35       		.byte	(.L16-.L18)/2
+ 239 002b 35       		.byte	(.L16-.L18)/2
+ 240 002c 35       		.byte	(.L16-.L18)/2
+ 241 002d 35       		.byte	(.L16-.L18)/2
+ 242 002e 35       		.byte	(.L16-.L18)/2
+ 243 002f 17       		.byte	(.L22-.L18)/2
+ 244 0030 17       		.byte	(.L22-.L18)/2
+ 245 0031 35       		.byte	(.L16-.L18)/2
+ 246 0032 35       		.byte	(.L16-.L18)/2
+ 247 0033 25       		.byte	(.L21-.L18)/2
+ 248 0034 29       		.byte	(.L20-.L18)/2
+ 249 0035 2D       		.byte	(.L19-.L18)/2
+ 250 0036 31       		.byte	(.L17-.L18)/2
+ 251 0037 00       		.p2align 1
+ 252              	.L23:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccoaxDqj.s 			page 7
+
+
+  65:Core/Src/oled_init.c ****     {
+  66:Core/Src/oled_init.c ****     case U8X8_MSG_DELAY_100NANO: // delay arg_int * 100 nano seconds
+  67:Core/Src/oled_init.c ****         __NOP();
+ 253              		.loc 1 67 9 is_stmt 1 view .LVU42
+ 254              		.syntax unified
+ 255              	@ 67 "Core/Src/oled_init.c" 1
+ 256 0038 00BF     		nop
+ 257              	@ 0 "" 2
+  68:Core/Src/oled_init.c ****         break;
+ 258              		.loc 1 68 9 view .LVU43
+ 259              	.LVL23:
+ 260              		.thumb
+ 261              		.syntax unified
+ 262              	.L22:
+  69:Core/Src/oled_init.c ****     case U8X8_MSG_DELAY_10MICRO: // delay arg_int * 10 micro seconds
+  70:Core/Src/oled_init.c ****         for (uint16_t n = 0; n < 320; n++)
+  71:Core/Src/oled_init.c ****         {
+  72:Core/Src/oled_init.c ****             __NOP();
+  73:Core/Src/oled_init.c ****         }
+  74:Core/Src/oled_init.c ****         break;
+  75:Core/Src/oled_init.c ****     case U8X8_MSG_DELAY_MILLI: // delay arg_int * 1 milli second
+  76:Core/Src/oled_init.c ****         HAL_Delay(1);
+  77:Core/Src/oled_init.c ****         break;
+  78:Core/Src/oled_init.c ****     case U8X8_MSG_DELAY_I2C: // arg_int is the I2C speed in 100KHz, e.g. 4 = 400 KHz
+  79:Core/Src/oled_init.c ****         delay_us(5);
+  80:Core/Src/oled_init.c ****         break;                    // arg_int=1: delay by 5us, arg_int = 4: delay by 1.25us
+  81:Core/Src/oled_init.c ****     case U8X8_MSG_GPIO_I2C_CLOCK: // arg_int=0: Output low at I2C clock pin
+  82:Core/Src/oled_init.c ****         break;                    // arg_int=1: Input dir with pullup high for I2C clock pin
+  83:Core/Src/oled_init.c ****     case U8X8_MSG_GPIO_I2C_DATA:  // arg_int=0: Output low at I2C data pin
+  84:Core/Src/oled_init.c ****         break;                    // arg_int=1: Input dir with pullup high for I2C data pin
+  85:Core/Src/oled_init.c ****     case U8X8_MSG_GPIO_MENU_SELECT:
+  86:Core/Src/oled_init.c ****         u8x8_SetGPIOResult(u8x8, /* get menu select pin state */ 0);
+  87:Core/Src/oled_init.c ****         break;
+  88:Core/Src/oled_init.c ****     case U8X8_MSG_GPIO_MENU_NEXT:
+  89:Core/Src/oled_init.c ****         u8x8_SetGPIOResult(u8x8, /* get menu next pin state */ 0);
+  90:Core/Src/oled_init.c ****         break;
+  91:Core/Src/oled_init.c ****     case U8X8_MSG_GPIO_MENU_PREV:
+  92:Core/Src/oled_init.c ****         u8x8_SetGPIOResult(u8x8, /* get menu prev pin state */ 0);
+  93:Core/Src/oled_init.c ****         break;
+  94:Core/Src/oled_init.c ****     case U8X8_MSG_GPIO_MENU_HOME:
+  95:Core/Src/oled_init.c ****         u8x8_SetGPIOResult(u8x8, /* get menu home pin state */ 0);
+  96:Core/Src/oled_init.c ****         break;
+  97:Core/Src/oled_init.c ****     default:
+  98:Core/Src/oled_init.c ****         u8x8_SetGPIOResult(u8x8, 1); // default return value
+  99:Core/Src/oled_init.c ****         break;
+ 100:Core/Src/oled_init.c ****     }
+ 101:Core/Src/oled_init.c ****     return 1;
+ 263              		.loc 1 101 5 view .LVU44
+ 102:Core/Src/oled_init.c **** }
+ 264              		.loc 1 102 1 is_stmt 0 view .LVU45
+ 265 003a 0120     		movs	r0, #1
+ 266 003c 08BD     		pop	{r3, pc}
+ 267              	.LVL24:
+ 268              	.L27:
+  63:Core/Src/oled_init.c ****     switch (msg)
+ 269              		.loc 1 63 1 view .LVU46
+ 270 003e 0023     		movs	r3, #0
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccoaxDqj.s 			page 8
+
+
+ 271              	.L24:
+ 272              	.LVL25:
+ 273              	.LBB2:
+  70:Core/Src/oled_init.c ****         {
+ 274              		.loc 1 70 30 is_stmt 1 discriminator 1 view .LVU47
+  70:Core/Src/oled_init.c ****         {
+ 275              		.loc 1 70 9 is_stmt 0 discriminator 1 view .LVU48
+ 276 0040 B3F5A07F 		cmp	r3, #320
+ 277 0044 F9D2     		bcs	.L22
+  72:Core/Src/oled_init.c ****         }
+ 278              		.loc 1 72 13 is_stmt 1 discriminator 3 view .LVU49
+ 279              		.syntax unified
+ 280              	@ 72 "Core/Src/oled_init.c" 1
+ 281 0046 00BF     		nop
+ 282              	@ 0 "" 2
+  70:Core/Src/oled_init.c ****         {
+ 283              		.loc 1 70 39 discriminator 3 view .LVU50
+  70:Core/Src/oled_init.c ****         {
+ 284              		.loc 1 70 40 is_stmt 0 discriminator 3 view .LVU51
+ 285              		.thumb
+ 286              		.syntax unified
+ 287 0048 0133     		adds	r3, r3, #1
+ 288              	.LVL26:
+  70:Core/Src/oled_init.c ****         {
+ 289              		.loc 1 70 40 discriminator 3 view .LVU52
+ 290 004a 9BB2     		uxth	r3, r3
+ 291              	.LVL27:
+  70:Core/Src/oled_init.c ****         {
+ 292              		.loc 1 70 40 discriminator 3 view .LVU53
+ 293 004c F8E7     		b	.L24
+ 294              	.LVL28:
+ 295              	.L25:
+  70:Core/Src/oled_init.c ****         {
+ 296              		.loc 1 70 40 discriminator 3 view .LVU54
+ 297              	.LBE2:
+  76:Core/Src/oled_init.c ****         break;
+ 298              		.loc 1 76 9 is_stmt 1 view .LVU55
+ 299 004e 0120     		movs	r0, #1
+ 300              	.LVL29:
+  76:Core/Src/oled_init.c ****         break;
+ 301              		.loc 1 76 9 is_stmt 0 view .LVU56
+ 302 0050 FFF7FEFF 		bl	HAL_Delay
+ 303              	.LVL30:
+  77:Core/Src/oled_init.c ****     case U8X8_MSG_DELAY_I2C: // arg_int is the I2C speed in 100KHz, e.g. 4 = 400 KHz
+ 304              		.loc 1 77 9 is_stmt 1 view .LVU57
+ 305 0054 F1E7     		b	.L22
+ 306              	.LVL31:
+ 307              	.L21:
+  86:Core/Src/oled_init.c ****         break;
+ 308              		.loc 1 86 9 view .LVU58
+ 309 0056 0023     		movs	r3, #0
+ 310 0058 80F82730 		strb	r3, [r0, #39]
+  87:Core/Src/oled_init.c ****     case U8X8_MSG_GPIO_MENU_NEXT:
+ 311              		.loc 1 87 9 view .LVU59
+ 312 005c EDE7     		b	.L22
+ 313              	.L20:
+  89:Core/Src/oled_init.c ****         break;
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccoaxDqj.s 			page 9
+
+
+ 314              		.loc 1 89 9 view .LVU60
+ 315 005e 0023     		movs	r3, #0
+ 316 0060 80F82730 		strb	r3, [r0, #39]
+  90:Core/Src/oled_init.c ****     case U8X8_MSG_GPIO_MENU_PREV:
+ 317              		.loc 1 90 9 view .LVU61
+ 318 0064 E9E7     		b	.L22
+ 319              	.L19:
+  92:Core/Src/oled_init.c ****         break;
+ 320              		.loc 1 92 9 view .LVU62
+ 321 0066 0023     		movs	r3, #0
+ 322 0068 80F82730 		strb	r3, [r0, #39]
+  93:Core/Src/oled_init.c ****     case U8X8_MSG_GPIO_MENU_HOME:
+ 323              		.loc 1 93 9 view .LVU63
+ 324 006c E5E7     		b	.L22
+ 325              	.L17:
+  95:Core/Src/oled_init.c ****         break;
+ 326              		.loc 1 95 9 view .LVU64
+ 327 006e 0023     		movs	r3, #0
+ 328 0070 80F82730 		strb	r3, [r0, #39]
+  96:Core/Src/oled_init.c ****     default:
+ 329              		.loc 1 96 9 view .LVU65
+ 330 0074 E1E7     		b	.L22
+ 331              	.L16:
+  98:Core/Src/oled_init.c ****         break;
+ 332              		.loc 1 98 9 view .LVU66
+ 333 0076 0123     		movs	r3, #1
+ 334 0078 80F82730 		strb	r3, [r0, #39]
+  99:Core/Src/oled_init.c ****     }
+ 335              		.loc 1 99 9 view .LVU67
+ 336 007c DDE7     		b	.L22
+ 337              		.cfi_endproc
+ 338              	.LFE67:
+ 340              		.section	.text.delay_us,"ax",%progbits
+ 341              		.align	1
+ 342              		.global	delay_us
+ 343              		.syntax unified
+ 344              		.thumb
+ 345              		.thumb_func
+ 346              		.fpu softvfp
+ 348              	delay_us:
+ 349              	.LVL32:
+ 350              	.LFB66:
+  56:Core/Src/oled_init.c ****     uint32_t i = 8 * time;
+ 351              		.loc 1 56 1 view -0
+ 352              		.cfi_startproc
+ 353              		@ args = 0, pretend = 0, frame = 0
+ 354              		@ frame_needed = 0, uses_anonymous_args = 0
+ 355              		@ link register save eliminated.
+  57:Core/Src/oled_init.c ****     while (i--)
+ 356              		.loc 1 57 5 view .LVU69
+  57:Core/Src/oled_init.c ****     while (i--)
+ 357              		.loc 1 57 14 is_stmt 0 view .LVU70
+ 358 0000 C000     		lsls	r0, r0, #3
+ 359              	.LVL33:
+  58:Core/Src/oled_init.c ****         ;
+ 360              		.loc 1 58 5 is_stmt 1 view .LVU71
+ 361              	.L30:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccoaxDqj.s 			page 10
+
+
+  59:Core/Src/oled_init.c **** }
+ 362              		.loc 1 59 9 discriminator 1 view .LVU72
+  58:Core/Src/oled_init.c ****         ;
+ 363              		.loc 1 58 11 discriminator 1 view .LVU73
+ 364 0002 0346     		mov	r3, r0
+  58:Core/Src/oled_init.c ****         ;
+ 365              		.loc 1 58 13 is_stmt 0 discriminator 1 view .LVU74
+ 366 0004 0138     		subs	r0, r0, #1
+ 367              	.LVL34:
+  58:Core/Src/oled_init.c ****         ;
+ 368              		.loc 1 58 11 discriminator 1 view .LVU75
+ 369 0006 002B     		cmp	r3, #0
+ 370 0008 FBD1     		bne	.L30
+  60:Core/Src/oled_init.c **** 
+ 371              		.loc 1 60 1 view .LVU76
+ 372 000a 7047     		bx	lr
+ 373              		.cfi_endproc
+ 374              	.LFE66:
+ 376              		.section	.text.u8g2Init,"ax",%progbits
+ 377              		.align	1
+ 378              		.global	u8g2Init
+ 379              		.syntax unified
+ 380              		.thumb
+ 381              		.thumb_func
+ 382              		.fpu softvfp
+ 384              	u8g2Init:
+ 385              	.LVL35:
+ 386              	.LFB68:
+ 103:Core/Src/oled_init.c **** 
+ 104:Core/Src/oled_init.c **** void u8g2Init(u8g2_t *u8g2)
+ 105:Core/Src/oled_init.c **** {
+ 387              		.loc 1 105 1 is_stmt 1 view -0
+ 388              		.cfi_startproc
+ 389              		@ args = 0, pretend = 0, frame = 0
+ 390              		@ frame_needed = 0, uses_anonymous_args = 0
+ 391              		.loc 1 105 1 is_stmt 0 view .LVU78
+ 392 0000 10B5     		push	{r4, lr}
+ 393              	.LCFI5:
+ 394              		.cfi_def_cfa_offset 8
+ 395              		.cfi_offset 4, -8
+ 396              		.cfi_offset 14, -4
+ 397 0002 0446     		mov	r4, r0
+ 106:Core/Src/oled_init.c ****     u8g2_Setup_ssd1306_i2c_128x64_noname_f(u8g2, U8G2_R0, u8x8_byte_hw_i2c, u8x8_gpio_and_delay); /
+ 398              		.loc 1 106 5 is_stmt 1 view .LVU79
+ 399 0004 074B     		ldr	r3, .L33
+ 400 0006 084A     		ldr	r2, .L33+4
+ 401 0008 0849     		ldr	r1, .L33+8
+ 402 000a FFF7FEFF 		bl	u8g2_Setup_ssd1306_i2c_128x64_noname_f
+ 403              	.LVL36:
+ 107:Core/Src/oled_init.c ****     u8g2_InitDisplay(u8g2);                                                                       /
+ 404              		.loc 1 107 5 view .LVU80
+ 405 000e 2046     		mov	r0, r4
+ 406 0010 FFF7FEFF 		bl	u8x8_InitDisplay
+ 407              	.LVL37:
+ 108:Core/Src/oled_init.c ****     u8g2_SetPowerSave(u8g2, 0);                                                                   /
+ 408              		.loc 1 108 5 view .LVU81
+ 409 0014 0021     		movs	r1, #0
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccoaxDqj.s 			page 11
+
+
+ 410 0016 2046     		mov	r0, r4
+ 411 0018 FFF7FEFF 		bl	u8x8_SetPowerSave
+ 412              	.LVL38:
+ 109:Core/Src/oled_init.c ****     u8g2_ClearBuffer(u8g2);
+ 413              		.loc 1 109 5 view .LVU82
+ 414 001c 2046     		mov	r0, r4
+ 415 001e FFF7FEFF 		bl	u8g2_ClearBuffer
+ 416              	.LVL39:
+ 110:Core/Src/oled_init.c **** }
+ 417              		.loc 1 110 1 is_stmt 0 view .LVU83
+ 418 0022 10BD     		pop	{r4, pc}
+ 419              	.LVL40:
+ 420              	.L34:
+ 421              		.loc 1 110 1 view .LVU84
+ 422              		.align	2
+ 423              	.L33:
+ 424 0024 00000000 		.word	u8x8_gpio_and_delay
+ 425 0028 00000000 		.word	u8x8_byte_hw_i2c
+ 426 002c 00000000 		.word	u8g2_cb_r0
+ 427              		.cfi_endproc
+ 428              	.LFE68:
+ 430              		.section	.bss.buf_idx.13292,"aw",%nobits
+ 431              		.set	.LANCHOR0,. + 0
+ 434              	buf_idx.13292:
+ 435 0000 00       		.space	1
+ 436              		.section	.bss.buffer.13291,"aw",%nobits
+ 437              		.align	2
+ 438              		.set	.LANCHOR1,. + 0
+ 441              	buffer.13291:
+ 442 0000 00000000 		.space	128
+ 442      00000000 
+ 442      00000000 
+ 442      00000000 
+ 442      00000000 
+ 443              		.text
+ 444              	.Letext0:
+ 445              		.file 2 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 446              		.file 3 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 447              		.file 4 "u8g2_lib/u8x8.h"
+ 448              		.file 5 "u8g2_lib/u8g2.h"
+ 449              		.file 6 "Drivers/CMSIS/Include/core_cm3.h"
+ 450              		.file 7 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/system_stm32f1xx.h"
+ 451              		.file 8 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xe.h"
+ 452              		.file 9 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h"
+ 453              		.file 10 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma.h"
+ 454              		.file 11 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_i2c.h"
+ 455              		.file 12 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
+ 456              		.file 13 "Core/Inc/i2c.h"
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccoaxDqj.s 			page 12
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 oled_init.c
+C:\Users\GKQ\AppData\Local\Temp\ccoaxDqj.s:16     .text.u8x8_byte_hw_i2c:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccoaxDqj.s:24     .text.u8x8_byte_hw_i2c:00000000 u8x8_byte_hw_i2c
+C:\Users\GKQ\AppData\Local\Temp\ccoaxDqj.s:53     .text.u8x8_byte_hw_i2c:0000000e $d
+C:\Users\GKQ\AppData\Local\Temp\ccoaxDqj.s:172    .text.u8x8_byte_hw_i2c:00000074 $d
+C:\Users\GKQ\AppData\Local\Temp\ccoaxDqj.s:179    .text.u8x8_gpio_and_delay:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccoaxDqj.s:186    .text.u8x8_gpio_and_delay:00000000 u8x8_gpio_and_delay
+C:\Users\GKQ\AppData\Local\Temp\ccoaxDqj.s:208    .text.u8x8_gpio_and_delay:0000000c $d
+C:\Users\GKQ\AppData\Local\Temp\ccoaxDqj.s:341    .text.delay_us:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccoaxDqj.s:348    .text.delay_us:00000000 delay_us
+C:\Users\GKQ\AppData\Local\Temp\ccoaxDqj.s:377    .text.u8g2Init:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccoaxDqj.s:384    .text.u8g2Init:00000000 u8g2Init
+C:\Users\GKQ\AppData\Local\Temp\ccoaxDqj.s:424    .text.u8g2Init:00000024 $d
+C:\Users\GKQ\AppData\Local\Temp\ccoaxDqj.s:434    .bss.buf_idx.13292:00000000 buf_idx.13292
+C:\Users\GKQ\AppData\Local\Temp\ccoaxDqj.s:435    .bss.buf_idx.13292:00000000 $d
+C:\Users\GKQ\AppData\Local\Temp\ccoaxDqj.s:437    .bss.buffer.13291:00000000 $d
+C:\Users\GKQ\AppData\Local\Temp\ccoaxDqj.s:441    .bss.buffer.13291:00000000 buffer.13291
+C:\Users\GKQ\AppData\Local\Temp\ccoaxDqj.s:66     .text.u8x8_byte_hw_i2c:0000001b $d
+C:\Users\GKQ\AppData\Local\Temp\ccoaxDqj.s:66     .text.u8x8_byte_hw_i2c:0000001c $t
+C:\Users\GKQ\AppData\Local\Temp\ccoaxDqj.s:251    .text.u8x8_gpio_and_delay:00000037 $d
+C:\Users\GKQ\AppData\Local\Temp\ccoaxDqj.s:251    .text.u8x8_gpio_and_delay:00000038 $t
+
+UNDEFINED SYMBOLS
+MX_I2C1_Init
+HAL_I2C_Master_Transmit
+hi2c1
+HAL_Delay
+u8g2_Setup_ssd1306_i2c_128x64_noname_f
+u8x8_InitDisplay
+u8x8_SetPowerSave
+u8g2_ClearBuffer
+u8g2_cb_r0

@@ -1,0 +1,2232 @@
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"u8g2_setup.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.u8g2_update_dimension_common,"ax",%progbits
+  16              		.align	1
+  17              		.arch armv7-m
+  18              		.syntax unified
+  19              		.thumb
+  20              		.thumb_func
+  21              		.fpu softvfp
+  23              	u8g2_update_dimension_common:
+  24              	.LVL0:
+  25              	.LFB5:
+  26              		.file 1 "u8g2_lib/u8g2_setup.c"
+   1:u8g2_lib/u8g2_setup.c **** /*
+   2:u8g2_lib/u8g2_setup.c **** 
+   3:u8g2_lib/u8g2_setup.c ****   u8g2_setup.c
+   4:u8g2_lib/u8g2_setup.c **** 
+   5:u8g2_lib/u8g2_setup.c ****   Universal 8bit Graphics Library (https://github.com/olikraus/u8g2/)
+   6:u8g2_lib/u8g2_setup.c **** 
+   7:u8g2_lib/u8g2_setup.c ****   Copyright (c) 2016, olikraus@gmail.com
+   8:u8g2_lib/u8g2_setup.c ****   All rights reserved.
+   9:u8g2_lib/u8g2_setup.c **** 
+  10:u8g2_lib/u8g2_setup.c ****   Redistribution and use in source and binary forms, with or without modification, 
+  11:u8g2_lib/u8g2_setup.c ****   are permitted provided that the following conditions are met:
+  12:u8g2_lib/u8g2_setup.c **** 
+  13:u8g2_lib/u8g2_setup.c ****   * Redistributions of source code must retain the above copyright notice, this list 
+  14:u8g2_lib/u8g2_setup.c ****     of conditions and the following disclaimer.
+  15:u8g2_lib/u8g2_setup.c ****     
+  16:u8g2_lib/u8g2_setup.c ****   * Redistributions in binary form must reproduce the above copyright notice, this 
+  17:u8g2_lib/u8g2_setup.c ****     list of conditions and the following disclaimer in the documentation and/or other 
+  18:u8g2_lib/u8g2_setup.c ****     materials provided with the distribution.
+  19:u8g2_lib/u8g2_setup.c **** 
+  20:u8g2_lib/u8g2_setup.c ****   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND 
+  21:u8g2_lib/u8g2_setup.c ****   CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, 
+  22:u8g2_lib/u8g2_setup.c ****   INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF 
+  23:u8g2_lib/u8g2_setup.c ****   MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE 
+  24:u8g2_lib/u8g2_setup.c ****   DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR 
+  25:u8g2_lib/u8g2_setup.c ****   CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
+  26:u8g2_lib/u8g2_setup.c ****   SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
+  27:u8g2_lib/u8g2_setup.c ****   NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; 
+  28:u8g2_lib/u8g2_setup.c ****   LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER 
+  29:u8g2_lib/u8g2_setup.c ****   CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, 
+  30:u8g2_lib/u8g2_setup.c ****   STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+  31:u8g2_lib/u8g2_setup.c ****   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF 
+  32:u8g2_lib/u8g2_setup.c ****   ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.  
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s 			page 2
+
+
+  33:u8g2_lib/u8g2_setup.c **** 
+  34:u8g2_lib/u8g2_setup.c **** */
+  35:u8g2_lib/u8g2_setup.c **** 
+  36:u8g2_lib/u8g2_setup.c **** #include "u8g2.h"
+  37:u8g2_lib/u8g2_setup.c **** #include <string.h>
+  38:u8g2_lib/u8g2_setup.c **** #include <assert.h>
+  39:u8g2_lib/u8g2_setup.c **** 
+  40:u8g2_lib/u8g2_setup.c **** 
+  41:u8g2_lib/u8g2_setup.c **** /*============================================*/
+  42:u8g2_lib/u8g2_setup.c **** 
+  43:u8g2_lib/u8g2_setup.c **** 
+  44:u8g2_lib/u8g2_setup.c **** #ifdef U8G2_WITH_CLIP_WINDOW_SUPPORT
+  45:u8g2_lib/u8g2_setup.c **** 
+  46:u8g2_lib/u8g2_setup.c **** void u8g2_SetMaxClipWindow(u8g2_t *u8g2)
+  47:u8g2_lib/u8g2_setup.c **** {
+  48:u8g2_lib/u8g2_setup.c ****   u8g2->clip_x0 = 0;
+  49:u8g2_lib/u8g2_setup.c ****   u8g2->clip_y0 = 0;
+  50:u8g2_lib/u8g2_setup.c ****   u8g2->clip_x1 = (u8g2_uint_t)~(u8g2_uint_t)0;
+  51:u8g2_lib/u8g2_setup.c ****   u8g2->clip_y1 = (u8g2_uint_t)~(u8g2_uint_t)0;
+  52:u8g2_lib/u8g2_setup.c ****   
+  53:u8g2_lib/u8g2_setup.c ****   u8g2->cb->update_page_win(u8g2);
+  54:u8g2_lib/u8g2_setup.c **** }
+  55:u8g2_lib/u8g2_setup.c **** 
+  56:u8g2_lib/u8g2_setup.c **** void u8g2_SetClipWindow(u8g2_t *u8g2, u8g2_uint_t clip_x0, u8g2_uint_t clip_y0, u8g2_uint_t clip_x1
+  57:u8g2_lib/u8g2_setup.c **** {
+  58:u8g2_lib/u8g2_setup.c ****   u8g2->clip_x0 = clip_x0;
+  59:u8g2_lib/u8g2_setup.c ****   u8g2->clip_y0 = clip_y0;
+  60:u8g2_lib/u8g2_setup.c ****   u8g2->clip_x1 = clip_x1;
+  61:u8g2_lib/u8g2_setup.c ****   u8g2->clip_y1 = clip_y1;
+  62:u8g2_lib/u8g2_setup.c ****   u8g2->cb->update_page_win(u8g2);
+  63:u8g2_lib/u8g2_setup.c **** }
+  64:u8g2_lib/u8g2_setup.c **** #endif
+  65:u8g2_lib/u8g2_setup.c **** 
+  66:u8g2_lib/u8g2_setup.c **** /*============================================*/
+  67:u8g2_lib/u8g2_setup.c **** /*
+  68:u8g2_lib/u8g2_setup.c ****   This procedure is called after setting up the display (u8x8 structure).
+  69:u8g2_lib/u8g2_setup.c ****   --> This is the central init procedure for u8g2 object
+  70:u8g2_lib/u8g2_setup.c **** */
+  71:u8g2_lib/u8g2_setup.c **** void u8g2_SetupBuffer(u8g2_t *u8g2, uint8_t *buf, uint8_t tile_buf_height, u8g2_draw_ll_hvline_cb l
+  72:u8g2_lib/u8g2_setup.c **** {
+  73:u8g2_lib/u8g2_setup.c ****   u8g2->font = NULL;
+  74:u8g2_lib/u8g2_setup.c ****   //u8g2->kerning = NULL;
+  75:u8g2_lib/u8g2_setup.c ****   //u8g2->get_kerning_cb = u8g2_GetNullKerning;
+  76:u8g2_lib/u8g2_setup.c ****   
+  77:u8g2_lib/u8g2_setup.c ****   //u8g2->ll_hvline = u8g2_ll_hvline_vertical_top_lsb;
+  78:u8g2_lib/u8g2_setup.c ****   u8g2->ll_hvline = ll_hvline_cb;
+  79:u8g2_lib/u8g2_setup.c ****   
+  80:u8g2_lib/u8g2_setup.c ****   u8g2->tile_buf_ptr = buf;
+  81:u8g2_lib/u8g2_setup.c ****   u8g2->tile_buf_height = tile_buf_height;
+  82:u8g2_lib/u8g2_setup.c ****   
+  83:u8g2_lib/u8g2_setup.c ****   u8g2->tile_curr_row = 0;
+  84:u8g2_lib/u8g2_setup.c ****   
+  85:u8g2_lib/u8g2_setup.c ****   u8g2->font_decode.is_transparent = 0; /* issue 443 */
+  86:u8g2_lib/u8g2_setup.c ****   u8g2->bitmap_transparency = 0;
+  87:u8g2_lib/u8g2_setup.c ****   
+  88:u8g2_lib/u8g2_setup.c ****   u8g2->draw_color = 1;
+  89:u8g2_lib/u8g2_setup.c ****   u8g2->is_auto_page_clear = 1;
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s 			page 3
+
+
+  90:u8g2_lib/u8g2_setup.c ****   
+  91:u8g2_lib/u8g2_setup.c ****   u8g2->cb = u8g2_cb;
+  92:u8g2_lib/u8g2_setup.c ****   u8g2->cb->update_dimension(u8g2);
+  93:u8g2_lib/u8g2_setup.c **** #ifdef U8G2_WITH_CLIP_WINDOW_SUPPORT
+  94:u8g2_lib/u8g2_setup.c ****   u8g2_SetMaxClipWindow(u8g2);		/* assign a clip window and call the update() procedure */
+  95:u8g2_lib/u8g2_setup.c **** #else
+  96:u8g2_lib/u8g2_setup.c ****   u8g2->cb->update_page_win(u8g2);
+  97:u8g2_lib/u8g2_setup.c **** #endif
+  98:u8g2_lib/u8g2_setup.c **** 
+  99:u8g2_lib/u8g2_setup.c ****   u8g2_SetFontPosBaseline(u8g2);  /* issue 195 */
+ 100:u8g2_lib/u8g2_setup.c ****   
+ 101:u8g2_lib/u8g2_setup.c **** #ifdef U8G2_WITH_FONT_ROTATION  
+ 102:u8g2_lib/u8g2_setup.c ****   u8g2->font_decode.dir = 0;
+ 103:u8g2_lib/u8g2_setup.c **** #endif
+ 104:u8g2_lib/u8g2_setup.c **** }
+ 105:u8g2_lib/u8g2_setup.c **** 
+ 106:u8g2_lib/u8g2_setup.c **** /*
+ 107:u8g2_lib/u8g2_setup.c ****   Usually the display rotation is set initially, but it could be done later also
+ 108:u8g2_lib/u8g2_setup.c ****   u8g2_cb can be U8G2_R0..U8G2_R3
+ 109:u8g2_lib/u8g2_setup.c **** */
+ 110:u8g2_lib/u8g2_setup.c **** void u8g2_SetDisplayRotation(u8g2_t *u8g2, const u8g2_cb_t *u8g2_cb)
+ 111:u8g2_lib/u8g2_setup.c **** {
+ 112:u8g2_lib/u8g2_setup.c ****   u8g2->cb = u8g2_cb;
+ 113:u8g2_lib/u8g2_setup.c ****   u8g2->cb->update_dimension(u8g2);
+ 114:u8g2_lib/u8g2_setup.c ****   u8g2->cb->update_page_win(u8g2);
+ 115:u8g2_lib/u8g2_setup.c **** }
+ 116:u8g2_lib/u8g2_setup.c **** 
+ 117:u8g2_lib/u8g2_setup.c **** /*============================================*/
+ 118:u8g2_lib/u8g2_setup.c **** 
+ 119:u8g2_lib/u8g2_setup.c **** void u8g2_SendF(u8g2_t * u8g2, const char *fmt, ...)
+ 120:u8g2_lib/u8g2_setup.c **** {
+ 121:u8g2_lib/u8g2_setup.c ****   va_list va;
+ 122:u8g2_lib/u8g2_setup.c ****   va_start(va, fmt);
+ 123:u8g2_lib/u8g2_setup.c ****   u8x8_cad_vsendf(u8g2_GetU8x8(u8g2), fmt, va);
+ 124:u8g2_lib/u8g2_setup.c ****   va_end(va);
+ 125:u8g2_lib/u8g2_setup.c **** }
+ 126:u8g2_lib/u8g2_setup.c **** 
+ 127:u8g2_lib/u8g2_setup.c **** 
+ 128:u8g2_lib/u8g2_setup.c **** /*============================================*/
+ 129:u8g2_lib/u8g2_setup.c **** /* 
+ 130:u8g2_lib/u8g2_setup.c ****   update dimension: 
+ 131:u8g2_lib/u8g2_setup.c ****   calculate the following variables:
+ 132:u8g2_lib/u8g2_setup.c ****     u8g2_uint_t buf_x0;	left corner of the buffer
+ 133:u8g2_lib/u8g2_setup.c ****     u8g2_uint_t buf_x1;	right corner of the buffer (excluded)
+ 134:u8g2_lib/u8g2_setup.c ****     u8g2_uint_t buf_y0;
+ 135:u8g2_lib/u8g2_setup.c ****     u8g2_uint_t buf_y1; 	
+ 136:u8g2_lib/u8g2_setup.c **** */
+ 137:u8g2_lib/u8g2_setup.c **** 
+ 138:u8g2_lib/u8g2_setup.c **** static void u8g2_update_dimension_common(u8g2_t *u8g2)
+ 139:u8g2_lib/u8g2_setup.c **** {
+  27              		.loc 1 139 1 view -0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              		@ link register save eliminated.
+  32              		.loc 1 139 1 is_stmt 0 view .LVU1
+  33 0000 70B4     		push	{r4, r5, r6}
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s 			page 4
+
+
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 12
+  36              		.cfi_offset 4, -12
+  37              		.cfi_offset 5, -8
+  38              		.cfi_offset 6, -4
+ 140:u8g2_lib/u8g2_setup.c ****   const u8x8_display_info_t *display_info = u8g2_GetU8x8(u8g2)->display_info;
+  39              		.loc 1 140 3 is_stmt 1 view .LVU2
+  40              		.loc 1 140 30 is_stmt 0 view .LVU3
+  41 0002 0168     		ldr	r1, [r0]
+  42              	.LVL1:
+ 141:u8g2_lib/u8g2_setup.c ****   u8g2_uint_t t;
+  43              		.loc 1 141 3 is_stmt 1 view .LVU4
+ 142:u8g2_lib/u8g2_setup.c ****   
+ 143:u8g2_lib/u8g2_setup.c ****   t = u8g2->tile_buf_height;
+  44              		.loc 1 143 3 view .LVU5
+  45              		.loc 1 143 5 is_stmt 0 view .LVU6
+  46 0004 90F83830 		ldrb	r3, [r0, #56]	@ zero_extendqisi2
+  47              	.LVL2:
+ 144:u8g2_lib/u8g2_setup.c ****   t *= 8;
+  48              		.loc 1 144 3 is_stmt 1 view .LVU7
+  49              		.loc 1 144 5 is_stmt 0 view .LVU8
+  50 0008 DA00     		lsls	r2, r3, #3
+  51              	.LVL3:
+ 145:u8g2_lib/u8g2_setup.c ****   u8g2->pixel_buf_height = t;
+  52              		.loc 1 145 3 is_stmt 1 view .LVU9
+  53              		.loc 1 145 26 is_stmt 0 view .LVU10
+  54 000a 80F83B20 		strb	r2, [r0, #59]
+ 146:u8g2_lib/u8g2_setup.c ****   
+ 147:u8g2_lib/u8g2_setup.c ****   t = display_info->tile_width;
+  55              		.loc 1 147 3 is_stmt 1 view .LVU11
+  56              		.loc 1 147 5 is_stmt 0 view .LVU12
+  57 000e 0A7C     		ldrb	r2, [r1, #16]	@ zero_extendqisi2
+  58              	.LVL4:
+ 148:u8g2_lib/u8g2_setup.c **** #ifndef U8G2_16BIT
+ 149:u8g2_lib/u8g2_setup.c ****   if ( t >= 32 )
+  59              		.loc 1 149 3 is_stmt 1 view .LVU13
+  60              		.loc 1 149 6 is_stmt 0 view .LVU14
+  61 0010 1F2A     		cmp	r2, #31
+  62 0012 00D9     		bls	.L2
+ 150:u8g2_lib/u8g2_setup.c ****     t = 31;
+  63              		.loc 1 150 7 view .LVU15
+  64 0014 1F22     		movs	r2, #31
+  65              	.LVL5:
+  66              	.L2:
+ 151:u8g2_lib/u8g2_setup.c **** #endif
+ 152:u8g2_lib/u8g2_setup.c ****   t *= 8;
+  67              		.loc 1 152 3 is_stmt 1 view .LVU16
+  68              		.loc 1 152 5 is_stmt 0 view .LVU17
+  69 0016 D200     		lsls	r2, r2, #3
+  70              	.LVL6:
+ 153:u8g2_lib/u8g2_setup.c ****   u8g2->pixel_buf_width = t;
+  71              		.loc 1 153 3 is_stmt 1 view .LVU18
+  72              		.loc 1 153 25 is_stmt 0 view .LVU19
+  73 0018 80F83A20 		strb	r2, [r0, #58]
+ 154:u8g2_lib/u8g2_setup.c ****   
+ 155:u8g2_lib/u8g2_setup.c ****   t = u8g2->tile_curr_row;
+  74              		.loc 1 155 3 is_stmt 1 view .LVU20
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s 			page 5
+
+
+  75              		.loc 1 155 5 is_stmt 0 view .LVU21
+  76 001c 90F83950 		ldrb	r5, [r0, #57]	@ zero_extendqisi2
+  77              	.LVL7:
+ 156:u8g2_lib/u8g2_setup.c ****   t *= 8;
+  78              		.loc 1 156 3 is_stmt 1 view .LVU22
+  79              		.loc 1 156 5 is_stmt 0 view .LVU23
+  80 0020 EA00     		lsls	r2, r5, #3
+  81 0022 D2B2     		uxtb	r2, r2
+  82              	.LVL8:
+ 157:u8g2_lib/u8g2_setup.c ****   u8g2->pixel_curr_row = t;
+  83              		.loc 1 157 3 is_stmt 1 view .LVU24
+  84              		.loc 1 157 24 is_stmt 0 view .LVU25
+  85 0024 80F83C20 		strb	r2, [r0, #60]
+ 158:u8g2_lib/u8g2_setup.c ****   
+ 159:u8g2_lib/u8g2_setup.c ****   t = u8g2->tile_buf_height;
+  86              		.loc 1 159 3 is_stmt 1 view .LVU26
+  87              	.LVL9:
+ 160:u8g2_lib/u8g2_setup.c ****   /* handle the case, where the buffer is larger than the (remaining) part of the display */
+ 161:u8g2_lib/u8g2_setup.c ****   if ( t + u8g2->tile_curr_row > display_info->tile_height )
+  88              		.loc 1 161 3 view .LVU27
+  89              		.loc 1 161 10 is_stmt 0 view .LVU28
+  90 0028 5E19     		adds	r6, r3, r5
+  91              		.loc 1 161 46 view .LVU29
+  92 002a 4C7C     		ldrb	r4, [r1, #17]	@ zero_extendqisi2
+  93              		.loc 1 161 6 view .LVU30
+  94 002c A642     		cmp	r6, r4
+  95 002e 01DD     		ble	.L3
+ 162:u8g2_lib/u8g2_setup.c ****     t = display_info->tile_height - u8g2->tile_curr_row;
+  96              		.loc 1 162 5 is_stmt 1 view .LVU31
+  97              		.loc 1 162 7 is_stmt 0 view .LVU32
+  98 0030 631B     		subs	r3, r4, r5
+  99              	.LVL10:
+ 100              		.loc 1 162 7 view .LVU33
+ 101 0032 DBB2     		uxtb	r3, r3
+ 102              	.LVL11:
+ 103              	.L3:
+ 163:u8g2_lib/u8g2_setup.c ****   t *= 8;
+ 104              		.loc 1 163 3 is_stmt 1 view .LVU34
+ 105              		.loc 1 163 5 is_stmt 0 view .LVU35
+ 106 0034 DB00     		lsls	r3, r3, #3
+ 107              	.LVL12:
+ 108              		.loc 1 163 5 view .LVU36
+ 109 0036 DBB2     		uxtb	r3, r3
+ 110              	.LVL13:
+ 164:u8g2_lib/u8g2_setup.c ****   
+ 165:u8g2_lib/u8g2_setup.c ****   u8g2->buf_y0 = u8g2->pixel_curr_row;   
+ 111              		.loc 1 165 3 is_stmt 1 view .LVU37
+ 112              		.loc 1 165 16 is_stmt 0 view .LVU38
+ 113 0038 80F83D20 		strb	r2, [r0, #61]
+ 166:u8g2_lib/u8g2_setup.c ****   u8g2->buf_y1 = u8g2->buf_y0;
+ 114              		.loc 1 166 3 is_stmt 1 view .LVU39
+ 167:u8g2_lib/u8g2_setup.c ****   u8g2->buf_y1 += t;
+ 115              		.loc 1 167 3 view .LVU40
+ 116              		.loc 1 167 16 is_stmt 0 view .LVU41
+ 117 003c 1344     		add	r3, r3, r2
+ 118              	.LVL14:
+ 119              		.loc 1 167 16 view .LVU42
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s 			page 6
+
+
+ 120 003e 80F83E30 		strb	r3, [r0, #62]
+ 168:u8g2_lib/u8g2_setup.c **** 
+ 169:u8g2_lib/u8g2_setup.c ****   
+ 170:u8g2_lib/u8g2_setup.c **** #ifdef U8G2_16BIT
+ 171:u8g2_lib/u8g2_setup.c ****   u8g2->width = display_info->pixel_width;
+ 172:u8g2_lib/u8g2_setup.c ****   u8g2->height = display_info->pixel_height;
+ 173:u8g2_lib/u8g2_setup.c **** #else
+ 174:u8g2_lib/u8g2_setup.c ****   u8g2->width = 240;
+ 121              		.loc 1 174 3 is_stmt 1 view .LVU43
+ 122              		.loc 1 174 15 is_stmt 0 view .LVU44
+ 123 0042 F023     		movs	r3, #240
+ 124 0044 80F83F30 		strb	r3, [r0, #63]
+ 175:u8g2_lib/u8g2_setup.c ****   if ( display_info->pixel_width <= 240 )
+ 125              		.loc 1 175 3 is_stmt 1 view .LVU45
+ 126              		.loc 1 175 20 is_stmt 0 view .LVU46
+ 127 0048 8B8A     		ldrh	r3, [r1, #20]
+ 128              		.loc 1 175 6 view .LVU47
+ 129 004a F02B     		cmp	r3, #240
+ 130 004c 01D8     		bhi	.L4
+ 176:u8g2_lib/u8g2_setup.c ****     u8g2->width = display_info->pixel_width;
+ 131              		.loc 1 176 5 is_stmt 1 view .LVU48
+ 132              		.loc 1 176 17 is_stmt 0 view .LVU49
+ 133 004e 80F83F30 		strb	r3, [r0, #63]
+ 134              	.L4:
+ 177:u8g2_lib/u8g2_setup.c ****   u8g2->height = display_info->pixel_height;
+ 135              		.loc 1 177 3 is_stmt 1 view .LVU50
+ 136              		.loc 1 177 30 is_stmt 0 view .LVU51
+ 137 0052 CB8A     		ldrh	r3, [r1, #22]
+ 138              		.loc 1 177 16 view .LVU52
+ 139 0054 80F84030 		strb	r3, [r0, #64]
+ 178:u8g2_lib/u8g2_setup.c **** #endif
+ 179:u8g2_lib/u8g2_setup.c **** 
+ 180:u8g2_lib/u8g2_setup.c **** }
+ 140              		.loc 1 180 1 view .LVU53
+ 141 0058 70BC     		pop	{r4, r5, r6}
+ 142              	.LCFI1:
+ 143              		.cfi_restore 6
+ 144              		.cfi_restore 5
+ 145              		.cfi_restore 4
+ 146              		.cfi_def_cfa_offset 0
+ 147 005a 7047     		bx	lr
+ 148              		.cfi_endproc
+ 149              	.LFE5:
+ 151              		.section	.text.u8g2_update_dimension_r0,"ax",%progbits
+ 152              		.align	1
+ 153              		.global	u8g2_update_dimension_r0
+ 154              		.syntax unified
+ 155              		.thumb
+ 156              		.thumb_func
+ 157              		.fpu softvfp
+ 159              	u8g2_update_dimension_r0:
+ 160              	.LVL15:
+ 161              	.LFB7:
+ 181:u8g2_lib/u8g2_setup.c **** 
+ 182:u8g2_lib/u8g2_setup.c **** /*==========================================================*/
+ 183:u8g2_lib/u8g2_setup.c **** /* apply clip window */
+ 184:u8g2_lib/u8g2_setup.c **** 
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s 			page 7
+
+
+ 185:u8g2_lib/u8g2_setup.c **** #ifdef U8G2_WITH_CLIP_WINDOW_SUPPORT
+ 186:u8g2_lib/u8g2_setup.c **** static void u8g2_apply_clip_window(u8g2_t *u8g2)
+ 187:u8g2_lib/u8g2_setup.c **** {
+ 188:u8g2_lib/u8g2_setup.c ****   /* check aganst the current user_??? window */
+ 189:u8g2_lib/u8g2_setup.c ****   if ( u8g2_IsIntersection(u8g2, u8g2->clip_x0, u8g2->clip_y0, u8g2->clip_x1, u8g2->clip_y1) == 0 )
+ 190:u8g2_lib/u8g2_setup.c ****   {
+ 191:u8g2_lib/u8g2_setup.c ****     u8g2->is_page_clip_window_intersection = 0;
+ 192:u8g2_lib/u8g2_setup.c ****   }
+ 193:u8g2_lib/u8g2_setup.c ****   else
+ 194:u8g2_lib/u8g2_setup.c ****   {
+ 195:u8g2_lib/u8g2_setup.c ****     u8g2->is_page_clip_window_intersection = 1;
+ 196:u8g2_lib/u8g2_setup.c **** 
+ 197:u8g2_lib/u8g2_setup.c ****     if ( u8g2->user_x0 < u8g2->clip_x0 )
+ 198:u8g2_lib/u8g2_setup.c ****       u8g2->user_x0 = u8g2->clip_x0;
+ 199:u8g2_lib/u8g2_setup.c ****     if ( u8g2->user_x1 > u8g2->clip_x1 )
+ 200:u8g2_lib/u8g2_setup.c ****       u8g2->user_x1 = u8g2->clip_x1;
+ 201:u8g2_lib/u8g2_setup.c ****     if ( u8g2->user_y0 < u8g2->clip_y0 )
+ 202:u8g2_lib/u8g2_setup.c ****       u8g2->user_y0 = u8g2->clip_y0;
+ 203:u8g2_lib/u8g2_setup.c ****     if ( u8g2->user_y1 > u8g2->clip_y1 )
+ 204:u8g2_lib/u8g2_setup.c ****       u8g2->user_y1 = u8g2->clip_y1;
+ 205:u8g2_lib/u8g2_setup.c ****   }
+ 206:u8g2_lib/u8g2_setup.c **** }
+ 207:u8g2_lib/u8g2_setup.c **** #endif /* U8G2_WITH_CLIP_WINDOW_SUPPORT */
+ 208:u8g2_lib/u8g2_setup.c **** 
+ 209:u8g2_lib/u8g2_setup.c **** /*==========================================================*/
+ 210:u8g2_lib/u8g2_setup.c **** 
+ 211:u8g2_lib/u8g2_setup.c **** 
+ 212:u8g2_lib/u8g2_setup.c **** void u8g2_update_dimension_r0(u8g2_t *u8g2)
+ 213:u8g2_lib/u8g2_setup.c **** {
+ 162              		.loc 1 213 1 is_stmt 1 view -0
+ 163              		.cfi_startproc
+ 164              		@ args = 0, pretend = 0, frame = 0
+ 165              		@ frame_needed = 0, uses_anonymous_args = 0
+ 166              		.loc 1 213 1 is_stmt 0 view .LVU55
+ 167 0000 08B5     		push	{r3, lr}
+ 168              	.LCFI2:
+ 169              		.cfi_def_cfa_offset 8
+ 170              		.cfi_offset 3, -8
+ 171              		.cfi_offset 14, -4
+ 214:u8g2_lib/u8g2_setup.c ****   u8g2_update_dimension_common(u8g2);  
+ 172              		.loc 1 214 3 is_stmt 1 view .LVU56
+ 173 0002 FFF7FEFF 		bl	u8g2_update_dimension_common
+ 174              	.LVL16:
+ 215:u8g2_lib/u8g2_setup.c **** }
+ 175              		.loc 1 215 1 is_stmt 0 view .LVU57
+ 176 0006 08BD     		pop	{r3, pc}
+ 177              		.cfi_endproc
+ 178              	.LFE7:
+ 180              		.section	.text.u8g2_update_dimension_r1,"ax",%progbits
+ 181              		.align	1
+ 182              		.global	u8g2_update_dimension_r1
+ 183              		.syntax unified
+ 184              		.thumb
+ 185              		.thumb_func
+ 186              		.fpu softvfp
+ 188              	u8g2_update_dimension_r1:
+ 189              	.LVL17:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s 			page 8
+
+
+ 190              	.LFB9:
+ 216:u8g2_lib/u8g2_setup.c **** 
+ 217:u8g2_lib/u8g2_setup.c **** void u8g2_update_page_win_r0(u8g2_t *u8g2)
+ 218:u8g2_lib/u8g2_setup.c **** {
+ 219:u8g2_lib/u8g2_setup.c ****   u8g2->user_x0 = 0;
+ 220:u8g2_lib/u8g2_setup.c ****   u8g2->user_x1 = u8g2->width;			/* pixel_buf_width replaced with width */
+ 221:u8g2_lib/u8g2_setup.c ****   
+ 222:u8g2_lib/u8g2_setup.c ****   u8g2->user_y0 = u8g2->buf_y0;
+ 223:u8g2_lib/u8g2_setup.c ****   u8g2->user_y1 = u8g2->buf_y1;
+ 224:u8g2_lib/u8g2_setup.c ****   
+ 225:u8g2_lib/u8g2_setup.c **** #ifdef U8G2_WITH_CLIP_WINDOW_SUPPORT
+ 226:u8g2_lib/u8g2_setup.c ****   u8g2_apply_clip_window(u8g2);
+ 227:u8g2_lib/u8g2_setup.c **** #endif /* U8G2_WITH_CLIP_WINDOW_SUPPORT */
+ 228:u8g2_lib/u8g2_setup.c **** }
+ 229:u8g2_lib/u8g2_setup.c **** 
+ 230:u8g2_lib/u8g2_setup.c **** 
+ 231:u8g2_lib/u8g2_setup.c **** void u8g2_update_dimension_r1(u8g2_t *u8g2)
+ 232:u8g2_lib/u8g2_setup.c **** {
+ 191              		.loc 1 232 1 is_stmt 1 view -0
+ 192              		.cfi_startproc
+ 193              		@ args = 0, pretend = 0, frame = 0
+ 194              		@ frame_needed = 0, uses_anonymous_args = 0
+ 195              		.loc 1 232 1 is_stmt 0 view .LVU59
+ 196 0000 10B5     		push	{r4, lr}
+ 197              	.LCFI3:
+ 198              		.cfi_def_cfa_offset 8
+ 199              		.cfi_offset 4, -8
+ 200              		.cfi_offset 14, -4
+ 201 0002 0446     		mov	r4, r0
+ 233:u8g2_lib/u8g2_setup.c ****   u8g2_update_dimension_common(u8g2);
+ 202              		.loc 1 233 3 is_stmt 1 view .LVU60
+ 203 0004 FFF7FEFF 		bl	u8g2_update_dimension_common
+ 204              	.LVL18:
+ 234:u8g2_lib/u8g2_setup.c ****   
+ 235:u8g2_lib/u8g2_setup.c ****   u8g2->height = u8g2_GetU8x8(u8g2)->display_info->pixel_width;
+ 205              		.loc 1 235 3 view .LVU61
+ 206              		.loc 1 235 36 is_stmt 0 view .LVU62
+ 207 0008 2368     		ldr	r3, [r4]
+ 208              		.loc 1 235 50 view .LVU63
+ 209 000a 9A8A     		ldrh	r2, [r3, #20]
+ 210              		.loc 1 235 16 view .LVU64
+ 211 000c 84F84020 		strb	r2, [r4, #64]
+ 236:u8g2_lib/u8g2_setup.c ****   u8g2->width = u8g2_GetU8x8(u8g2)->display_info->pixel_height;
+ 212              		.loc 1 236 3 is_stmt 1 view .LVU65
+ 213              		.loc 1 236 49 is_stmt 0 view .LVU66
+ 214 0010 DB8A     		ldrh	r3, [r3, #22]
+ 215              		.loc 1 236 15 view .LVU67
+ 216 0012 84F83F30 		strb	r3, [r4, #63]
+ 237:u8g2_lib/u8g2_setup.c ****   
+ 238:u8g2_lib/u8g2_setup.c **** }
+ 217              		.loc 1 238 1 view .LVU68
+ 218 0016 10BD     		pop	{r4, pc}
+ 219              		.loc 1 238 1 view .LVU69
+ 220              		.cfi_endproc
+ 221              	.LFE9:
+ 223              		.section	.text.u8g2_update_dimension_r2,"ax",%progbits
+ 224              		.align	1
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s 			page 9
+
+
+ 225              		.global	u8g2_update_dimension_r2
+ 226              		.syntax unified
+ 227              		.thumb
+ 228              		.thumb_func
+ 229              		.fpu softvfp
+ 231              	u8g2_update_dimension_r2:
+ 232              	.LVL19:
+ 233              	.LFB11:
+ 239:u8g2_lib/u8g2_setup.c **** 
+ 240:u8g2_lib/u8g2_setup.c **** void u8g2_update_page_win_r1(u8g2_t *u8g2)
+ 241:u8g2_lib/u8g2_setup.c **** {
+ 242:u8g2_lib/u8g2_setup.c ****   u8g2->user_x0 = u8g2->buf_y0;
+ 243:u8g2_lib/u8g2_setup.c ****   u8g2->user_x1 = u8g2->buf_y1;
+ 244:u8g2_lib/u8g2_setup.c ****   
+ 245:u8g2_lib/u8g2_setup.c ****   u8g2->user_y0 = 0;
+ 246:u8g2_lib/u8g2_setup.c ****   u8g2->user_y1 = u8g2->height;	/* pixel_buf_width replaced with height (which is the real pixel wi
+ 247:u8g2_lib/u8g2_setup.c ****   
+ 248:u8g2_lib/u8g2_setup.c **** #ifdef U8G2_WITH_CLIP_WINDOW_SUPPORT
+ 249:u8g2_lib/u8g2_setup.c ****   u8g2_apply_clip_window(u8g2);
+ 250:u8g2_lib/u8g2_setup.c **** #endif /* U8G2_WITH_CLIP_WINDOW_SUPPORT */
+ 251:u8g2_lib/u8g2_setup.c **** }
+ 252:u8g2_lib/u8g2_setup.c **** 
+ 253:u8g2_lib/u8g2_setup.c **** void u8g2_update_dimension_r2(u8g2_t *u8g2)
+ 254:u8g2_lib/u8g2_setup.c **** {
+ 234              		.loc 1 254 1 is_stmt 1 view -0
+ 235              		.cfi_startproc
+ 236              		@ args = 0, pretend = 0, frame = 0
+ 237              		@ frame_needed = 0, uses_anonymous_args = 0
+ 238              		.loc 1 254 1 is_stmt 0 view .LVU71
+ 239 0000 08B5     		push	{r3, lr}
+ 240              	.LCFI4:
+ 241              		.cfi_def_cfa_offset 8
+ 242              		.cfi_offset 3, -8
+ 243              		.cfi_offset 14, -4
+ 255:u8g2_lib/u8g2_setup.c ****   u8g2_update_dimension_common(u8g2);
+ 244              		.loc 1 255 3 is_stmt 1 view .LVU72
+ 245 0002 FFF7FEFF 		bl	u8g2_update_dimension_common
+ 246              	.LVL20:
+ 256:u8g2_lib/u8g2_setup.c **** }
+ 247              		.loc 1 256 1 is_stmt 0 view .LVU73
+ 248 0006 08BD     		pop	{r3, pc}
+ 249              		.cfi_endproc
+ 250              	.LFE11:
+ 252              		.section	.text.u8g2_update_dimension_r3,"ax",%progbits
+ 253              		.align	1
+ 254              		.global	u8g2_update_dimension_r3
+ 255              		.syntax unified
+ 256              		.thumb
+ 257              		.thumb_func
+ 258              		.fpu softvfp
+ 260              	u8g2_update_dimension_r3:
+ 261              	.LVL21:
+ 262              	.LFB13:
+ 257:u8g2_lib/u8g2_setup.c **** 
+ 258:u8g2_lib/u8g2_setup.c **** void u8g2_update_page_win_r2(u8g2_t *u8g2)
+ 259:u8g2_lib/u8g2_setup.c **** {
+ 260:u8g2_lib/u8g2_setup.c ****   u8g2->user_x0 = 0;
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s 			page 10
+
+
+ 261:u8g2_lib/u8g2_setup.c ****   u8g2->user_x1 = u8g2->width;	/* pixel_buf_width replaced with width */
+ 262:u8g2_lib/u8g2_setup.c ****   
+ 263:u8g2_lib/u8g2_setup.c ****   /* there are ases where the height is not a multiple of 8. */
+ 264:u8g2_lib/u8g2_setup.c ****   /* in such a case u8g2->buf_y1 might be heigher than u8g2->height */
+ 265:u8g2_lib/u8g2_setup.c ****   u8g2->user_y0 = 0;
+ 266:u8g2_lib/u8g2_setup.c ****   if ( u8g2->height >= u8g2->buf_y1 )
+ 267:u8g2_lib/u8g2_setup.c ****     u8g2->user_y0 = u8g2->height - u8g2->buf_y1;
+ 268:u8g2_lib/u8g2_setup.c ****   u8g2->user_y1 = u8g2->height - u8g2->buf_y0;
+ 269:u8g2_lib/u8g2_setup.c **** 
+ 270:u8g2_lib/u8g2_setup.c **** #ifdef U8G2_WITH_CLIP_WINDOW_SUPPORT
+ 271:u8g2_lib/u8g2_setup.c ****   u8g2_apply_clip_window(u8g2);
+ 272:u8g2_lib/u8g2_setup.c **** #endif /* U8G2_WITH_CLIP_WINDOW_SUPPORT */
+ 273:u8g2_lib/u8g2_setup.c **** }
+ 274:u8g2_lib/u8g2_setup.c **** 
+ 275:u8g2_lib/u8g2_setup.c **** 
+ 276:u8g2_lib/u8g2_setup.c **** void u8g2_update_dimension_r3(u8g2_t *u8g2)
+ 277:u8g2_lib/u8g2_setup.c **** {
+ 263              		.loc 1 277 1 is_stmt 1 view -0
+ 264              		.cfi_startproc
+ 265              		@ args = 0, pretend = 0, frame = 0
+ 266              		@ frame_needed = 0, uses_anonymous_args = 0
+ 267              		.loc 1 277 1 is_stmt 0 view .LVU75
+ 268 0000 10B5     		push	{r4, lr}
+ 269              	.LCFI5:
+ 270              		.cfi_def_cfa_offset 8
+ 271              		.cfi_offset 4, -8
+ 272              		.cfi_offset 14, -4
+ 273 0002 0446     		mov	r4, r0
+ 278:u8g2_lib/u8g2_setup.c ****   u8g2_update_dimension_common(u8g2);
+ 274              		.loc 1 278 3 is_stmt 1 view .LVU76
+ 275 0004 FFF7FEFF 		bl	u8g2_update_dimension_common
+ 276              	.LVL22:
+ 279:u8g2_lib/u8g2_setup.c ****   
+ 280:u8g2_lib/u8g2_setup.c ****   u8g2->height = u8g2_GetU8x8(u8g2)->display_info->pixel_width;
+ 277              		.loc 1 280 3 view .LVU77
+ 278              		.loc 1 280 36 is_stmt 0 view .LVU78
+ 279 0008 2368     		ldr	r3, [r4]
+ 280              		.loc 1 280 50 view .LVU79
+ 281 000a 9A8A     		ldrh	r2, [r3, #20]
+ 282              		.loc 1 280 16 view .LVU80
+ 283 000c 84F84020 		strb	r2, [r4, #64]
+ 281:u8g2_lib/u8g2_setup.c ****   u8g2->width = u8g2_GetU8x8(u8g2)->display_info->pixel_height;
+ 284              		.loc 1 281 3 is_stmt 1 view .LVU81
+ 285              		.loc 1 281 49 is_stmt 0 view .LVU82
+ 286 0010 DB8A     		ldrh	r3, [r3, #22]
+ 287              		.loc 1 281 15 view .LVU83
+ 288 0012 84F83F30 		strb	r3, [r4, #63]
+ 282:u8g2_lib/u8g2_setup.c **** 
+ 283:u8g2_lib/u8g2_setup.c **** }
+ 289              		.loc 1 283 1 view .LVU84
+ 290 0016 10BD     		pop	{r4, pc}
+ 291              		.loc 1 283 1 view .LVU85
+ 292              		.cfi_endproc
+ 293              	.LFE13:
+ 295              		.section	.text.u8g2_apply_clip_window,"ax",%progbits
+ 296              		.align	1
+ 297              		.syntax unified
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s 			page 11
+
+
+ 298              		.thumb
+ 299              		.thumb_func
+ 300              		.fpu softvfp
+ 302              	u8g2_apply_clip_window:
+ 303              	.LVL23:
+ 304              	.LFB6:
+ 187:u8g2_lib/u8g2_setup.c ****   /* check aganst the current user_??? window */
+ 305              		.loc 1 187 1 is_stmt 1 view -0
+ 306              		.cfi_startproc
+ 307              		@ args = 0, pretend = 0, frame = 0
+ 308              		@ frame_needed = 0, uses_anonymous_args = 0
+ 187:u8g2_lib/u8g2_setup.c ****   /* check aganst the current user_??? window */
+ 309              		.loc 1 187 1 is_stmt 0 view .LVU87
+ 310 0000 10B5     		push	{r4, lr}
+ 311              	.LCFI6:
+ 312              		.cfi_def_cfa_offset 8
+ 313              		.cfi_offset 4, -8
+ 314              		.cfi_offset 14, -4
+ 315 0002 82B0     		sub	sp, sp, #8
+ 316              	.LCFI7:
+ 317              		.cfi_def_cfa_offset 16
+ 318 0004 0446     		mov	r4, r0
+ 189:u8g2_lib/u8g2_setup.c ****   {
+ 319              		.loc 1 189 3 is_stmt 1 view .LVU88
+ 189:u8g2_lib/u8g2_setup.c ****   {
+ 320              		.loc 1 189 8 is_stmt 0 view .LVU89
+ 321 0006 90F84830 		ldrb	r3, [r0, #72]	@ zero_extendqisi2
+ 322 000a 0093     		str	r3, [sp]
+ 323 000c 90F84630 		ldrb	r3, [r0, #70]	@ zero_extendqisi2
+ 324 0010 90F84720 		ldrb	r2, [r0, #71]	@ zero_extendqisi2
+ 325 0014 90F84510 		ldrb	r1, [r0, #69]	@ zero_extendqisi2
+ 326 0018 FFF7FEFF 		bl	u8g2_IsIntersection
+ 327              	.LVL24:
+ 189:u8g2_lib/u8g2_setup.c ****   {
+ 328              		.loc 1 189 6 view .LVU90
+ 329 001c 20B9     		cbnz	r0, .L16
+ 191:u8g2_lib/u8g2_setup.c ****   }
+ 330              		.loc 1 191 5 is_stmt 1 view .LVU91
+ 191:u8g2_lib/u8g2_setup.c ****   }
+ 331              		.loc 1 191 44 is_stmt 0 view .LVU92
+ 332 001e 0023     		movs	r3, #0
+ 333 0020 84F87C30 		strb	r3, [r4, #124]
+ 334              	.L15:
+ 206:u8g2_lib/u8g2_setup.c **** #endif /* U8G2_WITH_CLIP_WINDOW_SUPPORT */
+ 335              		.loc 1 206 1 view .LVU93
+ 336 0024 02B0     		add	sp, sp, #8
+ 337              	.LCFI8:
+ 338              		.cfi_remember_state
+ 339              		.cfi_def_cfa_offset 8
+ 340              		@ sp needed
+ 341 0026 10BD     		pop	{r4, pc}
+ 342              	.LVL25:
+ 343              	.L16:
+ 344              	.LCFI9:
+ 345              		.cfi_restore_state
+ 195:u8g2_lib/u8g2_setup.c **** 
+ 346              		.loc 1 195 5 is_stmt 1 view .LVU94
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s 			page 12
+
+
+ 195:u8g2_lib/u8g2_setup.c **** 
+ 347              		.loc 1 195 44 is_stmt 0 view .LVU95
+ 348 0028 0123     		movs	r3, #1
+ 349 002a 84F87C30 		strb	r3, [r4, #124]
+ 197:u8g2_lib/u8g2_setup.c ****       u8g2->user_x0 = u8g2->clip_x0;
+ 350              		.loc 1 197 5 is_stmt 1 view .LVU96
+ 197:u8g2_lib/u8g2_setup.c ****       u8g2->user_x0 = u8g2->clip_x0;
+ 351              		.loc 1 197 14 is_stmt 0 view .LVU97
+ 352 002e 94F84120 		ldrb	r2, [r4, #65]	@ zero_extendqisi2
+ 197:u8g2_lib/u8g2_setup.c ****       u8g2->user_x0 = u8g2->clip_x0;
+ 353              		.loc 1 197 30 view .LVU98
+ 354 0032 94F84530 		ldrb	r3, [r4, #69]	@ zero_extendqisi2
+ 197:u8g2_lib/u8g2_setup.c ****       u8g2->user_x0 = u8g2->clip_x0;
+ 355              		.loc 1 197 8 view .LVU99
+ 356 0036 9A42     		cmp	r2, r3
+ 357 0038 01D2     		bcs	.L18
+ 198:u8g2_lib/u8g2_setup.c ****     if ( u8g2->user_x1 > u8g2->clip_x1 )
+ 358              		.loc 1 198 7 is_stmt 1 view .LVU100
+ 198:u8g2_lib/u8g2_setup.c ****     if ( u8g2->user_x1 > u8g2->clip_x1 )
+ 359              		.loc 1 198 21 is_stmt 0 view .LVU101
+ 360 003a 84F84130 		strb	r3, [r4, #65]
+ 361              	.L18:
+ 199:u8g2_lib/u8g2_setup.c ****       u8g2->user_x1 = u8g2->clip_x1;
+ 362              		.loc 1 199 5 is_stmt 1 view .LVU102
+ 199:u8g2_lib/u8g2_setup.c ****       u8g2->user_x1 = u8g2->clip_x1;
+ 363              		.loc 1 199 14 is_stmt 0 view .LVU103
+ 364 003e 94F84220 		ldrb	r2, [r4, #66]	@ zero_extendqisi2
+ 199:u8g2_lib/u8g2_setup.c ****       u8g2->user_x1 = u8g2->clip_x1;
+ 365              		.loc 1 199 30 view .LVU104
+ 366 0042 94F84630 		ldrb	r3, [r4, #70]	@ zero_extendqisi2
+ 199:u8g2_lib/u8g2_setup.c ****       u8g2->user_x1 = u8g2->clip_x1;
+ 367              		.loc 1 199 8 view .LVU105
+ 368 0046 9A42     		cmp	r2, r3
+ 369 0048 01D9     		bls	.L19
+ 200:u8g2_lib/u8g2_setup.c ****     if ( u8g2->user_y0 < u8g2->clip_y0 )
+ 370              		.loc 1 200 7 is_stmt 1 view .LVU106
+ 200:u8g2_lib/u8g2_setup.c ****     if ( u8g2->user_y0 < u8g2->clip_y0 )
+ 371              		.loc 1 200 21 is_stmt 0 view .LVU107
+ 372 004a 84F84230 		strb	r3, [r4, #66]
+ 373              	.L19:
+ 201:u8g2_lib/u8g2_setup.c ****       u8g2->user_y0 = u8g2->clip_y0;
+ 374              		.loc 1 201 5 is_stmt 1 view .LVU108
+ 201:u8g2_lib/u8g2_setup.c ****       u8g2->user_y0 = u8g2->clip_y0;
+ 375              		.loc 1 201 14 is_stmt 0 view .LVU109
+ 376 004e 94F84320 		ldrb	r2, [r4, #67]	@ zero_extendqisi2
+ 201:u8g2_lib/u8g2_setup.c ****       u8g2->user_y0 = u8g2->clip_y0;
+ 377              		.loc 1 201 30 view .LVU110
+ 378 0052 94F84730 		ldrb	r3, [r4, #71]	@ zero_extendqisi2
+ 201:u8g2_lib/u8g2_setup.c ****       u8g2->user_y0 = u8g2->clip_y0;
+ 379              		.loc 1 201 8 view .LVU111
+ 380 0056 9A42     		cmp	r2, r3
+ 381 0058 01D2     		bcs	.L20
+ 202:u8g2_lib/u8g2_setup.c ****     if ( u8g2->user_y1 > u8g2->clip_y1 )
+ 382              		.loc 1 202 7 is_stmt 1 view .LVU112
+ 202:u8g2_lib/u8g2_setup.c ****     if ( u8g2->user_y1 > u8g2->clip_y1 )
+ 383              		.loc 1 202 21 is_stmt 0 view .LVU113
+ 384 005a 84F84330 		strb	r3, [r4, #67]
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s 			page 13
+
+
+ 385              	.L20:
+ 203:u8g2_lib/u8g2_setup.c ****       u8g2->user_y1 = u8g2->clip_y1;
+ 386              		.loc 1 203 5 is_stmt 1 view .LVU114
+ 203:u8g2_lib/u8g2_setup.c ****       u8g2->user_y1 = u8g2->clip_y1;
+ 387              		.loc 1 203 14 is_stmt 0 view .LVU115
+ 388 005e 94F84420 		ldrb	r2, [r4, #68]	@ zero_extendqisi2
+ 203:u8g2_lib/u8g2_setup.c ****       u8g2->user_y1 = u8g2->clip_y1;
+ 389              		.loc 1 203 30 view .LVU116
+ 390 0062 94F84830 		ldrb	r3, [r4, #72]	@ zero_extendqisi2
+ 203:u8g2_lib/u8g2_setup.c ****       u8g2->user_y1 = u8g2->clip_y1;
+ 391              		.loc 1 203 8 view .LVU117
+ 392 0066 9A42     		cmp	r2, r3
+ 393 0068 DCD9     		bls	.L15
+ 204:u8g2_lib/u8g2_setup.c ****   }
+ 394              		.loc 1 204 7 is_stmt 1 view .LVU118
+ 204:u8g2_lib/u8g2_setup.c ****   }
+ 395              		.loc 1 204 21 is_stmt 0 view .LVU119
+ 396 006a 84F84430 		strb	r3, [r4, #68]
+ 206:u8g2_lib/u8g2_setup.c **** #endif /* U8G2_WITH_CLIP_WINDOW_SUPPORT */
+ 397              		.loc 1 206 1 view .LVU120
+ 398 006e D9E7     		b	.L15
+ 399              		.cfi_endproc
+ 400              	.LFE6:
+ 402              		.section	.text.u8g2_update_page_win_r0,"ax",%progbits
+ 403              		.align	1
+ 404              		.global	u8g2_update_page_win_r0
+ 405              		.syntax unified
+ 406              		.thumb
+ 407              		.thumb_func
+ 408              		.fpu softvfp
+ 410              	u8g2_update_page_win_r0:
+ 411              	.LVL26:
+ 412              	.LFB8:
+ 218:u8g2_lib/u8g2_setup.c ****   u8g2->user_x0 = 0;
+ 413              		.loc 1 218 1 is_stmt 1 view -0
+ 414              		.cfi_startproc
+ 415              		@ args = 0, pretend = 0, frame = 0
+ 416              		@ frame_needed = 0, uses_anonymous_args = 0
+ 218:u8g2_lib/u8g2_setup.c ****   u8g2->user_x0 = 0;
+ 417              		.loc 1 218 1 is_stmt 0 view .LVU122
+ 418 0000 08B5     		push	{r3, lr}
+ 419              	.LCFI10:
+ 420              		.cfi_def_cfa_offset 8
+ 421              		.cfi_offset 3, -8
+ 422              		.cfi_offset 14, -4
+ 219:u8g2_lib/u8g2_setup.c ****   u8g2->user_x1 = u8g2->width;			/* pixel_buf_width replaced with width */
+ 423              		.loc 1 219 3 is_stmt 1 view .LVU123
+ 219:u8g2_lib/u8g2_setup.c ****   u8g2->user_x1 = u8g2->width;			/* pixel_buf_width replaced with width */
+ 424              		.loc 1 219 17 is_stmt 0 view .LVU124
+ 425 0002 0022     		movs	r2, #0
+ 426 0004 80F84120 		strb	r2, [r0, #65]
+ 220:u8g2_lib/u8g2_setup.c ****   
+ 427              		.loc 1 220 3 is_stmt 1 view .LVU125
+ 220:u8g2_lib/u8g2_setup.c ****   
+ 428              		.loc 1 220 23 is_stmt 0 view .LVU126
+ 429 0008 90F83F20 		ldrb	r2, [r0, #63]	@ zero_extendqisi2
+ 220:u8g2_lib/u8g2_setup.c ****   
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s 			page 14
+
+
+ 430              		.loc 1 220 17 view .LVU127
+ 431 000c 80F84220 		strb	r2, [r0, #66]
+ 222:u8g2_lib/u8g2_setup.c ****   u8g2->user_y1 = u8g2->buf_y1;
+ 432              		.loc 1 222 3 is_stmt 1 view .LVU128
+ 222:u8g2_lib/u8g2_setup.c ****   u8g2->user_y1 = u8g2->buf_y1;
+ 433              		.loc 1 222 23 is_stmt 0 view .LVU129
+ 434 0010 90F83D20 		ldrb	r2, [r0, #61]	@ zero_extendqisi2
+ 222:u8g2_lib/u8g2_setup.c ****   u8g2->user_y1 = u8g2->buf_y1;
+ 435              		.loc 1 222 17 view .LVU130
+ 436 0014 80F84320 		strb	r2, [r0, #67]
+ 223:u8g2_lib/u8g2_setup.c ****   
+ 437              		.loc 1 223 3 is_stmt 1 view .LVU131
+ 223:u8g2_lib/u8g2_setup.c ****   
+ 438              		.loc 1 223 23 is_stmt 0 view .LVU132
+ 439 0018 90F83E20 		ldrb	r2, [r0, #62]	@ zero_extendqisi2
+ 223:u8g2_lib/u8g2_setup.c ****   
+ 440              		.loc 1 223 17 view .LVU133
+ 441 001c 80F84420 		strb	r2, [r0, #68]
+ 226:u8g2_lib/u8g2_setup.c **** #endif /* U8G2_WITH_CLIP_WINDOW_SUPPORT */
+ 442              		.loc 1 226 3 is_stmt 1 view .LVU134
+ 443 0020 FFF7FEFF 		bl	u8g2_apply_clip_window
+ 444              	.LVL27:
+ 228:u8g2_lib/u8g2_setup.c **** 
+ 445              		.loc 1 228 1 is_stmt 0 view .LVU135
+ 446 0024 08BD     		pop	{r3, pc}
+ 447              		.cfi_endproc
+ 448              	.LFE8:
+ 450              		.section	.text.u8g2_update_page_win_r1,"ax",%progbits
+ 451              		.align	1
+ 452              		.global	u8g2_update_page_win_r1
+ 453              		.syntax unified
+ 454              		.thumb
+ 455              		.thumb_func
+ 456              		.fpu softvfp
+ 458              	u8g2_update_page_win_r1:
+ 459              	.LVL28:
+ 460              	.LFB10:
+ 241:u8g2_lib/u8g2_setup.c ****   u8g2->user_x0 = u8g2->buf_y0;
+ 461              		.loc 1 241 1 is_stmt 1 view -0
+ 462              		.cfi_startproc
+ 463              		@ args = 0, pretend = 0, frame = 0
+ 464              		@ frame_needed = 0, uses_anonymous_args = 0
+ 241:u8g2_lib/u8g2_setup.c ****   u8g2->user_x0 = u8g2->buf_y0;
+ 465              		.loc 1 241 1 is_stmt 0 view .LVU137
+ 466 0000 08B5     		push	{r3, lr}
+ 467              	.LCFI11:
+ 468              		.cfi_def_cfa_offset 8
+ 469              		.cfi_offset 3, -8
+ 470              		.cfi_offset 14, -4
+ 242:u8g2_lib/u8g2_setup.c ****   u8g2->user_x1 = u8g2->buf_y1;
+ 471              		.loc 1 242 3 is_stmt 1 view .LVU138
+ 242:u8g2_lib/u8g2_setup.c ****   u8g2->user_x1 = u8g2->buf_y1;
+ 472              		.loc 1 242 23 is_stmt 0 view .LVU139
+ 473 0002 90F83D20 		ldrb	r2, [r0, #61]	@ zero_extendqisi2
+ 242:u8g2_lib/u8g2_setup.c ****   u8g2->user_x1 = u8g2->buf_y1;
+ 474              		.loc 1 242 17 view .LVU140
+ 475 0006 80F84120 		strb	r2, [r0, #65]
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s 			page 15
+
+
+ 243:u8g2_lib/u8g2_setup.c ****   
+ 476              		.loc 1 243 3 is_stmt 1 view .LVU141
+ 243:u8g2_lib/u8g2_setup.c ****   
+ 477              		.loc 1 243 23 is_stmt 0 view .LVU142
+ 478 000a 90F83E20 		ldrb	r2, [r0, #62]	@ zero_extendqisi2
+ 243:u8g2_lib/u8g2_setup.c ****   
+ 479              		.loc 1 243 17 view .LVU143
+ 480 000e 80F84220 		strb	r2, [r0, #66]
+ 245:u8g2_lib/u8g2_setup.c ****   u8g2->user_y1 = u8g2->height;	/* pixel_buf_width replaced with height (which is the real pixel wi
+ 481              		.loc 1 245 3 is_stmt 1 view .LVU144
+ 245:u8g2_lib/u8g2_setup.c ****   u8g2->user_y1 = u8g2->height;	/* pixel_buf_width replaced with height (which is the real pixel wi
+ 482              		.loc 1 245 17 is_stmt 0 view .LVU145
+ 483 0012 0022     		movs	r2, #0
+ 484 0014 80F84320 		strb	r2, [r0, #67]
+ 246:u8g2_lib/u8g2_setup.c ****   
+ 485              		.loc 1 246 3 is_stmt 1 view .LVU146
+ 246:u8g2_lib/u8g2_setup.c ****   
+ 486              		.loc 1 246 23 is_stmt 0 view .LVU147
+ 487 0018 90F84020 		ldrb	r2, [r0, #64]	@ zero_extendqisi2
+ 246:u8g2_lib/u8g2_setup.c ****   
+ 488              		.loc 1 246 17 view .LVU148
+ 489 001c 80F84420 		strb	r2, [r0, #68]
+ 249:u8g2_lib/u8g2_setup.c **** #endif /* U8G2_WITH_CLIP_WINDOW_SUPPORT */
+ 490              		.loc 1 249 3 is_stmt 1 view .LVU149
+ 491 0020 FFF7FEFF 		bl	u8g2_apply_clip_window
+ 492              	.LVL29:
+ 251:u8g2_lib/u8g2_setup.c **** 
+ 493              		.loc 1 251 1 is_stmt 0 view .LVU150
+ 494 0024 08BD     		pop	{r3, pc}
+ 495              		.cfi_endproc
+ 496              	.LFE10:
+ 498              		.section	.text.u8g2_update_page_win_r2,"ax",%progbits
+ 499              		.align	1
+ 500              		.global	u8g2_update_page_win_r2
+ 501              		.syntax unified
+ 502              		.thumb
+ 503              		.thumb_func
+ 504              		.fpu softvfp
+ 506              	u8g2_update_page_win_r2:
+ 507              	.LVL30:
+ 508              	.LFB12:
+ 259:u8g2_lib/u8g2_setup.c ****   u8g2->user_x0 = 0;
+ 509              		.loc 1 259 1 is_stmt 1 view -0
+ 510              		.cfi_startproc
+ 511              		@ args = 0, pretend = 0, frame = 0
+ 512              		@ frame_needed = 0, uses_anonymous_args = 0
+ 259:u8g2_lib/u8g2_setup.c ****   u8g2->user_x0 = 0;
+ 513              		.loc 1 259 1 is_stmt 0 view .LVU152
+ 514 0000 08B5     		push	{r3, lr}
+ 515              	.LCFI12:
+ 516              		.cfi_def_cfa_offset 8
+ 517              		.cfi_offset 3, -8
+ 518              		.cfi_offset 14, -4
+ 260:u8g2_lib/u8g2_setup.c ****   u8g2->user_x1 = u8g2->width;	/* pixel_buf_width replaced with width */
+ 519              		.loc 1 260 3 is_stmt 1 view .LVU153
+ 260:u8g2_lib/u8g2_setup.c ****   u8g2->user_x1 = u8g2->width;	/* pixel_buf_width replaced with width */
+ 520              		.loc 1 260 17 is_stmt 0 view .LVU154
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s 			page 16
+
+
+ 521 0002 0023     		movs	r3, #0
+ 522 0004 80F84130 		strb	r3, [r0, #65]
+ 261:u8g2_lib/u8g2_setup.c ****   
+ 523              		.loc 1 261 3 is_stmt 1 view .LVU155
+ 261:u8g2_lib/u8g2_setup.c ****   
+ 524              		.loc 1 261 23 is_stmt 0 view .LVU156
+ 525 0008 90F83F20 		ldrb	r2, [r0, #63]	@ zero_extendqisi2
+ 261:u8g2_lib/u8g2_setup.c ****   
+ 526              		.loc 1 261 17 view .LVU157
+ 527 000c 80F84220 		strb	r2, [r0, #66]
+ 265:u8g2_lib/u8g2_setup.c ****   if ( u8g2->height >= u8g2->buf_y1 )
+ 528              		.loc 1 265 3 is_stmt 1 view .LVU158
+ 265:u8g2_lib/u8g2_setup.c ****   if ( u8g2->height >= u8g2->buf_y1 )
+ 529              		.loc 1 265 17 is_stmt 0 view .LVU159
+ 530 0010 80F84330 		strb	r3, [r0, #67]
+ 266:u8g2_lib/u8g2_setup.c ****     u8g2->user_y0 = u8g2->height - u8g2->buf_y1;
+ 531              		.loc 1 266 3 is_stmt 1 view .LVU160
+ 266:u8g2_lib/u8g2_setup.c ****     u8g2->user_y0 = u8g2->height - u8g2->buf_y1;
+ 532              		.loc 1 266 12 is_stmt 0 view .LVU161
+ 533 0014 90F84030 		ldrb	r3, [r0, #64]	@ zero_extendqisi2
+ 266:u8g2_lib/u8g2_setup.c ****     u8g2->user_y0 = u8g2->height - u8g2->buf_y1;
+ 534              		.loc 1 266 28 view .LVU162
+ 535 0018 90F83E20 		ldrb	r2, [r0, #62]	@ zero_extendqisi2
+ 266:u8g2_lib/u8g2_setup.c ****     u8g2->user_y0 = u8g2->height - u8g2->buf_y1;
+ 536              		.loc 1 266 6 view .LVU163
+ 537 001c 9342     		cmp	r3, r2
+ 538 001e 02D3     		bcc	.L27
+ 267:u8g2_lib/u8g2_setup.c ****   u8g2->user_y1 = u8g2->height - u8g2->buf_y0;
+ 539              		.loc 1 267 5 is_stmt 1 view .LVU164
+ 267:u8g2_lib/u8g2_setup.c ****   u8g2->user_y1 = u8g2->height - u8g2->buf_y0;
+ 540              		.loc 1 267 34 is_stmt 0 view .LVU165
+ 541 0020 9A1A     		subs	r2, r3, r2
+ 267:u8g2_lib/u8g2_setup.c ****   u8g2->user_y1 = u8g2->height - u8g2->buf_y0;
+ 542              		.loc 1 267 19 view .LVU166
+ 543 0022 80F84320 		strb	r2, [r0, #67]
+ 544              	.L27:
+ 268:u8g2_lib/u8g2_setup.c **** 
+ 545              		.loc 1 268 3 is_stmt 1 view .LVU167
+ 268:u8g2_lib/u8g2_setup.c **** 
+ 546              		.loc 1 268 38 is_stmt 0 view .LVU168
+ 547 0026 90F83D20 		ldrb	r2, [r0, #61]	@ zero_extendqisi2
+ 268:u8g2_lib/u8g2_setup.c **** 
+ 548              		.loc 1 268 32 view .LVU169
+ 549 002a 9B1A     		subs	r3, r3, r2
+ 268:u8g2_lib/u8g2_setup.c **** 
+ 550              		.loc 1 268 17 view .LVU170
+ 551 002c 80F84430 		strb	r3, [r0, #68]
+ 271:u8g2_lib/u8g2_setup.c **** #endif /* U8G2_WITH_CLIP_WINDOW_SUPPORT */
+ 552              		.loc 1 271 3 is_stmt 1 view .LVU171
+ 553 0030 FFF7FEFF 		bl	u8g2_apply_clip_window
+ 554              	.LVL31:
+ 273:u8g2_lib/u8g2_setup.c **** 
+ 555              		.loc 1 273 1 is_stmt 0 view .LVU172
+ 556 0034 08BD     		pop	{r3, pc}
+ 557              		.cfi_endproc
+ 558              	.LFE12:
+ 560              		.section	.text.u8g2_update_page_win_r3,"ax",%progbits
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s 			page 17
+
+
+ 561              		.align	1
+ 562              		.global	u8g2_update_page_win_r3
+ 563              		.syntax unified
+ 564              		.thumb
+ 565              		.thumb_func
+ 566              		.fpu softvfp
+ 568              	u8g2_update_page_win_r3:
+ 569              	.LVL32:
+ 570              	.LFB14:
+ 284:u8g2_lib/u8g2_setup.c **** 
+ 285:u8g2_lib/u8g2_setup.c **** void u8g2_update_page_win_r3(u8g2_t *u8g2)
+ 286:u8g2_lib/u8g2_setup.c **** {
+ 571              		.loc 1 286 1 is_stmt 1 view -0
+ 572              		.cfi_startproc
+ 573              		@ args = 0, pretend = 0, frame = 0
+ 574              		@ frame_needed = 0, uses_anonymous_args = 0
+ 575              		.loc 1 286 1 is_stmt 0 view .LVU174
+ 576 0000 08B5     		push	{r3, lr}
+ 577              	.LCFI13:
+ 578              		.cfi_def_cfa_offset 8
+ 579              		.cfi_offset 3, -8
+ 580              		.cfi_offset 14, -4
+ 287:u8g2_lib/u8g2_setup.c ****   /* there are ases where the height is not a multiple of 8. */
+ 288:u8g2_lib/u8g2_setup.c ****   /* in such a case u8g2->buf_y1 might be heigher than u8g2->width */
+ 289:u8g2_lib/u8g2_setup.c ****   u8g2->user_x0 = 0;
+ 581              		.loc 1 289 3 is_stmt 1 view .LVU175
+ 582              		.loc 1 289 17 is_stmt 0 view .LVU176
+ 583 0002 0023     		movs	r3, #0
+ 584 0004 80F84130 		strb	r3, [r0, #65]
+ 290:u8g2_lib/u8g2_setup.c ****   if ( u8g2->width >= u8g2->buf_y1 )
+ 585              		.loc 1 290 3 is_stmt 1 view .LVU177
+ 586              		.loc 1 290 12 is_stmt 0 view .LVU178
+ 587 0008 90F83F30 		ldrb	r3, [r0, #63]	@ zero_extendqisi2
+ 588              		.loc 1 290 27 view .LVU179
+ 589 000c 90F83E20 		ldrb	r2, [r0, #62]	@ zero_extendqisi2
+ 590              		.loc 1 290 6 view .LVU180
+ 591 0010 9342     		cmp	r3, r2
+ 592 0012 02D3     		bcc	.L30
+ 291:u8g2_lib/u8g2_setup.c ****     u8g2->user_x0 = u8g2->width - u8g2->buf_y1;
+ 593              		.loc 1 291 5 is_stmt 1 view .LVU181
+ 594              		.loc 1 291 33 is_stmt 0 view .LVU182
+ 595 0014 9A1A     		subs	r2, r3, r2
+ 596              		.loc 1 291 19 view .LVU183
+ 597 0016 80F84120 		strb	r2, [r0, #65]
+ 598              	.L30:
+ 292:u8g2_lib/u8g2_setup.c ****   u8g2->user_x1 = u8g2->width - u8g2->buf_y0;
+ 599              		.loc 1 292 3 is_stmt 1 view .LVU184
+ 600              		.loc 1 292 37 is_stmt 0 view .LVU185
+ 601 001a 90F83D20 		ldrb	r2, [r0, #61]	@ zero_extendqisi2
+ 602              		.loc 1 292 31 view .LVU186
+ 603 001e 9B1A     		subs	r3, r3, r2
+ 604              		.loc 1 292 17 view .LVU187
+ 605 0020 80F84230 		strb	r3, [r0, #66]
+ 293:u8g2_lib/u8g2_setup.c ****   
+ 294:u8g2_lib/u8g2_setup.c ****   u8g2->user_y0 = 0;
+ 606              		.loc 1 294 3 is_stmt 1 view .LVU188
+ 607              		.loc 1 294 17 is_stmt 0 view .LVU189
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s 			page 18
+
+
+ 608 0024 0023     		movs	r3, #0
+ 609 0026 80F84330 		strb	r3, [r0, #67]
+ 295:u8g2_lib/u8g2_setup.c ****   u8g2->user_y1 = u8g2->height;	/* pixel_buf_width replaced with height (pixel_width) */
+ 610              		.loc 1 295 3 is_stmt 1 view .LVU190
+ 611              		.loc 1 295 23 is_stmt 0 view .LVU191
+ 612 002a 90F84030 		ldrb	r3, [r0, #64]	@ zero_extendqisi2
+ 613              		.loc 1 295 17 view .LVU192
+ 614 002e 80F84430 		strb	r3, [r0, #68]
+ 296:u8g2_lib/u8g2_setup.c **** 
+ 297:u8g2_lib/u8g2_setup.c **** #ifdef U8G2_WITH_CLIP_WINDOW_SUPPORT
+ 298:u8g2_lib/u8g2_setup.c ****   u8g2_apply_clip_window(u8g2);
+ 615              		.loc 1 298 3 is_stmt 1 view .LVU193
+ 616 0032 FFF7FEFF 		bl	u8g2_apply_clip_window
+ 617              	.LVL33:
+ 299:u8g2_lib/u8g2_setup.c **** #endif /* U8G2_WITH_CLIP_WINDOW_SUPPORT */
+ 300:u8g2_lib/u8g2_setup.c **** }
+ 618              		.loc 1 300 1 is_stmt 0 view .LVU194
+ 619 0036 08BD     		pop	{r3, pc}
+ 620              		.cfi_endproc
+ 621              	.LFE14:
+ 623              		.section	.text.u8g2_draw_l90_r0,"ax",%progbits
+ 624              		.align	1
+ 625              		.global	u8g2_draw_l90_r0
+ 626              		.syntax unified
+ 627              		.thumb
+ 628              		.thumb_func
+ 629              		.fpu softvfp
+ 631              	u8g2_draw_l90_r0:
+ 632              	.LVL34:
+ 633              	.LFB15:
+ 301:u8g2_lib/u8g2_setup.c **** 
+ 302:u8g2_lib/u8g2_setup.c **** 
+ 303:u8g2_lib/u8g2_setup.c **** /*============================================*/
+ 304:u8g2_lib/u8g2_setup.c **** extern void u8g2_draw_hv_line_2dir(u8g2_t *u8g2, u8g2_uint_t x, u8g2_uint_t y, u8g2_uint_t len, uin
+ 305:u8g2_lib/u8g2_setup.c **** 
+ 306:u8g2_lib/u8g2_setup.c **** 
+ 307:u8g2_lib/u8g2_setup.c **** void u8g2_draw_l90_r0(u8g2_t *u8g2, u8g2_uint_t x, u8g2_uint_t y, u8g2_uint_t len, uint8_t dir)
+ 308:u8g2_lib/u8g2_setup.c **** {
+ 634              		.loc 1 308 1 is_stmt 1 view -0
+ 635              		.cfi_startproc
+ 636              		@ args = 4, pretend = 0, frame = 0
+ 637              		@ frame_needed = 0, uses_anonymous_args = 0
+ 638              		.loc 1 308 1 is_stmt 0 view .LVU196
+ 639 0000 10B5     		push	{r4, lr}
+ 640              	.LCFI14:
+ 641              		.cfi_def_cfa_offset 8
+ 642              		.cfi_offset 4, -8
+ 643              		.cfi_offset 14, -4
+ 644 0002 82B0     		sub	sp, sp, #8
+ 645              	.LCFI15:
+ 646              		.cfi_def_cfa_offset 16
+ 309:u8g2_lib/u8g2_setup.c **** #ifdef __unix
+ 310:u8g2_lib/u8g2_setup.c ****   assert( dir <= 1 );
+ 311:u8g2_lib/u8g2_setup.c **** #endif
+ 312:u8g2_lib/u8g2_setup.c ****   u8g2_draw_hv_line_2dir(u8g2, x, y, len, dir);
+ 647              		.loc 1 312 3 is_stmt 1 view .LVU197
+ 648 0004 9DF81040 		ldrb	r4, [sp, #16]	@ zero_extendqisi2
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s 			page 19
+
+
+ 649 0008 0094     		str	r4, [sp]
+ 650 000a FFF7FEFF 		bl	u8g2_draw_hv_line_2dir
+ 651              	.LVL35:
+ 313:u8g2_lib/u8g2_setup.c **** }
+ 652              		.loc 1 313 1 is_stmt 0 view .LVU198
+ 653 000e 02B0     		add	sp, sp, #8
+ 654              	.LCFI16:
+ 655              		.cfi_def_cfa_offset 8
+ 656              		@ sp needed
+ 657 0010 10BD     		pop	{r4, pc}
+ 658              		.loc 1 313 1 view .LVU199
+ 659              		.cfi_endproc
+ 660              	.LFE15:
+ 662              		.section	.text.u8g2_draw_l90_mirrorr_r0,"ax",%progbits
+ 663              		.align	1
+ 664              		.global	u8g2_draw_l90_mirrorr_r0
+ 665              		.syntax unified
+ 666              		.thumb
+ 667              		.thumb_func
+ 668              		.fpu softvfp
+ 670              	u8g2_draw_l90_mirrorr_r0:
+ 671              	.LVL36:
+ 672              	.LFB16:
+ 314:u8g2_lib/u8g2_setup.c **** 
+ 315:u8g2_lib/u8g2_setup.c **** void u8g2_draw_l90_mirrorr_r0(u8g2_t *u8g2, u8g2_uint_t x, u8g2_uint_t y, u8g2_uint_t len, uint8_t 
+ 316:u8g2_lib/u8g2_setup.c **** {
+ 673              		.loc 1 316 1 is_stmt 1 view -0
+ 674              		.cfi_startproc
+ 675              		@ args = 4, pretend = 0, frame = 0
+ 676              		@ frame_needed = 0, uses_anonymous_args = 0
+ 677              		.loc 1 316 1 is_stmt 0 view .LVU201
+ 678 0000 30B5     		push	{r4, r5, lr}
+ 679              	.LCFI17:
+ 680              		.cfi_def_cfa_offset 12
+ 681              		.cfi_offset 4, -12
+ 682              		.cfi_offset 5, -8
+ 683              		.cfi_offset 14, -4
+ 684 0002 83B0     		sub	sp, sp, #12
+ 685              	.LCFI18:
+ 686              		.cfi_def_cfa_offset 24
+ 687 0004 9DF81850 		ldrb	r5, [sp, #24]	@ zero_extendqisi2
+ 317:u8g2_lib/u8g2_setup.c ****   u8g2_uint_t xx;
+ 688              		.loc 1 317 3 is_stmt 1 view .LVU202
+ 318:u8g2_lib/u8g2_setup.c ****   xx = u8g2->width;
+ 689              		.loc 1 318 3 view .LVU203
+ 690              		.loc 1 318 6 is_stmt 0 view .LVU204
+ 691 0008 90F83F40 		ldrb	r4, [r0, #63]	@ zero_extendqisi2
+ 692              	.LVL37:
+ 319:u8g2_lib/u8g2_setup.c ****   xx -= x;
+ 693              		.loc 1 319 3 is_stmt 1 view .LVU205
+ 694              		.loc 1 319 6 is_stmt 0 view .LVU206
+ 695 000c 611A     		subs	r1, r4, r1
+ 696              	.LVL38:
+ 697              		.loc 1 319 6 view .LVU207
+ 698 000e C9B2     		uxtb	r1, r1
+ 699              	.LVL39:
+ 320:u8g2_lib/u8g2_setup.c ****   if ( (dir & 1) == 0 )
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s 			page 20
+
+
+ 700              		.loc 1 320 3 is_stmt 1 view .LVU208
+ 701              		.loc 1 320 6 is_stmt 0 view .LVU209
+ 702 0010 15F0010F 		tst	r5, #1
+ 703 0014 06D1     		bne	.L35
+ 321:u8g2_lib/u8g2_setup.c ****   {
+ 322:u8g2_lib/u8g2_setup.c ****     xx -= len;
+ 704              		.loc 1 322 5 is_stmt 1 view .LVU210
+ 705              		.loc 1 322 8 is_stmt 0 view .LVU211
+ 706 0016 C91A     		subs	r1, r1, r3
+ 707              	.LVL40:
+ 708              		.loc 1 322 8 view .LVU212
+ 709 0018 C9B2     		uxtb	r1, r1
+ 710              	.LVL41:
+ 711              	.L36:
+ 323:u8g2_lib/u8g2_setup.c ****   }
+ 324:u8g2_lib/u8g2_setup.c ****   else
+ 325:u8g2_lib/u8g2_setup.c ****   {
+ 326:u8g2_lib/u8g2_setup.c ****     xx--;
+ 327:u8g2_lib/u8g2_setup.c ****   }
+ 328:u8g2_lib/u8g2_setup.c ****   u8g2_draw_hv_line_2dir(u8g2, xx, y, len, dir);
+ 712              		.loc 1 328 3 is_stmt 1 view .LVU213
+ 713 001a 0095     		str	r5, [sp]
+ 714 001c FFF7FEFF 		bl	u8g2_draw_hv_line_2dir
+ 715              	.LVL42:
+ 329:u8g2_lib/u8g2_setup.c **** }
+ 716              		.loc 1 329 1 is_stmt 0 view .LVU214
+ 717 0020 03B0     		add	sp, sp, #12
+ 718              	.LCFI19:
+ 719              		.cfi_remember_state
+ 720              		.cfi_def_cfa_offset 12
+ 721              		@ sp needed
+ 722 0022 30BD     		pop	{r4, r5, pc}
+ 723              	.LVL43:
+ 724              	.L35:
+ 725              	.LCFI20:
+ 726              		.cfi_restore_state
+ 326:u8g2_lib/u8g2_setup.c ****   }
+ 727              		.loc 1 326 5 is_stmt 1 view .LVU215
+ 326:u8g2_lib/u8g2_setup.c ****   }
+ 728              		.loc 1 326 7 is_stmt 0 view .LVU216
+ 729 0024 0139     		subs	r1, r1, #1
+ 730              	.LVL44:
+ 326:u8g2_lib/u8g2_setup.c ****   }
+ 731              		.loc 1 326 7 view .LVU217
+ 732 0026 C9B2     		uxtb	r1, r1
+ 733              	.LVL45:
+ 326:u8g2_lib/u8g2_setup.c ****   }
+ 734              		.loc 1 326 7 view .LVU218
+ 735 0028 F7E7     		b	.L36
+ 736              		.cfi_endproc
+ 737              	.LFE16:
+ 739              		.section	.text.u8g2_draw_l90_r1,"ax",%progbits
+ 740              		.align	1
+ 741              		.global	u8g2_draw_l90_r1
+ 742              		.syntax unified
+ 743              		.thumb
+ 744              		.thumb_func
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s 			page 21
+
+
+ 745              		.fpu softvfp
+ 747              	u8g2_draw_l90_r1:
+ 748              	.LVL46:
+ 749              	.LFB17:
+ 330:u8g2_lib/u8g2_setup.c **** 
+ 331:u8g2_lib/u8g2_setup.c **** /* dir = 0 or 1 */
+ 332:u8g2_lib/u8g2_setup.c **** void u8g2_draw_l90_r1(u8g2_t *u8g2, u8g2_uint_t x, u8g2_uint_t y, u8g2_uint_t len, uint8_t dir)
+ 333:u8g2_lib/u8g2_setup.c **** {
+ 750              		.loc 1 333 1 is_stmt 1 view -0
+ 751              		.cfi_startproc
+ 752              		@ args = 4, pretend = 0, frame = 0
+ 753              		@ frame_needed = 0, uses_anonymous_args = 0
+ 754              		.loc 1 333 1 is_stmt 0 view .LVU220
+ 755 0000 30B5     		push	{r4, r5, lr}
+ 756              	.LCFI21:
+ 757              		.cfi_def_cfa_offset 12
+ 758              		.cfi_offset 4, -12
+ 759              		.cfi_offset 5, -8
+ 760              		.cfi_offset 14, -4
+ 761 0002 83B0     		sub	sp, sp, #12
+ 762              	.LCFI22:
+ 763              		.cfi_def_cfa_offset 24
+ 764 0004 0D46     		mov	r5, r1
+ 334:u8g2_lib/u8g2_setup.c ****   u8g2_uint_t xx, yy;
+ 765              		.loc 1 334 3 is_stmt 1 view .LVU221
+ 335:u8g2_lib/u8g2_setup.c **** 
+ 336:u8g2_lib/u8g2_setup.c **** #ifdef __unix
+ 337:u8g2_lib/u8g2_setup.c ****   assert( dir <= 1 );
+ 338:u8g2_lib/u8g2_setup.c **** #endif
+ 339:u8g2_lib/u8g2_setup.c ****   
+ 340:u8g2_lib/u8g2_setup.c ****   yy = x;
+ 766              		.loc 1 340 3 view .LVU222
+ 767              	.LVL47:
+ 341:u8g2_lib/u8g2_setup.c ****   
+ 342:u8g2_lib/u8g2_setup.c ****   xx = u8g2->height;
+ 768              		.loc 1 342 3 view .LVU223
+ 769              		.loc 1 342 6 is_stmt 0 view .LVU224
+ 770 0006 90F84040 		ldrb	r4, [r0, #64]	@ zero_extendqisi2
+ 771              	.LVL48:
+ 343:u8g2_lib/u8g2_setup.c ****   xx -= y;
+ 772              		.loc 1 343 3 is_stmt 1 view .LVU225
+ 773              		.loc 1 343 6 is_stmt 0 view .LVU226
+ 774 000a A41A     		subs	r4, r4, r2
+ 775              	.LVL49:
+ 776              		.loc 1 343 6 view .LVU227
+ 777 000c E4B2     		uxtb	r4, r4
+ 778              	.LVL50:
+ 344:u8g2_lib/u8g2_setup.c ****   xx--;
+ 779              		.loc 1 344 3 is_stmt 1 view .LVU228
+ 780              		.loc 1 344 5 is_stmt 0 view .LVU229
+ 781 000e 013C     		subs	r4, r4, #1
+ 782              	.LVL51:
+ 783              		.loc 1 344 5 view .LVU230
+ 784 0010 E1B2     		uxtb	r1, r4
+ 785              	.LVL52:
+ 345:u8g2_lib/u8g2_setup.c ****   
+ 346:u8g2_lib/u8g2_setup.c ****   dir ++;
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s 			page 22
+
+
+ 786              		.loc 1 346 3 is_stmt 1 view .LVU231
+ 787              		.loc 1 346 7 is_stmt 0 view .LVU232
+ 788 0012 9DF81820 		ldrb	r2, [sp, #24]	@ zero_extendqisi2
+ 789              	.LVL53:
+ 790              		.loc 1 346 7 view .LVU233
+ 791 0016 0132     		adds	r2, r2, #1
+ 792 0018 D2B2     		uxtb	r2, r2
+ 793              	.LVL54:
+ 347:u8g2_lib/u8g2_setup.c ****   if ( dir == 2 )
+ 794              		.loc 1 347 3 is_stmt 1 view .LVU234
+ 795              		.loc 1 347 6 is_stmt 0 view .LVU235
+ 796 001a 022A     		cmp	r2, #2
+ 797 001c 05D0     		beq	.L41
+ 798              	.LVL55:
+ 799              	.L39:
+ 348:u8g2_lib/u8g2_setup.c ****   {
+ 349:u8g2_lib/u8g2_setup.c ****     xx -= len;
+ 350:u8g2_lib/u8g2_setup.c ****     xx++;
+ 351:u8g2_lib/u8g2_setup.c ****     dir = 0;
+ 352:u8g2_lib/u8g2_setup.c ****   }
+ 353:u8g2_lib/u8g2_setup.c ****   
+ 354:u8g2_lib/u8g2_setup.c ****   u8g2_draw_hv_line_2dir(u8g2, xx, yy, len, dir);
+ 800              		.loc 1 354 3 is_stmt 1 view .LVU236
+ 801 001e 0092     		str	r2, [sp]
+ 802 0020 2A46     		mov	r2, r5
+ 803              	.LVL56:
+ 804              		.loc 1 354 3 is_stmt 0 view .LVU237
+ 805 0022 FFF7FEFF 		bl	u8g2_draw_hv_line_2dir
+ 806              	.LVL57:
+ 355:u8g2_lib/u8g2_setup.c **** }
+ 807              		.loc 1 355 1 view .LVU238
+ 808 0026 03B0     		add	sp, sp, #12
+ 809              	.LCFI23:
+ 810              		.cfi_remember_state
+ 811              		.cfi_def_cfa_offset 12
+ 812              		@ sp needed
+ 813 0028 30BD     		pop	{r4, r5, pc}
+ 814              	.LVL58:
+ 815              	.L41:
+ 816              	.LCFI24:
+ 817              		.cfi_restore_state
+ 349:u8g2_lib/u8g2_setup.c ****     xx++;
+ 818              		.loc 1 349 5 is_stmt 1 view .LVU239
+ 349:u8g2_lib/u8g2_setup.c ****     xx++;
+ 819              		.loc 1 349 8 is_stmt 0 view .LVU240
+ 820 002a CA1A     		subs	r2, r1, r3
+ 821              	.LVL59:
+ 349:u8g2_lib/u8g2_setup.c ****     xx++;
+ 822              		.loc 1 349 8 view .LVU241
+ 823 002c D2B2     		uxtb	r2, r2
+ 824              	.LVL60:
+ 350:u8g2_lib/u8g2_setup.c ****     dir = 0;
+ 825              		.loc 1 350 5 is_stmt 1 view .LVU242
+ 350:u8g2_lib/u8g2_setup.c ****     dir = 0;
+ 826              		.loc 1 350 7 is_stmt 0 view .LVU243
+ 827 002e 0132     		adds	r2, r2, #1
+ 828              	.LVL61:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s 			page 23
+
+
+ 350:u8g2_lib/u8g2_setup.c ****     dir = 0;
+ 829              		.loc 1 350 7 view .LVU244
+ 830 0030 D1B2     		uxtb	r1, r2
+ 831              	.LVL62:
+ 351:u8g2_lib/u8g2_setup.c ****   }
+ 832              		.loc 1 351 5 is_stmt 1 view .LVU245
+ 351:u8g2_lib/u8g2_setup.c ****   }
+ 833              		.loc 1 351 9 is_stmt 0 view .LVU246
+ 834 0032 0022     		movs	r2, #0
+ 835 0034 F3E7     		b	.L39
+ 836              		.cfi_endproc
+ 837              	.LFE17:
+ 839              		.section	.text.u8g2_draw_l90_r2,"ax",%progbits
+ 840              		.align	1
+ 841              		.global	u8g2_draw_l90_r2
+ 842              		.syntax unified
+ 843              		.thumb
+ 844              		.thumb_func
+ 845              		.fpu softvfp
+ 847              	u8g2_draw_l90_r2:
+ 848              	.LVL63:
+ 849              	.LFB18:
+ 356:u8g2_lib/u8g2_setup.c **** 
+ 357:u8g2_lib/u8g2_setup.c **** void u8g2_draw_l90_r2(u8g2_t *u8g2, u8g2_uint_t x, u8g2_uint_t y, u8g2_uint_t len, uint8_t dir)
+ 358:u8g2_lib/u8g2_setup.c **** {
+ 850              		.loc 1 358 1 is_stmt 1 view -0
+ 851              		.cfi_startproc
+ 852              		@ args = 4, pretend = 0, frame = 0
+ 853              		@ frame_needed = 0, uses_anonymous_args = 0
+ 854              		.loc 1 358 1 is_stmt 0 view .LVU248
+ 855 0000 70B5     		push	{r4, r5, r6, lr}
+ 856              	.LCFI25:
+ 857              		.cfi_def_cfa_offset 16
+ 858              		.cfi_offset 4, -16
+ 859              		.cfi_offset 5, -12
+ 860              		.cfi_offset 6, -8
+ 861              		.cfi_offset 14, -4
+ 862 0002 82B0     		sub	sp, sp, #8
+ 863              	.LCFI26:
+ 864              		.cfi_def_cfa_offset 24
+ 865 0004 9DF81860 		ldrb	r6, [sp, #24]	@ zero_extendqisi2
+ 359:u8g2_lib/u8g2_setup.c ****   u8g2_uint_t xx, yy;
+ 866              		.loc 1 359 3 is_stmt 1 view .LVU249
+ 360:u8g2_lib/u8g2_setup.c **** 
+ 361:u8g2_lib/u8g2_setup.c ****   /*
+ 362:u8g2_lib/u8g2_setup.c ****   yy = u8g2->height;
+ 363:u8g2_lib/u8g2_setup.c ****   yy -= y;
+ 364:u8g2_lib/u8g2_setup.c ****   yy--;
+ 365:u8g2_lib/u8g2_setup.c ****   
+ 366:u8g2_lib/u8g2_setup.c ****   xx = u8g2->width;
+ 367:u8g2_lib/u8g2_setup.c ****   xx -= x;
+ 368:u8g2_lib/u8g2_setup.c ****   xx--;
+ 369:u8g2_lib/u8g2_setup.c ****   
+ 370:u8g2_lib/u8g2_setup.c ****   if ( dir == 0 )
+ 371:u8g2_lib/u8g2_setup.c ****   {
+ 372:u8g2_lib/u8g2_setup.c ****     xx -= len;
+ 373:u8g2_lib/u8g2_setup.c ****     xx++;
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s 			page 24
+
+
+ 374:u8g2_lib/u8g2_setup.c ****   }
+ 375:u8g2_lib/u8g2_setup.c ****   else if ( dir == 1 )
+ 376:u8g2_lib/u8g2_setup.c ****   {
+ 377:u8g2_lib/u8g2_setup.c ****     yy -= len;
+ 378:u8g2_lib/u8g2_setup.c ****     yy++;
+ 379:u8g2_lib/u8g2_setup.c ****   }
+ 380:u8g2_lib/u8g2_setup.c ****   */
+ 381:u8g2_lib/u8g2_setup.c **** 
+ 382:u8g2_lib/u8g2_setup.c ****   yy = u8g2->height;
+ 867              		.loc 1 382 3 view .LVU250
+ 868              		.loc 1 382 6 is_stmt 0 view .LVU251
+ 869 0008 90F84050 		ldrb	r5, [r0, #64]	@ zero_extendqisi2
+ 870              	.LVL64:
+ 383:u8g2_lib/u8g2_setup.c ****   yy -= y;
+ 871              		.loc 1 383 3 is_stmt 1 view .LVU252
+ 872              		.loc 1 383 6 is_stmt 0 view .LVU253
+ 873 000c AA1A     		subs	r2, r5, r2
+ 874              	.LVL65:
+ 875              		.loc 1 383 6 view .LVU254
+ 876 000e D2B2     		uxtb	r2, r2
+ 877              	.LVL66:
+ 384:u8g2_lib/u8g2_setup.c ****   
+ 385:u8g2_lib/u8g2_setup.c ****   xx = u8g2->width;
+ 878              		.loc 1 385 3 is_stmt 1 view .LVU255
+ 879              		.loc 1 385 6 is_stmt 0 view .LVU256
+ 880 0010 90F83F40 		ldrb	r4, [r0, #63]	@ zero_extendqisi2
+ 881              	.LVL67:
+ 386:u8g2_lib/u8g2_setup.c ****   xx -= x;
+ 882              		.loc 1 386 3 is_stmt 1 view .LVU257
+ 883              		.loc 1 386 6 is_stmt 0 view .LVU258
+ 884 0014 611A     		subs	r1, r4, r1
+ 885              	.LVL68:
+ 886              		.loc 1 386 6 view .LVU259
+ 887 0016 C9B2     		uxtb	r1, r1
+ 888              	.LVL69:
+ 387:u8g2_lib/u8g2_setup.c ****   
+ 388:u8g2_lib/u8g2_setup.c ****   if ( dir == 0 )
+ 889              		.loc 1 388 3 is_stmt 1 view .LVU260
+ 890              		.loc 1 388 6 is_stmt 0 view .LVU261
+ 891 0018 46B9     		cbnz	r6, .L43
+ 389:u8g2_lib/u8g2_setup.c ****   {
+ 390:u8g2_lib/u8g2_setup.c ****     yy--;
+ 892              		.loc 1 390 5 is_stmt 1 view .LVU262
+ 893              		.loc 1 390 7 is_stmt 0 view .LVU263
+ 894 001a 013A     		subs	r2, r2, #1
+ 895              	.LVL70:
+ 896              		.loc 1 390 7 view .LVU264
+ 897 001c D2B2     		uxtb	r2, r2
+ 898              	.LVL71:
+ 391:u8g2_lib/u8g2_setup.c ****     xx -= len;
+ 899              		.loc 1 391 5 is_stmt 1 view .LVU265
+ 900              		.loc 1 391 8 is_stmt 0 view .LVU266
+ 901 001e C91A     		subs	r1, r1, r3
+ 902              	.LVL72:
+ 903              		.loc 1 391 8 view .LVU267
+ 904 0020 C9B2     		uxtb	r1, r1
+ 905              	.LVL73:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s 			page 25
+
+
+ 906              	.L44:
+ 392:u8g2_lib/u8g2_setup.c ****   }
+ 393:u8g2_lib/u8g2_setup.c ****   else if ( dir == 1 )
+ 394:u8g2_lib/u8g2_setup.c ****   {
+ 395:u8g2_lib/u8g2_setup.c ****     xx--;
+ 396:u8g2_lib/u8g2_setup.c ****     yy -= len;
+ 397:u8g2_lib/u8g2_setup.c ****   }
+ 398:u8g2_lib/u8g2_setup.c **** 
+ 399:u8g2_lib/u8g2_setup.c ****   u8g2_draw_hv_line_2dir(u8g2, xx, yy, len, dir);
+ 907              		.loc 1 399 3 is_stmt 1 view .LVU268
+ 908 0022 0096     		str	r6, [sp]
+ 909 0024 FFF7FEFF 		bl	u8g2_draw_hv_line_2dir
+ 910              	.LVL74:
+ 400:u8g2_lib/u8g2_setup.c **** }
+ 911              		.loc 1 400 1 is_stmt 0 view .LVU269
+ 912 0028 02B0     		add	sp, sp, #8
+ 913              	.LCFI27:
+ 914              		.cfi_remember_state
+ 915              		.cfi_def_cfa_offset 16
+ 916              		@ sp needed
+ 917 002a 70BD     		pop	{r4, r5, r6, pc}
+ 918              	.LVL75:
+ 919              	.L43:
+ 920              	.LCFI28:
+ 921              		.cfi_restore_state
+ 393:u8g2_lib/u8g2_setup.c ****   {
+ 922              		.loc 1 393 8 is_stmt 1 view .LVU270
+ 393:u8g2_lib/u8g2_setup.c ****   {
+ 923              		.loc 1 393 11 is_stmt 0 view .LVU271
+ 924 002c 012E     		cmp	r6, #1
+ 925 002e F8D1     		bne	.L44
+ 395:u8g2_lib/u8g2_setup.c ****     yy -= len;
+ 926              		.loc 1 395 5 is_stmt 1 view .LVU272
+ 395:u8g2_lib/u8g2_setup.c ****     yy -= len;
+ 927              		.loc 1 395 7 is_stmt 0 view .LVU273
+ 928 0030 0139     		subs	r1, r1, #1
+ 929              	.LVL76:
+ 395:u8g2_lib/u8g2_setup.c ****     yy -= len;
+ 930              		.loc 1 395 7 view .LVU274
+ 931 0032 C9B2     		uxtb	r1, r1
+ 932              	.LVL77:
+ 396:u8g2_lib/u8g2_setup.c ****   }
+ 933              		.loc 1 396 5 is_stmt 1 view .LVU275
+ 396:u8g2_lib/u8g2_setup.c ****   }
+ 934              		.loc 1 396 8 is_stmt 0 view .LVU276
+ 935 0034 D21A     		subs	r2, r2, r3
+ 936              	.LVL78:
+ 396:u8g2_lib/u8g2_setup.c ****   }
+ 937              		.loc 1 396 8 view .LVU277
+ 938 0036 D2B2     		uxtb	r2, r2
+ 939              	.LVL79:
+ 396:u8g2_lib/u8g2_setup.c ****   }
+ 940              		.loc 1 396 8 view .LVU278
+ 941 0038 F3E7     		b	.L44
+ 942              		.cfi_endproc
+ 943              	.LFE18:
+ 945              		.section	.text.u8g2_draw_l90_r3,"ax",%progbits
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s 			page 26
+
+
+ 946              		.align	1
+ 947              		.global	u8g2_draw_l90_r3
+ 948              		.syntax unified
+ 949              		.thumb
+ 950              		.thumb_func
+ 951              		.fpu softvfp
+ 953              	u8g2_draw_l90_r3:
+ 954              	.LVL80:
+ 955              	.LFB19:
+ 401:u8g2_lib/u8g2_setup.c **** 
+ 402:u8g2_lib/u8g2_setup.c **** void u8g2_draw_l90_r3(u8g2_t *u8g2, u8g2_uint_t x, u8g2_uint_t y, u8g2_uint_t len, uint8_t dir)
+ 403:u8g2_lib/u8g2_setup.c **** {
+ 956              		.loc 1 403 1 is_stmt 1 view -0
+ 957              		.cfi_startproc
+ 958              		@ args = 4, pretend = 0, frame = 0
+ 959              		@ frame_needed = 0, uses_anonymous_args = 0
+ 960              		.loc 1 403 1 is_stmt 0 view .LVU280
+ 961 0000 30B5     		push	{r4, r5, lr}
+ 962              	.LCFI29:
+ 963              		.cfi_def_cfa_offset 12
+ 964              		.cfi_offset 4, -12
+ 965              		.cfi_offset 5, -8
+ 966              		.cfi_offset 14, -4
+ 967 0002 83B0     		sub	sp, sp, #12
+ 968              	.LCFI30:
+ 969              		.cfi_def_cfa_offset 24
+ 970 0004 0D46     		mov	r5, r1
+ 971 0006 1146     		mov	r1, r2
+ 972              	.LVL81:
+ 973              		.loc 1 403 1 view .LVU281
+ 974 0008 9DF81820 		ldrb	r2, [sp, #24]	@ zero_extendqisi2
+ 975              	.LVL82:
+ 404:u8g2_lib/u8g2_setup.c ****   u8g2_uint_t xx, yy;
+ 976              		.loc 1 404 3 is_stmt 1 view .LVU282
+ 405:u8g2_lib/u8g2_setup.c **** 
+ 406:u8g2_lib/u8g2_setup.c ****   xx = y;
+ 977              		.loc 1 406 3 view .LVU283
+ 407:u8g2_lib/u8g2_setup.c ****   
+ 408:u8g2_lib/u8g2_setup.c ****   yy = u8g2->width;
+ 978              		.loc 1 408 3 view .LVU284
+ 979              		.loc 1 408 6 is_stmt 0 view .LVU285
+ 980 000c 90F83F40 		ldrb	r4, [r0, #63]	@ zero_extendqisi2
+ 981              	.LVL83:
+ 409:u8g2_lib/u8g2_setup.c ****   yy -= x;
+ 982              		.loc 1 409 3 is_stmt 1 view .LVU286
+ 983              		.loc 1 409 6 is_stmt 0 view .LVU287
+ 984 0010 641B     		subs	r4, r4, r5
+ 985              	.LVL84:
+ 986              		.loc 1 409 6 view .LVU288
+ 987 0012 E4B2     		uxtb	r4, r4
+ 988              	.LVL85:
+ 410:u8g2_lib/u8g2_setup.c ****   
+ 411:u8g2_lib/u8g2_setup.c ****   if ( dir == 0 )
+ 989              		.loc 1 411 3 is_stmt 1 view .LVU289
+ 990              		.loc 1 411 6 is_stmt 0 view .LVU290
+ 991 0014 5AB9     		cbnz	r2, .L47
+ 412:u8g2_lib/u8g2_setup.c ****   {
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s 			page 27
+
+
+ 413:u8g2_lib/u8g2_setup.c ****     yy--;
+ 992              		.loc 1 413 5 is_stmt 1 view .LVU291
+ 993              		.loc 1 413 7 is_stmt 0 view .LVU292
+ 994 0016 013C     		subs	r4, r4, #1
+ 995              	.LVL86:
+ 996              		.loc 1 413 7 view .LVU293
+ 997 0018 E4B2     		uxtb	r4, r4
+ 998              	.LVL87:
+ 414:u8g2_lib/u8g2_setup.c ****     yy -= len;
+ 999              		.loc 1 414 5 is_stmt 1 view .LVU294
+ 1000              		.loc 1 414 8 is_stmt 0 view .LVU295
+ 1001 001a E41A     		subs	r4, r4, r3
+ 1002              	.LVL88:
+ 1003              		.loc 1 414 8 view .LVU296
+ 1004 001c E4B2     		uxtb	r4, r4
+ 1005              	.LVL89:
+ 415:u8g2_lib/u8g2_setup.c ****     yy++;
+ 1006              		.loc 1 415 5 is_stmt 1 view .LVU297
+ 1007              		.loc 1 415 7 is_stmt 0 view .LVU298
+ 1008 001e 0134     		adds	r4, r4, #1
+ 1009              	.LVL90:
+ 1010              		.loc 1 415 7 view .LVU299
+ 1011 0020 E2B2     		uxtb	r2, r4
+ 1012              	.LVL91:
+ 416:u8g2_lib/u8g2_setup.c ****     dir = 1;
+ 1013              		.loc 1 416 5 is_stmt 1 view .LVU300
+ 1014              		.loc 1 416 9 is_stmt 0 view .LVU301
+ 1015 0022 0124     		movs	r4, #1
+ 1016              	.LVL92:
+ 1017              	.L48:
+ 417:u8g2_lib/u8g2_setup.c ****   }
+ 418:u8g2_lib/u8g2_setup.c ****   else
+ 419:u8g2_lib/u8g2_setup.c ****   {
+ 420:u8g2_lib/u8g2_setup.c ****     yy--;
+ 421:u8g2_lib/u8g2_setup.c ****     dir = 0;
+ 422:u8g2_lib/u8g2_setup.c ****   }
+ 423:u8g2_lib/u8g2_setup.c ****   
+ 424:u8g2_lib/u8g2_setup.c ****   
+ 425:u8g2_lib/u8g2_setup.c ****   u8g2_draw_hv_line_2dir(u8g2, xx, yy, len, dir);
+ 1018              		.loc 1 425 3 is_stmt 1 view .LVU302
+ 1019 0024 0094     		str	r4, [sp]
+ 1020 0026 FFF7FEFF 		bl	u8g2_draw_hv_line_2dir
+ 1021              	.LVL93:
+ 426:u8g2_lib/u8g2_setup.c **** }
+ 1022              		.loc 1 426 1 is_stmt 0 view .LVU303
+ 1023 002a 03B0     		add	sp, sp, #12
+ 1024              	.LCFI31:
+ 1025              		.cfi_remember_state
+ 1026              		.cfi_def_cfa_offset 12
+ 1027              		@ sp needed
+ 1028 002c 30BD     		pop	{r4, r5, pc}
+ 1029              	.LVL94:
+ 1030              	.L47:
+ 1031              	.LCFI32:
+ 1032              		.cfi_restore_state
+ 420:u8g2_lib/u8g2_setup.c ****     dir = 0;
+ 1033              		.loc 1 420 5 is_stmt 1 view .LVU304
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s 			page 28
+
+
+ 420:u8g2_lib/u8g2_setup.c ****     dir = 0;
+ 1034              		.loc 1 420 7 is_stmt 0 view .LVU305
+ 1035 002e 013C     		subs	r4, r4, #1
+ 1036              	.LVL95:
+ 420:u8g2_lib/u8g2_setup.c ****     dir = 0;
+ 1037              		.loc 1 420 7 view .LVU306
+ 1038 0030 E2B2     		uxtb	r2, r4
+ 1039              	.LVL96:
+ 421:u8g2_lib/u8g2_setup.c ****   }
+ 1040              		.loc 1 421 5 is_stmt 1 view .LVU307
+ 421:u8g2_lib/u8g2_setup.c ****   }
+ 1041              		.loc 1 421 9 is_stmt 0 view .LVU308
+ 1042 0032 0024     		movs	r4, #0
+ 1043 0034 F6E7     		b	.L48
+ 1044              		.cfi_endproc
+ 1045              	.LFE19:
+ 1047              		.section	.text.u8g2_SetMaxClipWindow,"ax",%progbits
+ 1048              		.align	1
+ 1049              		.global	u8g2_SetMaxClipWindow
+ 1050              		.syntax unified
+ 1051              		.thumb
+ 1052              		.thumb_func
+ 1053              		.fpu softvfp
+ 1055              	u8g2_SetMaxClipWindow:
+ 1056              	.LVL97:
+ 1057              	.LFB0:
+  47:u8g2_lib/u8g2_setup.c ****   u8g2->clip_x0 = 0;
+ 1058              		.loc 1 47 1 is_stmt 1 view -0
+ 1059              		.cfi_startproc
+ 1060              		@ args = 0, pretend = 0, frame = 0
+ 1061              		@ frame_needed = 0, uses_anonymous_args = 0
+  47:u8g2_lib/u8g2_setup.c ****   u8g2->clip_x0 = 0;
+ 1062              		.loc 1 47 1 is_stmt 0 view .LVU310
+ 1063 0000 08B5     		push	{r3, lr}
+ 1064              	.LCFI33:
+ 1065              		.cfi_def_cfa_offset 8
+ 1066              		.cfi_offset 3, -8
+ 1067              		.cfi_offset 14, -4
+  48:u8g2_lib/u8g2_setup.c ****   u8g2->clip_y0 = 0;
+ 1068              		.loc 1 48 3 is_stmt 1 view .LVU311
+  48:u8g2_lib/u8g2_setup.c ****   u8g2->clip_y0 = 0;
+ 1069              		.loc 1 48 17 is_stmt 0 view .LVU312
+ 1070 0002 0022     		movs	r2, #0
+ 1071 0004 80F84520 		strb	r2, [r0, #69]
+  49:u8g2_lib/u8g2_setup.c ****   u8g2->clip_x1 = (u8g2_uint_t)~(u8g2_uint_t)0;
+ 1072              		.loc 1 49 3 is_stmt 1 view .LVU313
+  49:u8g2_lib/u8g2_setup.c ****   u8g2->clip_x1 = (u8g2_uint_t)~(u8g2_uint_t)0;
+ 1073              		.loc 1 49 17 is_stmt 0 view .LVU314
+ 1074 0008 80F84720 		strb	r2, [r0, #71]
+  50:u8g2_lib/u8g2_setup.c ****   u8g2->clip_y1 = (u8g2_uint_t)~(u8g2_uint_t)0;
+ 1075              		.loc 1 50 3 is_stmt 1 view .LVU315
+  50:u8g2_lib/u8g2_setup.c ****   u8g2->clip_y1 = (u8g2_uint_t)~(u8g2_uint_t)0;
+ 1076              		.loc 1 50 17 is_stmt 0 view .LVU316
+ 1077 000c FF22     		movs	r2, #255
+ 1078 000e 80F84620 		strb	r2, [r0, #70]
+  51:u8g2_lib/u8g2_setup.c ****   
+ 1079              		.loc 1 51 3 is_stmt 1 view .LVU317
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s 			page 29
+
+
+  51:u8g2_lib/u8g2_setup.c ****   
+ 1080              		.loc 1 51 17 is_stmt 0 view .LVU318
+ 1081 0012 80F84820 		strb	r2, [r0, #72]
+  53:u8g2_lib/u8g2_setup.c **** }
+ 1082              		.loc 1 53 3 is_stmt 1 view .LVU319
+  53:u8g2_lib/u8g2_setup.c **** }
+ 1083              		.loc 1 53 7 is_stmt 0 view .LVU320
+ 1084 0016 036B     		ldr	r3, [r0, #48]
+  53:u8g2_lib/u8g2_setup.c **** }
+ 1085              		.loc 1 53 11 view .LVU321
+ 1086 0018 5B68     		ldr	r3, [r3, #4]
+  53:u8g2_lib/u8g2_setup.c **** }
+ 1087              		.loc 1 53 3 view .LVU322
+ 1088 001a 9847     		blx	r3
+ 1089              	.LVL98:
+  54:u8g2_lib/u8g2_setup.c **** 
+ 1090              		.loc 1 54 1 view .LVU323
+ 1091 001c 08BD     		pop	{r3, pc}
+ 1092              		.cfi_endproc
+ 1093              	.LFE0:
+ 1095              		.section	.text.u8g2_SetClipWindow,"ax",%progbits
+ 1096              		.align	1
+ 1097              		.global	u8g2_SetClipWindow
+ 1098              		.syntax unified
+ 1099              		.thumb
+ 1100              		.thumb_func
+ 1101              		.fpu softvfp
+ 1103              	u8g2_SetClipWindow:
+ 1104              	.LVL99:
+ 1105              	.LFB1:
+  57:u8g2_lib/u8g2_setup.c ****   u8g2->clip_x0 = clip_x0;
+ 1106              		.loc 1 57 1 is_stmt 1 view -0
+ 1107              		.cfi_startproc
+ 1108              		@ args = 4, pretend = 0, frame = 0
+ 1109              		@ frame_needed = 0, uses_anonymous_args = 0
+  57:u8g2_lib/u8g2_setup.c ****   u8g2->clip_x0 = clip_x0;
+ 1110              		.loc 1 57 1 is_stmt 0 view .LVU325
+ 1111 0000 10B5     		push	{r4, lr}
+ 1112              	.LCFI34:
+ 1113              		.cfi_def_cfa_offset 8
+ 1114              		.cfi_offset 4, -8
+ 1115              		.cfi_offset 14, -4
+  58:u8g2_lib/u8g2_setup.c ****   u8g2->clip_y0 = clip_y0;
+ 1116              		.loc 1 58 3 is_stmt 1 view .LVU326
+  58:u8g2_lib/u8g2_setup.c ****   u8g2->clip_y0 = clip_y0;
+ 1117              		.loc 1 58 17 is_stmt 0 view .LVU327
+ 1118 0002 80F84510 		strb	r1, [r0, #69]
+  59:u8g2_lib/u8g2_setup.c ****   u8g2->clip_x1 = clip_x1;
+ 1119              		.loc 1 59 3 is_stmt 1 view .LVU328
+  59:u8g2_lib/u8g2_setup.c ****   u8g2->clip_x1 = clip_x1;
+ 1120              		.loc 1 59 17 is_stmt 0 view .LVU329
+ 1121 0006 80F84720 		strb	r2, [r0, #71]
+  60:u8g2_lib/u8g2_setup.c ****   u8g2->clip_y1 = clip_y1;
+ 1122              		.loc 1 60 3 is_stmt 1 view .LVU330
+  60:u8g2_lib/u8g2_setup.c ****   u8g2->clip_y1 = clip_y1;
+ 1123              		.loc 1 60 17 is_stmt 0 view .LVU331
+ 1124 000a 80F84630 		strb	r3, [r0, #70]
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s 			page 30
+
+
+  61:u8g2_lib/u8g2_setup.c ****   u8g2->cb->update_page_win(u8g2);
+ 1125              		.loc 1 61 3 is_stmt 1 view .LVU332
+  61:u8g2_lib/u8g2_setup.c ****   u8g2->cb->update_page_win(u8g2);
+ 1126              		.loc 1 61 17 is_stmt 0 view .LVU333
+ 1127 000e 9DF80830 		ldrb	r3, [sp, #8]	@ zero_extendqisi2
+ 1128              	.LVL100:
+  61:u8g2_lib/u8g2_setup.c ****   u8g2->cb->update_page_win(u8g2);
+ 1129              		.loc 1 61 17 view .LVU334
+ 1130 0012 80F84830 		strb	r3, [r0, #72]
+  62:u8g2_lib/u8g2_setup.c **** }
+ 1131              		.loc 1 62 3 is_stmt 1 view .LVU335
+  62:u8g2_lib/u8g2_setup.c **** }
+ 1132              		.loc 1 62 7 is_stmt 0 view .LVU336
+ 1133 0016 036B     		ldr	r3, [r0, #48]
+  62:u8g2_lib/u8g2_setup.c **** }
+ 1134              		.loc 1 62 11 view .LVU337
+ 1135 0018 5B68     		ldr	r3, [r3, #4]
+  62:u8g2_lib/u8g2_setup.c **** }
+ 1136              		.loc 1 62 3 view .LVU338
+ 1137 001a 9847     		blx	r3
+ 1138              	.LVL101:
+  63:u8g2_lib/u8g2_setup.c **** #endif
+ 1139              		.loc 1 63 1 view .LVU339
+ 1140 001c 10BD     		pop	{r4, pc}
+  63:u8g2_lib/u8g2_setup.c **** #endif
+ 1141              		.loc 1 63 1 view .LVU340
+ 1142              		.cfi_endproc
+ 1143              	.LFE1:
+ 1145              		.section	.text.u8g2_SetupBuffer,"ax",%progbits
+ 1146              		.align	1
+ 1147              		.global	u8g2_SetupBuffer
+ 1148              		.syntax unified
+ 1149              		.thumb
+ 1150              		.thumb_func
+ 1151              		.fpu softvfp
+ 1153              	u8g2_SetupBuffer:
+ 1154              	.LVL102:
+ 1155              	.LFB2:
+  72:u8g2_lib/u8g2_setup.c ****   u8g2->font = NULL;
+ 1156              		.loc 1 72 1 is_stmt 1 view -0
+ 1157              		.cfi_startproc
+ 1158              		@ args = 4, pretend = 0, frame = 0
+ 1159              		@ frame_needed = 0, uses_anonymous_args = 0
+  72:u8g2_lib/u8g2_setup.c ****   u8g2->font = NULL;
+ 1160              		.loc 1 72 1 is_stmt 0 view .LVU342
+ 1161 0000 70B5     		push	{r4, r5, r6, lr}
+ 1162              	.LCFI35:
+ 1163              		.cfi_def_cfa_offset 16
+ 1164              		.cfi_offset 4, -16
+ 1165              		.cfi_offset 5, -12
+ 1166              		.cfi_offset 6, -8
+ 1167              		.cfi_offset 14, -4
+ 1168 0002 0446     		mov	r4, r0
+ 1169 0004 049E     		ldr	r6, [sp, #16]
+  73:u8g2_lib/u8g2_setup.c ****   //u8g2->kerning = NULL;
+ 1170              		.loc 1 73 3 is_stmt 1 view .LVU343
+  73:u8g2_lib/u8g2_setup.c ****   //u8g2->kerning = NULL;
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s 			page 31
+
+
+ 1171              		.loc 1 73 14 is_stmt 0 view .LVU344
+ 1172 0006 0025     		movs	r5, #0
+ 1173 0008 C564     		str	r5, [r0, #76]
+  78:u8g2_lib/u8g2_setup.c ****   
+ 1174              		.loc 1 78 3 is_stmt 1 view .LVU345
+  78:u8g2_lib/u8g2_setup.c ****   
+ 1175              		.loc 1 78 19 is_stmt 0 view .LVU346
+ 1176 000a C362     		str	r3, [r0, #44]
+  80:u8g2_lib/u8g2_setup.c ****   u8g2->tile_buf_height = tile_buf_height;
+ 1177              		.loc 1 80 3 is_stmt 1 view .LVU347
+  80:u8g2_lib/u8g2_setup.c ****   u8g2->tile_buf_height = tile_buf_height;
+ 1178              		.loc 1 80 22 is_stmt 0 view .LVU348
+ 1179 000c 4163     		str	r1, [r0, #52]
+  81:u8g2_lib/u8g2_setup.c ****   
+ 1180              		.loc 1 81 3 is_stmt 1 view .LVU349
+  81:u8g2_lib/u8g2_setup.c ****   
+ 1181              		.loc 1 81 25 is_stmt 0 view .LVU350
+ 1182 000e 80F83820 		strb	r2, [r0, #56]
+  83:u8g2_lib/u8g2_setup.c ****   
+ 1183              		.loc 1 83 3 is_stmt 1 view .LVU351
+  83:u8g2_lib/u8g2_setup.c ****   
+ 1184              		.loc 1 83 23 is_stmt 0 view .LVU352
+ 1185 0012 80F83950 		strb	r5, [r0, #57]
+  85:u8g2_lib/u8g2_setup.c ****   u8g2->bitmap_transparency = 0;
+ 1186              		.loc 1 85 3 is_stmt 1 view .LVU353
+  85:u8g2_lib/u8g2_setup.c ****   u8g2->bitmap_transparency = 0;
+ 1187              		.loc 1 85 36 is_stmt 0 view .LVU354
+ 1188 0016 80F85F50 		strb	r5, [r0, #95]
+  86:u8g2_lib/u8g2_setup.c ****   
+ 1189              		.loc 1 86 3 is_stmt 1 view .LVU355
+  86:u8g2_lib/u8g2_setup.c ****   
+ 1190              		.loc 1 86 29 is_stmt 0 view .LVU356
+ 1191 001a 80F88150 		strb	r5, [r0, #129]
+  88:u8g2_lib/u8g2_setup.c ****   u8g2->is_auto_page_clear = 1;
+ 1192              		.loc 1 88 3 is_stmt 1 view .LVU357
+  88:u8g2_lib/u8g2_setup.c ****   u8g2->is_auto_page_clear = 1;
+ 1193              		.loc 1 88 20 is_stmt 0 view .LVU358
+ 1194 001e 0123     		movs	r3, #1
+ 1195              	.LVL103:
+  88:u8g2_lib/u8g2_setup.c ****   u8g2->is_auto_page_clear = 1;
+ 1196              		.loc 1 88 20 view .LVU359
+ 1197 0020 80F88230 		strb	r3, [r0, #130]
+  89:u8g2_lib/u8g2_setup.c ****   
+ 1198              		.loc 1 89 3 is_stmt 1 view .LVU360
+  89:u8g2_lib/u8g2_setup.c ****   
+ 1199              		.loc 1 89 28 is_stmt 0 view .LVU361
+ 1200 0024 80F88330 		strb	r3, [r0, #131]
+  91:u8g2_lib/u8g2_setup.c ****   u8g2->cb->update_dimension(u8g2);
+ 1201              		.loc 1 91 3 is_stmt 1 view .LVU362
+  91:u8g2_lib/u8g2_setup.c ****   u8g2->cb->update_dimension(u8g2);
+ 1202              		.loc 1 91 12 is_stmt 0 view .LVU363
+ 1203 0028 0663     		str	r6, [r0, #48]
+  92:u8g2_lib/u8g2_setup.c **** #ifdef U8G2_WITH_CLIP_WINDOW_SUPPORT
+ 1204              		.loc 1 92 3 is_stmt 1 view .LVU364
+  92:u8g2_lib/u8g2_setup.c **** #ifdef U8G2_WITH_CLIP_WINDOW_SUPPORT
+ 1205              		.loc 1 92 11 is_stmt 0 view .LVU365
+ 1206 002a 3368     		ldr	r3, [r6]
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s 			page 32
+
+
+  92:u8g2_lib/u8g2_setup.c **** #ifdef U8G2_WITH_CLIP_WINDOW_SUPPORT
+ 1207              		.loc 1 92 3 view .LVU366
+ 1208 002c 9847     		blx	r3
+ 1209              	.LVL104:
+  94:u8g2_lib/u8g2_setup.c **** #else
+ 1210              		.loc 1 94 3 is_stmt 1 view .LVU367
+ 1211 002e 2046     		mov	r0, r4
+ 1212 0030 FFF7FEFF 		bl	u8g2_SetMaxClipWindow
+ 1213              	.LVL105:
+  99:u8g2_lib/u8g2_setup.c ****   
+ 1214              		.loc 1 99 3 view .LVU368
+ 1215 0034 2046     		mov	r0, r4
+ 1216 0036 FFF7FEFF 		bl	u8g2_SetFontPosBaseline
+ 1217              	.LVL106:
+ 102:u8g2_lib/u8g2_setup.c **** #endif
+ 1218              		.loc 1 102 3 view .LVU369
+ 102:u8g2_lib/u8g2_setup.c **** #endif
+ 1219              		.loc 1 102 25 is_stmt 0 view .LVU370
+ 1220 003a 84F86250 		strb	r5, [r4, #98]
+ 104:u8g2_lib/u8g2_setup.c **** 
+ 1221              		.loc 1 104 1 view .LVU371
+ 1222 003e 70BD     		pop	{r4, r5, r6, pc}
+ 104:u8g2_lib/u8g2_setup.c **** 
+ 1223              		.loc 1 104 1 view .LVU372
+ 1224              		.cfi_endproc
+ 1225              	.LFE2:
+ 1227              		.section	.text.u8g2_SetDisplayRotation,"ax",%progbits
+ 1228              		.align	1
+ 1229              		.global	u8g2_SetDisplayRotation
+ 1230              		.syntax unified
+ 1231              		.thumb
+ 1232              		.thumb_func
+ 1233              		.fpu softvfp
+ 1235              	u8g2_SetDisplayRotation:
+ 1236              	.LVL107:
+ 1237              	.LFB3:
+ 111:u8g2_lib/u8g2_setup.c ****   u8g2->cb = u8g2_cb;
+ 1238              		.loc 1 111 1 is_stmt 1 view -0
+ 1239              		.cfi_startproc
+ 1240              		@ args = 0, pretend = 0, frame = 0
+ 1241              		@ frame_needed = 0, uses_anonymous_args = 0
+ 111:u8g2_lib/u8g2_setup.c ****   u8g2->cb = u8g2_cb;
+ 1242              		.loc 1 111 1 is_stmt 0 view .LVU374
+ 1243 0000 10B5     		push	{r4, lr}
+ 1244              	.LCFI36:
+ 1245              		.cfi_def_cfa_offset 8
+ 1246              		.cfi_offset 4, -8
+ 1247              		.cfi_offset 14, -4
+ 1248 0002 0446     		mov	r4, r0
+ 112:u8g2_lib/u8g2_setup.c ****   u8g2->cb->update_dimension(u8g2);
+ 1249              		.loc 1 112 3 is_stmt 1 view .LVU375
+ 112:u8g2_lib/u8g2_setup.c ****   u8g2->cb->update_dimension(u8g2);
+ 1250              		.loc 1 112 12 is_stmt 0 view .LVU376
+ 1251 0004 0163     		str	r1, [r0, #48]
+ 113:u8g2_lib/u8g2_setup.c ****   u8g2->cb->update_page_win(u8g2);
+ 1252              		.loc 1 113 3 is_stmt 1 view .LVU377
+ 113:u8g2_lib/u8g2_setup.c ****   u8g2->cb->update_page_win(u8g2);
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s 			page 33
+
+
+ 1253              		.loc 1 113 11 is_stmt 0 view .LVU378
+ 1254 0006 0B68     		ldr	r3, [r1]
+ 113:u8g2_lib/u8g2_setup.c ****   u8g2->cb->update_page_win(u8g2);
+ 1255              		.loc 1 113 3 view .LVU379
+ 1256 0008 9847     		blx	r3
+ 1257              	.LVL108:
+ 114:u8g2_lib/u8g2_setup.c **** }
+ 1258              		.loc 1 114 3 is_stmt 1 view .LVU380
+ 114:u8g2_lib/u8g2_setup.c **** }
+ 1259              		.loc 1 114 7 is_stmt 0 view .LVU381
+ 1260 000a 236B     		ldr	r3, [r4, #48]
+ 114:u8g2_lib/u8g2_setup.c **** }
+ 1261              		.loc 1 114 11 view .LVU382
+ 1262 000c 5B68     		ldr	r3, [r3, #4]
+ 114:u8g2_lib/u8g2_setup.c **** }
+ 1263              		.loc 1 114 3 view .LVU383
+ 1264 000e 2046     		mov	r0, r4
+ 1265 0010 9847     		blx	r3
+ 1266              	.LVL109:
+ 115:u8g2_lib/u8g2_setup.c **** 
+ 1267              		.loc 1 115 1 view .LVU384
+ 1268 0012 10BD     		pop	{r4, pc}
+ 115:u8g2_lib/u8g2_setup.c **** 
+ 1269              		.loc 1 115 1 view .LVU385
+ 1270              		.cfi_endproc
+ 1271              	.LFE3:
+ 1273              		.section	.text.u8g2_SendF,"ax",%progbits
+ 1274              		.align	1
+ 1275              		.global	u8g2_SendF
+ 1276              		.syntax unified
+ 1277              		.thumb
+ 1278              		.thumb_func
+ 1279              		.fpu softvfp
+ 1281              	u8g2_SendF:
+ 1282              	.LVL110:
+ 1283              	.LFB4:
+ 120:u8g2_lib/u8g2_setup.c ****   va_list va;
+ 1284              		.loc 1 120 1 is_stmt 1 view -0
+ 1285              		.cfi_startproc
+ 1286              		@ args = 4, pretend = 12, frame = 8
+ 1287              		@ frame_needed = 0, uses_anonymous_args = 1
+ 120:u8g2_lib/u8g2_setup.c ****   va_list va;
+ 1288              		.loc 1 120 1 is_stmt 0 view .LVU387
+ 1289 0000 0EB4     		push	{r1, r2, r3}
+ 1290              	.LCFI37:
+ 1291              		.cfi_def_cfa_offset 12
+ 1292              		.cfi_offset 1, -12
+ 1293              		.cfi_offset 2, -8
+ 1294              		.cfi_offset 3, -4
+ 1295 0002 00B5     		push	{lr}
+ 1296              	.LCFI38:
+ 1297              		.cfi_def_cfa_offset 16
+ 1298              		.cfi_offset 14, -16
+ 1299 0004 82B0     		sub	sp, sp, #8
+ 1300              	.LCFI39:
+ 1301              		.cfi_def_cfa_offset 24
+ 1302 0006 03AA     		add	r2, sp, #12
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s 			page 34
+
+
+ 1303 0008 52F8041B 		ldr	r1, [r2], #4
+ 121:u8g2_lib/u8g2_setup.c ****   va_start(va, fmt);
+ 1304              		.loc 1 121 3 is_stmt 1 view .LVU388
+ 122:u8g2_lib/u8g2_setup.c ****   u8x8_cad_vsendf(u8g2_GetU8x8(u8g2), fmt, va);
+ 1305              		.loc 1 122 3 view .LVU389
+ 1306 000c 0192     		str	r2, [sp, #4]
+ 123:u8g2_lib/u8g2_setup.c ****   va_end(va);
+ 1307              		.loc 1 123 3 view .LVU390
+ 1308 000e FFF7FEFF 		bl	u8x8_cad_vsendf
+ 1309              	.LVL111:
+ 124:u8g2_lib/u8g2_setup.c **** }
+ 1310              		.loc 1 124 3 view .LVU391
+ 125:u8g2_lib/u8g2_setup.c **** 
+ 1311              		.loc 1 125 1 is_stmt 0 view .LVU392
+ 1312 0012 02B0     		add	sp, sp, #8
+ 1313              	.LCFI40:
+ 1314              		.cfi_def_cfa_offset 16
+ 1315              		@ sp needed
+ 1316 0014 5DF804EB 		ldr	lr, [sp], #4
+ 1317              	.LCFI41:
+ 1318              		.cfi_restore 14
+ 1319              		.cfi_def_cfa_offset 12
+ 1320 0018 03B0     		add	sp, sp, #12
+ 1321              	.LCFI42:
+ 1322              		.cfi_restore 3
+ 1323              		.cfi_restore 2
+ 1324              		.cfi_restore 1
+ 1325              		.cfi_def_cfa_offset 0
+ 1326 001a 7047     		bx	lr
+ 1327              		.cfi_endproc
+ 1328              	.LFE4:
+ 1330              		.section	.text.u8g2_Setup_null,"ax",%progbits
+ 1331              		.align	1
+ 1332              		.global	u8g2_Setup_null
+ 1333              		.syntax unified
+ 1334              		.thumb
+ 1335              		.thumb_func
+ 1336              		.fpu softvfp
+ 1338              	u8g2_Setup_null:
+ 1339              	.LVL112:
+ 1340              	.LFB20:
+ 427:u8g2_lib/u8g2_setup.c **** 
+ 428:u8g2_lib/u8g2_setup.c **** 
+ 429:u8g2_lib/u8g2_setup.c **** 
+ 430:u8g2_lib/u8g2_setup.c **** /*============================================*/
+ 431:u8g2_lib/u8g2_setup.c **** const u8g2_cb_t u8g2_cb_r0 = { u8g2_update_dimension_r0, u8g2_update_page_win_r0, u8g2_draw_l90_r0 
+ 432:u8g2_lib/u8g2_setup.c **** const u8g2_cb_t u8g2_cb_r1 = { u8g2_update_dimension_r1, u8g2_update_page_win_r1, u8g2_draw_l90_r1 
+ 433:u8g2_lib/u8g2_setup.c **** const u8g2_cb_t u8g2_cb_r2 = { u8g2_update_dimension_r2, u8g2_update_page_win_r2, u8g2_draw_l90_r2 
+ 434:u8g2_lib/u8g2_setup.c **** const u8g2_cb_t u8g2_cb_r3 = { u8g2_update_dimension_r3, u8g2_update_page_win_r3, u8g2_draw_l90_r3 
+ 435:u8g2_lib/u8g2_setup.c ****   
+ 436:u8g2_lib/u8g2_setup.c **** const u8g2_cb_t u8g2_cb_mirror = { u8g2_update_dimension_r0, u8g2_update_page_win_r0, u8g2_draw_l90
+ 437:u8g2_lib/u8g2_setup.c ****   
+ 438:u8g2_lib/u8g2_setup.c **** /*============================================*/
+ 439:u8g2_lib/u8g2_setup.c **** /* setup for the null device */
+ 440:u8g2_lib/u8g2_setup.c **** 
+ 441:u8g2_lib/u8g2_setup.c **** /* setup for the null (empty) device */
+ 442:u8g2_lib/u8g2_setup.c **** void u8g2_Setup_null(u8g2_t *u8g2, const u8g2_cb_t *rotation, u8x8_msg_cb byte_cb, u8x8_msg_cb gpio
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s 			page 35
+
+
+ 443:u8g2_lib/u8g2_setup.c **** {
+ 1341              		.loc 1 443 1 is_stmt 1 view -0
+ 1342              		.cfi_startproc
+ 1343              		@ args = 0, pretend = 0, frame = 0
+ 1344              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1345              		.loc 1 443 1 is_stmt 0 view .LVU394
+ 1346 0000 30B5     		push	{r4, r5, lr}
+ 1347              	.LCFI43:
+ 1348              		.cfi_def_cfa_offset 12
+ 1349              		.cfi_offset 4, -12
+ 1350              		.cfi_offset 5, -8
+ 1351              		.cfi_offset 14, -4
+ 1352 0002 83B0     		sub	sp, sp, #12
+ 1353              	.LCFI44:
+ 1354              		.cfi_def_cfa_offset 24
+ 1355 0004 0446     		mov	r4, r0
+ 1356 0006 0D46     		mov	r5, r1
+ 444:u8g2_lib/u8g2_setup.c ****   static uint8_t buf[8];
+ 1357              		.loc 1 444 3 is_stmt 1 view .LVU395
+ 445:u8g2_lib/u8g2_setup.c ****   u8g2_SetupDisplay(u8g2, u8x8_d_null_cb, u8x8_cad_empty, byte_cb, gpio_and_delay_cb);
+ 1358              		.loc 1 445 3 view .LVU396
+ 1359 0008 0093     		str	r3, [sp]
+ 1360 000a 1346     		mov	r3, r2
+ 1361              	.LVL113:
+ 1362              		.loc 1 445 3 is_stmt 0 view .LVU397
+ 1363 000c 064A     		ldr	r2, .L62
+ 1364              	.LVL114:
+ 1365              		.loc 1 445 3 view .LVU398
+ 1366 000e 0749     		ldr	r1, .L62+4
+ 1367              	.LVL115:
+ 1368              		.loc 1 445 3 view .LVU399
+ 1369 0010 FFF7FEFF 		bl	u8x8_Setup
+ 1370              	.LVL116:
+ 446:u8g2_lib/u8g2_setup.c ****   u8g2_SetupBuffer(u8g2, buf, 1, u8g2_ll_hvline_vertical_top_lsb, rotation);
+ 1371              		.loc 1 446 3 is_stmt 1 view .LVU400
+ 1372 0014 0095     		str	r5, [sp]
+ 1373 0016 064B     		ldr	r3, .L62+8
+ 1374 0018 0122     		movs	r2, #1
+ 1375 001a 0649     		ldr	r1, .L62+12
+ 1376 001c 2046     		mov	r0, r4
+ 1377 001e FFF7FEFF 		bl	u8g2_SetupBuffer
+ 1378              	.LVL117:
+ 447:u8g2_lib/u8g2_setup.c **** }
+ 1379              		.loc 1 447 1 is_stmt 0 view .LVU401
+ 1380 0022 03B0     		add	sp, sp, #12
+ 1381              	.LCFI45:
+ 1382              		.cfi_def_cfa_offset 12
+ 1383              		@ sp needed
+ 1384 0024 30BD     		pop	{r4, r5, pc}
+ 1385              	.LVL118:
+ 1386              	.L63:
+ 1387              		.loc 1 447 1 view .LVU402
+ 1388 0026 00BF     		.align	2
+ 1389              	.L62:
+ 1390 0028 00000000 		.word	u8x8_cad_empty
+ 1391 002c 00000000 		.word	u8x8_d_null_cb
+ 1392 0030 00000000 		.word	u8g2_ll_hvline_vertical_top_lsb
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s 			page 36
+
+
+ 1393 0034 00000000 		.word	.LANCHOR0
+ 1394              		.cfi_endproc
+ 1395              	.LFE20:
+ 1397              		.global	u8g2_cb_mirror
+ 1398              		.global	u8g2_cb_r3
+ 1399              		.global	u8g2_cb_r2
+ 1400              		.global	u8g2_cb_r1
+ 1401              		.global	u8g2_cb_r0
+ 1402              		.section	.bss.buf.11546,"aw",%nobits
+ 1403              		.align	2
+ 1404              		.set	.LANCHOR0,. + 0
+ 1407              	buf.11546:
+ 1408 0000 00000000 		.space	8
+ 1408      00000000 
+ 1409              		.section	.rodata.u8g2_cb_mirror,"a"
+ 1410              		.align	2
+ 1413              	u8g2_cb_mirror:
+ 1414 0000 00000000 		.word	u8g2_update_dimension_r0
+ 1415 0004 00000000 		.word	u8g2_update_page_win_r0
+ 1416 0008 00000000 		.word	u8g2_draw_l90_mirrorr_r0
+ 1417              		.section	.rodata.u8g2_cb_r0,"a"
+ 1418              		.align	2
+ 1421              	u8g2_cb_r0:
+ 1422 0000 00000000 		.word	u8g2_update_dimension_r0
+ 1423 0004 00000000 		.word	u8g2_update_page_win_r0
+ 1424 0008 00000000 		.word	u8g2_draw_l90_r0
+ 1425              		.section	.rodata.u8g2_cb_r1,"a"
+ 1426              		.align	2
+ 1429              	u8g2_cb_r1:
+ 1430 0000 00000000 		.word	u8g2_update_dimension_r1
+ 1431 0004 00000000 		.word	u8g2_update_page_win_r1
+ 1432 0008 00000000 		.word	u8g2_draw_l90_r1
+ 1433              		.section	.rodata.u8g2_cb_r2,"a"
+ 1434              		.align	2
+ 1437              	u8g2_cb_r2:
+ 1438 0000 00000000 		.word	u8g2_update_dimension_r2
+ 1439 0004 00000000 		.word	u8g2_update_page_win_r2
+ 1440 0008 00000000 		.word	u8g2_draw_l90_r2
+ 1441              		.section	.rodata.u8g2_cb_r3,"a"
+ 1442              		.align	2
+ 1445              	u8g2_cb_r3:
+ 1446 0000 00000000 		.word	u8g2_update_dimension_r3
+ 1447 0004 00000000 		.word	u8g2_update_page_win_r3
+ 1448 0008 00000000 		.word	u8g2_draw_l90_r3
+ 1449              		.text
+ 1450              	.Letext0:
+ 1451              		.file 2 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 1452              		.file 3 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 1453              		.file 4 "d:\\work_project\\9 2019-q4-major\\lib\\gcc\\arm-none-eabi\\9.2.1\\include\\stdarg.h"
+ 1454              		.file 5 "u8g2_lib/u8x8.h"
+ 1455              		.file 6 "u8g2_lib/u8g2.h"
+ 1456              		.file 7 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\sys\\lock.h"
+ 1457              		.file 8 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\sys\\_types.h"
+ 1458              		.file 9 "d:\\work_project\\9 2019-q4-major\\lib\\gcc\\arm-none-eabi\\9.2.1\\include\\stddef.h"
+ 1459              		.file 10 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\sys\\reent.h"
+ 1460              		.file 11 "<built-in>"
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s 			page 37
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 u8g2_setup.c
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:16     .text.u8g2_update_dimension_common:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:23     .text.u8g2_update_dimension_common:00000000 u8g2_update_dimension_common
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:152    .text.u8g2_update_dimension_r0:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:159    .text.u8g2_update_dimension_r0:00000000 u8g2_update_dimension_r0
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:181    .text.u8g2_update_dimension_r1:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:188    .text.u8g2_update_dimension_r1:00000000 u8g2_update_dimension_r1
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:224    .text.u8g2_update_dimension_r2:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:231    .text.u8g2_update_dimension_r2:00000000 u8g2_update_dimension_r2
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:253    .text.u8g2_update_dimension_r3:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:260    .text.u8g2_update_dimension_r3:00000000 u8g2_update_dimension_r3
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:296    .text.u8g2_apply_clip_window:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:302    .text.u8g2_apply_clip_window:00000000 u8g2_apply_clip_window
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:403    .text.u8g2_update_page_win_r0:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:410    .text.u8g2_update_page_win_r0:00000000 u8g2_update_page_win_r0
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:451    .text.u8g2_update_page_win_r1:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:458    .text.u8g2_update_page_win_r1:00000000 u8g2_update_page_win_r1
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:499    .text.u8g2_update_page_win_r2:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:506    .text.u8g2_update_page_win_r2:00000000 u8g2_update_page_win_r2
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:561    .text.u8g2_update_page_win_r3:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:568    .text.u8g2_update_page_win_r3:00000000 u8g2_update_page_win_r3
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:624    .text.u8g2_draw_l90_r0:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:631    .text.u8g2_draw_l90_r0:00000000 u8g2_draw_l90_r0
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:663    .text.u8g2_draw_l90_mirrorr_r0:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:670    .text.u8g2_draw_l90_mirrorr_r0:00000000 u8g2_draw_l90_mirrorr_r0
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:740    .text.u8g2_draw_l90_r1:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:747    .text.u8g2_draw_l90_r1:00000000 u8g2_draw_l90_r1
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:840    .text.u8g2_draw_l90_r2:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:847    .text.u8g2_draw_l90_r2:00000000 u8g2_draw_l90_r2
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:946    .text.u8g2_draw_l90_r3:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:953    .text.u8g2_draw_l90_r3:00000000 u8g2_draw_l90_r3
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:1048   .text.u8g2_SetMaxClipWindow:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:1055   .text.u8g2_SetMaxClipWindow:00000000 u8g2_SetMaxClipWindow
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:1096   .text.u8g2_SetClipWindow:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:1103   .text.u8g2_SetClipWindow:00000000 u8g2_SetClipWindow
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:1146   .text.u8g2_SetupBuffer:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:1153   .text.u8g2_SetupBuffer:00000000 u8g2_SetupBuffer
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:1228   .text.u8g2_SetDisplayRotation:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:1235   .text.u8g2_SetDisplayRotation:00000000 u8g2_SetDisplayRotation
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:1274   .text.u8g2_SendF:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:1281   .text.u8g2_SendF:00000000 u8g2_SendF
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:1331   .text.u8g2_Setup_null:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:1338   .text.u8g2_Setup_null:00000000 u8g2_Setup_null
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:1390   .text.u8g2_Setup_null:00000028 $d
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:1413   .rodata.u8g2_cb_mirror:00000000 u8g2_cb_mirror
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:1445   .rodata.u8g2_cb_r3:00000000 u8g2_cb_r3
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:1437   .rodata.u8g2_cb_r2:00000000 u8g2_cb_r2
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:1429   .rodata.u8g2_cb_r1:00000000 u8g2_cb_r1
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:1421   .rodata.u8g2_cb_r0:00000000 u8g2_cb_r0
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:1403   .bss.buf.11546:00000000 $d
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:1407   .bss.buf.11546:00000000 buf.11546
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:1410   .rodata.u8g2_cb_mirror:00000000 $d
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:1418   .rodata.u8g2_cb_r0:00000000 $d
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:1426   .rodata.u8g2_cb_r1:00000000 $d
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:1434   .rodata.u8g2_cb_r2:00000000 $d
+C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s:1442   .rodata.u8g2_cb_r3:00000000 $d
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\ccNuupXu.s 			page 38
+
+
+
+UNDEFINED SYMBOLS
+u8g2_IsIntersection
+u8g2_draw_hv_line_2dir
+u8g2_SetFontPosBaseline
+u8x8_cad_vsendf
+u8x8_Setup
+u8x8_cad_empty
+u8x8_d_null_cb
+u8g2_ll_hvline_vertical_top_lsb

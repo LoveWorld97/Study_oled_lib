@@ -1,0 +1,1207 @@
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc3iU9uR.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"u8g2_box.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.u8g2_DrawBox,"ax",%progbits
+  16              		.align	1
+  17              		.global	u8g2_DrawBox
+  18              		.arch armv7-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu softvfp
+  24              	u8g2_DrawBox:
+  25              	.LVL0:
+  26              	.LFB0:
+  27              		.file 1 "u8g2_lib/u8g2_box.c"
+   1:u8g2_lib/u8g2_box.c **** /*
+   2:u8g2_lib/u8g2_box.c **** 
+   3:u8g2_lib/u8g2_box.c ****   u8g2_box.c
+   4:u8g2_lib/u8g2_box.c **** 
+   5:u8g2_lib/u8g2_box.c ****   Universal 8bit Graphics Library (https://github.com/olikraus/u8g2/)
+   6:u8g2_lib/u8g2_box.c **** 
+   7:u8g2_lib/u8g2_box.c ****   Copyright (c) 2016, olikraus@gmail.com
+   8:u8g2_lib/u8g2_box.c ****   All rights reserved.
+   9:u8g2_lib/u8g2_box.c **** 
+  10:u8g2_lib/u8g2_box.c ****   Redistribution and use in source and binary forms, with or without modification, 
+  11:u8g2_lib/u8g2_box.c ****   are permitted provided that the following conditions are met:
+  12:u8g2_lib/u8g2_box.c **** 
+  13:u8g2_lib/u8g2_box.c ****   * Redistributions of source code must retain the above copyright notice, this list 
+  14:u8g2_lib/u8g2_box.c ****     of conditions and the following disclaimer.
+  15:u8g2_lib/u8g2_box.c ****     
+  16:u8g2_lib/u8g2_box.c ****   * Redistributions in binary form must reproduce the above copyright notice, this 
+  17:u8g2_lib/u8g2_box.c ****     list of conditions and the following disclaimer in the documentation and/or other 
+  18:u8g2_lib/u8g2_box.c ****     materials provided with the distribution.
+  19:u8g2_lib/u8g2_box.c **** 
+  20:u8g2_lib/u8g2_box.c ****   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND 
+  21:u8g2_lib/u8g2_box.c ****   CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, 
+  22:u8g2_lib/u8g2_box.c ****   INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF 
+  23:u8g2_lib/u8g2_box.c ****   MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE 
+  24:u8g2_lib/u8g2_box.c ****   DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR 
+  25:u8g2_lib/u8g2_box.c ****   CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
+  26:u8g2_lib/u8g2_box.c ****   SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
+  27:u8g2_lib/u8g2_box.c ****   NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; 
+  28:u8g2_lib/u8g2_box.c ****   LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER 
+  29:u8g2_lib/u8g2_box.c ****   CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, 
+  30:u8g2_lib/u8g2_box.c ****   STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+  31:u8g2_lib/u8g2_box.c ****   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF 
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc3iU9uR.s 			page 2
+
+
+  32:u8g2_lib/u8g2_box.c ****   ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.  
+  33:u8g2_lib/u8g2_box.c **** 
+  34:u8g2_lib/u8g2_box.c **** */
+  35:u8g2_lib/u8g2_box.c **** 
+  36:u8g2_lib/u8g2_box.c **** #include "u8g2.h"
+  37:u8g2_lib/u8g2_box.c **** 
+  38:u8g2_lib/u8g2_box.c **** /*
+  39:u8g2_lib/u8g2_box.c ****   draw a filled box
+  40:u8g2_lib/u8g2_box.c ****   restriction: does not work for w = 0 or h = 0
+  41:u8g2_lib/u8g2_box.c **** */
+  42:u8g2_lib/u8g2_box.c **** void u8g2_DrawBox(u8g2_t *u8g2, u8g2_uint_t x, u8g2_uint_t y, u8g2_uint_t w, u8g2_uint_t h)
+  43:u8g2_lib/u8g2_box.c **** {
+  28              		.loc 1 43 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 4, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		.loc 1 43 1 is_stmt 0 view .LVU1
+  33 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 24
+  36              		.cfi_offset 4, -24
+  37              		.cfi_offset 5, -20
+  38              		.cfi_offset 6, -16
+  39              		.cfi_offset 7, -12
+  40              		.cfi_offset 8, -8
+  41              		.cfi_offset 14, -4
+  42 0004 82B0     		sub	sp, sp, #8
+  43              	.LCFI1:
+  44              		.cfi_def_cfa_offset 32
+  45 0006 8046     		mov	r8, r0
+  46 0008 0F46     		mov	r7, r1
+  47 000a 1446     		mov	r4, r2
+  48 000c 1E46     		mov	r6, r3
+  49 000e 9DF82050 		ldrb	r5, [sp, #32]	@ zero_extendqisi2
+  44:u8g2_lib/u8g2_box.c **** #ifdef U8G2_WITH_INTERSECTION
+  45:u8g2_lib/u8g2_box.c ****   if ( u8g2_IsIntersection(u8g2, x, y, x+w, y+h) == 0 ) 
+  50              		.loc 1 45 3 is_stmt 1 view .LVU2
+  51              		.loc 1 45 8 is_stmt 0 view .LVU3
+  52 0012 01EB030C 		add	ip, r1, r3
+  53 0016 5319     		adds	r3, r2, r5
+  54              	.LVL1:
+  55              		.loc 1 45 8 view .LVU4
+  56 0018 DBB2     		uxtb	r3, r3
+  57 001a 0093     		str	r3, [sp]
+  58 001c 5FFA8CF3 		uxtb	r3, ip
+  59 0020 FFF7FEFF 		bl	u8g2_IsIntersection
+  60              	.LVL2:
+  61              		.loc 1 45 6 view .LVU5
+  62 0024 68B1     		cbz	r0, .L1
+  63              	.LVL3:
+  64              	.L3:
+  46:u8g2_lib/u8g2_box.c ****     return;
+  47:u8g2_lib/u8g2_box.c **** #endif /* U8G2_WITH_INTERSECTION */
+  48:u8g2_lib/u8g2_box.c ****   while( h != 0 )
+  65              		.loc 1 48 8 is_stmt 1 view .LVU6
+  66 0026 65B1     		cbz	r5, .L1
+  49:u8g2_lib/u8g2_box.c ****   { 
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc3iU9uR.s 			page 3
+
+
+  50:u8g2_lib/u8g2_box.c ****     u8g2_DrawHVLine(u8g2, x, y, w, 0);
+  67              		.loc 1 50 5 view .LVU7
+  68 0028 0022     		movs	r2, #0
+  69 002a 0092     		str	r2, [sp]
+  70 002c 3346     		mov	r3, r6
+  71 002e 2246     		mov	r2, r4
+  72 0030 3946     		mov	r1, r7
+  73 0032 4046     		mov	r0, r8
+  74 0034 FFF7FEFF 		bl	u8g2_DrawHVLine
+  75              	.LVL4:
+  51:u8g2_lib/u8g2_box.c ****     y++;    
+  76              		.loc 1 51 5 view .LVU8
+  77              		.loc 1 51 6 is_stmt 0 view .LVU9
+  78 0038 0134     		adds	r4, r4, #1
+  79              	.LVL5:
+  80              		.loc 1 51 6 view .LVU10
+  81 003a E4B2     		uxtb	r4, r4
+  82              	.LVL6:
+  52:u8g2_lib/u8g2_box.c ****     h--;
+  83              		.loc 1 52 5 is_stmt 1 view .LVU11
+  84              		.loc 1 52 6 is_stmt 0 view .LVU12
+  85 003c 013D     		subs	r5, r5, #1
+  86              	.LVL7:
+  87              		.loc 1 52 6 view .LVU13
+  88 003e EDB2     		uxtb	r5, r5
+  89              	.LVL8:
+  90              		.loc 1 52 6 view .LVU14
+  91 0040 F1E7     		b	.L3
+  92              	.LVL9:
+  93              	.L1:
+  53:u8g2_lib/u8g2_box.c ****   }
+  54:u8g2_lib/u8g2_box.c **** }
+  94              		.loc 1 54 1 view .LVU15
+  95 0042 02B0     		add	sp, sp, #8
+  96              	.LCFI2:
+  97              		.cfi_def_cfa_offset 24
+  98              		@ sp needed
+  99 0044 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 100              		.loc 1 54 1 view .LVU16
+ 101              		.cfi_endproc
+ 102              	.LFE0:
+ 104              		.section	.text.u8g2_DrawFrame,"ax",%progbits
+ 105              		.align	1
+ 106              		.global	u8g2_DrawFrame
+ 107              		.syntax unified
+ 108              		.thumb
+ 109              		.thumb_func
+ 110              		.fpu softvfp
+ 112              	u8g2_DrawFrame:
+ 113              	.LVL10:
+ 114              	.LFB1:
+  55:u8g2_lib/u8g2_box.c **** 
+  56:u8g2_lib/u8g2_box.c **** 
+  57:u8g2_lib/u8g2_box.c **** /*
+  58:u8g2_lib/u8g2_box.c ****   draw a frame (empty box)
+  59:u8g2_lib/u8g2_box.c ****   restriction: does not work for w = 0 or h = 0
+  60:u8g2_lib/u8g2_box.c **** */
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc3iU9uR.s 			page 4
+
+
+  61:u8g2_lib/u8g2_box.c **** void u8g2_DrawFrame(u8g2_t *u8g2, u8g2_uint_t x, u8g2_uint_t y, u8g2_uint_t w, u8g2_uint_t h)
+  62:u8g2_lib/u8g2_box.c **** {
+ 115              		.loc 1 62 1 is_stmt 1 view -0
+ 116              		.cfi_startproc
+ 117              		@ args = 4, pretend = 0, frame = 0
+ 118              		@ frame_needed = 0, uses_anonymous_args = 0
+ 119              		.loc 1 62 1 is_stmt 0 view .LVU18
+ 120 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, r10, lr}
+ 121              	.LCFI3:
+ 122              		.cfi_def_cfa_offset 32
+ 123              		.cfi_offset 4, -32
+ 124              		.cfi_offset 5, -28
+ 125              		.cfi_offset 6, -24
+ 126              		.cfi_offset 7, -20
+ 127              		.cfi_offset 8, -16
+ 128              		.cfi_offset 9, -12
+ 129              		.cfi_offset 10, -8
+ 130              		.cfi_offset 14, -4
+ 131 0004 82B0     		sub	sp, sp, #8
+ 132              	.LCFI4:
+ 133              		.cfi_def_cfa_offset 40
+ 134 0006 8046     		mov	r8, r0
+ 135 0008 0D46     		mov	r5, r1
+ 136 000a 1446     		mov	r4, r2
+ 137 000c 1E46     		mov	r6, r3
+ 138 000e 9DF82870 		ldrb	r7, [sp, #40]	@ zero_extendqisi2
+  63:u8g2_lib/u8g2_box.c ****   u8g2_uint_t xtmp = x;
+ 139              		.loc 1 63 3 is_stmt 1 view .LVU19
+ 140              	.LVL11:
+  64:u8g2_lib/u8g2_box.c ****   
+  65:u8g2_lib/u8g2_box.c **** #ifdef U8G2_WITH_INTERSECTION
+  66:u8g2_lib/u8g2_box.c ****   if ( u8g2_IsIntersection(u8g2, x, y, x+w, y+h) == 0 ) 
+ 141              		.loc 1 66 3 view .LVU20
+ 142              		.loc 1 66 8 is_stmt 0 view .LVU21
+ 143 0012 01EB0309 		add	r9, r1, r3
+ 144 0016 5FFA89F9 		uxtb	r9, r9
+ 145 001a D319     		adds	r3, r2, r7
+ 146              	.LVL12:
+ 147              		.loc 1 66 8 view .LVU22
+ 148 001c DBB2     		uxtb	r3, r3
+ 149 001e 0093     		str	r3, [sp]
+ 150 0020 4B46     		mov	r3, r9
+ 151 0022 FFF7FEFF 		bl	u8g2_IsIntersection
+ 152              	.LVL13:
+ 153              		.loc 1 66 6 view .LVU23
+ 154 0026 10B9     		cbnz	r0, .L10
+ 155              	.LVL14:
+ 156              	.L6:
+  67:u8g2_lib/u8g2_box.c ****     return;
+  68:u8g2_lib/u8g2_box.c **** #endif /* U8G2_WITH_INTERSECTION */
+  69:u8g2_lib/u8g2_box.c ****   
+  70:u8g2_lib/u8g2_box.c ****   u8g2_DrawHVLine(u8g2, x, y, w, 0);
+  71:u8g2_lib/u8g2_box.c ****   if (h >= 2) {
+  72:u8g2_lib/u8g2_box.c ****     h-=2;
+  73:u8g2_lib/u8g2_box.c ****     y++;
+  74:u8g2_lib/u8g2_box.c ****     if (h > 0) {
+  75:u8g2_lib/u8g2_box.c ****       u8g2_DrawHVLine(u8g2, x, y, h, 1);
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc3iU9uR.s 			page 5
+
+
+  76:u8g2_lib/u8g2_box.c ****       x+=w;
+  77:u8g2_lib/u8g2_box.c ****       x--;
+  78:u8g2_lib/u8g2_box.c ****       u8g2_DrawHVLine(u8g2, x, y, h, 1);
+  79:u8g2_lib/u8g2_box.c ****       y+=h;
+  80:u8g2_lib/u8g2_box.c ****     }
+  81:u8g2_lib/u8g2_box.c ****     u8g2_DrawHVLine(u8g2, xtmp, y, w, 0);
+  82:u8g2_lib/u8g2_box.c ****   }
+  83:u8g2_lib/u8g2_box.c **** }
+ 157              		.loc 1 83 1 view .LVU24
+ 158 0028 02B0     		add	sp, sp, #8
+ 159              	.LCFI5:
+ 160              		.cfi_remember_state
+ 161              		.cfi_def_cfa_offset 32
+ 162              		@ sp needed
+ 163 002a BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+ 164              	.LVL15:
+ 165              	.L10:
+ 166              	.LCFI6:
+ 167              		.cfi_restore_state
+  70:u8g2_lib/u8g2_box.c ****   if (h >= 2) {
+ 168              		.loc 1 70 3 is_stmt 1 view .LVU25
+ 169 002e 0023     		movs	r3, #0
+ 170 0030 0093     		str	r3, [sp]
+ 171 0032 3346     		mov	r3, r6
+ 172 0034 2246     		mov	r2, r4
+ 173 0036 2946     		mov	r1, r5
+ 174 0038 4046     		mov	r0, r8
+ 175 003a FFF7FEFF 		bl	u8g2_DrawHVLine
+ 176              	.LVL16:
+  71:u8g2_lib/u8g2_box.c ****     h-=2;
+ 177              		.loc 1 71 3 view .LVU26
+  71:u8g2_lib/u8g2_box.c ****     h-=2;
+ 178              		.loc 1 71 6 is_stmt 0 view .LVU27
+ 179 003e 012F     		cmp	r7, #1
+ 180 0040 F2D9     		bls	.L6
+  72:u8g2_lib/u8g2_box.c ****     y++;
+ 181              		.loc 1 72 5 is_stmt 1 view .LVU28
+  72:u8g2_lib/u8g2_box.c ****     y++;
+ 182              		.loc 1 72 6 is_stmt 0 view .LVU29
+ 183 0042 023F     		subs	r7, r7, #2
+ 184              	.LVL17:
+  73:u8g2_lib/u8g2_box.c ****     if (h > 0) {
+ 185              		.loc 1 73 5 is_stmt 1 view .LVU30
+  73:u8g2_lib/u8g2_box.c ****     if (h > 0) {
+ 186              		.loc 1 73 6 is_stmt 0 view .LVU31
+ 187 0044 0134     		adds	r4, r4, #1
+ 188 0046 E4B2     		uxtb	r4, r4
+ 189              	.LVL18:
+  74:u8g2_lib/u8g2_box.c ****       u8g2_DrawHVLine(u8g2, x, y, h, 1);
+ 190              		.loc 1 74 5 is_stmt 1 view .LVU32
+  74:u8g2_lib/u8g2_box.c ****       u8g2_DrawHVLine(u8g2, x, y, h, 1);
+ 191              		.loc 1 74 8 is_stmt 0 view .LVU33
+ 192 0048 17F0FF07 		ands	r7, r7, #255
+ 193              	.LVL19:
+  74:u8g2_lib/u8g2_box.c ****       u8g2_DrawHVLine(u8g2, x, y, h, 1);
+ 194              		.loc 1 74 8 view .LVU34
+ 195 004c 08D1     		bne	.L11
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc3iU9uR.s 			page 6
+
+
+ 196              	.LVL20:
+ 197              	.L8:
+  81:u8g2_lib/u8g2_box.c ****   }
+ 198              		.loc 1 81 5 is_stmt 1 view .LVU35
+ 199 004e 0023     		movs	r3, #0
+ 200 0050 0093     		str	r3, [sp]
+ 201 0052 3346     		mov	r3, r6
+ 202 0054 2246     		mov	r2, r4
+ 203 0056 2946     		mov	r1, r5
+ 204 0058 4046     		mov	r0, r8
+ 205 005a FFF7FEFF 		bl	u8g2_DrawHVLine
+ 206              	.LVL21:
+ 207 005e E3E7     		b	.L6
+ 208              	.LVL22:
+ 209              	.L11:
+  75:u8g2_lib/u8g2_box.c ****       x+=w;
+ 210              		.loc 1 75 7 view .LVU36
+ 211 0060 4FF0010A 		mov	r10, #1
+ 212 0064 CDF800A0 		str	r10, [sp]
+ 213 0068 3B46     		mov	r3, r7
+ 214 006a 2246     		mov	r2, r4
+ 215 006c 2946     		mov	r1, r5
+ 216 006e 4046     		mov	r0, r8
+ 217 0070 FFF7FEFF 		bl	u8g2_DrawHVLine
+ 218              	.LVL23:
+  76:u8g2_lib/u8g2_box.c ****       x--;
+ 219              		.loc 1 76 7 view .LVU37
+  77:u8g2_lib/u8g2_box.c ****       u8g2_DrawHVLine(u8g2, x, y, h, 1);
+ 220              		.loc 1 77 7 view .LVU38
+  77:u8g2_lib/u8g2_box.c ****       u8g2_DrawHVLine(u8g2, x, y, h, 1);
+ 221              		.loc 1 77 8 is_stmt 0 view .LVU39
+ 222 0074 09F1FF31 		add	r1, r9, #-1
+ 223              	.LVL24:
+  78:u8g2_lib/u8g2_box.c ****       y+=h;
+ 224              		.loc 1 78 7 is_stmt 1 view .LVU40
+ 225 0078 CDF800A0 		str	r10, [sp]
+ 226 007c 3B46     		mov	r3, r7
+ 227 007e 2246     		mov	r2, r4
+ 228 0080 C9B2     		uxtb	r1, r1
+  78:u8g2_lib/u8g2_box.c ****       y+=h;
+ 229              		.loc 1 78 7 is_stmt 0 view .LVU41
+ 230 0082 4046     		mov	r0, r8
+ 231 0084 FFF7FEFF 		bl	u8g2_DrawHVLine
+ 232              	.LVL25:
+  79:u8g2_lib/u8g2_box.c ****     }
+ 233              		.loc 1 79 7 is_stmt 1 view .LVU42
+  79:u8g2_lib/u8g2_box.c ****     }
+ 234              		.loc 1 79 8 is_stmt 0 view .LVU43
+ 235 0088 2744     		add	r7, r7, r4
+ 236 008a FCB2     		uxtb	r4, r7
+ 237              	.LVL26:
+  79:u8g2_lib/u8g2_box.c ****     }
+ 238              		.loc 1 79 8 view .LVU44
+ 239 008c DFE7     		b	.L8
+ 240              		.cfi_endproc
+ 241              	.LFE1:
+ 243              		.section	.text.u8g2_DrawRBox,"ax",%progbits
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc3iU9uR.s 			page 7
+
+
+ 244              		.align	1
+ 245              		.global	u8g2_DrawRBox
+ 246              		.syntax unified
+ 247              		.thumb
+ 248              		.thumb_func
+ 249              		.fpu softvfp
+ 251              	u8g2_DrawRBox:
+ 252              	.LVL27:
+ 253              	.LFB2:
+  84:u8g2_lib/u8g2_box.c **** 
+  85:u8g2_lib/u8g2_box.c **** 
+  86:u8g2_lib/u8g2_box.c **** 
+  87:u8g2_lib/u8g2_box.c **** 
+  88:u8g2_lib/u8g2_box.c **** void u8g2_DrawRBox(u8g2_t *u8g2, u8g2_uint_t x, u8g2_uint_t y, u8g2_uint_t w, u8g2_uint_t h, u8g2_u
+  89:u8g2_lib/u8g2_box.c **** {
+ 254              		.loc 1 89 1 is_stmt 1 view -0
+ 255              		.cfi_startproc
+ 256              		@ args = 8, pretend = 0, frame = 16
+ 257              		@ frame_needed = 0, uses_anonymous_args = 0
+ 258              		.loc 1 89 1 is_stmt 0 view .LVU46
+ 259 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 260              	.LCFI7:
+ 261              		.cfi_def_cfa_offset 36
+ 262              		.cfi_offset 4, -36
+ 263              		.cfi_offset 5, -32
+ 264              		.cfi_offset 6, -28
+ 265              		.cfi_offset 7, -24
+ 266              		.cfi_offset 8, -20
+ 267              		.cfi_offset 9, -16
+ 268              		.cfi_offset 10, -12
+ 269              		.cfi_offset 11, -8
+ 270              		.cfi_offset 14, -4
+ 271 0004 87B0     		sub	sp, sp, #28
+ 272              	.LCFI8:
+ 273              		.cfi_def_cfa_offset 64
+ 274 0006 8046     		mov	r8, r0
+ 275 0008 0C46     		mov	r4, r1
+ 276 000a 9246     		mov	r10, r2
+ 277 000c 9DF84060 		ldrb	r6, [sp, #64]	@ zero_extendqisi2
+ 278 0010 9DF84470 		ldrb	r7, [sp, #68]	@ zero_extendqisi2
+  90:u8g2_lib/u8g2_box.c ****   u8g2_uint_t xl, yu;
+ 279              		.loc 1 90 3 is_stmt 1 view .LVU47
+  91:u8g2_lib/u8g2_box.c ****   u8g2_uint_t yl, xr;
+ 280              		.loc 1 91 3 view .LVU48
+  92:u8g2_lib/u8g2_box.c **** 
+  93:u8g2_lib/u8g2_box.c **** #ifdef U8G2_WITH_INTERSECTION
+  94:u8g2_lib/u8g2_box.c ****   if ( u8g2_IsIntersection(u8g2, x, y, x+w, y+h) == 0 ) 
+ 281              		.loc 1 94 3 view .LVU49
+ 282              		.loc 1 94 8 is_stmt 0 view .LVU50
+ 283 0014 0391     		str	r1, [sp, #12]
+ 284 0016 0493     		str	r3, [sp, #16]
+ 285 0018 1C44     		add	r4, r4, r3
+ 286 001a E4B2     		uxtb	r4, r4
+ 287 001c 9519     		adds	r5, r2, r6
+ 288 001e EDB2     		uxtb	r5, r5
+ 289 0020 0095     		str	r5, [sp]
+ 290 0022 2346     		mov	r3, r4
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc3iU9uR.s 			page 8
+
+
+ 291              	.LVL28:
+ 292              		.loc 1 94 8 view .LVU51
+ 293 0024 FFF7FEFF 		bl	u8g2_IsIntersection
+ 294              	.LVL29:
+ 295              		.loc 1 94 6 view .LVU52
+ 296 0028 10B9     		cbnz	r0, .L16
+ 297              	.L12:
+  95:u8g2_lib/u8g2_box.c ****     return;
+  96:u8g2_lib/u8g2_box.c **** #endif /* U8G2_WITH_INTERSECTION */
+  97:u8g2_lib/u8g2_box.c **** 
+  98:u8g2_lib/u8g2_box.c ****   xl = x;
+  99:u8g2_lib/u8g2_box.c ****   xl += r;
+ 100:u8g2_lib/u8g2_box.c ****   yu = y;
+ 101:u8g2_lib/u8g2_box.c ****   yu += r;
+ 102:u8g2_lib/u8g2_box.c ****  
+ 103:u8g2_lib/u8g2_box.c ****   xr = x;
+ 104:u8g2_lib/u8g2_box.c ****   xr += w;
+ 105:u8g2_lib/u8g2_box.c ****   xr -= r;
+ 106:u8g2_lib/u8g2_box.c ****   xr -= 1;
+ 107:u8g2_lib/u8g2_box.c ****   
+ 108:u8g2_lib/u8g2_box.c ****   yl = y;
+ 109:u8g2_lib/u8g2_box.c ****   yl += h;
+ 110:u8g2_lib/u8g2_box.c ****   yl -= r; 
+ 111:u8g2_lib/u8g2_box.c ****   yl -= 1;
+ 112:u8g2_lib/u8g2_box.c **** 
+ 113:u8g2_lib/u8g2_box.c ****   u8g2_DrawDisc(u8g2, xl, yu, r, U8G2_DRAW_UPPER_LEFT);
+ 114:u8g2_lib/u8g2_box.c ****   u8g2_DrawDisc(u8g2, xr, yu, r, U8G2_DRAW_UPPER_RIGHT);
+ 115:u8g2_lib/u8g2_box.c ****   u8g2_DrawDisc(u8g2, xl, yl, r, U8G2_DRAW_LOWER_LEFT);
+ 116:u8g2_lib/u8g2_box.c ****   u8g2_DrawDisc(u8g2, xr, yl, r, U8G2_DRAW_LOWER_RIGHT);
+ 117:u8g2_lib/u8g2_box.c **** 
+ 118:u8g2_lib/u8g2_box.c ****   {
+ 119:u8g2_lib/u8g2_box.c ****     u8g2_uint_t ww, hh;
+ 120:u8g2_lib/u8g2_box.c **** 
+ 121:u8g2_lib/u8g2_box.c ****     ww = w;
+ 122:u8g2_lib/u8g2_box.c ****     ww -= r;
+ 123:u8g2_lib/u8g2_box.c ****     ww -= r;
+ 124:u8g2_lib/u8g2_box.c ****     xl++;
+ 125:u8g2_lib/u8g2_box.c ****     yu++;
+ 126:u8g2_lib/u8g2_box.c ****     
+ 127:u8g2_lib/u8g2_box.c ****     if ( ww >= 3 )
+ 128:u8g2_lib/u8g2_box.c ****     {
+ 129:u8g2_lib/u8g2_box.c ****       ww -= 2;
+ 130:u8g2_lib/u8g2_box.c ****       u8g2_DrawBox(u8g2, xl, y, ww, r+1);
+ 131:u8g2_lib/u8g2_box.c ****       u8g2_DrawBox(u8g2, xl, yl, ww, r+1);
+ 132:u8g2_lib/u8g2_box.c ****     }
+ 133:u8g2_lib/u8g2_box.c ****     
+ 134:u8g2_lib/u8g2_box.c ****     hh = h;
+ 135:u8g2_lib/u8g2_box.c ****     hh -= r;
+ 136:u8g2_lib/u8g2_box.c ****     hh -= r;
+ 137:u8g2_lib/u8g2_box.c ****     //h--;
+ 138:u8g2_lib/u8g2_box.c ****     if ( hh >= 3 )
+ 139:u8g2_lib/u8g2_box.c ****     {
+ 140:u8g2_lib/u8g2_box.c ****       hh -= 2;
+ 141:u8g2_lib/u8g2_box.c ****       u8g2_DrawBox(u8g2, x, yu, w, hh);
+ 142:u8g2_lib/u8g2_box.c ****     }
+ 143:u8g2_lib/u8g2_box.c ****   }
+ 144:u8g2_lib/u8g2_box.c **** }
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc3iU9uR.s 			page 9
+
+
+ 298              		.loc 1 144 1 view .LVU53
+ 299 002a 07B0     		add	sp, sp, #28
+ 300              	.LCFI9:
+ 301              		.cfi_remember_state
+ 302              		.cfi_def_cfa_offset 36
+ 303              		@ sp needed
+ 304 002c BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 305              	.LVL30:
+ 306              	.L16:
+ 307              	.LCFI10:
+ 308              		.cfi_restore_state
+  98:u8g2_lib/u8g2_box.c ****   xl += r;
+ 309              		.loc 1 98 3 is_stmt 1 view .LVU54
+  99:u8g2_lib/u8g2_box.c ****   yu = y;
+ 310              		.loc 1 99 3 view .LVU55
+  99:u8g2_lib/u8g2_box.c ****   yu = y;
+ 311              		.loc 1 99 6 is_stmt 0 view .LVU56
+ 312 0030 039B     		ldr	r3, [sp, #12]
+ 313 0032 03EB0709 		add	r9, r3, r7
+ 314 0036 5FFA89F9 		uxtb	r9, r9
+ 315              	.LVL31:
+ 100:u8g2_lib/u8g2_box.c ****   yu += r;
+ 316              		.loc 1 100 3 is_stmt 1 view .LVU57
+ 101:u8g2_lib/u8g2_box.c ****  
+ 317              		.loc 1 101 3 view .LVU58
+ 101:u8g2_lib/u8g2_box.c ****  
+ 318              		.loc 1 101 6 is_stmt 0 view .LVU59
+ 319 003a 0AEB070B 		add	fp, r10, r7
+ 320 003e 5FFA8BFB 		uxtb	fp, fp
+ 321              	.LVL32:
+ 103:u8g2_lib/u8g2_box.c ****   xr += w;
+ 322              		.loc 1 103 3 is_stmt 1 view .LVU60
+ 104:u8g2_lib/u8g2_box.c ****   xr -= r;
+ 323              		.loc 1 104 3 view .LVU61
+ 105:u8g2_lib/u8g2_box.c ****   xr -= 1;
+ 324              		.loc 1 105 3 view .LVU62
+ 105:u8g2_lib/u8g2_box.c ****   xr -= 1;
+ 325              		.loc 1 105 6 is_stmt 0 view .LVU63
+ 326 0042 E41B     		subs	r4, r4, r7
+ 327              	.LVL33:
+ 105:u8g2_lib/u8g2_box.c ****   xr -= 1;
+ 328              		.loc 1 105 6 view .LVU64
+ 329 0044 E4B2     		uxtb	r4, r4
+ 330              	.LVL34:
+ 106:u8g2_lib/u8g2_box.c ****   
+ 331              		.loc 1 106 3 is_stmt 1 view .LVU65
+ 106:u8g2_lib/u8g2_box.c ****   
+ 332              		.loc 1 106 6 is_stmt 0 view .LVU66
+ 333 0046 013C     		subs	r4, r4, #1
+ 334              	.LVL35:
+ 106:u8g2_lib/u8g2_box.c ****   
+ 335              		.loc 1 106 6 view .LVU67
+ 336 0048 E4B2     		uxtb	r4, r4
+ 337              	.LVL36:
+ 108:u8g2_lib/u8g2_box.c ****   yl += h;
+ 338              		.loc 1 108 3 is_stmt 1 view .LVU68
+ 109:u8g2_lib/u8g2_box.c ****   yl -= r; 
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc3iU9uR.s 			page 10
+
+
+ 339              		.loc 1 109 3 view .LVU69
+ 110:u8g2_lib/u8g2_box.c ****   yl -= 1;
+ 340              		.loc 1 110 3 view .LVU70
+ 110:u8g2_lib/u8g2_box.c ****   yl -= 1;
+ 341              		.loc 1 110 6 is_stmt 0 view .LVU71
+ 342 004a ED1B     		subs	r5, r5, r7
+ 343              	.LVL37:
+ 110:u8g2_lib/u8g2_box.c ****   yl -= 1;
+ 344              		.loc 1 110 6 view .LVU72
+ 345 004c EDB2     		uxtb	r5, r5
+ 346              	.LVL38:
+ 111:u8g2_lib/u8g2_box.c **** 
+ 347              		.loc 1 111 3 is_stmt 1 view .LVU73
+ 111:u8g2_lib/u8g2_box.c **** 
+ 348              		.loc 1 111 6 is_stmt 0 view .LVU74
+ 349 004e 013D     		subs	r5, r5, #1
+ 350              	.LVL39:
+ 111:u8g2_lib/u8g2_box.c **** 
+ 351              		.loc 1 111 6 view .LVU75
+ 352 0050 EDB2     		uxtb	r5, r5
+ 353              	.LVL40:
+ 113:u8g2_lib/u8g2_box.c ****   u8g2_DrawDisc(u8g2, xr, yu, r, U8G2_DRAW_UPPER_RIGHT);
+ 354              		.loc 1 113 3 is_stmt 1 view .LVU76
+ 355 0052 0223     		movs	r3, #2
+ 356 0054 0093     		str	r3, [sp]
+ 357 0056 3B46     		mov	r3, r7
+ 358 0058 5A46     		mov	r2, fp
+ 359 005a 4946     		mov	r1, r9
+ 360 005c 4046     		mov	r0, r8
+ 361 005e FFF7FEFF 		bl	u8g2_DrawDisc
+ 362              	.LVL41:
+ 114:u8g2_lib/u8g2_box.c ****   u8g2_DrawDisc(u8g2, xl, yl, r, U8G2_DRAW_LOWER_LEFT);
+ 363              		.loc 1 114 3 view .LVU77
+ 364 0062 0123     		movs	r3, #1
+ 365 0064 0093     		str	r3, [sp]
+ 366 0066 3B46     		mov	r3, r7
+ 367 0068 5A46     		mov	r2, fp
+ 368 006a 2146     		mov	r1, r4
+ 369 006c 4046     		mov	r0, r8
+ 370 006e FFF7FEFF 		bl	u8g2_DrawDisc
+ 371              	.LVL42:
+ 115:u8g2_lib/u8g2_box.c ****   u8g2_DrawDisc(u8g2, xr, yl, r, U8G2_DRAW_LOWER_RIGHT);
+ 372              		.loc 1 115 3 view .LVU78
+ 373 0072 0423     		movs	r3, #4
+ 374 0074 0093     		str	r3, [sp]
+ 375 0076 3B46     		mov	r3, r7
+ 376 0078 2A46     		mov	r2, r5
+ 377 007a 4946     		mov	r1, r9
+ 378 007c 4046     		mov	r0, r8
+ 379 007e FFF7FEFF 		bl	u8g2_DrawDisc
+ 380              	.LVL43:
+ 116:u8g2_lib/u8g2_box.c **** 
+ 381              		.loc 1 116 3 view .LVU79
+ 382 0082 0823     		movs	r3, #8
+ 383 0084 0093     		str	r3, [sp]
+ 384 0086 3B46     		mov	r3, r7
+ 385 0088 2A46     		mov	r2, r5
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc3iU9uR.s 			page 11
+
+
+ 386 008a 2146     		mov	r1, r4
+ 387 008c 4046     		mov	r0, r8
+ 388 008e FFF7FEFF 		bl	u8g2_DrawDisc
+ 389              	.LVL44:
+ 390              	.LBB2:
+ 119:u8g2_lib/u8g2_box.c **** 
+ 391              		.loc 1 119 5 view .LVU80
+ 121:u8g2_lib/u8g2_box.c ****     ww -= r;
+ 392              		.loc 1 121 5 view .LVU81
+ 122:u8g2_lib/u8g2_box.c ****     ww -= r;
+ 393              		.loc 1 122 5 view .LVU82
+ 122:u8g2_lib/u8g2_box.c ****     ww -= r;
+ 394              		.loc 1 122 8 is_stmt 0 view .LVU83
+ 395 0092 049B     		ldr	r3, [sp, #16]
+ 396 0094 DB1B     		subs	r3, r3, r7
+ 397 0096 DBB2     		uxtb	r3, r3
+ 398              	.LVL45:
+ 123:u8g2_lib/u8g2_box.c ****     xl++;
+ 399              		.loc 1 123 5 is_stmt 1 view .LVU84
+ 123:u8g2_lib/u8g2_box.c ****     xl++;
+ 400              		.loc 1 123 8 is_stmt 0 view .LVU85
+ 401 0098 DB1B     		subs	r3, r3, r7
+ 402              	.LVL46:
+ 123:u8g2_lib/u8g2_box.c ****     xl++;
+ 403              		.loc 1 123 8 view .LVU86
+ 404 009a DBB2     		uxtb	r3, r3
+ 405              	.LVL47:
+ 124:u8g2_lib/u8g2_box.c ****     yu++;
+ 406              		.loc 1 124 5 is_stmt 1 view .LVU87
+ 124:u8g2_lib/u8g2_box.c ****     yu++;
+ 407              		.loc 1 124 7 is_stmt 0 view .LVU88
+ 408 009c 09F10109 		add	r9, r9, #1
+ 409              	.LVL48:
+ 124:u8g2_lib/u8g2_box.c ****     yu++;
+ 410              		.loc 1 124 7 view .LVU89
+ 411 00a0 5FFA89F9 		uxtb	r9, r9
+ 412              	.LVL49:
+ 125:u8g2_lib/u8g2_box.c ****     
+ 413              		.loc 1 125 5 is_stmt 1 view .LVU90
+ 125:u8g2_lib/u8g2_box.c ****     
+ 414              		.loc 1 125 7 is_stmt 0 view .LVU91
+ 415 00a4 0BF1010B 		add	fp, fp, #1
+ 416              	.LVL50:
+ 125:u8g2_lib/u8g2_box.c ****     
+ 417              		.loc 1 125 7 view .LVU92
+ 418 00a8 5FFA8BFB 		uxtb	fp, fp
+ 419              	.LVL51:
+ 127:u8g2_lib/u8g2_box.c ****     {
+ 420              		.loc 1 127 5 is_stmt 1 view .LVU93
+ 127:u8g2_lib/u8g2_box.c ****     {
+ 421              		.loc 1 127 8 is_stmt 0 view .LVU94
+ 422 00ac 022B     		cmp	r3, #2
+ 423 00ae 0FD8     		bhi	.L17
+ 424              	.LVL52:
+ 425              	.L14:
+ 134:u8g2_lib/u8g2_box.c ****     hh -= r;
+ 426              		.loc 1 134 5 is_stmt 1 view .LVU95
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc3iU9uR.s 			page 12
+
+
+ 135:u8g2_lib/u8g2_box.c ****     hh -= r;
+ 427              		.loc 1 135 5 view .LVU96
+ 135:u8g2_lib/u8g2_box.c ****     hh -= r;
+ 428              		.loc 1 135 8 is_stmt 0 view .LVU97
+ 429 00b0 F61B     		subs	r6, r6, r7
+ 430              	.LVL53:
+ 135:u8g2_lib/u8g2_box.c ****     hh -= r;
+ 431              		.loc 1 135 8 view .LVU98
+ 432 00b2 F6B2     		uxtb	r6, r6
+ 433              	.LVL54:
+ 136:u8g2_lib/u8g2_box.c ****     //h--;
+ 434              		.loc 1 136 5 is_stmt 1 view .LVU99
+ 136:u8g2_lib/u8g2_box.c ****     //h--;
+ 435              		.loc 1 136 8 is_stmt 0 view .LVU100
+ 436 00b4 F71B     		subs	r7, r6, r7
+ 437              	.LVL55:
+ 136:u8g2_lib/u8g2_box.c ****     //h--;
+ 438              		.loc 1 136 8 view .LVU101
+ 439 00b6 FFB2     		uxtb	r7, r7
+ 440              	.LVL56:
+ 138:u8g2_lib/u8g2_box.c ****     {
+ 441              		.loc 1 138 5 is_stmt 1 view .LVU102
+ 138:u8g2_lib/u8g2_box.c ****     {
+ 442              		.loc 1 138 8 is_stmt 0 view .LVU103
+ 443 00b8 022F     		cmp	r7, #2
+ 444 00ba B6D9     		bls	.L12
+ 140:u8g2_lib/u8g2_box.c ****       u8g2_DrawBox(u8g2, x, yu, w, hh);
+ 445              		.loc 1 140 7 is_stmt 1 view .LVU104
+ 140:u8g2_lib/u8g2_box.c ****       u8g2_DrawBox(u8g2, x, yu, w, hh);
+ 446              		.loc 1 140 10 is_stmt 0 view .LVU105
+ 447 00bc 023F     		subs	r7, r7, #2
+ 448              	.LVL57:
+ 140:u8g2_lib/u8g2_box.c ****       u8g2_DrawBox(u8g2, x, yu, w, hh);
+ 449              		.loc 1 140 10 view .LVU106
+ 450 00be FFB2     		uxtb	r7, r7
+ 451              	.LVL58:
+ 141:u8g2_lib/u8g2_box.c ****     }
+ 452              		.loc 1 141 7 is_stmt 1 view .LVU107
+ 453 00c0 0097     		str	r7, [sp]
+ 454 00c2 049B     		ldr	r3, [sp, #16]
+ 455 00c4 5A46     		mov	r2, fp
+ 456 00c6 0399     		ldr	r1, [sp, #12]
+ 457 00c8 4046     		mov	r0, r8
+ 458 00ca FFF7FEFF 		bl	u8g2_DrawBox
+ 459              	.LVL59:
+ 460 00ce ACE7     		b	.L12
+ 461              	.LVL60:
+ 462              	.L17:
+ 129:u8g2_lib/u8g2_box.c ****       u8g2_DrawBox(u8g2, xl, y, ww, r+1);
+ 463              		.loc 1 129 7 view .LVU108
+ 129:u8g2_lib/u8g2_box.c ****       u8g2_DrawBox(u8g2, xl, y, ww, r+1);
+ 464              		.loc 1 129 10 is_stmt 0 view .LVU109
+ 465 00d0 023B     		subs	r3, r3, #2
+ 466              	.LVL61:
+ 129:u8g2_lib/u8g2_box.c ****       u8g2_DrawBox(u8g2, xl, y, ww, r+1);
+ 467              		.loc 1 129 10 view .LVU110
+ 468 00d2 DBB2     		uxtb	r3, r3
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc3iU9uR.s 			page 13
+
+
+ 469              	.LVL62:
+ 130:u8g2_lib/u8g2_box.c ****       u8g2_DrawBox(u8g2, xl, yl, ww, r+1);
+ 470              		.loc 1 130 7 is_stmt 1 view .LVU111
+ 471 00d4 7C1C     		adds	r4, r7, #1
+ 472              	.LVL63:
+ 130:u8g2_lib/u8g2_box.c ****       u8g2_DrawBox(u8g2, xl, yl, ww, r+1);
+ 473              		.loc 1 130 7 is_stmt 0 view .LVU112
+ 474 00d6 E4B2     		uxtb	r4, r4
+ 475 00d8 0094     		str	r4, [sp]
+ 476 00da 0593     		str	r3, [sp, #20]
+ 477 00dc 5246     		mov	r2, r10
+ 478 00de 4946     		mov	r1, r9
+ 479 00e0 4046     		mov	r0, r8
+ 480 00e2 FFF7FEFF 		bl	u8g2_DrawBox
+ 481              	.LVL64:
+ 131:u8g2_lib/u8g2_box.c ****     }
+ 482              		.loc 1 131 7 is_stmt 1 view .LVU113
+ 483 00e6 0094     		str	r4, [sp]
+ 484 00e8 059B     		ldr	r3, [sp, #20]
+ 485 00ea 2A46     		mov	r2, r5
+ 486 00ec 4946     		mov	r1, r9
+ 487 00ee 4046     		mov	r0, r8
+ 488 00f0 FFF7FEFF 		bl	u8g2_DrawBox
+ 489              	.LVL65:
+ 490 00f4 DCE7     		b	.L14
+ 491              	.LBE2:
+ 492              		.cfi_endproc
+ 493              	.LFE2:
+ 495              		.section	.text.u8g2_DrawRFrame,"ax",%progbits
+ 496              		.align	1
+ 497              		.global	u8g2_DrawRFrame
+ 498              		.syntax unified
+ 499              		.thumb
+ 500              		.thumb_func
+ 501              		.fpu softvfp
+ 503              	u8g2_DrawRFrame:
+ 504              	.LVL66:
+ 505              	.LFB3:
+ 145:u8g2_lib/u8g2_box.c **** 
+ 146:u8g2_lib/u8g2_box.c **** 
+ 147:u8g2_lib/u8g2_box.c **** void u8g2_DrawRFrame(u8g2_t *u8g2, u8g2_uint_t x, u8g2_uint_t y, u8g2_uint_t w, u8g2_uint_t h, u8g2
+ 148:u8g2_lib/u8g2_box.c **** {
+ 506              		.loc 1 148 1 view -0
+ 507              		.cfi_startproc
+ 508              		@ args = 8, pretend = 0, frame = 8
+ 509              		@ frame_needed = 0, uses_anonymous_args = 0
+ 510              		.loc 1 148 1 is_stmt 0 view .LVU115
+ 511 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 512              	.LCFI11:
+ 513              		.cfi_def_cfa_offset 36
+ 514              		.cfi_offset 4, -36
+ 515              		.cfi_offset 5, -32
+ 516              		.cfi_offset 6, -28
+ 517              		.cfi_offset 7, -24
+ 518              		.cfi_offset 8, -20
+ 519              		.cfi_offset 9, -16
+ 520              		.cfi_offset 10, -12
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc3iU9uR.s 			page 14
+
+
+ 521              		.cfi_offset 11, -8
+ 522              		.cfi_offset 14, -4
+ 523 0004 85B0     		sub	sp, sp, #20
+ 524              	.LCFI12:
+ 525              		.cfi_def_cfa_offset 56
+ 526 0006 0746     		mov	r7, r0
+ 527 0008 0C46     		mov	r4, r1
+ 528 000a 9046     		mov	r8, r2
+ 529 000c 9DF838B0 		ldrb	fp, [sp, #56]	@ zero_extendqisi2
+ 530 0010 9DF83C60 		ldrb	r6, [sp, #60]	@ zero_extendqisi2
+ 149:u8g2_lib/u8g2_box.c ****   u8g2_uint_t xl, yu;
+ 531              		.loc 1 149 3 is_stmt 1 view .LVU116
+ 150:u8g2_lib/u8g2_box.c **** 
+ 151:u8g2_lib/u8g2_box.c **** #ifdef U8G2_WITH_INTERSECTION
+ 152:u8g2_lib/u8g2_box.c ****   if ( u8g2_IsIntersection(u8g2, x, y, x+w, y+h) == 0 ) 
+ 532              		.loc 1 152 3 view .LVU117
+ 533              		.loc 1 152 8 is_stmt 0 view .LVU118
+ 534 0014 0291     		str	r1, [sp, #8]
+ 535 0016 0393     		str	r3, [sp, #12]
+ 536 0018 1C44     		add	r4, r4, r3
+ 537 001a E4B2     		uxtb	r4, r4
+ 538 001c 02EB0B05 		add	r5, r2, fp
+ 539 0020 EDB2     		uxtb	r5, r5
+ 540 0022 0095     		str	r5, [sp]
+ 541 0024 2346     		mov	r3, r4
+ 542              	.LVL67:
+ 543              		.loc 1 152 8 view .LVU119
+ 544 0026 FFF7FEFF 		bl	u8g2_IsIntersection
+ 545              	.LVL68:
+ 546              		.loc 1 152 6 view .LVU120
+ 547 002a 10B9     		cbnz	r0, .L22
+ 548              	.LVL69:
+ 549              	.L18:
+ 153:u8g2_lib/u8g2_box.c ****     return;
+ 154:u8g2_lib/u8g2_box.c **** #endif /* U8G2_WITH_INTERSECTION */
+ 155:u8g2_lib/u8g2_box.c **** 
+ 156:u8g2_lib/u8g2_box.c ****   xl = x;
+ 157:u8g2_lib/u8g2_box.c ****   xl += r;
+ 158:u8g2_lib/u8g2_box.c ****   yu = y;
+ 159:u8g2_lib/u8g2_box.c ****   yu += r;
+ 160:u8g2_lib/u8g2_box.c ****  
+ 161:u8g2_lib/u8g2_box.c ****   {
+ 162:u8g2_lib/u8g2_box.c ****     u8g2_uint_t yl, xr;
+ 163:u8g2_lib/u8g2_box.c ****       
+ 164:u8g2_lib/u8g2_box.c ****     xr = x;
+ 165:u8g2_lib/u8g2_box.c ****     xr += w;
+ 166:u8g2_lib/u8g2_box.c ****     xr -= r;
+ 167:u8g2_lib/u8g2_box.c ****     xr -= 1;
+ 168:u8g2_lib/u8g2_box.c ****     
+ 169:u8g2_lib/u8g2_box.c ****     yl = y;
+ 170:u8g2_lib/u8g2_box.c ****     yl += h;
+ 171:u8g2_lib/u8g2_box.c ****     yl -= r; 
+ 172:u8g2_lib/u8g2_box.c ****     yl -= 1;
+ 173:u8g2_lib/u8g2_box.c **** 
+ 174:u8g2_lib/u8g2_box.c ****     u8g2_DrawCircle(u8g2, xl, yu, r, U8G2_DRAW_UPPER_LEFT);
+ 175:u8g2_lib/u8g2_box.c ****     u8g2_DrawCircle(u8g2, xr, yu, r, U8G2_DRAW_UPPER_RIGHT);
+ 176:u8g2_lib/u8g2_box.c ****     u8g2_DrawCircle(u8g2, xl, yl, r, U8G2_DRAW_LOWER_LEFT);
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc3iU9uR.s 			page 15
+
+
+ 177:u8g2_lib/u8g2_box.c ****     u8g2_DrawCircle(u8g2, xr, yl, r, U8G2_DRAW_LOWER_RIGHT);
+ 178:u8g2_lib/u8g2_box.c ****   }
+ 179:u8g2_lib/u8g2_box.c **** 
+ 180:u8g2_lib/u8g2_box.c ****   {
+ 181:u8g2_lib/u8g2_box.c ****     u8g2_uint_t ww, hh;
+ 182:u8g2_lib/u8g2_box.c **** 
+ 183:u8g2_lib/u8g2_box.c ****     ww = w;
+ 184:u8g2_lib/u8g2_box.c ****     ww -= r;
+ 185:u8g2_lib/u8g2_box.c ****     ww -= r;
+ 186:u8g2_lib/u8g2_box.c ****     hh = h;
+ 187:u8g2_lib/u8g2_box.c ****     hh -= r;
+ 188:u8g2_lib/u8g2_box.c ****     hh -= r;
+ 189:u8g2_lib/u8g2_box.c ****     
+ 190:u8g2_lib/u8g2_box.c ****     xl++;
+ 191:u8g2_lib/u8g2_box.c ****     yu++;
+ 192:u8g2_lib/u8g2_box.c ****     
+ 193:u8g2_lib/u8g2_box.c ****     if ( ww >= 3 )
+ 194:u8g2_lib/u8g2_box.c ****     {
+ 195:u8g2_lib/u8g2_box.c ****       ww -= 2;
+ 196:u8g2_lib/u8g2_box.c ****       h--;
+ 197:u8g2_lib/u8g2_box.c ****       u8g2_DrawHLine(u8g2, xl, y, ww);
+ 198:u8g2_lib/u8g2_box.c ****       u8g2_DrawHLine(u8g2, xl, y+h, ww);
+ 199:u8g2_lib/u8g2_box.c ****     }
+ 200:u8g2_lib/u8g2_box.c ****     
+ 201:u8g2_lib/u8g2_box.c ****     if ( hh >= 3 )
+ 202:u8g2_lib/u8g2_box.c ****     {
+ 203:u8g2_lib/u8g2_box.c ****       hh -= 2;
+ 204:u8g2_lib/u8g2_box.c ****       w--;
+ 205:u8g2_lib/u8g2_box.c ****       u8g2_DrawVLine(u8g2, x, yu, hh);
+ 206:u8g2_lib/u8g2_box.c ****       u8g2_DrawVLine(u8g2, x+w, yu, hh);
+ 207:u8g2_lib/u8g2_box.c ****     }
+ 208:u8g2_lib/u8g2_box.c ****   }
+ 209:u8g2_lib/u8g2_box.c **** }
+ 550              		.loc 1 209 1 view .LVU121
+ 551 002c 05B0     		add	sp, sp, #20
+ 552              	.LCFI13:
+ 553              		.cfi_remember_state
+ 554              		.cfi_def_cfa_offset 36
+ 555              		@ sp needed
+ 556 002e BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 557              	.LVL70:
+ 558              	.L22:
+ 559              	.LCFI14:
+ 560              		.cfi_restore_state
+ 156:u8g2_lib/u8g2_box.c ****   xl += r;
+ 561              		.loc 1 156 3 is_stmt 1 view .LVU122
+ 157:u8g2_lib/u8g2_box.c ****   yu = y;
+ 562              		.loc 1 157 3 view .LVU123
+ 157:u8g2_lib/u8g2_box.c ****   yu = y;
+ 563              		.loc 1 157 6 is_stmt 0 view .LVU124
+ 564 0032 029B     		ldr	r3, [sp, #8]
+ 565 0034 03EB060A 		add	r10, r3, r6
+ 566 0038 5FFA8AFA 		uxtb	r10, r10
+ 567              	.LVL71:
+ 158:u8g2_lib/u8g2_box.c ****   yu += r;
+ 568              		.loc 1 158 3 is_stmt 1 view .LVU125
+ 159:u8g2_lib/u8g2_box.c ****  
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc3iU9uR.s 			page 16
+
+
+ 569              		.loc 1 159 3 view .LVU126
+ 159:u8g2_lib/u8g2_box.c ****  
+ 570              		.loc 1 159 6 is_stmt 0 view .LVU127
+ 571 003c 08EB0609 		add	r9, r8, r6
+ 572 0040 5FFA89F9 		uxtb	r9, r9
+ 573              	.LVL72:
+ 574              	.LBB3:
+ 162:u8g2_lib/u8g2_box.c ****       
+ 575              		.loc 1 162 5 is_stmt 1 view .LVU128
+ 164:u8g2_lib/u8g2_box.c ****     xr += w;
+ 576              		.loc 1 164 5 view .LVU129
+ 165:u8g2_lib/u8g2_box.c ****     xr -= r;
+ 577              		.loc 1 165 5 view .LVU130
+ 166:u8g2_lib/u8g2_box.c ****     xr -= 1;
+ 578              		.loc 1 166 5 view .LVU131
+ 166:u8g2_lib/u8g2_box.c ****     xr -= 1;
+ 579              		.loc 1 166 8 is_stmt 0 view .LVU132
+ 580 0044 A41B     		subs	r4, r4, r6
+ 581              	.LVL73:
+ 166:u8g2_lib/u8g2_box.c ****     xr -= 1;
+ 582              		.loc 1 166 8 view .LVU133
+ 583 0046 E4B2     		uxtb	r4, r4
+ 584              	.LVL74:
+ 167:u8g2_lib/u8g2_box.c ****     
+ 585              		.loc 1 167 5 is_stmt 1 view .LVU134
+ 167:u8g2_lib/u8g2_box.c ****     
+ 586              		.loc 1 167 8 is_stmt 0 view .LVU135
+ 587 0048 013C     		subs	r4, r4, #1
+ 588              	.LVL75:
+ 167:u8g2_lib/u8g2_box.c ****     
+ 589              		.loc 1 167 8 view .LVU136
+ 590 004a E4B2     		uxtb	r4, r4
+ 591              	.LVL76:
+ 169:u8g2_lib/u8g2_box.c ****     yl += h;
+ 592              		.loc 1 169 5 is_stmt 1 view .LVU137
+ 170:u8g2_lib/u8g2_box.c ****     yl -= r; 
+ 593              		.loc 1 170 5 view .LVU138
+ 171:u8g2_lib/u8g2_box.c ****     yl -= 1;
+ 594              		.loc 1 171 5 view .LVU139
+ 171:u8g2_lib/u8g2_box.c ****     yl -= 1;
+ 595              		.loc 1 171 8 is_stmt 0 view .LVU140
+ 596 004c AD1B     		subs	r5, r5, r6
+ 597              	.LVL77:
+ 171:u8g2_lib/u8g2_box.c ****     yl -= 1;
+ 598              		.loc 1 171 8 view .LVU141
+ 599 004e EDB2     		uxtb	r5, r5
+ 600              	.LVL78:
+ 172:u8g2_lib/u8g2_box.c **** 
+ 601              		.loc 1 172 5 is_stmt 1 view .LVU142
+ 172:u8g2_lib/u8g2_box.c **** 
+ 602              		.loc 1 172 8 is_stmt 0 view .LVU143
+ 603 0050 013D     		subs	r5, r5, #1
+ 604              	.LVL79:
+ 172:u8g2_lib/u8g2_box.c **** 
+ 605              		.loc 1 172 8 view .LVU144
+ 606 0052 EDB2     		uxtb	r5, r5
+ 607              	.LVL80:
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc3iU9uR.s 			page 17
+
+
+ 174:u8g2_lib/u8g2_box.c ****     u8g2_DrawCircle(u8g2, xr, yu, r, U8G2_DRAW_UPPER_RIGHT);
+ 608              		.loc 1 174 5 is_stmt 1 view .LVU145
+ 609 0054 0223     		movs	r3, #2
+ 610 0056 0093     		str	r3, [sp]
+ 611 0058 3346     		mov	r3, r6
+ 612 005a 4A46     		mov	r2, r9
+ 613 005c 5146     		mov	r1, r10
+ 614 005e 3846     		mov	r0, r7
+ 615 0060 FFF7FEFF 		bl	u8g2_DrawCircle
+ 616              	.LVL81:
+ 175:u8g2_lib/u8g2_box.c ****     u8g2_DrawCircle(u8g2, xl, yl, r, U8G2_DRAW_LOWER_LEFT);
+ 617              		.loc 1 175 5 view .LVU146
+ 618 0064 0123     		movs	r3, #1
+ 619 0066 0093     		str	r3, [sp]
+ 620 0068 3346     		mov	r3, r6
+ 621 006a 4A46     		mov	r2, r9
+ 622 006c 2146     		mov	r1, r4
+ 623 006e 3846     		mov	r0, r7
+ 624 0070 FFF7FEFF 		bl	u8g2_DrawCircle
+ 625              	.LVL82:
+ 176:u8g2_lib/u8g2_box.c ****     u8g2_DrawCircle(u8g2, xr, yl, r, U8G2_DRAW_LOWER_RIGHT);
+ 626              		.loc 1 176 5 view .LVU147
+ 627 0074 0423     		movs	r3, #4
+ 628 0076 0093     		str	r3, [sp]
+ 629 0078 3346     		mov	r3, r6
+ 630 007a 2A46     		mov	r2, r5
+ 631 007c 5146     		mov	r1, r10
+ 632 007e 3846     		mov	r0, r7
+ 633 0080 FFF7FEFF 		bl	u8g2_DrawCircle
+ 634              	.LVL83:
+ 177:u8g2_lib/u8g2_box.c ****   }
+ 635              		.loc 1 177 5 view .LVU148
+ 636 0084 0823     		movs	r3, #8
+ 637 0086 0093     		str	r3, [sp]
+ 638 0088 3346     		mov	r3, r6
+ 639 008a 2A46     		mov	r2, r5
+ 640 008c 2146     		mov	r1, r4
+ 641 008e 3846     		mov	r0, r7
+ 642 0090 FFF7FEFF 		bl	u8g2_DrawCircle
+ 643              	.LVL84:
+ 644              	.LBE3:
+ 645              	.LBB4:
+ 181:u8g2_lib/u8g2_box.c **** 
+ 646              		.loc 1 181 5 view .LVU149
+ 183:u8g2_lib/u8g2_box.c ****     ww -= r;
+ 647              		.loc 1 183 5 view .LVU150
+ 184:u8g2_lib/u8g2_box.c ****     ww -= r;
+ 648              		.loc 1 184 5 view .LVU151
+ 184:u8g2_lib/u8g2_box.c ****     ww -= r;
+ 649              		.loc 1 184 8 is_stmt 0 view .LVU152
+ 650 0094 039D     		ldr	r5, [sp, #12]
+ 651              	.LVL85:
+ 184:u8g2_lib/u8g2_box.c ****     ww -= r;
+ 652              		.loc 1 184 8 view .LVU153
+ 653 0096 AC1B     		subs	r4, r5, r6
+ 654              	.LVL86:
+ 184:u8g2_lib/u8g2_box.c ****     ww -= r;
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc3iU9uR.s 			page 18
+
+
+ 655              		.loc 1 184 8 view .LVU154
+ 656 0098 E4B2     		uxtb	r4, r4
+ 657              	.LVL87:
+ 185:u8g2_lib/u8g2_box.c ****     hh = h;
+ 658              		.loc 1 185 5 is_stmt 1 view .LVU155
+ 185:u8g2_lib/u8g2_box.c ****     hh = h;
+ 659              		.loc 1 185 8 is_stmt 0 view .LVU156
+ 660 009a A41B     		subs	r4, r4, r6
+ 661              	.LVL88:
+ 185:u8g2_lib/u8g2_box.c ****     hh = h;
+ 662              		.loc 1 185 8 view .LVU157
+ 663 009c E4B2     		uxtb	r4, r4
+ 664              	.LVL89:
+ 186:u8g2_lib/u8g2_box.c ****     hh -= r;
+ 665              		.loc 1 186 5 is_stmt 1 view .LVU158
+ 187:u8g2_lib/u8g2_box.c ****     hh -= r;
+ 666              		.loc 1 187 5 view .LVU159
+ 187:u8g2_lib/u8g2_box.c ****     hh -= r;
+ 667              		.loc 1 187 8 is_stmt 0 view .LVU160
+ 668 009e ABEB0603 		sub	r3, fp, r6
+ 669 00a2 DBB2     		uxtb	r3, r3
+ 670              	.LVL90:
+ 188:u8g2_lib/u8g2_box.c ****     
+ 671              		.loc 1 188 5 is_stmt 1 view .LVU161
+ 188:u8g2_lib/u8g2_box.c ****     
+ 672              		.loc 1 188 8 is_stmt 0 view .LVU162
+ 673 00a4 9E1B     		subs	r6, r3, r6
+ 674              	.LVL91:
+ 188:u8g2_lib/u8g2_box.c ****     
+ 675              		.loc 1 188 8 view .LVU163
+ 676 00a6 F6B2     		uxtb	r6, r6
+ 677              	.LVL92:
+ 190:u8g2_lib/u8g2_box.c ****     yu++;
+ 678              		.loc 1 190 5 is_stmt 1 view .LVU164
+ 190:u8g2_lib/u8g2_box.c ****     yu++;
+ 679              		.loc 1 190 7 is_stmt 0 view .LVU165
+ 680 00a8 0AF1010A 		add	r10, r10, #1
+ 681              	.LVL93:
+ 190:u8g2_lib/u8g2_box.c ****     yu++;
+ 682              		.loc 1 190 7 view .LVU166
+ 683 00ac 5FFA8AFA 		uxtb	r10, r10
+ 684              	.LVL94:
+ 191:u8g2_lib/u8g2_box.c ****     
+ 685              		.loc 1 191 5 is_stmt 1 view .LVU167
+ 191:u8g2_lib/u8g2_box.c ****     
+ 686              		.loc 1 191 7 is_stmt 0 view .LVU168
+ 687 00b0 09F10109 		add	r9, r9, #1
+ 688              	.LVL95:
+ 191:u8g2_lib/u8g2_box.c ****     
+ 689              		.loc 1 191 7 view .LVU169
+ 690 00b4 5FFA89F9 		uxtb	r9, r9
+ 691              	.LVL96:
+ 193:u8g2_lib/u8g2_box.c ****     {
+ 692              		.loc 1 193 5 is_stmt 1 view .LVU170
+ 193:u8g2_lib/u8g2_box.c ****     {
+ 693              		.loc 1 193 8 is_stmt 0 view .LVU171
+ 694 00b8 022C     		cmp	r4, #2
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc3iU9uR.s 			page 19
+
+
+ 695 00ba 17D8     		bhi	.L23
+ 696              	.LVL97:
+ 697              	.L20:
+ 201:u8g2_lib/u8g2_box.c ****     {
+ 698              		.loc 1 201 5 is_stmt 1 view .LVU172
+ 201:u8g2_lib/u8g2_box.c ****     {
+ 699              		.loc 1 201 8 is_stmt 0 view .LVU173
+ 700 00bc 022E     		cmp	r6, #2
+ 701 00be B5D9     		bls	.L18
+ 203:u8g2_lib/u8g2_box.c ****       w--;
+ 702              		.loc 1 203 7 is_stmt 1 view .LVU174
+ 203:u8g2_lib/u8g2_box.c ****       w--;
+ 703              		.loc 1 203 10 is_stmt 0 view .LVU175
+ 704 00c0 023E     		subs	r6, r6, #2
+ 705              	.LVL98:
+ 203:u8g2_lib/u8g2_box.c ****       w--;
+ 706              		.loc 1 203 10 view .LVU176
+ 707 00c2 F6B2     		uxtb	r6, r6
+ 708              	.LVL99:
+ 204:u8g2_lib/u8g2_box.c ****       u8g2_DrawVLine(u8g2, x, yu, hh);
+ 709              		.loc 1 204 7 is_stmt 1 view .LVU177
+ 204:u8g2_lib/u8g2_box.c ****       u8g2_DrawVLine(u8g2, x, yu, hh);
+ 710              		.loc 1 204 8 is_stmt 0 view .LVU178
+ 711 00c4 039B     		ldr	r3, [sp, #12]
+ 712 00c6 5C1E     		subs	r4, r3, #1
+ 713              	.LVL100:
+ 204:u8g2_lib/u8g2_box.c ****       u8g2_DrawVLine(u8g2, x, yu, hh);
+ 714              		.loc 1 204 8 view .LVU179
+ 715 00c8 E4B2     		uxtb	r4, r4
+ 716              	.LVL101:
+ 205:u8g2_lib/u8g2_box.c ****       u8g2_DrawVLine(u8g2, x+w, yu, hh);
+ 717              		.loc 1 205 7 is_stmt 1 view .LVU180
+ 718 00ca 3346     		mov	r3, r6
+ 719 00cc 4A46     		mov	r2, r9
+ 720 00ce 029D     		ldr	r5, [sp, #8]
+ 721 00d0 2946     		mov	r1, r5
+ 722 00d2 3846     		mov	r0, r7
+ 723 00d4 FFF7FEFF 		bl	u8g2_DrawVLine
+ 724              	.LVL102:
+ 206:u8g2_lib/u8g2_box.c ****     }
+ 725              		.loc 1 206 7 view .LVU181
+ 726 00d8 2B46     		mov	r3, r5
+ 727 00da 2344     		add	r3, r3, r4
+ 728 00dc 1946     		mov	r1, r3
+ 729 00de 3346     		mov	r3, r6
+ 730 00e0 4A46     		mov	r2, r9
+ 731 00e2 C9B2     		uxtb	r1, r1
+ 732 00e4 3846     		mov	r0, r7
+ 733 00e6 FFF7FEFF 		bl	u8g2_DrawVLine
+ 734              	.LVL103:
+ 735 00ea 9FE7     		b	.L18
+ 736              	.LVL104:
+ 737              	.L23:
+ 195:u8g2_lib/u8g2_box.c ****       h--;
+ 738              		.loc 1 195 7 view .LVU182
+ 195:u8g2_lib/u8g2_box.c ****       h--;
+ 739              		.loc 1 195 10 is_stmt 0 view .LVU183
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc3iU9uR.s 			page 20
+
+
+ 740 00ec 023C     		subs	r4, r4, #2
+ 741              	.LVL105:
+ 195:u8g2_lib/u8g2_box.c ****       h--;
+ 742              		.loc 1 195 10 view .LVU184
+ 743 00ee E4B2     		uxtb	r4, r4
+ 744              	.LVL106:
+ 196:u8g2_lib/u8g2_box.c ****       u8g2_DrawHLine(u8g2, xl, y, ww);
+ 745              		.loc 1 196 7 is_stmt 1 view .LVU185
+ 196:u8g2_lib/u8g2_box.c ****       u8g2_DrawHLine(u8g2, xl, y, ww);
+ 746              		.loc 1 196 8 is_stmt 0 view .LVU186
+ 747 00f0 0BF1FF3B 		add	fp, fp, #-1
+ 748              	.LVL107:
+ 196:u8g2_lib/u8g2_box.c ****       u8g2_DrawHLine(u8g2, xl, y, ww);
+ 749              		.loc 1 196 8 view .LVU187
+ 750 00f4 5FFA8BFB 		uxtb	fp, fp
+ 751              	.LVL108:
+ 197:u8g2_lib/u8g2_box.c ****       u8g2_DrawHLine(u8g2, xl, y+h, ww);
+ 752              		.loc 1 197 7 is_stmt 1 view .LVU188
+ 753 00f8 2346     		mov	r3, r4
+ 754 00fa 4246     		mov	r2, r8
+ 755 00fc 5146     		mov	r1, r10
+ 756 00fe 3846     		mov	r0, r7
+ 757 0100 FFF7FEFF 		bl	u8g2_DrawHLine
+ 758              	.LVL109:
+ 198:u8g2_lib/u8g2_box.c ****     }
+ 759              		.loc 1 198 7 view .LVU189
+ 760 0104 08EB0B02 		add	r2, r8, fp
+ 761 0108 2346     		mov	r3, r4
+ 762 010a D2B2     		uxtb	r2, r2
+ 763 010c 5146     		mov	r1, r10
+ 764 010e 3846     		mov	r0, r7
+ 765 0110 FFF7FEFF 		bl	u8g2_DrawHLine
+ 766              	.LVL110:
+ 767 0114 D2E7     		b	.L20
+ 768              	.LBE4:
+ 769              		.cfi_endproc
+ 770              	.LFE3:
+ 772              		.text
+ 773              	.Letext0:
+ 774              		.file 2 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 775              		.file 3 "d:\\work_project\\9 2019-q4-major\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 776              		.file 4 "u8g2_lib/u8x8.h"
+ 777              		.file 5 "u8g2_lib/u8g2.h"
+ARM GAS  C:\Users\GKQ\AppData\Local\Temp\cc3iU9uR.s 			page 21
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 u8g2_box.c
+C:\Users\GKQ\AppData\Local\Temp\cc3iU9uR.s:16     .text.u8g2_DrawBox:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\cc3iU9uR.s:24     .text.u8g2_DrawBox:00000000 u8g2_DrawBox
+C:\Users\GKQ\AppData\Local\Temp\cc3iU9uR.s:105    .text.u8g2_DrawFrame:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\cc3iU9uR.s:112    .text.u8g2_DrawFrame:00000000 u8g2_DrawFrame
+C:\Users\GKQ\AppData\Local\Temp\cc3iU9uR.s:244    .text.u8g2_DrawRBox:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\cc3iU9uR.s:251    .text.u8g2_DrawRBox:00000000 u8g2_DrawRBox
+C:\Users\GKQ\AppData\Local\Temp\cc3iU9uR.s:496    .text.u8g2_DrawRFrame:00000000 $t
+C:\Users\GKQ\AppData\Local\Temp\cc3iU9uR.s:503    .text.u8g2_DrawRFrame:00000000 u8g2_DrawRFrame
+
+UNDEFINED SYMBOLS
+u8g2_IsIntersection
+u8g2_DrawHVLine
+u8g2_DrawDisc
+u8g2_DrawCircle
+u8g2_DrawVLine
+u8g2_DrawHLine
